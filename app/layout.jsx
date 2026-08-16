@@ -25,6 +25,9 @@ export default function RootLayout({ children }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#0f2942" />
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1017" />
         <script dangerouslySetInnerHTML={{ __html: NO_FLASH_SCRIPT }} />
         {CSS.map((href) => (
           <link key={href} rel="stylesheet" href={href} />

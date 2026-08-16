@@ -11,6 +11,21 @@
     "start": "next start -p 3000",
     "lint": "next lint"
   },
+  "browserslist": [
+    "> 0.2%",
+    "last 4 versions",
+    "Firefox ESR",
+    "Safari >= 15",
+    "iOS >= 15",
+    "Chrome >= 100",
+    "Edge >= 100",
+    "Firefox >= 100",
+    "Android >= 9",
+    "Samsung >= 18",
+    "Opera >= 80",
+    "not dead",
+    "not op_mini all"
+  ],
   "dependencies": {
     "html-react-parser": "^5.2.2",
     "next": "15.1.6",

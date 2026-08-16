@@ -42,6 +42,44 @@
 
 html {
   background-color: rgb(var(--c-page));
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* =========================================================
+   TARAYICI / ISLETIM SISTEMI UYUMU (7. altin kural)
+   ========================================================= */
+
+/* iOS Safari'de 100vh adres cubugunu saymaz, sayfa tasar.
+   Once guvenli deger, destekleyen tarayicida dinamik yukseklik. */
+.min-h-ekran { min-height: 100vh; }
+@supports (min-height: 100dvh) {
+  .min-h-ekran { min-height: 100dvh; }
+}
+
+/* iOS Safari, yazi boyu 16px'in altinda olan bir alana odaklaninca sayfayi
+   zumlar ve geri cikmaz. Kural yalnizca WebKit dokunmatikte devreye girer;
+   utility siniflarini gecmesi icin !important sart. */
+@supports (-webkit-touch-callout: none) {
+  input:not([type='checkbox']):not([type='radio']),
+  textarea,
+  select {
+    font-size: max(16px, 1em) !important;
+  }
+}
+
+/* iOS metin alanlarina kendi ic golgesini/kose yuvarlatmasini ekler. */
+input[type='text'],
+input[type='email'],
+input[type='tel'],
+input[type='url'],
+input[type='search'],
+input[type='number'],
+input[type='password'],
+textarea {
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 /* TEMA GECISI - KRITIK
@@ -74,6 +112,11 @@ html.tema-kilit *::after {
   50%      { transform: translateY(-10px); }
 }
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+  html { scroll-behavior: auto !important; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
   html.tema-kilit, html.tema-kilit * { transition: none !important; }
 }

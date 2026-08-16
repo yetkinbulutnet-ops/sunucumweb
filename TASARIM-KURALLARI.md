@@ -1,7 +1,7 @@
 # Tasarım Altın Kuralları
 
-> Bu dosya bağlayıcıdır. Siteye eklenen **her yeni bölüm, bileşen ve sayfa** bu üç
-> kuralı sağlamak zorundadır. CMS geldiğinde de bu kurallar geçerli olacak.
+> Bu dosya bağlayıcıdır. Siteye eklenen **her yeni bölüm, bileşen ve sayfa** buradaki
+> kuralların **hepsini** sağlamak zorundadır. CMS geldiğinde de bu kurallar geçerli olacak.
 
 ---
 
@@ -193,6 +193,70 @@ Ne içerik, ne tasarım, ne de kod "AI çıktısı" gibi durmayacak.
 
 ---
 
+## 7. ALTIN KURAL — Her tarayıcıda, her işletim sisteminde aynı çalışır
+
+Site sadece geliştirme yaptığımız Chrome'da değil; **Safari, Firefox, Edge, Samsung
+Internet, Opera** ve **Windows, macOS, Linux, iOS, iPadOS, Android** üzerinde aynı
+görünmek ve aynı çalışmak zorunda. "Bende çalışıyor" bir kabul kriteri değildir.
+
+### Desteklenen taban
+`package.json` içindeki **`browserslist`** tek doğruluk kaynağıdır; autoprefixer ön
+ekleri buradan üretir. Taban: **Safari/iOS 15+, Chrome-Edge 100+, Firefox 100+,
+Android 9+, Samsung Internet 18+**. Bu listeyi daraltmak = eski iPhone'ları kesmek.
+
+> Varsayılan browserslist (`last 2 versions`) **yeterli değildi**: sadece iOS 18+
+> hedeflediği için `-webkit-backdrop-filter` ve `-webkit-mask-image` üretilmiyordu,
+> iOS 15–17 Safari'de bulanık başlık ve maskeli ızgaralar bozuk çıkıyordu.
+
+### CSS
+- Yeni bir özellik kullanmadan önce **caniuse tabanına bak**. Taban altındaysa ya
+  `@supports` ile kademeli iyileştirme yaz ya da vazgeç.
+- `100vh` **tek başına yasak** — iOS Safari'de adres çubuğu yüzünden taşar.
+  `min-h-ekran` yardımcı sınıfı kullanılır (`100vh` + `@supports` ile `100dvh`).
+- `backdrop-filter`, `mask-image`, `appearance` gibi ön ek isteyen özellikler elle
+  yazılmaz; autoprefixer'a bırakılır ama **çıktı `public/tailwind.css` içinde
+  doğrulanır**.
+- Bulanıklık (`backdrop-blur`) tek başına okunabilirlik sağlamaz: altında **her zaman**
+  yeterli opaklıkta bir zemin olur, blur desteklenmezse de metin okunur kalır.
+
+### Dokunmatik (iOS / Android)
+- `hover:` sınıfları dokunmatikte **yapışır**. `hoverOnlyWhenSupported` açıktır;
+  hover yalnızca gerçek imleçte çalışır. Bir işlev sadece hover ile erişiliyorsa
+  o işlev telefonda **yok** demektir — mutlaka tıkla/dokun karşılığı olur.
+- Form alanlarında yazı boyu **16px'in altına düşmez** (`globals.css` iOS'ta
+  `max(16px, 1em)` ile korur), yoksa Safari odaklanınca sayfayı zumlar.
+- Kaydırılan panel/modal açıkken gövde kilidi **paylaşılan motordan** yapılır
+  (`lib/engines/scroll-lock`). `document.body.style.overflow='hidden'` iOS'ta
+  arkadaki sayfayı durdurmaz ve iki bileşen aynı anda açılırsa birbirini bozar.
+- Kaydırılan kutulara `overscroll-contain` verilir; panel sonunda sayfa kaymaz.
+- Yatay kayan içerikte (slider vb.) dokunmatik **kaydırma jesti** desteklenir,
+  dikey kaydırma engellenmez (`touch-action: pan-y`).
+
+### JavaScript
+- Tarayıcıya özel API'ler **korumasız çağrılmaz**: `navigator.clipboard` yalnızca
+  HTTPS'te ve modern tarayıcıda vardır → `try/catch` + geri düşüş şart.
+  `localStorage` gizli sekmede yazmayı reddedebilir → her erişim `try/catch`.
+- `Date` metin ayrıştırma tarayıcıya göre değişir; tarihler sabit biçimde
+  (`new Date(yıl, ay, gün)` ya da ISO) üretilir.
+- Taban üstü sözdizimi/API (`Object.groupBy`, `Array.at`, lookbehind regex vb.)
+  kullanılmaz; gerekiyorsa özellik yoklaması yapılır.
+
+### Görsel ve tipografi
+- Font yığını **sistem yedekleriyle** tanımlanır (`-apple-system`, `Segoe UI`,
+  `Roboto`, `Noto Sans`…). Poppins yüklenmezse Linux'ta düzen dağılmaz.
+- SVG içindeki `id`/`url(#...)` değerleri **benzersiz** olur (`useId`); aynı sayfada
+  iki kopya varsa Firefox/Safari ilk tanımı kullanır ve ikincisi bozulur.
+- Türkçe karakter için `<html lang="tr">` zorunlu — `text-transform: uppercase`
+  ancak öyle `i → İ` yapar.
+
+### Test
+Bir bölüm bitince **en az** şu üçlüde denenir: Chromium (Windows), WebKit (iOS
+Safari), Gecko (Firefox). Elde cihaz yoksa tarayıcı geliştirici araçlarının cihaz
+emülasyonu + `Responsive` modu ile 375/768/1280/1920 ölçülür; blur, maske, sticky
+başlık, modal kilidi ve form odaklanma davranışı ayrıca kontrol edilir.
+
+---
+
 ## Bölüm bitince kontrol listesi
 
 - [ ] Açık modda düzgün
@@ -206,3 +270,7 @@ Ne içerik, ne tasarım, ne de kod "AI çıktısı" gibi durmayacak.
 - [ ] Tek h1, semantik etiketler, canonical, görsellerde alt/width/height
 - [ ] Metin doğal Türkçe, doldurma kalıp yok
 - [ ] Kodda yorum satırı yok
+- [ ] Safari/iOS'ta da çalışıyor (blur, maske, sticky, modal kilidi)
+- [ ] Dokunmatikte hover yapışması yok, her işlev tıklamayla da erişilebilir
+- [ ] Form alanları 16px+ (iOS zum yok), `100vh` yerine `min-h-ekran`
+- [ ] Tarayıcıya özel API'ler `try/catch` + geri düşüşlü

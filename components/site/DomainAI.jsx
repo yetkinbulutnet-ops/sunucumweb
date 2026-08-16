@@ -35,6 +35,26 @@ const STIL_ETIKET = {
 
 const SIRA = { musait: 0, bilinmiyor: 1, kontrol: 1, alinmis: 2 };
 
+function eskiUsulKopyala(metin) {
+  const alan = document.createElement('textarea');
+  alan.value = metin;
+  alan.setAttribute('readonly', '');
+  alan.style.position = 'fixed';
+  alan.style.top = '0';
+  alan.style.opacity = '0';
+  document.body.appendChild(alan);
+  alan.select();
+  alan.setSelectionRange(0, metin.length);
+  let oldu = false;
+  try {
+    oldu = document.execCommand('copy');
+  } catch {
+    oldu = false;
+  }
+  document.body.removeChild(alan);
+  return oldu;
+}
+
 export default function DomainAI() {
 
   const [aktif, setAktif] = useState(true);
@@ -129,7 +149,11 @@ export default function DomainAI() {
 
   const kopyala = async (domain) => {
     try {
-      await navigator.clipboard.writeText(domain);
+      if (navigator.clipboard?.writeText && window.isSecureContext) {
+        await navigator.clipboard.writeText(domain);
+      } else if (!eskiUsulKopyala(domain)) {
+        throw new Error('kopyalanamadi');
+      }
       setKopyalanan(domain);
     } catch {
       setHata('Kopyalanamadı; alan adını elle seçip kopyalayabilirsiniz.');

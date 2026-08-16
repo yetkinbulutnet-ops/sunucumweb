@@ -1,8 +1,9 @@
 'use client';
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useId } from 'react';
 import Link from 'next/link';
 import { currentTheme, toggleTheme } from '@/lib/engines/theme';
 import { formatTRY, CHECKOUT_URL } from '@/lib/engines/cart';
+import { scrollKilitle } from '@/lib/engines/scroll-lock';
 import { CartProvider, useCart } from './CartProvider';
 import OdemeLogolari from './OdemeLogolari';
 import DurumRozeti from './DurumRozeti';
@@ -238,8 +239,8 @@ function CartDrawer() {
     if (!panelAcik) return;
     const esc = (e) => e.key === 'Escape' && setPanelAcik(false);
     window.addEventListener('keydown', esc);
-    document.body.style.overflow = 'hidden';
-    return () => { window.removeEventListener('keydown', esc); document.body.style.overflow = ''; };
+    const coz = scrollKilitle();
+    return () => { window.removeEventListener('keydown', esc); coz(); };
   }, [panelAcik, setPanelAcik]);
 
   if (!panelAcik) return null;
@@ -269,7 +270,7 @@ function CartDrawer() {
           </div>
         ) : (
           <>
-            <div className="flex-1 overflow-y-auto px-5 py-4">
+            <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-4">
               <ul className="space-y-3">
                 {items.map((i) => (
                   <li key={i.id} className="rounded-2xl border border-line bg-surface2/60 p-4">
@@ -356,8 +357,8 @@ export function SiteHeader() {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
+    if (!open) return;
+    return scrollKilitle();
   }, [open]);
 
   return (
@@ -548,19 +549,21 @@ const SOSYAL = [
 ];
 
 function Yildizlar({ puan }) {
+  const benzersiz = useId().replace(/:/g, '');
   return (
     <span className="flex items-center gap-0.5" aria-hidden>
       {[1, 2, 3, 4, 5].map((n) => {
         const dolu = Math.max(0, Math.min(1, puan - n + 1)) * 100;
+        const gradId = `yz-${benzersiz}-${n}`;
         return (
           <svg key={n} viewBox="0 0 24 24" className="h-[15px] w-[15px]">
             <defs>
-              <linearGradient id={`yz${n}`}>
+              <linearGradient id={gradId}>
                 <stop offset={`${dolu}%`} stopColor="#FBBF24" />
                 <stop offset={`${dolu}%`} stopColor="rgba(255,255,255,0.2)" />
               </linearGradient>
             </defs>
-            <path fill={`url(#yz${n})`} d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4L12 17.4l-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z" />
+            <path fill={`url(#${gradId})`} d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4L12 17.4l-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z" />
           </svg>
         );
       })}
@@ -737,7 +740,7 @@ export function CtaBand({ title = 'Bugün başlayın, farkı hemen hissedin', te
 export function SiteShell({ children }) {
   return (
     <CartProvider>
-      <div style={{ fontFamily: "'Poppins', ui-sans-serif, system-ui, sans-serif" }} className="min-h-screen bg-page text-strong antialiased">
+      <div className="min-h-ekran bg-page font-sans text-strong antialiased">
         <SiteHeader />
         <main>{children}</main>
         <SiteFooter />

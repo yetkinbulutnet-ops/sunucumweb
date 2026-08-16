@@ -2,6 +2,9 @@
 module.exports = {
   // Koyu mod <html class="dark"> ile calisir (layout.jsx'teki no-flash scripti ayarlar)
   darkMode: 'class',
+  // 7. altin kural: hover sadece gercek imlecte calissin. Dokunmatikte hover
+  // sinifi tiklamadan sonra "yapisiyor"; bu bayrak hover'i (hover:hover) medyasina alir.
+  future: { hoverOnlyWhenSupported: true },
   content: [
     './app/**/*.{js,jsx,ts,tsx}',
     './components/**/*.{js,jsx,ts,tsx}',
@@ -55,7 +58,22 @@ module.exports = {
         ink: { DEFAULT: '#0f2942', 700: '#1c3a57', 600: '#33506e' },
       },
       fontFamily: {
-        sans: ['Poppins', 'sans-serif'],
+        /* Poppins yuklenmezse (Linux, kisitli ag, eski cihaz) yerine sistem
+           fontu gecsin; olcu ve satir yuksekligi kaymasin. */
+        sans: [
+          'Poppins',
+          'ui-sans-serif',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'Segoe UI',
+          'Roboto',
+          'Noto Sans',
+          'Helvetica Neue',
+          'Arial',
+          'sans-serif',
+          'Apple Color Emoji',
+          'Segoe UI Emoji',
+        ],
       },
       boxShadow: {
         elegant: '0 10px 25px -5px rgba(6, 95, 70, 0.08), 0 8px 10px -6px rgba(6, 95, 70, 0.03)',

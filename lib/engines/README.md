@@ -45,6 +45,21 @@ lib/engines/
 | `product-finder` | `recommend(answers)` | yok (saf fonksiyon) | — |
 | `theme` | `applyTheme(t)` / `toggleTheme()` | yok (localStorage) | — |
 | `cart` | `cartReducer(items, action)` | yok (localStorage) | — |
+| `scroll-lock` | `scrollKilitle()` → çözme fonksiyonu | yok | — |
+
+## Kaydırma kilidi (scroll-lock)
+
+Modal/panel açıkken arkadaki sayfa kaymasın diye kullanılır. İki sebeple ayrı motor:
+
+1. **iOS Safari**, `document.body.style.overflow = 'hidden'` ile durmaz; gövdeyi
+   `position: fixed` + `top: -scrollY` yapıp kapanışta eski konuma dönmek gerekir.
+2. Aynı anda birden fazla katman açılabiliyor (mobil menü + sepet). Motor
+   **sayaç** tutar; kilidi ilk açan kurar, sonuncusu kaldırır — biri kapanınca
+   diğeri açıkken sayfa serbest kalmaz.
+
+```jsx
+useEffect(() => { if (acik) return scrollKilitle(); }, [acik]);
+```
 
 ## Tema (açık / koyu)
 

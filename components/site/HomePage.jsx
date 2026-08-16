@@ -1,9 +1,10 @@
 'use client';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { Icon, CtaBand, SiteShell } from './chrome';
 
 import { QUESTIONS, recommend } from '@/lib/engines/product-finder';
+import { scrollKilitle } from '@/lib/engines/scroll-lock';
 import DomainAI from './DomainAI';
 
 const SLIDES = [
@@ -89,6 +90,7 @@ function Hero() {
   const [i, setI] = useState(0);
   const [duraklat, setDuraklat] = useState(false);
   const go = useCallback((n) => setI((n + SLIDES.length) % SLIDES.length), []);
+  const dokunus = useRef(null);
 
   useEffect(() => {
     if (duraklat) return;
@@ -96,12 +98,30 @@ function Hero() {
     return () => clearInterval(t);
   }, [duraklat]);
 
+  const dokunBasla = (e) => {
+    const n = e.touches[0];
+    dokunus.current = { x: n.clientX, y: n.clientY };
+  };
+
+  const dokunBitir = (e) => {
+    const bas = dokunus.current;
+    dokunus.current = null;
+    if (!bas) return;
+    const n = e.changedTouches[0];
+    const dx = n.clientX - bas.x;
+    const dy = n.clientY - bas.y;
+    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) go(i + (dx < 0 ? 1 : -1));
+  };
+
   return (
     <section>
       <div
-        className="relative h-[440px] sm:h-[500px] lg:h-[580px] xl:h-[640px] overflow-hidden bg-ink"
-        onMouseEnter={() => setDuraklat(true)}
-        onMouseLeave={() => setDuraklat(false)}
+        className="relative h-[440px] sm:h-[500px] lg:h-[580px] xl:h-[640px] touch-pan-y overflow-hidden bg-ink"
+        onPointerEnter={(e) => e.pointerType === 'mouse' && setDuraklat(true)}
+        onPointerLeave={(e) => e.pointerType === 'mouse' && setDuraklat(false)}
+        onTouchStart={dokunBasla}
+        onTouchEnd={dokunBitir}
+        onTouchCancel={() => { dokunus.current = null; }}
       >
         {SLIDES.map((s, n) => (
           <div
@@ -228,9 +248,11 @@ function ProductFinder({ open, onClose }) {
   const [ans, setAns] = useState({});
   useEffect(() => { if (open) { setStep(0); setAns({}); } }, [open]);
   useEffect(() => {
+    if (!open) return;
     const esc = (e) => e.key === 'Escape' && onClose();
-    if (open) window.addEventListener('keydown', esc);
-    return () => window.removeEventListener('keydown', esc);
+    window.addEventListener('keydown', esc);
+    const coz = scrollKilitle();
+    return () => { window.removeEventListener('keydown', esc); coz(); };
   }, [open, onClose]);
   if (!open) return null;
   const done = step >= QUESTIONS.length;
