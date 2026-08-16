@@ -3,11 +3,6 @@ import { useState, useEffect } from 'react';
 import { Icon } from './chrome';
 import { useCart } from './CartProvider';
 
-/**
- * "Sepete Ekle" butonu.
- * useCart()'i KENDISI cagirir; boylece CartProvider agacinin ICINDE kalir.
- * (Sayfa bilesenleri SiteShell'in ustunde oldugu icin orada useCart() bos donerdi.)
- */
 export default function AddToCartButton({ item, tema = 'acik', className = '' }) {
   const { ekle, setPanelAcik } = useCart();
   const [eklendi, setEklendi] = useState(false);
@@ -21,15 +16,15 @@ export default function AddToCartButton({ item, tema = 'acik', className = '' })
   const tikla = () => {
     ekle(item);
     setEklendi(true);
-    if (window.innerWidth < 640) setPanelAcik(true); // mobilde sepeti hemen goster
+    if (window.innerWidth < 640) setPanelAcik(true);
   };
 
   const stiller = {
-    // koyu kart uzerinde (populer paket)
+
     koyu: 'bg-white/10 text-white ring-1 ring-white/20 hover:bg-white/15',
-    // acik kart uzerinde
+
     acik: 'bg-surface2 text-strong hover:bg-line',
-    // birincil eylem (urun sayfasi)
+
     dolu: 'bg-brand-500 text-white shadow-lg shadow-brand-500/30 hover:bg-brand-600',
   };
 

@@ -1,8 +1,6 @@
 import parse from 'html-react-parser';
 import { SiteShell, PageHero } from './chrome';
 
-/* Renkler tema degiskenlerinden gelir -> koyu modda da okunur kalir.
-   (Sabit hex kullanmayin; koyu zeminde metin kaybolur.) */
 const PROSE = `
 .legal-prose h2{font-size:1.4rem;font-weight:800;color:rgb(var(--c-strong));margin:2.2rem 0 .75rem;letter-spacing:-.01em}
 .legal-prose h2:first-child{margin-top:0}

@@ -120,6 +120,79 @@ dizideki sıradan (`index`) değil — CMS'te sıra değişince React karışmas
 
 ---
 
+## 5. ALTIN KURAL — Kod ve içerik %100 SEO uyumlu
+
+Demo **asla indexlenmez**, ama yazılan her şey ana sitede birinci günden çalışacak
+şekilde SEO uyumlu üretilir. Referans: YW-SEOSTD-NEXT-V1 dokümanı.
+
+### Render
+- SEO'ya konu her sayfa **Server Component** olarak render edilir. `use client`
+  yalnızca etkileşimli alt bileşenlerde kullanılır.
+- Sıralanması hedeflenen içerik **asla** `useEffect` + fetch ile basılmaz; veri
+  sunucuda çekilir. Botun gördüğü HTML dolu olmalı.
+- Varsayılan strateji SSG; sık değişen içerikte ISR (`revalidate`).
+
+### Metadata
+- Site adresi tek kaynaktan: `NEXT_PUBLIC_SITE_URL`. Alan adı koda gömülmez.
+- Kök layout'ta `metadataBase` **zorunlu** — yoksa OG görselleri mutlak URL'ye
+  çevrilmez, paylaşımlarda görsel çıkmaz.
+- Her indexlenebilir sayfada `alternates.canonical` tanımlı.
+- Başlık şablonu: `template: "%s | SunucumWEB"`.
+- OG + Twitter kartları, `locale: "tr_TR"`.
+
+### Semantik ve içerik
+- Sayfa başına **tek `<h1>`**; başlıklar sırayla h1 → h2 → h3.
+- `<header> <nav> <main> <article> <section> <footer>` kullanılır; her şey `div` değil.
+- İç bağlantılar `next/link`, dış bağlantılar `<a>`.
+- Görsellerde `alt` zorunlu; dekoratifse bilinçli `alt=""`.
+
+### Sistem dosyaları
+- `app/sitemap.js`, `app/robots.js`, `app/manifest.js` **kod ile** üretilir.
+- `lastModified: new Date()` **yasak** — her derlemede "bugün" döner, Google lastmod'u
+  yok saymaya başlar. İçeriğin gerçek güncelleme tarihi kullanılır.
+
+### Yapılandırılmış veri
+Organization, WebSite, BreadcrumbList, Service, FAQPage, LocalBusiness şemaları
+JSON-LD olarak sunucuda basılır. Kullanıcı girdisi ham olarak şemaya yazılmaz.
+
+### Performans (Core Web Vitals)
+- Görsellerde `width`/`height` zorunlu → CLS önlenir.
+- LCP görselinde `priority`/eager; ekran altındakiler lazy.
+- Font `<link>` ile CDN'den çekilmez; self-host edilir, `display: swap`.
+- Güvenlik başlıkları: HSTS, X-Frame-Options, X-Content-Type-Options,
+  Referrer-Policy, Permissions-Policy.
+
+> Demo'da indexleme `SITE_INDEXABLE=0` ile kapalıdır. Bu, SEO işini erteleme
+> gerekçesi değildir — anahtar `1` yapıldığı an site tam uyumlu olmalıdır.
+
+---
+
+## 6. ALTIN KURAL — Yapay zekâ ile yapıldığı belli olmayacak
+
+Ne içerik, ne tasarım, ne de kod "AI çıktısı" gibi durmayacak.
+
+### Metin
+- Doğal, yerel Türkçe. Kurumsal ama yapay değil.
+- **Kaçınılacaklar:** "çözümlerimizle tanışın", "ihtiyaçlarınıza özel", "bir adım önde",
+  "dijital dünyada yerinizi alın" gibi doldurma kalıplar; her cümlede sıfat yığını;
+  üç maddeli simetrik listeler; abartılı vaat.
+- **Tercih edilen:** somut bilgi (NVMe, 1 Gbps, İstanbul lokasyonu, 5 dakikada yanıt),
+  kısa cümle, gereksiz süsleme yok. Bir cümle bilgi vermiyorsa silinir.
+- Türkçe doğal olsun: "sizlere en iyi hizmeti sunmaktayız" değil, "7/24 destek veriyoruz".
+
+### Tasarım
+- Şablon kokan simetriden kaçınılır; bölümler birbirinin kopyası olmaz.
+- Her bölüm aynı "ikon + başlık + üç kart" kalıbıyla kurulmaz.
+
+### Kod
+- **Yorum satırı yazılmaz.** Kod kendini anlatacak şekilde yazılır: açıklayıcı
+  değişken/fonksiyon adları, küçük fonksiyonlar, net yapı.
+- Neden'ler koda değil, bu dokümana ve `lib/engines/README.md`'ye yazılır.
+- Aşırı savunmacı, gereksiz genel çözümler yerine işi yapan sade kod.
+- Değişken ve fonksiyon adları proje diliyle tutarlı olur.
+
+---
+
 ## Bölüm bitince kontrol listesi
 
 - [ ] Açık modda düzgün
@@ -130,3 +203,6 @@ dizideki sıradan (`index`) değil — CMS'te sıra değişince React karışmas
 - [ ] `transition-all` kullanılmamış
 - [ ] İçerik veri dizisinden üretiliyor (CMS'e hazır)
 - [ ] Eleman sayısı değişse tasarım bozulmuyor
+- [ ] Tek h1, semantik etiketler, canonical, görsellerde alt/width/height
+- [ ] Metin doğal Türkçe, doldurma kalıp yok
+- [ ] Kodda yorum satırı yok

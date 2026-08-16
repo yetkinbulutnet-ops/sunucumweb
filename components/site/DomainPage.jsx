@@ -26,10 +26,6 @@ const COPY = {
   whois: { eyebrow: 'WHOIS Sorgu', title: 'Alan adı WHOIS sorgulama', text: 'Bir alan adının kayıtlı olup olmadığını ve tescil bilgilerini anında öğrenin.', ph: 'sorgulanacakalanadi.com', btn: 'WHOIS Sorgula' },
 };
 
-/**
- * @param {'register'|'transfer'|'whois'} mode
- * AI bolumu kendi durumunu /api/health ile kontrol eder; motor kapaliysa kendini gizler.
- */
 export default function DomainPage({ mode = 'register' }) {
   const c = COPY[mode];
   const [q, setQ] = useState('');
@@ -60,10 +56,8 @@ export default function DomainPage({ mode = 'register' }) {
         </div>
       </section>
 
-      {/* AI alan adi bulucu - sadece kayit sayfasinda */}
       {mode === 'register' && <DomainAI />}
 
-      {/* TLD fiyat gridi (register + transfer) */}
       {mode !== 'whois' && (
         <section className="mx-auto max-w-7xl px-5 lg:px-8 py-16 lg:py-20">
           <div className="text-center max-w-2xl mx-auto mb-10"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Fiyatlar</span><h2 className="mt-3 text-3xl font-extrabold tracking-tight text-strong">Popüler uzantı fiyatları</h2></div>
@@ -79,7 +73,6 @@ export default function DomainPage({ mode = 'register' }) {
         </section>
       )}
 
-      {/* transfer adımları */}
       {mode === 'transfer' && (
         <section className="bg-surface2 border-y border-line"><div className="mx-auto max-w-7xl px-5 lg:px-8 py-16 lg:py-20">
           <div className="text-center max-w-2xl mx-auto mb-12"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Nasıl Çalışır</span><h2 className="mt-3 text-3xl font-extrabold tracking-tight text-strong">3 adımda transfer</h2></div>
@@ -95,7 +88,6 @@ export default function DomainPage({ mode = 'register' }) {
         </div></section>
       )}
 
-      {/* özellikler */}
       <section className="mx-auto max-w-7xl px-5 lg:px-8 py-16 lg:py-20">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {DFEATURES.map((f) => (<div key={f.t} className="group rounded-2xl border border-line bg-surface p-6 shadow-[0_10px_40px_-24px_rgba(15,41,66,0.2)] hover:-translate-y-1 transition-[transform,box-shadow,border-color,opacity]"><span className="grid h-12 w-12 place-items-center rounded-2xl bg-brandsoft text-brandtext group-hover:bg-brand-500 group-hover:text-white transition-colors"><Icon name={f.icon} /></span><h3 className="mt-4 text-[17px] font-bold text-strong">{f.t}</h3><p className="mt-2 text-sm leading-relaxed text-body">{f.d}</p></div>))}

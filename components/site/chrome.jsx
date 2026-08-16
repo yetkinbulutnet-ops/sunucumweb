@@ -6,7 +6,6 @@ import { formatTRY, CHECKOUT_URL } from '@/lib/engines/cart';
 import { CartProvider, useCart } from './CartProvider';
 import OdemeLogolari from './OdemeLogolari';
 
-/* ---------------- ikon seti ---------------- */
 const PATHS = {
   bolt: 'M13 2 3 14h7l-1 8 10-12h-7z',
   shield: 'M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z',
@@ -58,8 +57,6 @@ export function Icon({ name, className = 'w-6 h-6' }) {
   );
 }
 
-/* ---------------- navigasyon (eski site mega menü yapısı) ---------------- */
-/* rozet (r): kartin uzerindeki kucuk etiket · vurgu: one cikan kart */
 export const MENU = [
   { label: 'Domain', kolon: 3, items: [
     { t: 'Domain Tescil', d: 'Yeni domain tescil işlemleri için hemen tıklayın.', href: '/alan-adi', icon: 'globe', r: '%20 İndirim', rTon: 'yesil' },
@@ -98,7 +95,6 @@ const ROZET_TON = {
   kirmizi: 'bg-rose-500/15 text-rose-600 dark:text-rose-400 ring-rose-500/30',
 };
 
-/* mega menu kartı - gercek sitedeki yatay kart yapisi */
 function MegaItem({ it, onClick }) {
   return (
     <Link
@@ -108,7 +104,6 @@ function MegaItem({ it, onClick }) {
         it.vurgu ? 'border-amber-400/60 ring-1 ring-amber-400/30' : 'border-line hover:border-brandline'
       }`}
     >
-      {/* logo varsa marka gorseli, yoksa jenerik ikon (CMS: logo alani opsiyonel) */}
       <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-xl transition-colors ${
         it.logo ? 'bg-surface2 ring-1 ring-line' : 'bg-brandsoft text-brandtext group-hover/i:bg-brand-500 group-hover/i:text-white'
       }`}>
@@ -131,7 +126,6 @@ function MegaItem({ it, onClick }) {
   );
 }
 
-/* ---------------- tema anahtari (acik / koyu) ---------------- */
 export function ThemeToggle({ variant = 'topbar' }) {
   const [tema, setTema] = useState('light');
   const [monte, setMonte] = useState(false);
@@ -142,7 +136,7 @@ export function ThemeToggle({ variant = 'topbar' }) {
   const etiket = koyu ? 'Açık moda geç' : 'Koyu moda geç';
 
   if (variant === 'satir') {
-    // mobil menu icindeki genis satir
+
     return (
       <button
         onClick={() => setTema(toggleTheme())}
@@ -171,13 +165,11 @@ export function ThemeToggle({ variant = 'topbar' }) {
   );
 }
 
-/* ---------------- ust menu (header'in ustundeki ince serit) ---------------- */
 export function TopBar() {
   return (
     <div className="bg-ink text-slate-300">
       <div className="mx-auto max-w-7xl px-4 sm:px-5 lg:px-8">
         <div className="flex h-10 items-center justify-between gap-2 text-[12.5px]">
-          {/* sol taraf */}
           <div className="flex min-w-0 items-center gap-2 sm:gap-3.5">
             <a href="tel:08503025809" className="inline-flex shrink-0 items-center gap-1.5 font-semibold text-white transition-colors hover:text-brand-300">
               <Icon name="phone" className="w-[14px] h-[14px] text-brand-400" />
@@ -189,7 +181,6 @@ export function TopBar() {
             <a href="https://my.sunucumweb.com" target="_blank" rel="noopener noreferrer" className="hidden md:inline-block transition-colors hover:text-white">Hızlı Destek</a>
           </div>
 
-          {/* sag taraf */}
           <div className="flex shrink-0 items-center gap-1.5 sm:gap-3">
             <span className="hidden md:inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-1 font-semibold text-emerald-300 ring-1 ring-emerald-400/20" title="Tüm sistemler çalışıyor">
               <span className="relative flex h-1.5 w-1.5">
@@ -214,7 +205,6 @@ export function TopBar() {
   );
 }
 
-/* ---------------- sepet ---------------- */
 function CartButton() {
   const { adet, setPanelAcik, sonEklenen } = useCart();
   return (
@@ -257,7 +247,6 @@ function CartDrawer() {
     <div className="fixed inset-0 z-[90]" role="dialog" aria-modal="true" aria-label="Sepet">
       <div onClick={() => setPanelAcik(false)} className="absolute inset-0 bg-ink/60 backdrop-blur-sm animate-[fadeup_0.2s_ease-out]" />
       <div className="absolute right-0 top-0 flex h-full w-full max-w-[420px] flex-col bg-surface shadow-2xl animate-[fadeup_0.3s_ease-out]">
-        {/* baslik */}
         <div className="flex items-center justify-between border-b border-line px-5 py-4">
           <h2 className="flex items-center gap-2 text-[17px] font-extrabold text-strong">
             <Icon name="cart" className="w-5 h-5 text-brandtext" /> Sepetim
@@ -268,7 +257,6 @@ function CartDrawer() {
           </button>
         </div>
 
-        {/* icerik */}
         {items.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center px-8 text-center">
             <span className="grid h-16 w-16 place-items-center rounded-2xl bg-surface2 text-muted"><Icon name="cart" className="w-8 h-8" /></span>
@@ -308,7 +296,6 @@ function CartDrawer() {
               <button onClick={temizle} className="mt-4 text-[13px] font-semibold text-muted transition-colors hover:text-rose-600">Sepeti boşalt</button>
             </div>
 
-            {/* ozet */}
             <div className="border-t border-line bg-surface px-5 py-4">
               <div className="flex items-baseline justify-between">
                 <span className="text-[14px] text-body">Ara toplam</span>
@@ -334,14 +321,11 @@ function CartDrawer() {
   );
 }
 
-/* ---------------- header ---------------- */
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [acc, setAcc] = useState(-1);
   const [scrolled, setScrolled] = useState(false);
 
-  /* Mega menu: fare panele giderken aradaki bosluktan gecince kapanmasin diye
-     CSS :hover yerine gecikmeli JS kontrolu kullaniyoruz. */
   const [acikMenu, setAcikMenu] = useState(-1);
   const kapatmaZamani = useRef(null);
   const menuAc = useCallback((n) => {
@@ -370,7 +354,6 @@ export function SiteHeader() {
     return () => window.removeEventListener('scroll', on);
   }, []);
 
-  /* mobil menu acikken arka plan kaymasin */
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
@@ -378,7 +361,6 @@ export function SiteHeader() {
 
   return (
     <>
-      {/* ust menu + header BIRLIKTE sticky */}
       <div className="sticky top-0 z-50">
       <TopBar />
       <header className={`relative transition-shadow duration-300 ${scrolled ? 'bg-surface/90 backdrop-blur-xl border-b border-line shadow-[0_4px_30px_-12px_rgba(15,41,66,0.15)]' : 'bg-surface border-b border-line'}`}>
@@ -388,7 +370,6 @@ export function SiteHeader() {
               <img src="/icon/logo.png" alt="SunucumWEB" className="h-7 w-auto sm:h-8 dark:brightness-0 dark:invert" />
             </Link>
 
-            {/* masaustu mega menu */}
             <nav className="hidden lg:flex items-center gap-0.5" onMouseLeave={menuKapatGecikmeli}>
               {MENU.map((m, n) => {
                 const acikMi = acikMenu === n;
@@ -403,9 +384,6 @@ export function SiteHeader() {
                       <Icon name="chevron" className={`mt-0.5 w-3.5 h-3.5 transition-transform ${acikMi ? 'rotate-180' : ''}`} />
                     </button>
 
-                    {/* panel: header genisliginde. pt-2 fare koprusu gorevi gorur.
-                        NOT: opacity/transform gecisi yerine kosullu render + hazir animasyon
-                        kullaniyoruz; Chromium'da bu tur gecisler eski degerde donabiliyor. */}
                     {acikMi && (
                     <div
                       className="absolute left-0 right-0 top-full z-40 pt-2 animate-[fadeup_0.18s_ease-out]"
@@ -425,7 +403,6 @@ export function SiteHeader() {
               })}
             </nav>
 
-            {/* sag: sepet + CTA */}
             <div className="flex shrink-0 items-center gap-1 sm:gap-2">
               <CartButton />
               <Link href="/web-hosting" className="group hidden sm:inline-flex items-center gap-1.5 rounded-xl bg-brand-500 px-4 py-2.5 text-[14px] font-semibold text-white shadow-lg shadow-brand-500/25 transition-[transform,box-shadow,border-color,opacity] hover:bg-brand-600 lg:px-5 lg:text-[15px]">
@@ -443,14 +420,11 @@ export function SiteHeader() {
       </header>
       </div>
 
-      {/* ---- mobil menu: SAYFAYI ITMEZ, ustune acilir ---- */}
       {open && (
         <div className="fixed inset-0 z-[80] lg:hidden" role="dialog" aria-modal="true" aria-label="Menü">
-          {/* arka plan: sade koyu perde (blur yok - renk bozulmasin) */}
           <div onClick={() => setOpen(false)} className="absolute inset-0 bg-ink/70 animate-[fadeup_0.2s_ease-out]" />
 
           <div className="absolute inset-x-0 top-0 flex max-h-full flex-col bg-surface shadow-2xl animate-[fadeup_0.3s_ease-out]">
-            {/* baslik */}
             <div className="flex shrink-0 items-center justify-between border-b border-line px-4 py-3">
               <Link href="/" onClick={() => setOpen(false)} className="flex items-center">
                 <img src="/icon/logo.png" alt="SunucumWEB" className="h-7 w-auto dark:brightness-0 dark:invert" />
@@ -460,7 +434,6 @@ export function SiteHeader() {
               </button>
             </div>
 
-            {/* icerik */}
             <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-6 pt-2">
               {MENU.map((m, i) => (
                 <div key={m.label} className="border-b border-line/60">
@@ -474,7 +447,6 @@ export function SiteHeader() {
                   </button>
                   {acc === i && (
                     <div className="grid gap-1 pb-3 animate-[fadeup_0.25s_ease-out]">
-                      {/* mobilde de mega menu icerigi: ikon + baslik + aciklama */}
                       {m.items.map((it) => <MegaItem key={it.href + it.t} it={it} onClick={() => setOpen(false)} />)}
                     </div>
                   )}
@@ -485,7 +457,6 @@ export function SiteHeader() {
                 Hemen Başla
               </Link>
 
-              {/* ust menunun mobil karsiligi */}
               <div className="mt-4 rounded-2xl border border-line bg-surface2/60 p-3">
                 <div className="px-1 pb-2 text-[11px] font-bold uppercase tracking-wider text-muted">Hızlı erişim</div>
                 <div className="grid grid-cols-2 gap-2">
@@ -518,21 +489,26 @@ export function SiteHeader() {
   );
 }
 
-/* ---------------- footer ----------------
-   CMS notu: tum bloklar asagidaki veri dizilerinden uretilir.
-   Yeni kategori/link/sosyal hesap eklemek icin sadece diziye satir eklemek yeterli;
-   tasarim eleman sayisindan bagimsiz calisir. */
-
 const FIRMA = {
   unvan: 'SunucumWEB Bilişim Teknolojileri',
-  adres: 'Odunluk Mah. Akademi Cad. Zeno İş Merkezi No:2 D:5, Nilüfer / BURSA',
+  adres: 'Hasanbey Mahallesi, Sokullu Sokak No: 16, Keçiborlu / ISPARTA',
   telefon: '0(850) 302 5809',
   telefonHref: 'tel:08503025809',
   eposta: 'destek@sunucumweb.com',
   panel: 'https://my.sunucumweb.com',
 };
 
-/* Footer link kolonlari - her biri baslik + altinda urunler */
+const BTK = {
+  metin: '5651 sayılı kanun kapsamında Bilgi Teknolojileri ve İletişim Kurumu tarafından yetkilendirilmiş Yer Sağlayıcı\'dır.',
+  liste: 'https://internet.btk.gov.tr/yer-saglayici-listesi?page=1&q=SunucumWEB',
+  logo: 'https://cdn.yetkinweb.com/genel/genel/btklogo_320x320.png',
+};
+
+const DURUM_SAYFASI = 'https://durum.yetkinbulut.net';
+const DURUM_ROZETI = 'https://durum.yetkinbulut.net/b/overall-glass.svg';
+
+const GOOGLE_YORUM_URL = 'https://www.google.com/search?q=SunucumWEB&rldimm=10560064220033697496&tbm=lcl#lkt=LocalPoiReviews';
+
 const FOOT_KOLON = [
   { h: 'Hosting', items: [
     ['Web Hosting', '/web-hosting'],
@@ -573,39 +549,73 @@ const SOSYAL = [
   { ad: 'YouTube', href: 'https://youtube.com/@sunucumweb', d: 'M21 8.5a3 3 0 0 0-2.1-2.1C17.1 6 12 6 12 6s-5.1 0-6.9.4A3 3 0 0 0 3 8.5C2.6 10.3 2.6 12 2.6 12s0 1.7.4 3.5a3 3 0 0 0 2.1 2.1C6.9 18 12 18 12 18s5.1 0 6.9-.4a3 3 0 0 0 2.1-2.1c.4-1.8.4-3.5.4-3.5s0-1.7-.4-3.5zM10.2 15.1V8.9l5.3 3.1z' },
 ];
 
-/* Google musteri yorumlari - CMS/Google API'den beslenecek */
-const GOOGLE_YORUM = { puan: 4.8, adet: 327, href: 'https://www.google.com/search?q=sunucumweb+yorumlar' };
-
 function Yildizlar({ puan }) {
   return (
     <span className="flex items-center gap-0.5" aria-hidden>
-      {[1, 2, 3, 4, 5].map((n) => (
-        <svg key={n} viewBox="0 0 24 24" className="h-4 w-4">
-          <defs>
-            <linearGradient id={`yld${n}`}>
-              <stop offset={`${Math.max(0, Math.min(1, puan - n + 1)) * 100}%`} stopColor="#FBBF24" />
-              <stop offset={`${Math.max(0, Math.min(1, puan - n + 1)) * 100}%`} stopColor="rgba(255,255,255,0.22)" />
-            </linearGradient>
-          </defs>
-          <path fill={`url(#yld${n})`} d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4L12 17.4l-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z" />
-        </svg>
-      ))}
+      {[1, 2, 3, 4, 5].map((n) => {
+        const dolu = Math.max(0, Math.min(1, puan - n + 1)) * 100;
+        return (
+          <svg key={n} viewBox="0 0 24 24" className="h-[15px] w-[15px]">
+            <defs>
+              <linearGradient id={`yz${n}`}>
+                <stop offset={`${dolu}%`} stopColor="#FBBF24" />
+                <stop offset={`${dolu}%`} stopColor="rgba(255,255,255,0.2)" />
+              </linearGradient>
+            </defs>
+            <path fill={`url(#yz${n})`} d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4L12 17.4l-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z" />
+          </svg>
+        );
+      })}
     </span>
   );
 }
 
+function GoogleYorum() {
+  const [ozet, setOzet] = useState({ puan: 4.8, adet: 327 });
+
+  useEffect(() => {
+    let iptal = false;
+    fetch('/api/google-reviews')
+      .then((r) => r.json())
+      .then((d) => {
+        if (!iptal && d?.ok) setOzet({ puan: d.puan, adet: d.adet });
+      })
+      .catch(() => {});
+    return () => { iptal = true; };
+  }, []);
+
+  return (
+    <a
+      href={GOOGLE_YORUM_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group flex items-center gap-3 rounded-xl bg-white/5 px-4 py-2.5 ring-1 ring-white/10 transition-colors hover:bg-white/10"
+    >
+      <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0" aria-hidden>
+        <path fill="#4285F4" d="M23 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.2a5.3 5.3 0 0 1-2.3 3.5v2.9h3.7c2.2-2 3.4-5 3.4-8.6z" />
+        <path fill="#34A853" d="M12 24c3.1 0 5.7-1 7.6-2.8l-3.7-2.9c-1 .7-2.3 1.1-3.9 1.1-3 0-5.5-2-6.4-4.7H1.8v3A12 12 0 0 0 12 24z" />
+        <path fill="#FBBC05" d="M5.6 14.7a7.2 7.2 0 0 1 0-4.6v-3H1.8a12 12 0 0 0 0 10.7z" />
+        <path fill="#EA4335" d="M12 4.8c1.7 0 3.2.6 4.4 1.7l3.3-3.3C17.7 1.2 15.1 0 12 0A12 12 0 0 0 1.8 7.1l3.8 3a7.2 7.2 0 0 1 6.4-5.3z" />
+      </svg>
+      <span className="text-[15px] font-extrabold text-white">{String(ozet.puan).replace('.', ',')}</span>
+      <Yildizlar puan={ozet.puan} />
+      <span className="text-[13px] text-slate-400 group-hover:text-slate-300">
+        {ozet.adet} yorum
+      </span>
+      <Icon name="arrow" className="h-3.5 w-3.5 shrink-0 text-slate-500 transition-transform group-hover:translate-x-0.5 group-hover:text-brand-300" />
+    </a>
+  );
+}
+
 export function SiteFooter() {
-  const yil = 2026;
   return (
     <footer className="bg-ink text-slate-300">
-      {/* ---- ust: firma + link kolonlari ---- */}
       <div className="mx-auto max-w-7xl px-5 lg:px-8 pt-14 lg:pt-16">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,3fr)]">
-          {/* firma bilgileri */}
           <div className="max-w-sm">
             <img src="/icon/logo.png" alt={FIRMA.unvan} className="h-8 w-auto brightness-0 invert" />
             <p className="mt-4 text-sm leading-relaxed text-slate-400">
-              Türkiye&apos;nin güvenilir hosting ve sunucu sağlayıcısı. Hızlı altyapı, kesintisiz destek.
+              Isparta merkezli veri merkezimizden hosting, sanal sunucu ve dedicated sunucu hizmeti veriyoruz.
             </p>
 
             <ul className="mt-5 space-y-3 text-sm">
@@ -632,7 +642,6 @@ export function SiteFooter() {
               <Icon name="user" className="h-4 w-4" /> Müşteri Paneli
             </a>
 
-            {/* sosyal medya */}
             <ul className="mt-6 flex flex-wrap gap-2">
               {SOSYAL.map((s) => (
                 <li key={s.ad}>
@@ -653,7 +662,6 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          {/* link kolonlari */}
           <nav className="grid grid-cols-2 gap-x-6 gap-y-9 sm:grid-cols-3 lg:grid-cols-5" aria-label="Alt menü">
             {FOOT_KOLON.map((col) => (
               <div key={col.h} className="min-w-0">
@@ -670,86 +678,48 @@ export function SiteFooter() {
           </nav>
         </div>
 
-        {/* ---- guven seridi: google yorumlari + odeme + btk ---- */}
-        <div className="mt-12 grid gap-4 border-t border-white/10 pt-8 lg:grid-cols-3">
-          {/* google musteri yorumlari */}
+        <div className="mt-12 flex flex-col gap-6 border-t border-white/10 pt-8 lg:flex-row lg:items-center lg:justify-between">
+          <GoogleYorum />
+
           <a
-            href={GOOGLE_YORUM.href}
+            href={BTK.liste}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-4 rounded-2xl bg-white/5 p-4 ring-1 ring-white/10 transition-colors hover:bg-white/10"
+            className="group flex max-w-xl items-center gap-4 rounded-xl bg-white/5 px-4 py-3 ring-1 ring-white/10 transition-colors hover:bg-white/10"
           >
-            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white">
-              {/* Google G */}
-              <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden>
-                <path fill="#4285F4" d="M23 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.2a5.3 5.3 0 0 1-2.3 3.5v2.9h3.7c2.2-2 3.4-5 3.4-8.6z" />
-                <path fill="#34A853" d="M12 24c3.1 0 5.7-1 7.6-2.8l-3.7-2.9c-1 .7-2.3 1.1-3.9 1.1-3 0-5.5-2-6.4-4.7H1.8v3A12 12 0 0 0 12 24z" />
-                <path fill="#FBBC05" d="M5.6 14.7a7.2 7.2 0 0 1 0-4.6v-3H1.8a12 12 0 0 0 0 10.7z" />
-                <path fill="#EA4335" d="M12 4.8c1.7 0 3.2.6 4.4 1.7l3.3-3.3C17.7 1.2 15.1 0 12 0A12 12 0 0 0 1.8 7.1l3.8 3a7.2 7.2 0 0 1 6.4-5.3z" />
-              </svg>
-            </span>
-            <span className="min-w-0">
-              <span className="flex items-center gap-2">
-                <span className="text-lg font-extrabold text-white">{String(GOOGLE_YORUM.puan).replace('.', ',')}</span>
-                <Yildizlar puan={GOOGLE_YORUM.puan} />
-              </span>
-              <span className="mt-0.5 block text-[13px] text-slate-400">
-                {GOOGLE_YORUM.adet} Google müşteri yorumu
-                <span className="ml-1 inline-block transition-transform group-hover:translate-x-0.5">→</span>
-              </span>
+            <img
+              src={BTK.logo}
+              alt="BTK"
+              width={320}
+              height={320}
+              loading="lazy"
+              className="h-11 w-11 shrink-0 rounded-lg bg-white object-contain p-1"
+            />
+            <span className="text-[12.5px] leading-relaxed text-slate-400">
+              <span className="font-semibold text-white">{FIRMA.unvan}</span>, {BTK.metin}
+              <span className="ml-1 inline-block text-brand-300 transition-transform group-hover:translate-x-0.5">→</span>
             </span>
           </a>
-
-          {/* odeme yontemleri */}
-          <div className="rounded-2xl bg-white/5 p-4 ring-1 ring-white/10">
-            <div className="text-[13px] font-semibold text-white">Güvenli Ödeme Yöntemleri</div>
-            <OdemeLogolari className="mt-3" />
-            <div className="mt-2.5 flex items-center gap-1.5 text-[12px] text-slate-400">
-              <Icon name="lock" className="h-3.5 w-3.5 text-brand-400" />
-              256-bit SSL ile korunan ödeme altyapısı
-            </div>
-          </div>
-
-          {/* btk yer saglayici */}
-          <div className="rounded-2xl bg-white/5 p-4 ring-1 ring-white/10">
-            <div className="flex items-center gap-2">
-              <Icon name="shield" className="h-4 w-4 shrink-0 text-brand-400" />
-              <span className="text-[13px] font-semibold text-white">BTK Yer Sağlayıcı</span>
-            </div>
-            <p className="mt-2 text-[12.5px] leading-relaxed text-slate-400">
-              {FIRMA.unvan}, 5651 sayılı kanun kapsamında Bilgi Teknolojileri ve İletişim Kurumu
-              tarafından yetkilendirilmiş <span className="font-semibold text-slate-300">Yer Sağlayıcı</span>&apos;dır.
-            </p>
-            <div className="mt-2 text-[12px] text-slate-500">
-              Yer Sağlayıcı Belge No: <span className="font-mono text-slate-400">YS-XXXXX</span>
-            </div>
-          </div>
         </div>
       </div>
 
-      {/* ---- alt serit ---- */}
       <div className="mt-10 border-t border-white/10">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-5 py-6 text-sm text-slate-400 lg:flex-row lg:px-8">
-          <span className="text-center lg:text-left">© {yil} {FIRMA.unvan}. Tüm hakları saklıdır.</span>
-          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
-            <Link href="/sozlesmeler" className="transition-colors hover:text-brand-300">Sözleşmeler</Link>
-            <Link href="/gizlilik-sozlesmesi" className="transition-colors hover:text-brand-300">Gizlilik</Link>
-            <Link href="/iletisim" className="transition-colors hover:text-brand-300">İletişim</Link>
-            <span className="flex items-center gap-2">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-              </span>
-              Tüm sistemler çalışıyor
-            </span>
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-5 py-6 lg:flex-row lg:px-8">
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm text-slate-400">
+            <span>© 2026 {FIRMA.unvan}</span>
+            <span className="hidden text-white/20 sm:inline">|</span>
+            <a href={DURUM_SAYFASI} target="_blank" rel="noopener noreferrer" title="Sistem durumu">
+              <img src={DURUM_ROZETI} alt="YetkinBulut.Net durum" height={20} className="h-5 w-auto" loading="lazy" />
+            </a>
           </div>
+
+          <OdemeLogolari />
         </div>
       </div>
     </footer>
   );
 }
 
-/* ---------------- tekrar kullanılabilir CTA ---------------- */
 export function CtaBand({ title = 'Bugün başlayın, farkı hemen hissedin', text = 'Dakikalar içinde kurulum, 30 gün içinde memnun kalmazsanız iade garantisi.' }) {
   return (
     <section className="mx-auto max-w-7xl px-5 lg:px-8 py-20">
@@ -768,7 +738,6 @@ export function CtaBand({ title = 'Bugün başlayın, farkı hemen hissedin', te
   );
 }
 
-/* ---------------- sayfa çerçevesi ---------------- */
 export function SiteShell({ children }) {
   return (
     <CartProvider>
@@ -781,7 +750,6 @@ export function SiteShell({ children }) {
   );
 }
 
-/* ---------------- iç sayfa hero ---------------- */
 export function PageHero({ eyebrow, title, text, breadcrumb }) {
   return (
     <section className="relative overflow-hidden border-b border-line">

@@ -2,13 +2,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { Icon, CtaBand, SiteShell } from './chrome';
-// Urun bulucu mantigi kendi motorunda; bu dosya sadece gosterimden sorumlu.
+
 import { QUESTIONS, recommend } from '@/lib/engines/product-finder';
 import DomainAI from './DomainAI';
 
-/* ---------------- hero slider verisi ----------------
-   ALTIN KURAL: banner gorselleri HER ZAMAN 1920x1080 (public/img/slider/).
-   karartma: 0-100 arasi, gorselin uzerindeki koyulugu ayarlar (metin okunurlugu icin). */
 const SLIDES = [
   {
     img: '/img/slider/sunucu-rack.jpg',
@@ -48,7 +45,7 @@ const FEATURES = [
   { t: '7/24 Uzman Destek', d: 'Gerçek insanlardan, ortalama 5 dakikada yanıt. Ticket, canlı destek ve telefon.', icon: 'headset' },
   { t: 'Ücretsiz SSL & Yedek', d: 'Tüm paketlerde ücretsiz SSL sertifikası ve otomatik günlük yedekleme dahildir.', icon: 'lock' },
 ];
-/* Gercek kategoriler - her satir kendi sayfasina gider */
+
 const KATEGORILER = [
   {
     baslik: 'Hosting', icon: 'globe', ozet: 'Web siteniz için hazır, yönetimi kolay paketler',
@@ -88,7 +85,6 @@ const KATEGORILER = [
 ];
 const STATS = [['%99.9', 'Uptime Garantisi'], ['10.000+', 'Mutlu Müşteri'], ['7/24', 'Uzman Destek'], ['<5dk', 'Ortalama Yanıt']];
 
-/* ================= HERO SLIDER (gorselli) ================= */
 function Hero() {
   const [i, setI] = useState(0);
   const [duraklat, setDuraklat] = useState(false);
@@ -102,7 +98,6 @@ function Hero() {
 
   return (
     <section>
-      {/* ---- banner: sabit yukseklik, gorsel arkada, metin onde ---- */}
       <div
         className="relative h-[440px] sm:h-[500px] lg:h-[580px] xl:h-[640px] overflow-hidden bg-ink"
         onMouseEnter={() => setDuraklat(true)}
@@ -114,7 +109,6 @@ function Hero() {
             aria-hidden={n !== i}
             className={`absolute inset-0 transition-opacity duration-700 ease-out ${n === i ? 'opacity-100' : 'opacity-0'}`}
           >
-            {/* 1920x1080 banner - kap sabit, gorsel object-cover */}
             <img
               src={s.img}
               alt=""
@@ -124,7 +118,6 @@ function Hero() {
               fetchPriority={n === 0 ? 'high' : 'auto'}
               className="h-full w-full object-cover"
             />
-            {/* karartma: soldan saga koyudan aciga + genel bir kat */}
             <div
               aria-hidden
               className="absolute inset-0"
@@ -137,7 +130,6 @@ function Hero() {
           </div>
         ))}
 
-        {/* ---- onde duran icerik ---- */}
         <div className="absolute inset-0 flex items-center">
           <div className="mx-auto w-full max-w-7xl px-5 lg:px-8">
             <div key={i} className="max-w-2xl animate-[fadeup_0.7s_ease-out]">
@@ -185,7 +177,6 @@ function Hero() {
           </div>
         </div>
 
-        {/* ---- yan oklar (sol / sag) ---- */}
         <button
           onClick={() => go(i - 1)}
           aria-label="Önceki slayt"
@@ -201,7 +192,6 @@ function Hero() {
           <Icon name="arrow" className="w-5 h-5 transition-transform group-hover:translate-x-0.5" />
         </button>
 
-        {/* ---- alt noktalar: ilerleme cubuklu ---- */}
         <div className="absolute bottom-5 left-0 right-0 z-20">
           <div className="mx-auto flex max-w-7xl items-center gap-2 px-5 lg:px-8">
             {SLIDES.map((_, n) => (
@@ -217,7 +207,6 @@ function Hero() {
                 </span>
               </button>
             ))}
-            {/* mobilde oklar burada */}
             <div className="ml-auto flex gap-2 sm:hidden">
               <button onClick={() => go(i - 1)} aria-label="Önceki" className="grid h-9 w-9 place-items-center rounded-full border border-white/25 bg-ink/35 text-white backdrop-blur-sm">
                 <Icon name="arrow" className="w-4 h-4 rotate-180" />
@@ -233,9 +222,6 @@ function Hero() {
     </section>
   );
 }
-
-/* ================= ÜRÜN BULUCU (quiz popup) ================= */
-/* Sorular ve oneri mantigi: lib/engines/product-finder */
 
 function ProductFinder({ open, onClose }) {
   const [step, setStep] = useState(0);
@@ -255,7 +241,6 @@ function ProductFinder({ open, onClose }) {
       <div onClick={onClose} className="absolute inset-0 bg-ink/60 backdrop-blur-sm animate-[fadeup_0.2s_ease-out]" />
       <div className="relative w-full max-w-lg rounded-3xl bg-surface p-7 sm:p-9 shadow-2xl animate-[fadeup_0.35s_ease-out]">
         <button onClick={onClose} aria-label="Kapat" className="absolute right-5 top-5 grid h-9 w-9 place-items-center rounded-full text-muted hover:bg-surface2 hover:text-strong"><svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M6 6l12 12M18 6 6 18" /></svg></button>
-        {/* ilerleme */}
         <div className="flex items-center gap-2">{QUESTIONS.map((_, n) => (<span key={n} className={`h-1.5 flex-1 rounded-full transition-colors ${n < step ? 'bg-brand-500' : n === step ? 'bg-brand-300' : 'bg-line'}`} />))}</div>
 
         {!done ? (
@@ -290,17 +275,14 @@ function ProductFinder({ open, onClose }) {
   );
 }
 
-/* ---------------- ürün bulucu + güven şeridi (tek bölüm) ---------------- */
 function FinderBanner({ onOpen }) {
   return (
     <section className="relative overflow-hidden bg-surface2">
-      {/* yumusak gecis: ustten sayfa zeminine karisir, sert kenar olmaz */}
       <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-page to-transparent" />
       <div aria-hidden className="pointer-events-none absolute -left-24 top-0 h-72 w-72 rounded-full bg-brandline/20 blur-[100px]" />
       <div aria-hidden className="pointer-events-none absolute -right-16 bottom-0 h-72 w-72 rounded-full bg-brandline/15 blur-[100px]" />
 
       <div className="relative mx-auto max-w-7xl px-5 lg:px-8 py-14 lg:py-16">
-        {/* ürün bulucu çağrısı */}
         <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div className="flex items-start gap-4">
             <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-brand-600 text-white shadow-lg shadow-brand-600/25">
@@ -332,13 +314,11 @@ function FinderBanner({ onOpen }) {
         </div>
       </div>
 
-      {/* alttan da yumusak gecis */}
       <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-page to-transparent" />
     </section>
   );
 }
 
-/* ---------------- yan floating buton ---------------- */
 function FinderTab({ onOpen }) {
   return (
     <button onClick={onOpen} className="fixed right-0 top-1/2 -translate-y-1/2 z-40 hidden md:flex items-center gap-2 rounded-l-2xl bg-brand-600 px-3 py-4 text-white shadow-lg shadow-brand-600/30 hover:bg-brand-700 hover:pr-5 transition-[transform,box-shadow,border-color,opacity] [writing-mode:vertical-rl] rotate-180" aria-label="Ürün bulucu">
@@ -347,7 +327,6 @@ function FinderTab({ onOpen }) {
   );
 }
 
-/* ================= SAYFA ================= */
 export default function HomePage() {
   const [finder, setFinder] = useState(false);
   const openF = useCallback(() => setFinder(true), []);
@@ -359,13 +338,10 @@ export default function HomePage() {
       <FinderTab onOpen={openF} />
       <ProductFinder open={finder} onClose={closeF} />
 
-      {/* AI alan adi bulucu (motor kapaliysa hic basilmaz) */}
       <DomainAI />
 
-      {/* özellikler */}
       <section className="mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-28">
         <div className="max-w-2xl"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Neden SunucumWEB</span><h2 className="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight text-strong text-balance">Performans ve güveni bir arada sunuyoruz</h2><p className="mt-4 text-lg text-body">Altyapımızı; hız, kesintisizlik ve destek üçgeninde kurduk. Teknik detayları biz düşünelim, siz işinize odaklanın.</p></div>
-        {/* rakamlarla biz */}
         <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-8 border-y border-line py-8 md:grid-cols-4">
           {STATS.map(([n, l]) => (
             <div key={l}>
@@ -377,7 +353,6 @@ export default function HomePage() {
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">{FEATURES.map((f) => (<div key={f.t} className="group rounded-2xl border border-line bg-surface p-6 shadow-[0_10px_40px_-20px_rgba(15,41,66,0.18)] hover:shadow-[0_24px_60px_-24px_rgba(20,184,166,0.35)] hover:-translate-y-1 transition-[transform,box-shadow,border-color,opacity] duration-300"><span className="grid h-12 w-12 place-items-center rounded-2xl bg-brandsoft text-brandtext group-hover:bg-brand-500 group-hover:text-white transition-colors"><Icon name={f.icon} /></span><h3 className="mt-5 text-lg font-bold text-strong">{f.t}</h3><p className="mt-2 text-[15px] leading-relaxed text-body">{f.d}</p></div>))}</div>
       </section>
 
-      {/* çözümler: gerçek kategoriler, tıklanınca ilgili sayfaya gider */}
       <section id="cozumler" className="relative scroll-mt-28 bg-surface2 border-y border-line">
         <div className="mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-28">
           <div className="mx-auto max-w-2xl text-center">
@@ -429,7 +404,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* koyu istatistik */}
       <section className="relative overflow-hidden bg-ink"><div aria-hidden className="pointer-events-none absolute inset-0"><div className="absolute -right-20 top-0 h-80 w-80 rounded-full bg-brand-500/20 blur-[100px]" /><div className="absolute left-0 bottom-0 h-72 w-72 rounded-full bg-brand-400/10 blur-[100px]" /></div><div className="relative mx-auto max-w-7xl px-5 lg:px-8 py-20"><div className="grid lg:grid-cols-[1fr_1.1fr] gap-12 items-center"><div><h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white text-balance">Binlerce işletme altyapısını bize emanet ediyor</h2><p className="mt-4 text-lg text-slate-300">Startup'lardan kurumsal firmalara; hız, güvenlik ve kesintisiz destek arayan herkes SunucumWEB'i tercih ediyor.</p><Link href="/hakkimizda" className="mt-7 inline-flex items-center gap-2 rounded-xl bg-white/10 px-5 py-3 text-[15px] font-semibold text-white ring-1 ring-white/15 hover:bg-white/15 transition">Hikâyemizi keşfedin <Icon name="arrow" className="w-4 h-4" /></Link></div><div className="grid grid-cols-2 gap-4">{STATS.map(([n, l]) => (<div key={l} className="rounded-2xl bg-white/5 ring-1 ring-white/10 p-6 backdrop-blur"><div className="text-3xl sm:text-4xl font-extrabold text-brand-300">{n}</div><div className="mt-1 text-sm text-slate-300">{l}</div></div>))}</div></div></div></section>
       <CtaBand />
     </SiteShell>

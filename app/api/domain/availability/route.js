@@ -6,7 +6,6 @@ import { errorText } from '@/lib/engines/core/result';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-/** POST { domains: string[] } -> { ok, results: [{domain, status, source}] } */
 export async function POST(request) {
   const { allowed, retryAfterSec } = rateLimit(clientKey(request, 'domain-avail'), { limit: 20, windowMs: 60_000 });
   if (!allowed) {

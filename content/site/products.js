@@ -1,4 +1,3 @@
-// Ürün sayfaları içeriği (metinler temsilîdir, kolayca güncellenebilir)
 const F = {
   ssl: { icon: 'lock', t: 'Ücretsiz SSL', d: 'Tüm alan adlarınız için otomatik kurulan, ücretsiz Let\'s Encrypt SSL sertifikaları.' },
   backup: { icon: 'refresh', t: 'Otomatik Yedekleme', d: 'Günlük otomatik yedekleme ile verileriniz her zaman güvende, tek tıkla geri yükleyin.' },

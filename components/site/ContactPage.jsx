@@ -17,7 +17,6 @@ export default function ContactPage() {
         text="Sorularınız, teklif talepleriniz veya teknik destek için ekibimiz 7/24 yanınızda." />
       <section className="mx-auto max-w-7xl px-5 lg:px-8 py-16 lg:py-20">
         <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-8 lg:gap-12">
-          {/* bilgi kartları */}
           <div className="grid sm:grid-cols-2 gap-4 content-start">
             {INFO.map((c) => {
               const inner = (
@@ -36,7 +35,6 @@ export default function ContactPage() {
               <p className="mt-3 text-sm text-slate-300">Teknik destek <span className="font-semibold text-white">7/24 kesintisiz</span> hizmetinizdedir. Satış ekibimiz hafta içi 09:00–18:00 arası ulaşılabilir.</p>
             </div>
           </div>
-          {/* form */}
           <div className="rounded-3xl border border-line bg-surface p-7 sm:p-9 shadow-[0_30px_70px_-40px_rgba(15,41,66,0.4)]">
             <h2 className="text-2xl font-extrabold tracking-tight text-strong">Bize yazın</h2>
             <p className="mt-2 text-[15px] text-body">Formu doldurun, en kısa sürede size dönelim.</p>

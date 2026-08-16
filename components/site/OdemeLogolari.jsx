@@ -1,10 +1,3 @@
-/**
- * Odeme yontemi logolari (sadelestirilmis, taninabilir SVG'ler).
- * Her biri 48x32 viewBox'ta, beyaz yuvarlak cip icinde durur -> iki temada da okunur.
- *
- * CMS notu: yeni bir odeme yontemi eklemek icin ODEME dizisine bir satir eklemek yeterli.
- */
-
 function Visa() {
   return (
     <svg viewBox="0 0 48 32" className="h-full w-full" aria-hidden>

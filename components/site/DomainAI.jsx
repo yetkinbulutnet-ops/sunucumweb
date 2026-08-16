@@ -2,14 +2,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { Icon } from './chrome';
 
-/**
- * AI Alan Adi Bulucu (arayuz).
- * Is mantigi YOK - sadece iki API ucunu konusturur:
- *   POST /api/ai/domain-ideas      -> domain-ai motoru
- *   POST /api/domain/availability  -> domain-availability motoru
- * Motorlardan biri kapaliysa/hata verirse diger her sey calismaya devam eder.
- */
-
 const MIN_CHARS = 15;
 const MAX_CHARS = 600;
 
@@ -41,17 +33,14 @@ const STIL_ETIKET = {
   sektorel: 'Sektörel',
 };
 
-/* müsait olanlar üstte, alınmışlar en altta */
 const SIRA = { musait: 0, bilinmiyor: 1, kontrol: 1, alinmis: 2 };
 
 export default function DomainAI() {
-  /* Motor durumu CALISMA ANINDA kontrol edilir.
-     Sayfalar statik uretildigi icin build anindaki duruma bakilamaz:
-     sunucuda GROQ_API_KEY olsa bile bolum gorunmezdi. */
+
   const [aktif, setAktif] = useState(true);
   const [brief, setBrief] = useState('');
-  const [ideas, setIdeas] = useState(null);      // null = hiç sorgulanmadı
-  const [durumlar, setDurumlar] = useState({});  // domain -> 'musait' | 'alinmis' | 'bilinmiyor'
+  const [ideas, setIdeas] = useState(null);
+  const [durumlar, setDurumlar] = useState({});
   const [yukleniyor, setYukleniyor] = useState(false);
   const [adim, setAdim] = useState(0);
   const [hata, setHata] = useState('');
@@ -59,12 +48,11 @@ export default function DomainAI() {
   const [tlds, setTlds] = useState([]);
   const [filtreAcik, setFiltreAcik] = useState(false);
   const [sadeceMusait, setSadeceMusait] = useState(false);
-  const [dogrudan, setDogrudan] = useState('');   // 'aklimda bir isim var' kutusu
+  const [dogrudan, setDogrudan] = useState('');
 
   const taRef = useRef(null);
   const sonucRef = useRef(null);
 
-  /* motor kapali/hazir degilse bolumu tamamen gizle */
   useEffect(() => {
     let iptal = false;
     fetch('/api/health')
@@ -73,11 +61,10 @@ export default function DomainAI() {
         const e = d?.engines?.find((x) => x.id === 'domain-ai');
         if (!iptal) setAktif(Boolean(e?.enabled && e?.ready));
       })
-      .catch(() => { /* saglik ucuna ulasilamadi: bolumu kapatma, kullanici denesin */ });
+      .catch(() => {  });
     return () => { iptal = true; };
   }, []);
 
-  /* yükleme sırasında dönen durum metni */
   useEffect(() => {
     if (!yukleniyor) return;
     setAdim(0);
@@ -85,7 +72,6 @@ export default function DomainAI() {
     return () => clearInterval(t);
   }, [yukleniyor]);
 
-  /* kopyalandı bildirimi sönsün */
   useEffect(() => {
     if (!kopyalanan) return;
     const t = setTimeout(() => setKopyalanan(''), 1600);
@@ -100,10 +86,10 @@ export default function DomainAI() {
         body: JSON.stringify({ domains: list.map((i) => i.domain) }),
       });
       const d = await r.json();
-      if (!d.ok) return; // müsaitlik motoru düşse bile öneriler ekranda kalır
+      if (!d.ok) return;
       setDurumlar(Object.fromEntries(d.results.map((x) => [x.domain, x.status])));
     } catch {
-      /* sessiz geç: bu motor kritik değil */
+
     }
   }, []);
 
@@ -133,7 +119,7 @@ export default function DomainAI() {
       }
       setIdeas(d.ideas);
       requestAnimationFrame(() => sonucRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
-      musaitlikGetir(d.ideas); // arka planda, sonuçları beklemeden göster
+      musaitlikGetir(d.ideas);
     } catch {
       setHata('Sunucuya ulaşılamadı. İnternet bağlantınızı kontrol edip tekrar deneyin.');
     } finally {
@@ -166,7 +152,6 @@ export default function DomainAI() {
 
   return (
     <section className="relative overflow-hidden bg-ink">
-      {/* arka plan efektleri */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <div className="absolute -top-24 right-[-6%] h-[440px] w-[440px] rounded-full bg-brand-500/20 blur-[110px]" />
         <div className="absolute bottom-[-10%] left-[-6%] h-[380px] w-[380px] rounded-full bg-brand-400/10 blur-[110px]" />
@@ -174,7 +159,6 @@ export default function DomainAI() {
       </div>
 
       <div className="relative mx-auto max-w-5xl px-5 lg:px-8 py-20 lg:py-24">
-        {/* başlık */}
         <div className="text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-brand-400/30 bg-brand-500/10 px-3.5 py-1.5 text-[13px] font-semibold text-brand-300">
             <Icon name="sparkles" className="w-4 h-4" /> Yapay zekâ destekli
@@ -188,7 +172,6 @@ export default function DomainAI() {
           </p>
         </div>
 
-        {/* giriş kartı */}
         <div className="mt-10 rounded-3xl border border-white/10 bg-white/[0.06] p-2 backdrop-blur-sm shadow-[0_40px_90px_-40px_rgba(0,0,0,0.8)]">
           <div className="rounded-[1.25rem] bg-surface p-5 sm:p-7">
             <label htmlFor="ai-brief" className="block text-sm font-bold text-strong">
@@ -214,7 +197,6 @@ export default function DomainAI() {
               </span>
             </div>
 
-            {/* örnekler */}
             <div className="mt-4 flex flex-wrap items-center gap-2">
               <span className="text-[13px] font-medium text-muted">Örnek:</span>
               {ORNEKLER.map((o) => (
@@ -229,7 +211,6 @@ export default function DomainAI() {
               ))}
             </div>
 
-            {/* uzantı filtresi */}
             <div className="mt-4 border-t border-line pt-4">
               <button
                 type="button"
@@ -267,7 +248,6 @@ export default function DomainAI() {
               )}
             </div>
 
-            {/* eylem */}
             <div className="mt-5 flex flex-col sm:flex-row sm:items-center gap-3">
               <button
                 type="button"
@@ -304,7 +284,6 @@ export default function DomainAI() {
           </div>
         </div>
 
-        {/* ---- aklında isim varsa: doğrudan sorgula (ikincil, AI öne çıkmaya devam eder) ---- */}
         <div className="mt-5 flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 sm:flex-row sm:items-center">
           <div className="shrink-0 text-[13.5px] text-slate-300">
             <span className="font-semibold text-white">Aklınızda bir isim var mı?</span>
@@ -328,7 +307,6 @@ export default function DomainAI() {
           </form>
         </div>
 
-        {/* ---- sonuçlar ---- */}
         <div ref={sonucRef} aria-live="polite" className="scroll-mt-24">
           {yukleniyor && (
             <div className="mt-10 grid sm:grid-cols-2 gap-4">

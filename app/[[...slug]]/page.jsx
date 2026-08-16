@@ -58,32 +58,26 @@ export default async function Page({ params }) {
   const meta = pageBySlug(slug);
   if (!meta) notFound();
 
-  // --- YENI modern ana sayfa (tamamen yeni tasarim) ---
   if (slug === 'index') {
     return <HomePage />;
   }
 
-  // --- YENI urun sayfalari (12 adet, tek template) ---
   if (PRODUCTS[slug]) {
     return <ProductPage data={PRODUCTS[slug]} />;
   }
 
-  // --- YENI iletisim sayfasi ---
   if (slug === 'iletisim') {
     return <ContactPage />;
   }
 
-  // --- YENI alan adi / transfer / whois (temiz tasarim, arama WiseCP paneline gider) ---
   if (slug === 'alan-adi') return <DomainPage mode="register" />;
   if (slug === 'transfer') return <DomainPage mode="transfer" />;
   if (slug === 'whois') return <DomainPage mode="whois" />;
 
-  // --- YENI legal + kurumsal sayfalar (gercek metinle, temiz prose) ---
   if (LEGAL[slug]) {
     return <LegalPage title={LEGAL[slug].title} eyebrow={LEGAL[slug].eyebrow} html={getLegalHtml(slug)} />;
   }
 
-  // --- Standalone (WiseCP panel) sayfalar: kendi head CSS/JS'i, paylasimli chrome YOK ---
   if (meta.standalone) {
     const html = getStandaloneHtml(slug);
     if (html === null) notFound();
@@ -105,7 +99,6 @@ export default async function Page({ params }) {
     );
   }
 
-  // --- Normal sayfalar: ortak Header + icerik + Footer ---
   const html = getPageHtml(slug);
   if (html === null) notFound();
   const scripts = getPageScripts(slug);

@@ -3,11 +3,6 @@ import Link from 'next/link';
 import { Icon, CtaBand, SiteShell, PageHero } from './chrome';
 import { SOZLESMELER } from '@/content/site/sozlesmeler';
 
-/**
- * Sozlesmeler dizin sayfasi.
- * Icerik content/site/sozlesmeler.js'ten gelir -> CMS'e hazir,
- * belge sayisi degisince tasarim bozulmaz.
- */
 export default function SozlesmelerPage() {
   return (
     <SiteShell>

@@ -1,8 +1,3 @@
-/**
- * Sozlesmeler sayfasindaki belge listesi.
- * CMS notu: yeni sozlesme eklemek icin buraya bir satir eklemek yeterli;
- * hem /sozlesmeler sayfasi hem menuler bu diziden beslenir.
- */
 export const SOZLESMELER = [
   {
     slug: 'kullanim-kosullari',

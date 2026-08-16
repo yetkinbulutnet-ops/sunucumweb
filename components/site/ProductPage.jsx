@@ -27,7 +27,6 @@ export default function ProductPage({ data }) {
   const d = data;
   return (
     <SiteShell>
-      {/* hero */}
       <section className="relative overflow-hidden border-b border-line">
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute -top-32 right-[-8%] h-[460px] w-[460px] rounded-full bg-brand-300/25 blur-[120px]" />
@@ -46,7 +45,6 @@ export default function ProductPage({ data }) {
               </div>
               <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-3">{d.heroStats.map(([n, l]) => (<div key={l} className="flex items-center gap-2.5"><span className="text-xl font-extrabold text-strong">{n}</span><span className="text-sm text-body">{l}</span></div>))}</div>
             </div>
-            {/* spec kartı */}
             <div className="relative animate-[fadeup_0.8s_ease-out]">
               <div className="rounded-3xl border border-line/80 bg-surface/90 backdrop-blur p-7 shadow-[0_40px_80px_-30px_rgba(15,41,66,0.35)]">
                 <div className="flex items-center gap-3"><span className="grid h-12 w-12 place-items-center rounded-2xl bg-brand-500 text-white"><Icon name={d.icon} /></span><div><div className="text-base font-extrabold text-strong">{d.title}</div><div className="text-[13px] text-muted">Teknik özet</div></div></div>
@@ -58,20 +56,17 @@ export default function ProductPage({ data }) {
         </div>
       </section>
 
-      {/* özellikler */}
       <section className="mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-24">
         <div className="max-w-2xl"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Öne Çıkanlar</span><h2 className="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight text-strong text-balance">{d.featuresTitle}</h2></div>
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">{d.features.map((f) => (<div key={f.t} className="group rounded-2xl border border-line bg-surface p-6 shadow-[0_10px_40px_-20px_rgba(15,41,66,0.18)] hover:shadow-[0_24px_60px_-24px_rgba(20,184,166,0.35)] hover:-translate-y-1 transition-[transform,box-shadow,border-color,opacity] duration-300"><span className="grid h-12 w-12 place-items-center rounded-2xl bg-brandsoft text-brandtext group-hover:bg-brand-500 group-hover:text-white transition-colors"><Icon name={f.icon} /></span><h3 className="mt-5 text-lg font-bold text-strong">{f.t}</h3><p className="mt-2 text-[15px] leading-relaxed text-body">{f.d}</p></div>))}</div>
       </section>
 
-      {/* paketler */}
       <section id="paketler" className="bg-surface2 border-y border-line scroll-mt-20"><div className="mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-24">
         <div className="text-center max-w-2xl mx-auto"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Paketler</span><h2 className="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight text-strong text-balance">{d.title} Paketleri</h2><p className="mt-4 text-lg text-body">İhtiyacınıza göre ölçeklenen, şeffaf fiyatlı paketler.</p></div>
         <div className="mt-14 grid lg:grid-cols-3 gap-6 lg:gap-5 items-stretch">{d.plans.map((p) => (<div key={p.name} className={`relative flex flex-col rounded-3xl p-7 transition-[transform,box-shadow,border-color,opacity] duration-300 ${p.popular ? 'bg-ink text-white shadow-[0_40px_80px_-30px_rgba(15,41,66,0.6)] lg:-translate-y-4 ring-1 ring-brand-400/40' : 'bg-surface border border-line shadow-[0_20px_50px_-30px_rgba(15,41,66,0.3)]'}`}>{p.popular && <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-brand-600 px-4 py-1 text-xs font-bold text-white shadow-lg shadow-brand-500/40">EN POPÜLER</span>}<div className={`text-xl font-extrabold ${p.popular ? 'text-white' : 'text-strong'}`}>{p.name}</div><div className="mt-4 flex items-baseline gap-1"><span className={`text-sm font-semibold ${p.popular ? 'text-slate-300' : 'text-muted'}`}>₺</span><span className={`text-5xl font-extrabold tracking-tight ${p.popular ? 'text-white' : 'text-strong'}`}>{p.price}</span><span className={`text-sm ${p.popular ? 'text-slate-300' : 'text-muted'}`}>/ay</span></div><ul className="mt-6 space-y-3 flex-1">{p.feats.map((ft) => (<li key={ft} className="flex items-center gap-3 text-[15px]"><span className={`grid h-5 w-5 shrink-0 place-items-center rounded-full ${p.popular ? 'bg-brand-500/20 text-brand-300' : 'bg-brandsoft text-brandtext'}`}><Icon name="check" className="w-3 h-3" /></span><span className={p.popular ? 'text-slate-200' : 'text-body'}>{ft}</span></li>))}</ul><AddToCartButton item={{ name: p.name, product: d.title, price: p.price }} tema={p.popular ? 'dolu' : 'acik'} className="mt-8 w-full py-3.5 text-[15px]" /><Link href="/iletisim" className="mt-2 text-center text-[13px] font-semibold text-muted transition-colors hover:text-brandtext">Teklif isteyin</Link></div>))}</div>
         <p className="mt-6 text-center text-sm text-muted">* Fiyatlar temsilîdir; gerçek paket fiyatlarınızı buraya girebilirsiniz.</p>
       </div></section>
 
-      {/* FAQ */}
       {d.faq && (
         <section className="mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-24">
           <div className="text-center max-w-2xl mx-auto mb-12"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">SSS</span><h2 className="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight text-strong text-balance">Sık sorulan sorular</h2></div>
