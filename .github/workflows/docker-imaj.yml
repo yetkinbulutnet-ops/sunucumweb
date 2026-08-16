@@ -53,6 +53,11 @@ jobs:
           push: true
           # Bunny Magic Containers SADECE linux/amd64 imajlarini kabul eder
           platforms: linux/amd64
+          # buildx varsayilan olarak attestation (provenance/SBOM) ekler; bu, imaji
+          # "OCI image index" yapar ve icine unknown/unknown bir giris koyar.
+          # Bazi platformlar (Bunny dahil) bunu cozemiyor -> duz tek manifest uretiyoruz.
+          provenance: false
+          sbom: false
           tags: |
             ${{ steps.ad.outputs.yol }}:latest
             ${{ steps.ad.outputs.yol }}:${{ github.sha }}
