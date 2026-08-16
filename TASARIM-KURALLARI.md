@@ -77,6 +77,49 @@ değerleriyle tasarlanmaz.
 
 ---
 
+## 4. ALTIN KURAL — CMS'ten yönetilebilir, sürdürülebilir yapı
+
+Site ileride **CMS'ten yönetilecek**: içerik eklenecek, çıkarılacak, silinecek, düzenlenecek.
+Tasarım bu değişikliklerde **bozulmamalı**. "Şu an 3 tane var, 3'e göre tasarlarım" YASAK.
+
+### İçerik koddan ayrılır
+Her tekrarlanan blok **veri dizisinden** üretilir, elle kopyalanmaz.
+Veri; `content/site/` altında ya da bileşenin en üstünde tek bir sabitte durur —
+CMS geldiğinde tek yapılacak, o diziyi API'den beslemek.
+
+```jsx
+// DOĞRU: veri -> döngü            // YANLIŞ: elle üç kart yazmak
+{KATEGORILER.map((k) => <Kart key={k.id} {...k} />)}
+```
+
+### Değişken sayıya dayanıklı ol
+- **Izgaralar** eleman sayısından bağımsız çalışsın: `grid sm:grid-cols-2 lg:grid-cols-4`
+  1 eleman da 9 eleman da düzgün dizilir. `lg:grid-cols-3` yazıp 4. eleman gelince
+  ortalanan tek kart bırakma.
+- **Yükseklikler eşitlensin:** `items-stretch` + kart içinde `flex flex-col` ve
+  esneyen gövde (`flex-1`) — biri uzun metinli olunca sıra bozulmaz.
+- **Sıfır durumu:** liste boş gelirse bölüm ya gizlenir ya da anlamlı bir boş mesaj
+  gösterir; asla kırık/boş kutu bırakmaz.
+- **Taşma:** uzun başlık `text-balance`, uzun URL/e-posta `break-words`,
+  çok elemanlı satır `flex-wrap`.
+
+### Alanlar isteğe bağlı olsun
+Bir kartın rozeti, açıklaması veya görseli olmayabilir. Bileşen bunu **varsayarak**
+yazılır: `{it.r && <Rozet .../>}`. Eksik alan tasarımı bozmaz, sadece o parça çıkmaz.
+
+### Metin uzunluğuna dayanıklılık
+CMS'ten girilen metin kısa da olabilir uzun da. Kartlar sabit yükseklik yerine
+minimum yükseklik + esneme kullanır; başlıklar 2 satıra çıkabilir varsayılır.
+
+### Kimlikler
+Liste elemanlarının `key` değeri **kararlı bir kimlikten** gelir (slug/href),
+dizideki sıradan (`index`) değil — CMS'te sıra değişince React karışmasın.
+
+> **Kontrol sorusu:** "Bu bölüme CMS'ten 1 tane daha eklesem / birini silsem
+> tasarım bozulur mu?" Cevap evet ise bölüm henüz hazır değildir.
+
+---
+
 ## Bölüm bitince kontrol listesi
 
 - [ ] Açık modda düzgün
@@ -85,3 +128,5 @@ değerleriyle tasarlanmaz.
 - [ ] 375px'te yatay taşma yok
 - [ ] 1920px'te içerik dağılmıyor, orantılı büyümüş
 - [ ] `transition-all` kullanılmamış
+- [ ] İçerik veri dizisinden üretiliyor (CMS'e hazır)
+- [ ] Eleman sayısı değişse tasarım bozulmuyor

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { currentTheme, toggleTheme } from '@/lib/engines/theme';
 import { formatTRY, CHECKOUT_URL } from '@/lib/engines/cart';
 import { CartProvider, useCart } from './CartProvider';
+import OdemeLogolari from './OdemeLogolari';
 
 /* ---------------- ikon seti ---------------- */
 const PATHS = {
@@ -66,16 +67,16 @@ export const MENU = [
     { t: 'Domain Sorgulama', d: 'Hayalinizdeki domain adını hemen sorgulayın ve uygunluğunu görün.', href: '/whois', icon: 'search' },
   ]},
   { label: 'Hosting', kolon: 4, items: [
-    { t: 'Web Hosting', d: 'Sınırsız hosting paketlerini deneyin, dakikalar içinde yayında olun.', href: '/web-hosting', icon: 'globe', r: '%20 İndirim', rTon: 'yesil' },
-    { t: 'WordPress Hosting', d: 'WordPress için optimize edilmiş, hızlı ve güvenli altyapı.', href: '/wordpress-hosting', icon: 'bolt' },
+    { t: 'Web Hosting', d: 'Sınırsız hosting paketlerini deneyin, dakikalar içinde yayında olun.', href: '/web-hosting', icon: 'globe', r: '%20 İndirim', rTon: 'yesil', logo: '/img/marka/cpanel.svg' },
+    { t: 'WordPress Hosting', d: 'WordPress için optimize edilmiş, hızlı ve güvenli altyapı.', href: '/wordpress-hosting', icon: 'bolt', logo: '/img/marka/wordpress.png' },
     { t: 'Reseller Hosting', d: 'Linux hosting paketleri ile kendi hosting işinizi başlatın.', href: '/reseller-hosting', icon: 'users', r: 'Fırsatı Yakala', rTon: 'sari' },
-    { t: 'Kurumsal Hosting', d: 'Yüksek trafik ve izole kaynak gerektiren projeler için.', href: '/kurumsal-hosting', icon: 'layers' },
+    { t: 'Kurumsal Hosting', d: 'Yüksek trafik ve izole kaynak gerektiren projeler için.', href: '/kurumsal-hosting', icon: 'layers', logo: '/img/marka/litespeed.svg' },
   ]},
   { label: 'Sunucu', kolon: 3, items: [
-    { t: 'Sanal Sunucu (VDS)', d: 'E5-2699 v4 sanal sunucularla projelerinizi başlatın.', href: '/sanal-sunucu', icon: 'server', r: 'Kampanya', rTon: 'mavi' },
+    { t: 'Sanal Sunucu (VDS)', d: 'E5-2699 v4 sanal sunucularla projelerinizi başlatın.', href: '/sanal-sunucu', icon: 'server', r: 'Kampanya', rTon: 'mavi', logo: '/img/marka/linux.svg' },
     { t: 'Premium Sunucu', d: 'Jet hızında diskler ve Xeon Platinum ile tam güç!', href: '/premium-sunucu', icon: 'rocket', r: 'PREMIUM', rTon: 'sari', vurgu: true },
     { t: 'Dedicated Sunucu', d: 'Fiziksel sunucular ile maksimum performans elde edin.', href: '/dedicated-sunucu', icon: 'cpu' },
-    { t: 'GPU Sunucu', d: 'Yüksek performanslı GPU ile AI ve grafik iş yükleriniz için ideal.', href: '/gpu-sunucu', icon: 'cpu', r: 'Popüler', rTon: 'kirmizi' },
+    { t: 'GPU Sunucu', d: 'Yüksek performanslı GPU ile AI ve grafik iş yükleriniz için ideal.', href: '/gpu-sunucu', icon: 'cpu', r: 'Popüler', rTon: 'kirmizi', logo: '/img/marka/nvidia.svg' },
     { t: 'ISP Sunucu', d: 'Servis sağlayıcılar için özelleştirilmiş sunucu çözümleri.', href: '/isp-sunucu', icon: 'wifi' },
     { t: 'ABD Sunucu', d: 'Amerika lokasyonunda düşük gecikmeli sunucu seçenekleri.', href: '/abd-sunucu', icon: 'globe' },
   ]},
@@ -83,11 +84,10 @@ export const MENU = [
     { t: 'Sunucu Barındırma', d: 'Kendi donanımınız bizim Tier-3 veri merkezimizde güvende.', href: '/sunucu-barindirma', icon: 'database', r: 'TIER III', rTon: 'yesil' },
     { t: 'IP Kiralama', d: 'Kolay ve hızlı IP kiralama seçenekleri ile ihtiyacınız olan adresleri hemen edinin.', href: '/ip-kiralama', icon: 'globe', r: 'Özel', rTon: 'yesil' },
   ]},
-  { label: 'Kurumsal', kolon: 4, items: [
+  { label: 'Kurumsal', kolon: 3, items: [
     { t: 'Şirket Profili', d: 'SunucumWEB hakkında detaylı bilgi alın.', href: '/hakkimizda', icon: 'users' },
     { t: 'Ticari Bilgiler', d: 'Resmi ticari bilgilerimiz.', href: '/ticari-bilgiler', icon: 'star' },
-    { t: 'İade Sözleşmesi', d: 'İade politikamız ve koşulları.', href: '/iade-politikasi', icon: 'refresh' },
-    { t: 'Kullanım Koşulları', d: 'Hizmet kullanım koşullarımız.', href: '/kullanim-kosullari', icon: 'doc' },
+    { t: 'Sözleşmeler', d: 'Kullanım koşulları, gizlilik, iade ve tüm yasal belgeler.', href: '/sozlesmeler', icon: 'doc' },
   ]},
 ];
 
@@ -108,8 +108,13 @@ function MegaItem({ it, onClick }) {
         it.vurgu ? 'border-amber-400/60 ring-1 ring-amber-400/30' : 'border-line hover:border-brandline'
       }`}
     >
-      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-brandsoft text-brandtext transition-colors group-hover/i:bg-brand-500 group-hover/i:text-white">
-        <Icon name={it.icon} className="w-5 h-5" />
+      {/* logo varsa marka gorseli, yoksa jenerik ikon (CMS: logo alani opsiyonel) */}
+      <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-xl transition-colors ${
+        it.logo ? 'bg-surface2 ring-1 ring-line' : 'bg-brandsoft text-brandtext group-hover/i:bg-brand-500 group-hover/i:text-white'
+      }`}>
+        {it.logo
+          ? <img src={it.logo} alt="" width={128} height={128} loading="lazy" className="h-7 w-7 object-contain" />
+          : <Icon name={it.icon} className="w-5 h-5" />}
       </span>
       <span className="min-w-0 flex-1">
         <span className="flex flex-wrap items-center gap-2">
@@ -513,34 +518,231 @@ export function SiteHeader() {
   );
 }
 
-/* ---------------- footer ---------------- */
-const FOOT = [
-  { h: 'Domain', items: [['Domain Tescil', '/alan-adi'], ['Domain Transfer', '/transfer'], ['WHOIS Sorgu', '/whois']] },
-  { h: 'Hosting', items: [['Web Hosting', '/web-hosting'], ['WordPress Hosting', '/wordpress-hosting'], ['Reseller Hosting', '/reseller-hosting'], ['Kurumsal Hosting', '/kurumsal-hosting']] },
-  { h: 'Sunucular', items: [['Sanal Sunucu', '/sanal-sunucu'], ['Dedicated Sunucu', '/dedicated-sunucu'], ['GPU Sunucu', '/gpu-sunucu'], ['ABD Sunucu', '/abd-sunucu']] },
-  { h: 'Veri Merkezi', items: [['Sunucu Barındırma', '/sunucu-barindirma'], ['IP Kiralama', '/ip-kiralama'], ['ISP Sunucu', '/isp-sunucu']] },
-  { h: 'Kurumsal', items: [['Hakkımızda', '/hakkimizda'], ['İletişim', '/iletisim'], ['Ticari Bilgiler', '/ticari-bilgiler'], ['Kullanım Koşulları', '/kullanim-kosullari']] },
+/* ---------------- footer ----------------
+   CMS notu: tum bloklar asagidaki veri dizilerinden uretilir.
+   Yeni kategori/link/sosyal hesap eklemek icin sadece diziye satir eklemek yeterli;
+   tasarim eleman sayisindan bagimsiz calisir. */
+
+const FIRMA = {
+  unvan: 'SunucumWEB Bilişim Teknolojileri',
+  adres: 'Odunluk Mah. Akademi Cad. Zeno İş Merkezi No:2 D:5, Nilüfer / BURSA',
+  telefon: '0(850) 302 5809',
+  telefonHref: 'tel:08503025809',
+  eposta: 'destek@sunucumweb.com',
+  panel: 'https://my.sunucumweb.com',
+};
+
+/* Footer link kolonlari - her biri baslik + altinda urunler */
+const FOOT_KOLON = [
+  { h: 'Hosting', items: [
+    ['Web Hosting', '/web-hosting'],
+    ['WordPress Hosting', '/wordpress-hosting'],
+    ['Reseller Hosting', '/reseller-hosting'],
+    ['Kurumsal Hosting', '/kurumsal-hosting'],
+  ]},
+  { h: 'Sunucular', items: [
+    ['Sanal Sunucu (VDS)', '/sanal-sunucu'],
+    ['Premium Sunucu', '/premium-sunucu'],
+    ['Dedicated Sunucu', '/dedicated-sunucu'],
+    ['GPU Sunucu', '/gpu-sunucu'],
+    ['ISP Sunucu', '/isp-sunucu'],
+    ['ABD Sunucu', '/abd-sunucu'],
+  ]},
+  { h: 'Alan Adı', items: [
+    ['Alan Adı Tescil', '/alan-adi'],
+    ['Alan Adı Transfer', '/transfer'],
+    ['WHOIS Sorgulama', '/whois'],
+  ]},
+  { h: 'Veri Merkezi', items: [
+    ['Sunucu Barındırma', '/sunucu-barindirma'],
+    ['IP Kiralama', '/ip-kiralama'],
+  ]},
+  { h: 'Kurumsal', items: [
+    ['Hakkımızda', '/hakkimizda'],
+    ['Ticari Bilgiler', '/ticari-bilgiler'],
+    ['İletişim', '/iletisim'],
+    ['Sözleşmeler', '/sozlesmeler'],
+  ]},
 ];
+
+const SOSYAL = [
+  { ad: 'Facebook', href: 'https://facebook.com/sunucumweb', d: 'M14 8h-2a1 1 0 0 0-1 1v2h3l-.4 3H11v7H8v-7H6v-3h2V9a4 4 0 0 1 4-4h2z' },
+  { ad: 'X', href: 'https://x.com/sunucumweb', d: 'M4 4l7.6 9.6L4.4 20h2.1l5.9-6.4 5 6.4H20l-7.6-9.6L19.5 4h-2.1l-5.4 5.9L7.4 4z' },
+  { ad: 'Instagram', href: 'https://instagram.com/sunucumweb', d: 'M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4zM12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zM17.5 6.5h.01' },
+  { ad: 'LinkedIn', href: 'https://linkedin.com/company/sunucumweb', d: 'M4.5 9h3v11h-3zM6 4.5a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6zM10.5 9h3v1.6a3.4 3.4 0 0 1 3-1.6c2.4 0 3.5 1.6 3.5 4.3V20h-3v-6c0-1.5-.5-2.4-1.8-2.4-1.1 0-1.7.7-1.7 2.4v6h-3z' },
+  { ad: 'YouTube', href: 'https://youtube.com/@sunucumweb', d: 'M21 8.5a3 3 0 0 0-2.1-2.1C17.1 6 12 6 12 6s-5.1 0-6.9.4A3 3 0 0 0 3 8.5C2.6 10.3 2.6 12 2.6 12s0 1.7.4 3.5a3 3 0 0 0 2.1 2.1C6.9 18 12 18 12 18s5.1 0 6.9-.4a3 3 0 0 0 2.1-2.1c.4-1.8.4-3.5.4-3.5s0-1.7-.4-3.5zM10.2 15.1V8.9l5.3 3.1z' },
+];
+
+/* Google musteri yorumlari - CMS/Google API'den beslenecek */
+const GOOGLE_YORUM = { puan: 4.8, adet: 327, href: 'https://www.google.com/search?q=sunucumweb+yorumlar' };
+
+function Yildizlar({ puan }) {
+  return (
+    <span className="flex items-center gap-0.5" aria-hidden>
+      {[1, 2, 3, 4, 5].map((n) => (
+        <svg key={n} viewBox="0 0 24 24" className="h-4 w-4">
+          <defs>
+            <linearGradient id={`yld${n}`}>
+              <stop offset={`${Math.max(0, Math.min(1, puan - n + 1)) * 100}%`} stopColor="#FBBF24" />
+              <stop offset={`${Math.max(0, Math.min(1, puan - n + 1)) * 100}%`} stopColor="rgba(255,255,255,0.22)" />
+            </linearGradient>
+          </defs>
+          <path fill={`url(#yld${n})`} d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4L12 17.4l-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z" />
+        </svg>
+      ))}
+    </span>
+  );
+}
+
 export function SiteFooter() {
+  const yil = 2026;
   return (
     <footer className="bg-ink text-slate-300">
-      <div className="mx-auto max-w-7xl px-5 lg:px-8 py-16">
-        <div className="grid gap-10 lg:grid-cols-[1.5fr_repeat(5,1fr)]">
-          <div className="max-w-xs">
-            <img src="/icon/logo.png" alt="SunucumWEB" className="h-8 w-auto brightness-0 invert" />
-            <p className="mt-4 text-sm leading-relaxed text-muted">Türkiye'nin güvenilir hosting ve sunucu sağlayıcısı. Hızlı altyapı, kesintisiz destek.</p>
-            <a href="tel:08503025809" className="mt-5 inline-block text-lg font-bold text-white">0(850) 302 5809</a>
+      {/* ---- ust: firma + link kolonlari ---- */}
+      <div className="mx-auto max-w-7xl px-5 lg:px-8 pt-14 lg:pt-16">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,3fr)]">
+          {/* firma bilgileri */}
+          <div className="max-w-sm">
+            <img src="/icon/logo.png" alt={FIRMA.unvan} className="h-8 w-auto brightness-0 invert" />
+            <p className="mt-4 text-sm leading-relaxed text-slate-400">
+              Türkiye&apos;nin güvenilir hosting ve sunucu sağlayıcısı. Hızlı altyapı, kesintisiz destek.
+            </p>
+
+            <ul className="mt-5 space-y-3 text-sm">
+              <li className="flex items-start gap-2.5">
+                <Icon name="pin" className="mt-0.5 h-4 w-4 shrink-0 text-brand-400" />
+                <span className="text-slate-400">{FIRMA.adres}</span>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <Icon name="phone" className="h-4 w-4 shrink-0 text-brand-400" />
+                <a href={FIRMA.telefonHref} className="font-bold text-white transition-colors hover:text-brand-300">{FIRMA.telefon}</a>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <Icon name="mail" className="h-4 w-4 shrink-0 text-brand-400" />
+                <a href={`mailto:${FIRMA.eposta}`} className="break-words text-slate-300 transition-colors hover:text-brand-300">{FIRMA.eposta}</a>
+              </li>
+            </ul>
+
+            <a
+              href={FIRMA.panel}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-brand-500 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-brand-400"
+            >
+              <Icon name="user" className="h-4 w-4" /> Müşteri Paneli
+            </a>
+
+            {/* sosyal medya */}
+            <ul className="mt-6 flex flex-wrap gap-2">
+              {SOSYAL.map((s) => (
+                <li key={s.ad}>
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.ad}
+                    title={s.ad}
+                    className="grid h-10 w-10 place-items-center rounded-xl bg-white/5 text-slate-300 ring-1 ring-white/10 transition-colors hover:bg-brand-500 hover:text-white hover:ring-brand-400"
+                  >
+                    <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      <path d={s.d} />
+                    </svg>
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
-          {FOOT.map((col) => (
-            <div key={col.h}>
-              <div className="text-sm font-bold uppercase tracking-wider text-white">{col.h}</div>
-              <ul className="mt-4 space-y-2.5">{col.items.map(([t, h]) => (<li key={h + t}><Link href={h} className="text-sm text-muted hover:text-brand-300 transition-colors">{t}</Link></li>))}</ul>
-            </div>
-          ))}
+
+          {/* link kolonlari */}
+          <nav className="grid grid-cols-2 gap-x-6 gap-y-9 sm:grid-cols-3 lg:grid-cols-5" aria-label="Alt menü">
+            {FOOT_KOLON.map((col) => (
+              <div key={col.h} className="min-w-0">
+                <div className="text-[13px] font-bold uppercase tracking-wider text-white">{col.h}</div>
+                <ul className="mt-4 space-y-2.5">
+                  {col.items.map(([t, h]) => (
+                    <li key={h + t}>
+                      <Link href={h} className="text-sm text-slate-400 transition-colors hover:text-brand-300">{t}</Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </nav>
         </div>
-        <div className="mt-14 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/10 pt-7 text-sm text-muted">
-          <span>© 2026 SunucumWEB Bilişim Teknolojileri. Tüm hakları saklıdır.</span>
-          <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-brand-500" /> Tüm sistemler çalışıyor</span>
+
+        {/* ---- guven seridi: google yorumlari + odeme + btk ---- */}
+        <div className="mt-12 grid gap-4 border-t border-white/10 pt-8 lg:grid-cols-3">
+          {/* google musteri yorumlari */}
+          <a
+            href={GOOGLE_YORUM.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center gap-4 rounded-2xl bg-white/5 p-4 ring-1 ring-white/10 transition-colors hover:bg-white/10"
+          >
+            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white">
+              {/* Google G */}
+              <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden>
+                <path fill="#4285F4" d="M23 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.2a5.3 5.3 0 0 1-2.3 3.5v2.9h3.7c2.2-2 3.4-5 3.4-8.6z" />
+                <path fill="#34A853" d="M12 24c3.1 0 5.7-1 7.6-2.8l-3.7-2.9c-1 .7-2.3 1.1-3.9 1.1-3 0-5.5-2-6.4-4.7H1.8v3A12 12 0 0 0 12 24z" />
+                <path fill="#FBBC05" d="M5.6 14.7a7.2 7.2 0 0 1 0-4.6v-3H1.8a12 12 0 0 0 0 10.7z" />
+                <path fill="#EA4335" d="M12 4.8c1.7 0 3.2.6 4.4 1.7l3.3-3.3C17.7 1.2 15.1 0 12 0A12 12 0 0 0 1.8 7.1l3.8 3a7.2 7.2 0 0 1 6.4-5.3z" />
+              </svg>
+            </span>
+            <span className="min-w-0">
+              <span className="flex items-center gap-2">
+                <span className="text-lg font-extrabold text-white">{String(GOOGLE_YORUM.puan).replace('.', ',')}</span>
+                <Yildizlar puan={GOOGLE_YORUM.puan} />
+              </span>
+              <span className="mt-0.5 block text-[13px] text-slate-400">
+                {GOOGLE_YORUM.adet} Google müşteri yorumu
+                <span className="ml-1 inline-block transition-transform group-hover:translate-x-0.5">→</span>
+              </span>
+            </span>
+          </a>
+
+          {/* odeme yontemleri */}
+          <div className="rounded-2xl bg-white/5 p-4 ring-1 ring-white/10">
+            <div className="text-[13px] font-semibold text-white">Güvenli Ödeme Yöntemleri</div>
+            <OdemeLogolari className="mt-3" />
+            <div className="mt-2.5 flex items-center gap-1.5 text-[12px] text-slate-400">
+              <Icon name="lock" className="h-3.5 w-3.5 text-brand-400" />
+              256-bit SSL ile korunan ödeme altyapısı
+            </div>
+          </div>
+
+          {/* btk yer saglayici */}
+          <div className="rounded-2xl bg-white/5 p-4 ring-1 ring-white/10">
+            <div className="flex items-center gap-2">
+              <Icon name="shield" className="h-4 w-4 shrink-0 text-brand-400" />
+              <span className="text-[13px] font-semibold text-white">BTK Yer Sağlayıcı</span>
+            </div>
+            <p className="mt-2 text-[12.5px] leading-relaxed text-slate-400">
+              {FIRMA.unvan}, 5651 sayılı kanun kapsamında Bilgi Teknolojileri ve İletişim Kurumu
+              tarafından yetkilendirilmiş <span className="font-semibold text-slate-300">Yer Sağlayıcı</span>&apos;dır.
+            </p>
+            <div className="mt-2 text-[12px] text-slate-500">
+              Yer Sağlayıcı Belge No: <span className="font-mono text-slate-400">YS-XXXXX</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ---- alt serit ---- */}
+      <div className="mt-10 border-t border-white/10">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-5 py-6 text-sm text-slate-400 lg:flex-row lg:px-8">
+          <span className="text-center lg:text-left">© {yil} {FIRMA.unvan}. Tüm hakları saklıdır.</span>
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+            <Link href="/sozlesmeler" className="transition-colors hover:text-brand-300">Sözleşmeler</Link>
+            <Link href="/gizlilik-sozlesmesi" className="transition-colors hover:text-brand-300">Gizlilik</Link>
+            <Link href="/iletisim" className="transition-colors hover:text-brand-300">İletişim</Link>
+            <span className="flex items-center gap-2">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+              </span>
+              Tüm sistemler çalışıyor
+            </span>
+          </div>
         </div>
       </div>
     </footer>
