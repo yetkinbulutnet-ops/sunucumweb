@@ -38,46 +38,34 @@ Bunlar bende bitti, senin yapman gereken yok:
 Bilgisayarda **Git Credential Manager zaten kurulu** (v2.7.3), o yüzden
 GitHub CLI vs. kurmana gerek yok. Sadece tarayıcıdan onay vereceksin.
 
-### 1. GitHub'da boş depo aç (tarayıcı, ~30 saniye)
+### 1. ✅ TAMAMLANDI — Depo açıldı ve kod gönderildi
 
-github.com → sağ üst **+** → **New repository**
+Depo: https://github.com/yetkinbulutnet-ops/sunucumweb (private, 3 commit, dal `main`)
+Push başarılı; GitHub Actions imajı derlemeye otomatik başladı.
 
-| Alan | Değer |
-|---|---|
-| Repository name | `sunucumweb` |
-| Görünürlük | **Private** (gizli) |
-| Add README / .gitignore / license | **HİÇBİRİNİ İŞARETLEME** |
-
-**Create repository** → sonra bana kullanıcı adını söyle.
-
-> GitHub hesabın yoksa önce github.com'dan aç (ücretsiz, 1 dakika).
-
-### 2. Kodu ben göndereceğim
-
-Ben `git push` çalıştıracağım, ekrana bir **tarayıcı penceresi** açılacak →
-GitHub hesabınla **Authorize** de. Tek tıklama. Gerisi otomatik:
-Actions imajı derleyip GHCR'ye koyacak (~3-5 dk).
-
-### 3. İmaj paketini herkese açık yap
+### 2. İmaj paketini herkese açık yap
 
 Actions bitince (~3-5 dk) GitHub'da imaj oluşur. Bunny'nin onu çekebilmesi için:
 
-GitHub → profil fotoğrafın → **Your profile** → **Packages** sekmesi →
+Önce derlemenin bittiğini gör: https://github.com/yetkinbulutnet-ops/sunucumweb/actions
+(yeşil tik ✅ = hazır, ~3-5 dk sürer)
+
+Sonra: https://github.com/orgs/yetkinbulutnet-ops/packages →
 `sunucumweb` paketi → **Package settings** → en altta **Change visibility** → **Public**
 
 > Depo (repo) gizli kalabilir, sorun değil. Sadece **imaj paketi** herkese açık olmalı
 > ki Bunny "GitHub Public" seçeneğiyle kimlik doğrulamadan çekebilsin.
 
-### 4. Bunny'de imajı değiştir
+### 3. Bunny'de imajı değiştir
 
 Bunny paneli → `sunucumweb-demo` → **Container settings** → `app` kutusunda **Edit**:
 
 | Alan | Yeni değer |
 |---|---|
 | Registry | `GitHub Public` (zaten öyle) |
-| Image | `KULLANICI_ADIN/sunucumweb:latest` |
+| Image | `yetkinbulutnet-ops/sunucumweb:latest` |
 
-> `KULLANICI_ADIN` küçük harfle yazılmalı. Actions'ın çıktı özetinde tam yazan hâli görünür.
+> Tamamı küçük harf. Actions'ın çıktı özetinde de aynısı yazar.
 
 **Environment variables** → mevcut olanı sil, şunları ekle:
 
@@ -86,12 +74,12 @@ GROQ_API_KEY = (yeni üreteceğin Groq anahtarı)
 NODE_ENV     = production
 ```
 
-### 5. Veritabanı konteynerini sil
+### 4. Veritabanı konteynerini sil
 
 `db` kutusundaki **Delete** → sil. (Şablondan gelen Postgres; bizim sitede veritabanı yok.)
 Altındaki **Volume 1 / data** da onunla birlikte gider.
 
-### 6. Kaydet
+### 5. Kaydet
 
 Alttaki **Save Changes**. Bunny imajı çekip yeniden başlatır (~1-2 dk).
 `sunucumwebdemo.yetkin.web.tr` artık bizim site.
