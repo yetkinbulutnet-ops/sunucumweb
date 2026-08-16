@@ -1,0 +1,70 @@
+name: Docker imajı derle ve yayınla
+
+# Bu makinede Docker YOK; imajı GitHub derleyip GHCR'ye koyar,
+# Bunny Magic Containers oradan çeker.
+#
+# Tetikleme: main dalına her push + Actions sekmesinden elle çalıştırma.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      site_indexable:
+        description: 'Arama motorlarına açık mı? (0 = demo/kapalı, 1 = canlı)'
+        required: true
+        default: '0'
+        type: choice
+        options: ['0', '1']
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: sunucumweb
+
+jobs:
+  derle:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write   # GHCR'ye yazma izni (ek secret GEREKMEZ)
+
+    steps:
+      - name: Kodu al
+        uses: actions/checkout@v4
+
+      - name: Buildx kur
+        uses: docker/setup-buildx-action@v3
+
+      - name: GHCR'ye giriş yap
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: İmaj adını küçük harfe çevir
+        id: ad
+        run: echo "yol=${{ env.REGISTRY }}/$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')/${{ env.IMAGE_NAME }}" >> $GITHUB_OUTPUT
+
+      - name: Derle ve gönder
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ steps.ad.outputs.yol }}:latest
+            ${{ steps.ad.outputs.yol }}:${{ github.sha }}
+          build-args: |
+            SITE_INDEXABLE=${{ inputs.site_indexable || '0' }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Sonuç
+        run: |
+          echo "### İmaj hazır :rocket:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Bunny'ye yazılacak imaj adı:" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')/${{ env.IMAGE_NAME }}:latest" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "Arama motoru indexleme: ${{ inputs.site_indexable || '0' }} (0 = kapalı)" >> $GITHUB_STEP_SUMMARY

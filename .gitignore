@@ -1,0 +1,21 @@
+node_modules/
+.next/
+out/
+build/
+
+# ORTAM DEGISKENLERI - API anahtarlari asla git'e girmemeli
+.env
+.env.local
+.env*.local
+
+# Tailwind CLI ciktisi (build ile uretilir)
+public/tailwind.css
+
+npm-debug.log*
+yarn-error.log*
+.DS_Store
+*.pem
+
+# Yerel yedekler ve gecici klasorler
+_backup_precolor/
+_backup_pretheme/

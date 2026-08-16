@@ -1,0 +1,323 @@
+{
+ "pages": [
+  {
+   "slug": "abd-sunucu",
+   "route": "/abd-sunucu",
+   "title": "VDS Kiralama - Yüksek Performanslı Sanal Sunucular | SunucumWEB",
+   "description": "VDS sunucularla maksimum hız ve tam kontrol. SunucumWEB  ile SSD altyapılı, düşük ping'li sanal sunucu çözümleri.",
+   "canonical": "",
+   "jsonld": [
+    "{\n      \"@context\": \"https://schema.org\",\n      \"@type\": \"Product\",\n      \"name\": \"VDS Sunucu\",\n      \"brand\": \"SunucumWEB \",\n      \"url\": \"https://sunucumweb.com/vds-kirala.php\"\n    }"
+   ],
+   "hasScripts": true,
+   "contentBytes": 97094
+  },
+  {
+   "slug": "dedicated-sunucu",
+   "route": "/dedicated-sunucu",
+   "title": "Dedicated Sunucu Kiralama - SunucumWEB",
+   "description": "SunucumWEB  ile yüksek performanslı Dedicated Sunucu çözümleri. Kurumsal ihtiyaçlarınıza özel kiralık fiziksel sunucular.",
+   "canonical": "",
+   "jsonld": [
+    "{\n    \"@context\": \"https://schema.org\",\n    \"@type\": \"Product\",\n    \"name\": \"Dedicated Sunucu\",\n    \"description\": \"Kurumsal ve yüksek performanslı dedicated sunucular SunucumWEB  güvencesiyle.\",\n    \"brand\": \"SunucumWEB \",\n    \"url\": \"https://SunucumWEB .com/dedicated-sunucu.php\"\n  }"
+   ],
+   "hasScripts": true,
+   "contentBytes": 91126
+  },
+  {
+   "slug": "gizlilik-sozlesmesi",
+   "route": "/gizlilik-sozlesmesi",
+   "title": "Gizlilik Sözleşmesi - SunucumWEB",
+   "description": "SunucumWEB olarak gizliliğinize önem veriyoruz. Kişisel verilerinizin korunmasıyla ilgili detaylı bilgiler için gizlilik sözleşmemizi inceleyin.",
+   "canonical": "",
+   "jsonld": [
+    "{\n    \"@context\": \"https://schema.org\",\n    \"@type\": \"WebPage\",\n    \"name\": \"Gizlilik Sözleşmesi\",\n    \"url\": \"https://sunucumweb.com/gizlilik-sozlesmesi.php\"\n  }"
+   ],
+   "hasScripts": true,
+   "contentBytes": 16248
+  },
+  {
+   "slug": "gpu-sunucu",
+   "route": "/gpu-sunucu",
+   "title": "GPU VDS Sunucu Kiralama - SunucumWEB",
+   "description": "SunucumWEB GPU VDS sunucular ile RTX ve A serisi ekran kartlı yüksek performanslı sanal sunucu çözümleri. AI eğitim, render ve CUDA projeleri için ideal.",
+   "canonical": "",
+   "jsonld": [
+    "{\n    \"@context\": \"https://schema.org\",\n    \"@type\": \"Product\",\n    \"name\": \"GPU VDS Sunucu\",\n    \"description\": \"RTX ve A serisi ekran kartlı GPU VDS sunucular. AI, render ve veri işleme projeleri için yüksek performans.\",\n    \"brand\": \"SunucumWEB\",\n    \"url\": \"https://sunucumweb.com/gpu-vds.php\"\n  }"
+   ],
+   "hasScripts": true,
+   "contentBytes": 28215
+  },
+  {
+   "slug": "hakkimizda",
+   "route": "/hakkimizda",
+   "title": "Hakkımızda - SunucumWEB",
+   "description": "SunucumWEB, profesyonel hosting çözümleri sunan bir teknoloji firmasıdır. Müşteri memnuniyetini ön planda tutarak kaliteli hizmet vermektedir.",
+   "canonical": "",
+   "jsonld": [
+    "{\n    \"@context\": \"https://schema.org\",\n    \"@type\": \"Organization\",\n    \"name\": \"SunucumWEB\",\n    \"url\": \"https://sunucumweb.com\",\n    \"contactPoint\": {\n      \"@type\": \"ContactPoint\",\n      \"telephone\": \"+90-850-304-2531\",\n      \"contactType\": \"customer service\"\n    }\n  }"
+   ],
+   "hasScripts": true,
+   "contentBytes": 15440
+  },
+  {
+   "slug": "iade-politikasi",
+   "route": "/iade-politikasi",
+   "title": "İade Politikası - SunucumWEB",
+   "description": "SunucumWEB iade politikası hakkında detaylı bilgi alın. Koşullar, süreler ve geri ödeme süreçleri.",
+   "canonical": "",
+   "jsonld": [
+    "{\n    \"@context\": \"https://schema.org\",\n    \"@type\": \"WebPage\",\n    \"name\": \"İade Politikası\",\n    \"url\": \"https://sunucumweb.com/iade-politikasi.php\"\n  }"
+   ],
+   "hasScripts": true,
+   "contentBytes": 14511
+  },
+  {
+   "slug": "iletisim",
+   "route": "/iletisim",
+   "title": "İletişim - SunucumWEB",
+   "description": "Bize ulaşmak için iletişim bilgilerimizi kullanın. 0850 304 2531 numarası üzerinden destek alabilirsiniz.",
+   "canonical": "",
+   "jsonld": [
+    "{\n    \"@context\": \"https://schema.org\",\n    \"@type\": \"ContactPage\",\n    \"name\": \"İletişim\",\n    \"url\": \"https://sunucumweb.com/iletisim.php\",\n    \"mainEntity\": {\n      \"@type\": \"Organization\",\n      \"name\": \"SunucumWEB\",\n      \"contactPoint\": {\n        \"@type\": \"ContactPoint\",\n        \"telephone\": \"+90-850-304-2531\",\n        \"contactType\": \"customer support\"\n      }\n    }\n  }"
+   ],
+   "hasScripts": true,
+   "contentBytes": 20035
+  },
+  {
+   "slug": "index",
+   "route": "/",
+   "title": "SunucumWEB - Güvenilir Hosting ve Sunucu Çözümleri",
+   "description": "SunucumWEB TR, yüksek performanslı ve güvenilir hosting, VDS, sunucu kiralama ve internet çözümleri sunar. 7/24 destek ve uygun fiyat garantisi.",
+   "canonical": "",
+   "jsonld": [
+    "{\n    \"@context\": \"https://schema.org\",\n    \"@type\": \"WebSite\",\n    \"name\": \"SunucumWEB TR\",\n    \"url\": \"https://sunucumweb.com\",\n    \"potentialAction\": {\n      \"@type\": \"SearchAction\",\n      \"target\": \"https://sunucumweb.com/?s={search_term_string}\",\n      \"query-input\": \"required name=search_term_string\"\n    }\n  }"
+   ],
+   "hasScripts": true,
+   "contentBytes": 85850
+  },
+  {
+   "slug": "ip-kiralama",
+   "route": "/ip-kiralama",
+   "title": "IP Kiralama | IPv4 Subnet Kiralama - SunucumWEB",
+   "description": "SunucumWEB IP Kiralama hizmeti ile /30’dan /24’e kadar IPv4 subnet seçenekleri. Temiz IP blokları, RDNS desteği ve anında teslim.",
+   "canonical": "",
+   "jsonld": [
+    "{\n    \"@context\": \"https://schema.org\",\n    \"@type\": \"Product\",\n    \"name\": \"IPv4 IP Kiralama\",\n    \"description\": \"SunucumWEB IP kiralama hizmeti ile /30’dan /24’e kadar temiz IPv4 subnet blokları. RDNS ve Whois desteği ile kurumsal çözümler.\",\n    \"brand\": {\n      \"@type\": \"Organization\",\n      \"name\": \"SunucumWEB\"\n    },\n    \"category\": \"Network Services\",\n    \"url\": \"https://sunucumweb.com/ip-kiralama.php\"\n  }"
+   ],
+   "hasScripts": true,
+   "contentBytes": 25453
+  },
+  {
+   "slug": "isp-sunucu",
+   "route": "/isp-sunucu",
+   "title": "ISP VDS Kiralama - Residental IP Sanal Sunucular | SunucumWEB",
+   "description": "Residential IP destekli VDS sunucularla gerçek ev IP’si deneyimi. SunucumWEB ile SSD altyapılı, düşük ping’li ve güvenilir sanal sunucu çözümleri.",
+   "canonical": "",
+   "jsonld": [
+    "{\n      \"@context\": \"https://schema.org\",\n      \"@type\": \"Product\",\n      \"name\": \"VDS Sunucu\",\n      \"brand\": \"SunucumWEB \",\n      \"url\": \"https://sunucumweb.com/isp-sunucu.php\"\n    }"
+   ],
+   "hasScripts": true,
+   "contentBytes": 52646
+  },
+  {
+   "slug": "kullanim-kosullari",
+   "route": "/kullanim-kosullari",
+   "title": "Kullanım Koşulları - SunucumWEB",
+   "description": "SunucumWEB  hizmetlerinden faydalanmadan önce kullanım şartlarını inceleyin. Müşteri ve hizmet sağlayıcı hakları.",
+   "canonical": "",
+   "jsonld": [
+    "{\n    \"@context\": \"https://schema.org\",\n    \"@type\": \"WebPage\",\n    \"name\": \"Kullanım Koşulları\",\n    \"url\": \"https://sunucumweb.com/kullanim-kosullari.php\"\n  }"
+   ],
+   "hasScripts": true,
+   "contentBytes": 19535
+  },
+  {
+   "slug": "kurumsal-hosting",
+   "route": "/kurumsal-hosting",
+   "title": "Kurumsal Hosting - Uygun Fiyatlı Paylaşımlı Hosting Paketleri | sunucumweb.com",
+   "description": "sunucumweb.com web hosting ile siteniz hızlı, güvenli ve kesintisiz yayında. cPanel destekli uygun fiyatlı hosting çözümleri.",
+   "canonical": "",
+   "jsonld": [
+    "{\n        \"@context\": \"https://schema.org\",\n        \"@type\": \"Product\",\n        \"name\": \"Kurumsal Hosting\",\n        \"brand\": \"sunucumweb.com\",\n        \"url\": \"https://sunucumweb.com/kurumsal-hosting.php\"\n      }"
+   ],
+   "hasScripts": true,
+   "contentBytes": 74842
+  },
+  {
+   "slug": "premium-sunucu",
+   "route": "/premium-sunucu",
+   "title": "Sanal Sunucu | SunucumWEB.com",
+   "description": "<strong>VDS Sunucu</strong> ve <strong>Sanal Sunucu</strong> çözümleri ile maksimum performans. SunucumWEB ile <strong>Premium VDS</strong> kiralayın, yüksek hızlı sunucu deneyimini yaşayın.",
+   "canonical": "",
+   "jsonld": [
+    "{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"Product\",\n  \"name\": \"Premium VDS Sunucu\",\n  \"description\": \"Yüksek performanslı Intel Platinum işlemcili, NVMe SSD depolamalı sanal sunucu çözümleri. %99.9 uptime garantisi, tam root erişimi, 7/24 teknik destek.\",\n  \"brand\": {\n    \"@type\": \"Brand\",\n    \"name\": \"SunucumWEB\"\n  },\n  \"image\": \"https://sunucumweb.com/path/to/image.jpg\",\n  \"offers\": {\n    \"@type\": \"Offer\",\n    \"priceCurrency\": \"TRY\",\n    \"price\": \"149.99\",\n    \"priceValidUntil\": \"2025-12-31\",\n    \"availability\": \"https://schema.org/InStock\",\n    \"url\": \"https://sunucumweb.com/Premium-vds\",\n    \"seller\": {\n      \"@type\": \"Organization\",\n      \"name\": \"SunucumWEB Internet Hizmetleri\"\n    }\n  }\n}",
+    "{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"BreadcrumbList\",\n  \"itemListElement\": [\n    {\n      \"@type\": \"ListItem\",\n      \"position\": 1,\n      \"name\": \"Ana Sayfa\",\n      \"item\": \"https://sunucumweb.com\"\n    },\n    {\n      \"@type\": \"ListItem\",\n      \"position\": 2,\n      \"name\": \"Premium VDS\",\n      \"item\": \"https://sunucumweb.com/Premium-vds\"\n    }\n  ]\n}",
+    "{\n  \"@context\": \"https://schema.org\",\n  \"@graph\": [\n    {\n      \"@type\": \"Product\",\n      \"name\": \"Premium VDS\",\n      \"description\": \"SunucumWEB ile yüksek performanslı Premium VDS hizmetleri. Uygun fiyatlarla 7/24 destek.\",\n      \"url\": \"https://sunucumweb.com/Premium-vds\",\n      \"image\": \"https://sunucumweb.com/assets/img/logo.svg\",\n      \"brand\": {\n        \"@type\": \"Organization\",\n        \"name\": \"SunucumWEB\",\n        \"logo\": {\n          \"@type\": \"ImageObject\",\n          \"url\": \"https://sunucumweb.com/assets/img/logo.svg\",\n          \"width\": 200,\n          \"height\": 60\n        }\n      },\n      \"offers\": {\n        \"@type\": \"Offer\",\n        \"priceCurrency\": \"TRY\",\n        \"price\": \"89.99\",\n        \"availability\": \"https://schema.org/InStock\",\n        \"url\": \"https://sunucumweb.com/Premium-vds\"\n      }\n    },\n    {\n      \"@type\": \"Organization\",\n      \"name\": \"SunucumWEB\",\n      \"url\": \"https://sunucumweb.com\",\n      \"logo\": {\n        \"@type\": \"ImageObject\",\n        \"url\": \"https://sunucumweb.com/assets/img/logo.svg\",\n        \"width\": 200,\n        \"height\": 60\n      },\n      \"sameAs\": [\n        \"https://facebook.com/sunucumweb\",\n        \"https://twitter.com/sunucumweb\",\n        \"https://instagram.com/sunucumweb\"\n      ],\n      \"contactPoint\": {\n        \"@type\": \"ContactPoint\",\n        \"telephone\": \"+90-555-123-4567\",\n        \"contactType\": \"Customer Support\",\n        \"areaServed\": \"TR\",\n        \"availableLanguage\": [\"Turkish\"]\n      }\n    },\n    {\n      \"@type\": \"BreadcrumbList\",\n      \"itemListElement\": [\n        {\n          \"@type\": \"ListItem\",\n          \"position\": 1,\n          \"name\": \"Ana Sayfa\",\n          \"item\": \"https://sunucumweb.com/\"\n        },\n        {\n          \"@type\": \"ListItem\",\n          \"position\": 2,\n          \"name\": \"Premium VDS\",\n          \"item\": \"https://sunucumweb.com/Premium-vds\"\n        }\n      ]\n    }\n  ]\n}",
+    "{\n  \"@context\": \"https://schema.org\",\n  \"@graph\": [\n    {\n      \"@type\": \"Product\",\n      \"name\": \"Premium VDS\",\n      \"description\": \"2 Core CPU, 4 GB DDR4 RAM, 50 GB NVMe, 1 Gbps Hat - Intel Xeon Platinum 8173M\",\n      \"brand\": \"SunucumWEB\",\n      \"image\": \"https://sunucumweb.com/assets/img/platinum.jpg\",\n      \"offers\": {\n        \"@type\": \"Offer\",\n        \"price\": \"99.90\",\n        \"priceCurrency\": \"TRY\",\n        \"availability\": \"https://schema.org/InStock\",\n        \"priceValidUntil\": \"2025-12-31\",\n        \"url\": \"https://sunucumweb.com/vds-4\"\n      }\n    },\n    {\n      \"@type\": \"Product\",\n      \"name\": \"Premium VDS\",\n      \"description\": \"3 Core CPU, 6 GB DDR4 RAM, 65 GB NVMe, 1 Gbps Hat - Intel Xeon Platinum 8173M\",\n      \"brand\": \"SunucumWEB\",\n      \"image\": \"https://sunucumweb.com/assets/img/platinum.jpg\",\n      \"offers\": {\n        \"@type\": \"Offer\",\n        \"price\": \"149.90\",\n        \"priceCurrency\": \"TRY\",\n        \"availability\": \"https://schema.org/InStock\",\n        \"priceValidUntil\": \"2025-12-31\",\n        \"url\": \"https://sunucumweb.com/vds-6\"\n      }\n    },\n    {\n      \"@type\": \"Product\",\n      \"name\": \"Premium VDS\",\n      \"description\": \"4 Core CPU, 8 GB DDR4 RAM, 70 GB NVMe, 1 Gbps Hat - Intel Xeon Platinum 8173M\",\n      \"brand\": \"SunucumWEB\",\n      \"image\": \"https://sunucumweb.com/assets/img/platinum.jpg\",\n      \"offers\": {\n        \"@type\": \"Offer\",\n        \"price\": \"189.90\",\n        \"priceCurrency\": \"TRY\",\n        \"availability\": \"https://schema.org/InStock\",\n        \"priceValidUntil\": \"2025-12-31\",\n        \"url\": \"https://sunucumweb.com/vds-8\"\n      }\n    },\n    {\n      \"@type\": \"Product\",\n      \"name\": \"Premium VDS\",\n      \"description\": \"5 Core CPU, 12 GB DDR4 RAM, 75 GB NVMe, 1 Gbps Hat - Intel Xeon Platinum 8173M\",\n      \"brand\": \"SunucumWEB\",\n      \"image\": \"https://sunucumweb.com/assets/img/platinum.jpg\",\n      \"offers\": {\n        \"@type\": \"Offer\",\n        \"price\": \"284.90\",\n        \"priceCurrency\": \"TRY\",\n        \"availability\": \"https://schema.org/InStock\",\n        \"priceValidUntil\": \"2025-12-31\",\n        \"url\": \"https://sunucumweb.com/vds-12\"\n      }\n    },\n    {\n      \"@type\": \"Product\",\n      \"name\": \"Premium VDS\",\n      \"description\": \"6 Core CPU, 16 GB DDR4 RAM, 85 GB NVMe, 1 Gbps Hat - Intel Xeon Platinum 8173M\",\n      \"brand\": \"SunucumWEB\",\n      \"image\": \"https://sunucumweb.com/assets/img/platinum.jpg\",\n      \"offers\": {\n        \"@type\": \"Offer\",\n        \"price\": \"349.90\",\n        \"priceCurrency\": \"TRY\",\n        \"availability\": \"https://schema.org/InStock\",\n        \"priceValidUntil\": \"2025-12-31\",\n        \"url\": \"https://sunucumweb.com/vds-16\"\n      }\n    },\n    {\n      \"@type\": \"Product\",\n      \"name\": \"Premium VDS\",\n      \"description\": \"8 Core CPU, 24 GB DDR4 RAM, 100 GB NVMe, 1 Gbps Hat - Intel Xeon Platinum 8173M\",\n      \"brand\": \"SunucumWEB\",\n      \"image\": \"https://sunucumweb.com/assets/img/platinum.jpg\",\n      \"offers\": {\n        \"@type\": \"Offer\",\n        \"price\": \"459.90\",\n        \"priceCurrency\": \"TRY\",\n        \"availability\": \"https://schema.org/InStock\",\n        \"priceValidUntil\": \"2025-12-31\",\n        \"url\": \"https://sunucumweb.com/vds-24\"\n      }\n    },\n    {\n      \"@type\": \"Product\",\n      \"name\": \"Premium VDS\",\n      \"description\": \"12 Core CPU, 32 GB DDR4 RAM, 150 GB NVMe, 1 Gbps Hat - Intel Xeon Platinum 8173M\",\n      \"brand\": \"SunucumWEB\",\n      \"image\": \"https://sunucumweb.com/assets/img/platinum.jpg\",\n      \"offers\": {\n        \"@type\": \"Offer\",\n        \"price\": \"599.90\",\n        \"priceCurrency\": \"TRY\",\n        \"availability\": \"https://schema.org/InStock\",\n        \"priceValidUntil\": \"2025-12-31\",\n        \"url\": \"https://sunucumweb.com/vds-32\"\n      }\n    },\n    {\n      \"@type\": \"Product\",\n      \"name\": \"Premium VDS\",\n      \"description\": \"16 Core CPU, 64 GB DDR4 RAM, 320 GB NVMe, 1 Gbps Hat - Intel Xeon Platinum 8173M\",\n      \"brand\": \"SunucumWEB\",\n      \"image\": \"https://sunucumweb.com/assets/img/platinum.jpg\",\n      \"offers\": {\n        \"@type\": \"Offer\",\n        \"price\": \"899.90\",\n        \"priceCurrency\": \"TRY\",\n        \"availability\": \"https://schema.org/InStock\",\n        \"priceValidUntil\": \"2025-12-31\",\n        \"url\": \"https://sunucumweb.com/vds-64\"\n      }\n    }\n  ]\n}",
+    "{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"FAQPage\",\n  \"mainEntity\": [\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Premium VDS sunucularınızda hangi işletim sistemlerini kullanabilirim?\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"Premium VDS sunucularımızda çeşitli Linux dağıtımları (Ubuntu, CentOS, Debian, AlmaLinux) ve Windows Server sürümlerini kullanabilirsiniz. İşletim sistemi kurulumu ücretsiz olarak yapılmaktadır. Özel bir işletim sistemi talebiniz olursa, teknik destek ekibimizle iletişime geçebilirsiniz.\"\n      }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Premium VDS sunucularınızda root erişimi sağlıyor musunuz?\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"Evet, tüm Premium VDS paketlerimizde tam root/administrator erişimi sağlıyoruz. Bu sayede sunucunuzu tamamen kontrol edebilir, istediğiniz yazılımları kurabilir ve özel yapılandırmalar yapabilirsiniz. Sunucu yönetimi tamamen size aittir.\"\n      }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Premium VDS sunucularınızda trafik sınırlaması var mı?\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"Premium VDS Starter ve Basic paketlerimizde aylık belirli bir trafik limiti bulunmaktadır. Professional ve Enterprise paketlerimizde ise sınırsız trafik sunuyoruz. Trafik limitinizi aşmanız durumunda ek ücret ödemeden hız kısıtlaması uygulanır. Paket detaylarında trafik limitlerini görebilirsiniz.\"\n      }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Premium VDS sunucularınızda yedekleme hizmeti sunuyor musunuz?\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"Premium VDS Professional ve Enterprise paketlerimizde haftalık otomatik yedekleme hizmeti ücretsiz olarak sunulmaktadır. Starter ve Basic paketlerde ise ek ücret karşılığında yedekleme hizmeti alabilirsiniz. Ayrıca tüm paketlerde manuel yedekleme yapabilir veya kendi yedekleme çözümünüzü kullanabilirsiniz.\"\n      }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Premium VDS sunucumu başka bir sağlayıcıdan size taşıyabilir miyim?\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"Premium VDS mevcut VDS sunucunuzu SunucumWEB'e taşıyabilirsiniz. Teknik destek ekibimiz, verilerinizin ve uygulamalarınızın sorunsuz bir şekilde taşınması için size yardımcı olacaktır. Taşıma işlemi sırasında minimum kesinti yaşamanız için gerekli planlamayı yapıyoruz.\"\n      }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Premium VDS sunucularınızda DDoS koruması var mı?\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"Tüm Premium VDS paketlerimizde temel DDoS koruması standart olarak sunulmaktadır. Professional ve Enterprise paketlerimizde ise gelişmiş DDoS koruması bulunmaktadır. Kurumsal müşterilerimiz için özel güvenlik çözümleri de sunuyoruz. Güvenlik ihtiyaçlarınız için bizimle iletişime geçebilirsiniz.\"\n      }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Premium VDS paketimi daha sonra yükseltebilir miyim?\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"Evet, ihtiyaçlarınız değiştikçe VDS paketinizi kolayca yükseltebilirsiniz. Müşteri panelinizden yükseltme talebinde bulunabilir veya müşteri hizmetlerimizle iletişime geçebilirsiniz. Yükseltme işlemi genellikle kısa bir kesinti ile gerçekleştirilir ve ek kurulum ücreti alınmaz.\"\n      }\n    }\n  ]\n}"
+   ],
+   "hasScripts": true,
+   "contentBytes": 88855
+  },
+  {
+   "slug": "reseller-hosting",
+   "route": "/reseller-hosting",
+   "title": "Ucuz Reseller Hosting | Reseller Hositng Paketleri | sunucumweb.com",
+   "description": "Ucuz SSD hosting fırsatları! sunucumweb.com ile hızlı, güvenilir ve uygun fiyatlı Linux hosting paketlerini keşfedin.",
+   "canonical": "reseller-hosting.html",
+   "jsonld": [
+    "{\n    \"@context\": \"https://schema.org\",\n    \"@graph\": [\n      {\n        \"@type\": \"Product\",\n        \"name\": \"Linux Hosting - 1\",\n        \"description\": \"1 Site, 10 GB SSD, Limitsiz Trafik, 2 E-Posta, 1 Core CPU, 1 GB RAM\",\n        \"url\": \"https://sunucumweb.com/panel/index.php?rp=/store/web-hosting/cpanel-1\",\n        \"offers\": {\n          \"@type\": \"Offer\",\n          \"priceCurrency\": \"TRY\",\n          \"price\": \"9.99\",\n          \"availability\": \"https://schema.org/InStock\",\n          \"url\": \"https://sunucumweb.com/panel/index.php?rp=/store/web-hosting/cpanel-1\"\n        }\n      },\n      {\n        \"@type\": \"Product\",\n        \"name\": \"Linux Hosting - 2\",\n        \"description\": \"2 Site, 20 GB SSD, Limitsiz Trafik, 5 E-Posta, 1 Core CPU, 2 GB RAM\",\n        \"url\": \"https://sunucumweb.com/panel/index.php?rp=/store/web-hosting/cpanel-2\",\n        \"offers\": {\n          \"@type\": \"Offer\",\n          \"priceCurrency\": \"TRY\",\n          \"price\": \"19.99\",\n          \"availability\": \"https://schema.org/InStock\",\n          \"url\": \"https://sunucumweb.com/panel/index.php?rp=/store/web-hosting/cpanel-2\"\n        }\n      },\n      {\n        \"@type\": \"Product\",\n        \"name\": \"Linux Hosting - 3\",\n        \"description\": \"5 Site, Limitsiz SSD, Limitsiz Trafik, 10 E-Posta, 2 Core CPU, 2 GB RAM\",\n        \"url\": \"https://sunucumweb.com/panel/index.php?rp=/store/web-hosting/cpanel-3\",\n        \"offers\": {\n          \"@type\": \"Offer\",\n          \"priceCurrency\": \"TRY\",\n          \"price\": \"29.99\",\n          \"availability\": \"https://schema.org/InStock\",\n          \"url\": \"https://sunucumweb.com/panel/index.php?rp=/store/web-hosting/cpanel-3\"\n        }\n      },\n      {\n        \"@type\": \"Product\",\n        \"name\": \"Linux Hosting - 4\",\n        \"description\": \"Limitsiz Site, SSD, Trafik, E-Posta, Veritabanı, 2 Core CPU, 4 GB RAM\",\n        \"url\": \"https://sunucumweb.com/panel/index.php?rp=/store/web-hosting/cpanel-4\",\n        \"offers\": {\n          \"@type\": \"Offer\",\n          \"priceCurrency\": \"TRY\",\n          \"price\": \"39.99\",\n          \"availability\": \"https://schema.org/InStock\",\n          \"url\": \"https://sunucumweb.com/panel/index.php?rp=/store/web-hosting/cpanel-4\"\n        }\n      }\n    ]\n  }"
+   ],
+   "hasScripts": true,
+   "contentBytes": 74832
+  },
+  {
+   "slug": "sanal-sunucu",
+   "route": "/sanal-sunucu",
+   "title": "VDS Kiralama - Yüksek Performanslı Sanal Sunucular | SunucumWEB",
+   "description": "VDS sunucularla maksimum hız ve tam kontrol. SunucumWEB  ile SSD altyapılı, düşük ping'li sanal sunucu çözümleri.",
+   "canonical": "",
+   "jsonld": [
+    "{\n    \"@context\": \"https://schema.org\",\n    \"@type\": \"Product\",\n    \"name\": \"VDS Sunucu\",\n    \"brand\": \"SunucumWEB \",\n    \"url\": \"https://sunucumweb.com/vds-kirala.php\"\n  }"
+   ],
+   "hasScripts": true,
+   "contentBytes": 68235
+  },
+  {
+   "slug": "sunucu-barindirma",
+   "route": "/sunucu-barindirma",
+   "title": "Sunucu Barındırma (Co-Location) | Güçlü ve Güvenli Sunucular - sunucumweb.com",
+   "description": "",
+   "canonical": "",
+   "jsonld": [
+    "{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"Product\",\n  \"name\": \"Rust VDS Kiralama\",\n  \"image\": [\n    \"https://sunucumweb.com/images/sunucu-barindirma.jpg\"\n  ],\n  \"description\": \"Rust sunucularınız için yüksek performanslı, DDoS korumalı VDS kiralama hizmeti. sunucumweb.com ile düşük ping, kesintisiz erişim ve ücretsiz kurulum avantajı.\",\n  \"sku\": \"rust-vds-001\",\n  \"mpn\": \"RVDS-2025\",\n  \"brand\": {\n    \"@type\": \"Brand\",\n    \"name\": \"sunucumweb.com\"\n  },\n  \"review\": {\n    \"@type\": \"Review\",\n    \"reviewRating\": {\n      \"@type\": \"Rating\",\n      \"ratingValue\": \"4.8\",\n      \"bestRating\": \"5\"\n    },\n    \"author\": {\n      \"@type\": \"Person\",\n      \"name\": \"Oyuncu123\"\n    }\n  },\n  \"aggregateRating\": {\n    \"@type\": \"AggregateRating\",\n    \"ratingValue\": \"4.7\",\n    \"reviewCount\": \"164\"\n  },\n  \"offers\": {\n    \"@type\": \"Offer\",\n    \"url\": \"https://sunucumweb.com/rust-vds\",\n    \"priceCurrency\": \"TRY\",\n    \"price\": \"59.99\",\n    \"priceValidUntil\": \"2025-12-31\",\n    \"itemCondition\": \"https://schema.org/NewCondition\",\n    \"availability\": \"https://schema.org/InStock\",\n    \"seller\": {\n      \"@type\": \"Organization\",\n      \"name\": \"sunucumweb.com\"\n    }\n  }\n}",
+    "{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"Product\",\n  \"name\": \"Rust VDS Kiralama\",\n  \"image\": [\n    \"https://sunucumweb.com/images/rust-vds.jpg\"\n  ],\n  \"description\": \"Rust sunucularınız için yüksek performanslı, DDoS korumalı VDS kiralama hizmeti. sunucumweb.com ile düşük ping, kesintisiz erişim ve ücretsiz kurulum avantajı.\",\n  \"sku\": \"rust-vds-001\",\n  \"mpn\": \"RVDS-2025\",\n  \"brand\": {\n    \"@type\": \"Brand\",\n    \"name\": \"sunucumweb.com\"\n  },\n  \"review\": {\n    \"@type\": \"Review\",\n    \"reviewRating\": {\n      \"@type\": \"Rating\",\n      \"ratingValue\": \"4.8\",\n      \"bestRating\": \"5\"\n    },\n    \"author\": {\n      \"@type\": \"Person\",\n      \"name\": \"Oyuncu123\"\n    }\n  },\n  \"aggregateRating\": {\n    \"@type\": \"AggregateRating\",\n    \"ratingValue\": \"4.7\",\n    \"reviewCount\": \"164\"\n  },\n  \"offers\": {\n    \"@type\": \"Offer\",\n    \"url\": \"https://sunucumweb.com/rust-vds\",\n    \"priceCurrency\": \"TRY\",\n    \"price\": \"59.99\",\n    \"priceValidUntil\": \"2025-12-31\",\n    \"itemCondition\": \"https://schema.org/NewCondition\",\n    \"availability\": \"https://schema.org/InStock\",\n    \"seller\": {\n      \"@type\": \"Organization\",\n      \"name\": \"sunucumweb.com\"\n    }\n  }\n}"
+   ],
+   "hasScripts": true,
+   "contentBytes": 36245
+  },
+  {
+   "slug": "ticari-bilgiler",
+   "route": "/ticari-bilgiler",
+   "title": "Ticari Bilgiler - sunucumweb.com",
+   "description": "sunucumweb.com'nin resmi ticari bilgilerine ulaşın. Vergi numarası, şirket ünvanı ve iletişim bilgileri burada.",
+   "canonical": "",
+   "jsonld": [
+    "{\n    \"@context\": \"https://schema.org\",\n    \"@type\": \"Organization\",\n    \"name\": \"sunucumweb.com\",\n    \"legalName\": \"sunucumweb.com Bilişim Hizmetleri\",\n    \"address\": {\n      \"@type\": \"PostalAddress\",\n      \"streetAddress\": \"MUSTAFA KEMAL MAHALLESİ GÜL CADDESİ NO: 21 B İÇ KAPI NO: 1\",\n      \"addressLocality\": \"SİNCAN\",\n      \"addressRegion\": \"ANKARA\",\n      \"postalCode\": \"06930\",\n      \"addressCountry\": \"TR\"\n    },\n    \"telephone\": \"+90-850-302-5809\",\n    \"url\": \"https://sunucumweb.com/ticari-bilgiler.php\"\n  }"
+   ],
+   "hasScripts": true,
+   "contentBytes": 15372
+  },
+  {
+   "slug": "web-hosting",
+   "route": "/web-hosting",
+   "title": "Web Hosting Paketleri – SunucumWEB",
+   "description": "",
+   "canonical": "",
+   "jsonld": [],
+   "hasScripts": true,
+   "contentBytes": 35199
+  },
+  {
+   "slug": "alan-adi",
+   "route": "/alan-adi",
+   "title": "Alan Adı Tescili - SUNUCUMWEB - Türkiye'nin Sunucu Sağlayıcısı",
+   "description": "Uygun fiyatlarla .com / .net / .org ve daha fazla uzantılarla alan adınıza hemen sahip olun. Tüm alan adı işlemlerinizi paneliniz üzerinden anında gerçekleştirin.",
+   "canonical": "",
+   "jsonld": [],
+   "standalone": true,
+   "headCss": [
+    "/assets/_external/my.sunucumweb.com/resources/uploads/logo/favicon.png",
+    "/assets/_external/my.sunucumweb.com/resources/assets/style/theme_6a18d81d.css",
+    "/assets/_external/my.sunucumweb.com/resources/assets/plugins/iziModal/css/iziModal.min_6a18d81d.css",
+    "/assets/_external/my.sunucumweb.com/resources/assets/plugins/sweetalert2/dist/sweetalert2.min.css",
+    "/assets/_external/my.sunucumweb.com/templates/website/Classic/css/wisecp_6fc55f43.css",
+    "/assets/_external/my.sunucumweb.com/templates/website/Classic/css/ionicons.min.css",
+    "/assets/_external/my.sunucumweb.com/templates/website/Classic/css/animate.css",
+    "/assets/_external/my.sunucumweb.com/templates/website/Classic/css/aos.css",
+    "/assets/_external/my.sunucumweb.com/resources/assets/plugins/css/jquery-ui.css",
+    "/assets/_external/my.sunucumweb.com/resources/assets/style/theme-default_6a18d81d.css",
+    "/assets/_external/cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+   ],
+   "headJs": [
+    "/assets/_external/my.sunucumweb.com/templates/website/Classic/js/jquery-2.2.4.min.js",
+    "/assets/_external/my.sunucumweb.com/resources/assets/plugins/js/jquery-ui.js",
+    "/assets/_external/my.sunucumweb.com/resources/assets/plugins/js/i18n/datepicker-tr.js",
+    "/assets/_external/my.sunucumweb.com/resources/assets/plugins/iziModal/js/iziModal.min_6a18d81d.js",
+    "/assets/_external/my.sunucumweb.com/resources/assets/plugins/sweetalert2/dist/promise.min.js",
+    "/assets/_external/my.sunucumweb.com/resources/assets/plugins/sweetalert2/dist/sweetalert2.min.js",
+    "/assets/_external/my.sunucumweb.com/resources/assets/javascript/jquery.form.min.js",
+    "/assets/_external/my.sunucumweb.com/resources/assets/javascript/webmio_6a18d81d.js"
+   ],
+   "hasScripts": true
+  },
+  {
+   "slug": "transfer",
+   "route": "/transfer",
+   "title": "Alan Adı Tescili - SUNUCUMWEB - Türkiye'nin Sunucu Sağlayıcısı",
+   "description": "Uygun fiyatlarla .com / .net / .org ve daha fazla uzantılarla alan adınıza hemen sahip olun. Tüm alan adı işlemlerinizi paneliniz üzerinden anında gerçekleştirin.",
+   "canonical": "",
+   "jsonld": [],
+   "standalone": true,
+   "headCss": [
+    "/assets/_external/my.sunucumweb.com/resources/uploads/logo/favicon.png",
+    "/assets/_external/my.sunucumweb.com/resources/assets/style/theme_6a18d81d.css",
+    "/assets/_external/my.sunucumweb.com/resources/assets/plugins/iziModal/css/iziModal.min_6a18d81d.css",
+    "/assets/_external/my.sunucumweb.com/resources/assets/plugins/sweetalert2/dist/sweetalert2.min.css",
+    "/assets/_external/my.sunucumweb.com/templates/website/Classic/css/wisecp_6fc55f43.css",
+    "/assets/_external/my.sunucumweb.com/templates/website/Classic/css/ionicons.min.css",
+    "/assets/_external/my.sunucumweb.com/templates/website/Classic/css/animate.css",
+    "/assets/_external/my.sunucumweb.com/templates/website/Classic/css/aos.css",
+    "/assets/_external/my.sunucumweb.com/resources/assets/plugins/css/jquery-ui.css",
+    "/assets/_external/my.sunucumweb.com/resources/assets/style/theme-default_6a18d81d.css",
+    "/assets/_external/cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+   ],
+   "headJs": [
+    "/assets/_external/my.sunucumweb.com/templates/website/Classic/js/jquery-2.2.4.min.js",
+    "/assets/_external/my.sunucumweb.com/resources/assets/plugins/js/jquery-ui.js",
+    "/assets/_external/my.sunucumweb.com/resources/assets/plugins/js/i18n/datepicker-tr.js",
+    "/assets/_external/my.sunucumweb.com/resources/assets/plugins/iziModal/js/iziModal.min_6a18d81d.js",
+    "/assets/_external/my.sunucumweb.com/resources/assets/plugins/sweetalert2/dist/promise.min.js",
+    "/assets/_external/my.sunucumweb.com/resources/assets/plugins/sweetalert2/dist/sweetalert2.min.js",
+    "/assets/_external/my.sunucumweb.com/resources/assets/javascript/jquery.form.min.js",
+    "/assets/_external/my.sunucumweb.com/resources/assets/javascript/webmio_6a18d81d.js"
+   ],
+   "hasScripts": true
+  },
+  {
+   "slug": "whois",
+   "route": "/whois",
+   "title": "WHOIS Sorgu",
+   "description": "",
+   "canonical": "",
+   "jsonld": [],
+   "standalone": true,
+   "headCss": [
+    "/assets/_external/fonts.googleapis.com/css2_4ff7e433.css"
+   ],
+   "headJs": [],
+   "hasScripts": true
+  },
+  {
+   "slug": "wordpress-hosting",
+   "route": "/wordpress-hosting",
+   "title": "WordPress Hosting - SunucumWEB",
+   "description": "Hızlı, güvenli ve optimize WordPress hosting paketleri. Ücretsiz SSL, günlük yedek ve 7/24 destek.",
+   "canonical": "",
+   "jsonld": [],
+   "hasScripts": true,
+   "created": true
+  },
+  {
+   "slug": "kullanim-politikasi",
+   "route": "/kullanim-politikasi",
+   "title": "Kullanım Politikası - SunucumWEB",
+   "description": "SunucumWEB hizmet kullanım politikası.",
+   "canonical": "",
+   "jsonld": [],
+   "hasScripts": true,
+   "created": true
+  }
+ ]
+}

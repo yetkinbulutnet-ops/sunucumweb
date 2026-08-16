@@ -1,0 +1,12 @@
+node_modules
+.next
+.git
+.env
+.env.local
+.env*.local
+_backup_precolor
+_backup_pretheme
+npm-debug.log*
+*.md
+.vscode
+.idea

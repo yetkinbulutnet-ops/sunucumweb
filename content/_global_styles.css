@@ -1,0 +1,2160 @@
+
+        @keyframes shimmer {
+            0% {
+                background-position: -100% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+        .animate-shimmer {
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite linear;
+        }
+    
+
+
+  @keyframes blink {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.3;
+    }
+  }
+
+  .blink {
+    animation: blink 1.5s infinite;
+  }
+
+
+
+  .blink {
+    animation: blink 1.5s infinite;
+  }
+
+  @keyframes blink {
+
+    0%,
+    50%,
+    100% {
+      opacity: 1
+    }
+
+    25%,
+    75% {
+      opacity: 0.5
+    }
+  }
+
+  .discount-pulse {
+    animation: pulse 1.2s infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 rgba(16, 185, 129, 0.4);
+    }
+
+    70% {
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.8);
+    }
+
+    100% {
+      box-shadow: 0 0 0 rgba(16, 185, 129, 0.4);
+    }
+  }
+
+  .btn-gradient {
+    background-size: 200% 200%;
+    animation: gradientAnim 3s ease infinite;
+  }
+
+  @keyframes gradientAnim {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+
+
+    @import url('assets/_external/fonts.googleapis.com/css2_ab8c65e1.css');
+    
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .bg-gradient-dark {
+      background: linear-gradient(to bottom, #0f172a, #020617);
+    }
+    
+    .bg-grid {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%232563eb' fill-opacity='0.05'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    
+    .hover-lift {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .hover-lift:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 15px -5px rgba(0, 0, 0, 0.2);
+    }
+    
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    
+    .accordion-content.open {
+      max-height: 500px;
+    }
+    
+    .accordion-btn {
+      position: relative;
+    }
+    
+    .accordion-btn::after {
+      content: '+';
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: transform 0.3s ease;
+    }
+    
+    .accordion-btn[aria-expanded="true"]::after {
+      transform: translateY(-50%) rotate(45deg);
+    }
+    
+    .footer-link {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .footer-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 1px;
+      bottom: -2px;
+      left: 0;
+      background-color: #3d8df8;
+      transition: width 0.2s ease;
+    }
+    
+    .footer-link:hover::after {
+      width: 100%;
+    }
+    
+    
+    
+    
+  
+
+
+
+/* ======================================================
+   KURUMSAL TASARIM GLOBAL DEĞİŞKENLER
+====================================================== */
+:root {
+  --brand-primary: #002677;
+  --brand-secondary: #1e56b1;
+  --brand-soft: #f4f7fc;
+  --brand-border: #e6ebf3;
+  --brand-text: #1f2937;
+}
+
+/* ======================================================
+   GENEL TİPOGRAFİ & METİN HİYERARŞİSİ
+====================================================== */
+h2, h3 {
+  letter-spacing: -0.02em;
+}
+
+p {
+  line-height: 1.7;
+  color: #4b5563;
+}
+
+.tab-button {
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* ======================================================
+   HERO & ARKA PLAN YUMUŞATMA
+====================================================== */
+.absolute.bg-blue-50,
+.absolute.bg-gray-50 {
+  filter: blur(60px);
+  opacity: 0.25;
+}
+
+/* ======================================================
+   KURUMSAL KART TASARIMI
+====================================================== */
+.bg-white.border {
+  border-color: var(--brand-border);
+}
+
+.shadow-xl {
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+}
+
+.shadow-md {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Hover efektlerini kurumsallaştır */
+.group:hover {
+  transform: translateY(-2px);
+}
+
+.group:hover svg {
+  animation: none !important;
+  transform: translateX(2px);
+  opacity: 0.85;
+}
+
+/* ======================================================
+   INPUT & FORM KURUMSAL GÖRÜNÜM
+====================================================== */
+input,
+textarea,
+select {
+  font-size: 15px;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #9ca3af;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--brand-primary) !important;
+}
+
+/* ======================================================
+   BUTONLAR – KURUMSAL CTA
+====================================================== */
+button {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.bg-blue-700 {
+  background-color: var(--brand-primary) !important;
+}
+
+.bg-blue-700:hover {
+  background-color: var(--brand-secondary) !important;
+}
+
+/* CTA butonları daha ciddi */
+button:hover {
+  box-shadow: 0 6px 18px rgba(0, 38, 119, 0.25);
+}
+
+/* ======================================================
+   TAB ALANI – PANEL HİSSİ
+====================================================== */
+.tab-button {
+  padding-bottom: 14px;
+}
+
+.tab-button.text-blue-700 {
+  border-bottom-width: 3px;
+}
+
+/* ======================================================
+   DOMAIN FİYAT KARTLARI – PREMIUM
+====================================================== */
+.grid > div.bg-white {
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.grid > div.bg-white:hover {
+  border-color: var(--brand-secondary);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* İndirim badge daha kurumsal */
+.bg-green-50 {
+  background-color: #eaf6ef !important;
+  color: #0f5132 !important;
+}
+
+/* ======================================================
+   WHOIS SONUÇ ALANI
+====================================================== */
+#whois-result p {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+#whois-result strong {
+  color: var(--brand-text);
+}
+
+/* ======================================================
+   BİLGİ & UYARI KUTULARI
+====================================================== */
+.bg-blue-50 {
+  background-color: var(--brand-soft) !important;
+  border: 1px solid var(--brand-border);
+}
+
+/* ======================================================
+   LİSTELER – KURUMSAL OKUNABİLİRLİK
+====================================================== */
+ul li,
+ol li {
+  font-size: 14px;
+}
+
+/* ======================================================
+   ANİMASYONLAR – SADELEŞTİRME
+====================================================== */
+.animate-draw {
+  animation-duration: 1.6s;
+}
+
+@keyframes float {
+  0% { transform: none; }
+  100% { transform: none; }
+}
+
+/* ======================================================
+   MOBİL KURUMSAL DENGE
+====================================================== */
+@media (max-width: 768px) {
+  h2 {
+    font-size: 1.9rem;
+  }
+
+  .tab-button {
+    font-size: 12px;
+  }
+
+  button {
+    font-size: 14px;
+  }
+}
+
+/* ======================================================
+   AKILLI KURUMSAL GÜVEN BANNER (ENTERPRISE)
+====================================================== */
+
+#content-domain .mb-10 {
+  position: relative;
+}
+
+/* Ana banner */
+#content-domain .mb-10::after {
+  content: "ICANN akreditasyonu • KVKK uyumlu • Güvenli altyapı";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16px;
+  padding: 12px 16px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #1f2937;
+  background: linear-gradient(to right, #f8fafc, #ffffff);
+  border-left: 4px solid #1e40af;
+  border-radius: 10px;
+  letter-spacing: 0.02em;
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+}
+
+/* Hover'da detaylı bilgi */
+#content-domain .mb-10:hover::after {
+  content: "ICANN akreditasyonu • KVKK uyumlu altyapı • 256-bit SSL • Güvenli ödeme • WHOIS koruması";
+  color: #111827;
+  background: linear-gradient(to right, #eef2ff, #ffffff);
+  border-left-color: #1e3a8a;
+}
+
+
+
+/* ======================================================
+   EN ÇOK TERCİH EDİLEN – TAM KALDIRMA
+====================================================== */
+.grid.grid-cols-2 > div:first-child::after {
+  content: none !important;
+  display: none !important;
+}
+
+
+/* ======================================================
+   .COM SESSİZ LİDER MAVİ VURGU
+====================================================== */
+.grid.grid-cols-2 > div:first-child {
+  border: 2px solid #1e40af;
+  box-shadow: 0 18px 40px rgba(30, 64, 175, 0.22);
+  background: linear-gradient(to bottom, #ffffff, #eef2ff);
+}
+
+/* .com içeriği biraz daha güçlü */
+.grid.grid-cols-2 > div:first-child h3,
+.grid.grid-cols-2 > div:first-child span,
+.grid.grid-cols-2 > div:first-child p {
+  color: #1e40af;
+}
+
+/* ======================================================
+   KURUMSAL ETİKET BOŞLUK YÖNETİMİ
+====================================================== */
+
+/* Üst alan – sadece kurumsal etiket için */
+.grid.grid-cols-2 > div {
+  position: relative;
+  padding-top: 52px;
+}
+
+/* Kurumsal etiketi net ama sakin konum */
+.grid.grid-cols-2 > div::before {
+  top: 16px;
+}
+
+
+/* ======================================================
+   B2B FİYATLANDIRMA ALGISI
+====================================================== */
+.grid.grid-cols-2 > div::before {
+  content: "Kurumsal";
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #002677;
+  color: #fff;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.08em;
+}
+
+/* ======================================================
+   DOMAIN BUNDLE ALGISI
+====================================================== */
+.grid.grid-cols-2 {
+  position: relative;
+}
+
+.grid.grid-cols-2::before {
+  content: "Kurumsal Markalar İçin Önerilen Paketler";
+  display: block;
+  grid-column: 1 / -1;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* ======================================================
+   DASHBOARD / ENTERPRISE PANEL HİSSİ
+====================================================== */
+.bg-white.border.border-gray-200.rounded-2xl {
+  background-image: linear-gradient(
+    to bottom,
+    #ffffff,
+    #f9fafb
+  );
+}
+
+.tab-content {
+  animation: fadePanel 0.35s ease;
+}
+
+@keyframes fadePanel {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+
+/* Kurumsal checkbox hissi */
+button,
+input,
+select {
+  border-radius: 10px;
+}
+
+/* Satın alma CTA daha ciddi */
+.bg-blue-700 {
+  text-transform: uppercase;
+}
+
+/* Kart içi metin dengesi */
+.grid > div p,
+.grid > div span {
+  letter-spacing: 0.02em;
+}
+
+.grid.grid-cols-2 > div {
+  position: relative;
+  padding-top: 42px; /* 👈 boşluğu artırır */
+}
+
+/* ======================================================
+   EN ÇOK TERCİH EDİLEN (.com) KURUMSAL VURGUSU
+====================================================== */
+.grid.grid-cols-2 > div:first-child {
+  border: 2px solid var(--brand-primary);
+  box-shadow: 0 16px 40px rgba(0, 38, 119, 0.18);
+  transform: translateY(-4px);
+  background: linear-gradient(to bottom, #ffffff, #f4f7fc);
+}
+
+
+/* Kurumsal etikete nefes alanı */
+.grid.grid-cols-2 > div {
+  padding-top: 56px;
+}
+
+/* Kurumsal etiket konumu */
+.grid.grid-cols-2 > div::before {
+  top: 18px; /* 34px → daha dengeli */
+}
+
+
+
+
+/* ======================================================
+   KURUMSAL DOMAIN BUNDLE HİSSİ
+====================================================== */
+.grid.grid-cols-2 {
+  gap: 18px;
+}
+
+.grid.grid-cols-2 > div {
+  border-radius: 14px;
+}
+
+/* İlk 3 kartı (com, net, org) görsel paket yap */
+.grid.grid-cols-2 > div:nth-child(-n+3) {
+  background-image: linear-gradient(
+    to bottom,
+    #ffffff,
+    #f8fafc
+  );
+}
+
+
+
+/* ======================================================
+   GÖZ YÖNLENDİRME & HİYERARŞİ
+====================================================== */
+.grid.grid-cols-2 > div:not(:first-child) {
+  opacity: 0.95;
+}
+
+.grid.grid-cols-2 > div:hover {
+  opacity: 1;
+}
+
+/* Hover'da liderlik .com'dan çalınmasın */
+.grid.grid-cols-2 > div:first-child:hover {
+  transform: translateY(-6px);
+}
+
+
+
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-5px);
+    }
+
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
+  .group:hover svg {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(0, 38, 119, 0.4);
+    }
+
+    70% {
+      box-shadow: 0 0 0 10px rgba(0, 38, 119, 0);
+    }
+
+    100% {
+      box-shadow: 0 0 0 0 rgba(0, 38, 119, 0);
+    }
+  }
+
+  @keyframes draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .animate-draw {
+    stroke-dasharray: 500;
+    stroke-dashoffset: 500;
+    animation: draw 2s ease forwards;
+  }
+
+
+
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+    
+    .xhostpkt-price-card:hover .xhostpkt-card-icon {
+        animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(0, 38, 119, 0.4); }
+        70% { box-shadow: 0 0 0 10px rgba(0, 38, 119, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(0, 38, 119, 0); }
+    }
+    
+    .xhostpkt-price-card:nth-child(4):hover {
+        animation: pulse 2s infinite;
+    }
+
+
+
+        @import url('assets/_external/fonts.googleapis.com/css2_ab8c65e1.css');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+        }
+        
+        .card {
+            transition: all 0.4s ease;
+            border: 1px solid rgba(229, 231, 235, 1);
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.05);
+            border-color: rgba(229, 231, 235, 0.8);
+        }
+        
+        .icon-container {
+            transition: all 0.4s ease;
+        }
+        
+        .card:hover .icon-container {
+            transform: scale(1.05);
+            color: #3b82f6;
+        }
+        
+        .btn-detail {
+            transition: all 0.3s ease;
+        }
+        
+        .btn-detail:hover {
+            background-color: #2563eb;
+            box-shadow: 0 2px 6px -1px rgba(37, 99, 235, 0.2);
+        }
+        
+        .card-header {
+            transition: background-color 0.4s ease;
+        }
+        
+        .card:hover .card-header {
+            background-color: rgba(249, 250, 251, 0.8);
+        }
+    
+
+
+    @import url('assets/_external/fonts.googleapis.com/css2_ab8c65e1.css');
+    
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    
+
+    .support-icon-hover {
+      transition: all 0.3s ease;
+    }
+    
+    .support-icon-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      border-color: #d9e3f1;
+      background-color: #f5f8fc;
+    }
+    
+    .support-icon-hover:hover .icon-box {
+      background-color: #edf2fa;
+      color: #3d5a85;
+    }
+    
+    .icon-box {
+      transition: all 0.3s ease;
+    }
+    
+    .image-container {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .image-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -75%;
+      z-index: 2;
+      display: block;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 100%);
+      transform: skewX(-25deg);
+      animation: shine 6s infinite;
+    }
+    
+    @keyframes shine {
+      0% {
+        left: -75%;
+      }
+      20% {
+        left: 125%;
+      }
+      100% {
+        left: 125%;
+      }
+    }
+    
+    .hover-scale {
+      transition: transform 0.3s ease;
+    }
+    
+    .hover-scale:hover {
+      transform: scale(1.05);
+    }
+  
+
+
+.icon-ok{
+  color:#16a34a;
+  font-size:18px;
+}
+.icon-no{
+  color:#dc2626;
+  font-size:18px;
+}
+.feature-badge{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 12px;
+  border-radius:6px;
+  background:#f5f7fa;
+  font-size:14px;
+  color:#2c3e50;
+  border:1px solid #e5e7eb;
+}
+.feature-badge i{
+  color:#2563eb;
+  font-size:16px;
+}
+
+
+
+.badge-ok{
+    background:#dcfce7;
+    color:#16a34a;
+    padding:6px 10px;
+    border-radius:999px;
+    font-size:14px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+}
+.badge-no{
+    background:#fee2e2;
+    color:#dc2626;
+    padding:6px 10px;
+    border-radius:999px;
+    font-size:14px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+}
+.badge-ip{
+    background:#f3f4f6;
+    padding:6px 12px;
+    border-radius:999px;
+    font-size:14px;
+}
+
+
+
+  @keyframes blink {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.3;
+    }
+  }
+
+  .blink {
+    animation: blink 1.5s infinite;
+  }
+
+
+
+  .accordion-item .accordion-content {
+    max-height: 0;
+    transition: max-height 0.3s ease-out;
+  }
+
+  .accordion-item.active .accordion-content {
+    max-height: 500px;
+    transition: max-height 0.5s ease-in;
+  }
+
+  .accordion-item.active .accordion-icon {
+    transform: rotate(180deg);
+  }
+
+
+
+  .accordion-item .accordion-content {
+    max-height: 0;
+    transition: max-height 0.3s ease-out;
+  }
+  
+  .accordion-item.active .accordion-content {
+    max-height: 500px;
+    transition: max-height 0.5s ease-in;
+  }
+  
+  .accordion-item.active .accordion-icon {
+    transform: rotate(180deg);
+  }
+
+
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  .blink {
+    animation: blink 1.5s infinite;
+  }
+
+
+
+/* Özel stiller */
+body {
+    font-family: 'Euclid Circular B', sans-serif;
+}
+
+.bg-gmod {
+    background-image: url('assets/_external/image.api.playstation.com/vulcan/ap/rnd/202103/1609/wBzFi5s20C1I7o3A5iEFWNuI.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.hero-container {
+    width: 1904px;
+    height: 427px;
+    max-width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    padding-left: 320px;
+    padding-right: 320px;
+    display: flex;
+    align-items: center; /* Dikey ortalama */
+}
+
+.titleee2 {
+    font-family: 'Euclid Circular B', sans-serif;
+    white-space: nowrap;
+    font-weight: 700;
+    font-size: 3.5rem; /* Başlık boyutu küçültüldü */
+}
+
+.feature-icon {
+    font-size: 2.5rem; /* İkon boyutu büyütüldü */
+}
+
+@media (max-width: 1904px) {
+    .hero-container {
+        width: 100%;
+    }
+}
+
+@media (max-width: 1280px) {
+    .hero-container {
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+    
+    .titleee2 {
+        font-size: 2.25rem;
+    }
+    
+    .feature-icon {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-container {
+        padding-left: 40px;
+        padding-right: 40px;
+        height: auto;
+        min-height: 427px;
+    }
+    
+    .titleee2 {
+        font-size: 1.75rem;
+    }
+    
+    .feature-icon {
+        font-size: 1.75rem;
+    }
+}
+
+
+
+    /* Önceki CSS kodları buraya gelecek */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+        overflow-x: hidden; /* Prevent horizontal scrolling */
+        width: 100%;
+        position: relative;
+    }
+    
+    /* Sticky Header Styles */
+    .sunucumweb2023-sticky-header-wrapper {
+        position: sticky;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+    
+    /* Top Bar */
+    .sunucumweb2023-topbar {
+        background-color: #000000;
+        height: 42px;
+        width: 100%;
+        position: relative;
+        z-index: 110; /* Higher than blur overlay */
+    }
+    
+    /* Sticky header için stil */
+    .sunucumweb2023-sticky-active .sunucumweb2023-sticky-header-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .sunucumweb2023-topbar-container {
+        max-width: calc(100% - 600px); /* 300px padding on each side */
+        margin: 0 auto;
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .sunucumweb2023-topbar-left, .sunucumweb2023-topbar-right {
+        display: flex;
+        align-items: center;
+    }
+    
+    .sunucumweb2023-topbar a {
+        color: white;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        display: flex;
+        
+        transition: color 0.3s ease; /* Smooth transition */
+    }
+    
+    .sunucumweb2023-topbar a:hover {
+        color: #B8C5FF;
+    }
+    
+    .sunucumweb2023-topbar i {
+        color: #B8C5FF;
+        margin-right: 8px;
+        font-size: 16px;
+    }
+    
+    .sunucumweb2023-divider {
+        color: #666;
+        margin: 0 15px;
+    }
+    
+    /* Main Header */
+    .sunucumweb2023-main-header {
+        background-color: white;
+        height: 85px; /* Updated to 85px */
+        width: 100%;
+        margin: 0 auto;
+        border-bottom: 1px solid #e0e0e0; /* Added gray border at the bottom */
+        position: relative; /* Added for mega menu positioning */
+        z-index: 110; /* Higher than blur overlay */
+    }
+    
+    .sunucumweb2023-header-container {
+        max-width: calc(100% - 600px); /* 300px padding on each side */
+        margin: 0 auto;
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .sunucumweb2023-logo {
+        display: flex;
+        align-items: center;
+    }
+    
+    .sunucumweb2023-logo img {
+        height: 55px; /* Increased from 40px to 55px */
+        width: auto;
+    }
+    
+    .sunucumweb2023-nav-links {
+        display: flex;
+        align-items: center;
+        height: 100%; /* Make nav-links full height */
+        margin-left: auto; /* Push to the right */
+        margin-right: 20px; /* Space between nav and cart */
+    }
+    
+    .sunucumweb2023-nav-link {
+        width: auto; /* Let it take the necessary width */
+        height: 100%; /* Make nav-link full height */
+        font-size: 16px; /* Increased from 15px to 16px */
+        font-weight: 600; /* Increased from 400 to 600 for bolder text */
+        color: #333;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: color 0.3s ease;
+        position: relative;
+        margin: 0 8px; /* Increased from 4px to 8px for more spacing */
+        padding: 0 5px; /* Add some padding */
+    }
+    
+    .sunucumweb2023-nav-link:hover {
+        color: #0046B8; /* Standard blue color */
+    }
+    
+    /* Added underline indicator for hover */
+    .sunucumweb2023-nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1px; /* Reduced from 2px to 1px to make the underline even thinner */
+        background-color: #0046B8;
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+    }
+    
+    .sunucumweb2023-nav-link:hover::after {
+        transform: scaleX(1);
+    }
+    
+    /* Add this after the .nav-link:hover::after rule */
+    .sunucumweb2023-nav-link.sunucumweb2023-active-mega-menu::after {
+        transform: scaleX(1);
+    }
+
+    .sunucumweb2023-nav-link.sunucumweb2023-active-mega-menu {
+        color: #0046B8; /* Standard blue color */
+    }
+    
+    .sunucumweb2023-dropdown-icon {
+        font-size: 12px;
+        margin-left: 3px; /* Reduced from 5px */
+        display: inline-flex;
+        align-items: center;
+        vertical-align: middle;
+        color: #888; /* Grayish color for dropdown icons */
+        transition: all 0.3s ease; /* Added transition for smooth rotation and color change */
+    }
+    
+    .sunucumweb2023-nav-link:hover .sunucumweb2023-dropdown-icon {
+        color: #0046B8; /* Standard blue color */
+        transform: rotate(180deg); /* Rotate arrow upward on hover */
+    }
+    
+    /* Blur Overlay */
+    .sunucumweb2023-blur-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        z-index: 99; /* Lower than topbar/header/mega-menu but higher than page content */
+        display: none;
+        transition: all 0.3s ease;
+    }
+    
+    /* Mega Menu Styles - Dinamik yükseklik için güncellendi */
+    .sunucumweb2023-mega-menu-wrapper {
+        position: absolute; /* Fixed yerine absolute kullanıldı */
+        left: 0;
+        right: 0;
+        top: 127px; /* 42px (topbar) + 85px (header) */
+        height: auto; /* Otomatik yükseklik - JavaScript ile ayarlanacak */
+        min-height: 140px; /* Minimum yükseklik */
+        max-height: 260px; /* Maksimum yükseklik */
+        background-color: white;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* Added shadow only at the bottom */
+        z-index: 110; /* Higher than blur overlay */
+        display: none;
+        overflow: hidden; /* Hide scrolling */
+        transition: height 0.3s ease; /* Yükseklik değişimini animasyonlu yap */
+    }
+    
+    /* Sticky header aktifken mega menü pozisyonu */
+    .sunucumweb2023-sticky-active .sunucumweb2023-mega-menu-wrapper {
+        position: fixed;
+        top: 127px; /* Topbar + header yüksekliği */
+    }
+    
+    .sunucumweb2023-mega-menu-container {
+        max-width: calc(100% - 600px); /* Match header container width */
+        margin: 0 auto;
+        padding: 15px 0; /* Reduced from 20px to 15px */
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* Varsayılan 3 sütun */
+        grid-template-rows: repeat(2, auto); /* Varsayılan 2 satır */
+        gap: 12px; /* Reduced from 15px to 12px */
+        height: 100%;
+    }
+    
+    /* 4 öğeli mega menü için özel stil - tek satırda 4 öğe */
+    .sunucumweb2023-mega-menu-container.sunucumweb2023-four-items {
+        grid-template-columns: repeat(4, 1fr); /* 4 sütun */
+        grid-template-rows: auto; /* Tek satır */
+    }
+    
+    /* Hosting Card Styles - SMALLER SIZE */
+    .sunucumweb2023-hosting-card {
+        padding: 10px; /* Reduced from 12px to 10px */
+        border-radius: 6px;
+        border: 1px dashed #eee; /* Dashed border for cards */
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        height: 90px; /* Reduced from 110px to 90px */
+        position: relative;
+    }
+    
+    .sunucumweb2023-hosting-card:hover {
+        border: 1px dashed #0046B8; /* Dashed blue border on hover */
+        /* Removed box-shadow: 0 5px 15px rgba(0,70,184,0.1); */
+        /* Removed transform: translateY(-3px); to prevent growing on hover */
+    }
+    
+    .sunucumweb2023-hosting-card-icon-container {
+        width: 38px; /* Reduced from 45px to 38px */
+        height: 38px; /* Reduced from 45px to 38px */
+        border-radius: 6px;
+        background-color: white;
+        border: 1px solid #eee; /* Solid border for icon container */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px; /* Reduced from 12px to 10px */
+        transition: all 0.3s ease;
+    }
+    
+    .sunucumweb2023-hosting-card:hover .sunucumweb2023-hosting-card-icon-container {
+        border: 1px solid #0046B8; /* Solid blue border on hover */
+    }
+    
+    .sunucumweb2023-hosting-card-icon {
+        font-size: 18px; /* Reduced from 20px to 18px */
+        color: #000; /* Changed to black */
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .sunucumweb2023-hosting-card:hover .sunucumweb2023-hosting-card-icon {
+        color: #0046B8; /* Blue on hover */
+    }
+    
+    .sunucumweb2023-hosting-card-content {
+        flex: 1;
+    }
+    
+    .sunucumweb2023-hosting-card-title {
+        font-size: 15px; /* Reduced from 16px to 15px */
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 3px; /* Reduced from 4px to 3px */
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        transition: all 0.3s ease;
+    }
+    
+    .sunucumweb2023-hosting-card:hover .sunucumweb2023-hosting-card-title {
+        color: #0046B8; /* Blue text on hover */
+    }
+    
+    .sunucumweb2023-hosting-card-badge {
+        display: inline-block;
+        padding: 1px 5px; /* Reduced from 2px 6px to 1px 5px */
+        border-radius: 3px; /* Reduced from 4px to 3px */
+        font-size: 9px; /* Reduced from 10px to 9px */
+        font-weight: 500;
+        margin-left: 6px; /* Reduced from 8px to 6px */
+        background-color: #2ecc71;
+        color: white;
+    }
+    
+    .sunucumweb2023-hosting-card-description {
+        font-size: 12px; /* Reduced from 13px to 12px */
+        color: #666;
+        line-height: 1.3;
+    }
+    
+    /* Show mega menu on hover */
+    .sunucumweb2023-has-mega-menu:hover + .sunucumweb2023-mega-menu-wrapper,
+    .sunucumweb2023-mega-menu-wrapper:hover {
+        display: block;
+    }
+    
+    /* Cart Section */
+    .sunucumweb2023-cart-section {
+        display: flex;
+        align-items: center;
+    }
+    
+    .sunucumweb2023-cart-wrapper {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+    
+    .sunucumweb2023-cart-card {
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+    
+    .sunucumweb2023-cart-icon-container {
+        width: 47px;
+        height: 43px;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        background-color: white;
+    }
+    
+    .sunucumweb2023-cart-icon {
+        font-size: 20px;
+        color: #0046B8;
+    }
+    
+    .sunucumweb2023-cart-badge {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        width: 22px;
+        height: 22px;
+        background-color: #0046B8;
+        color: white;
+        border-radius: 50%;
+        font-size: 11px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .sunucumweb2023-cart-info {
+        margin-left: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .sunucumweb2023-cart-label {
+        font-size: 15px;
+        font-weight: 600; /* Increased from 500 to 600 for bolder text */
+        color: #555;
+    }
+    
+    .sunucumweb2023-cart-price {
+        font-size: 12px;
+        color: #777;
+    }
+    
+    /* Mobile menu button */
+    .sunucumweb2023-mobile-menu-btn {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 24px;
+        color: #0046B8; /* Changed to blue color */
+        margin-left: auto; /* Push to the right */
+    }
+    
+    /* Mobile responsiveness */
+    @media (max-width: 1400px) {
+        .sunucumweb2023-topbar-container, .sunucumweb2023-header-container, .sunucumweb2023-mega-menu-container {
+            max-width: calc(100% - 200px); /* Reduce padding on smaller screens */
+        }
+        
+        .sunucumweb2023-mega-menu-wrapper {
+            top: 127px; /* Keep the same as desktop */
+        }
+    }
+    
+    @media (max-width: 1200px) {
+        .sunucumweb2023-topbar-container, .sunucumweb2023-header-container, .sunucumweb2023-mega-menu-container {
+            max-width: calc(100% - 100px); /* Further reduce padding */
+        }
+        
+        .sunucumweb2023-nav-link {
+            font-size: 15px;
+            padding: 0 3px;
+            margin: 0 6px; /* Adjusted from 3px to 6px */
+        }
+        
+        .sunucumweb2023-logo img {
+            height: 50px; /* Slightly smaller on medium screens */
+        }
+        
+        .sunucumweb2023-mega-menu-container {
+            grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
+        }
+    }
+    
+    @media (max-width: 992px) {
+        .sunucumweb2023-mobile-menu-btn {
+            display: block;
+        }
+        
+        .sunucumweb2023-nav-links {
+            display: none; /* Hide navigation on mobile */
+        }
+        
+        .sunucumweb2023-topbar-container, .sunucumweb2023-header-container, .sunucumweb2023-mega-menu-container {
+            max-width: calc(100% - 40px);
+            padding: 0 10px;
+        }
+        
+        .sunucumweb2023-divider {
+            margin: 0 8px;
+        }
+        
+        .sunucumweb2023-topbar a {
+            font-size: 12px;
+        }
+        
+        .sunucumweb2023-topbar i {
+            font-size: 14px;
+            margin-right: 5px;
+        }
+        
+        .sunucumweb2023-logo img {
+            height: 45px; /* Smaller on tablet */
+        }
+        
+        /* Adjust cart on mobile */
+        .sunucumweb2023-cart-info {
+            display: none; /* Hide cart text on smaller screens */
+        }
+        
+        .sunucumweb2023-cart-section {
+            margin-left: 15px;
+        }
+        
+        /* Mobile header layout */
+        .sunucumweb2023-header-container {
+            justify-content: space-between; /* Space between logo and menu/cart */
+        }
+        
+        /* Mega menu on mobile - Değiştirildi */
+        .sunucumweb2023-mobile-menu .sunucumweb2023-mega-menu-wrapper {
+            display: none; /* Varsayılan olarak gizli */
+            position: static; /* Fixed yerine static */
+            top: auto;
+            height: auto; /* Otomatik yükseklik */
+            box-shadow: none; /* Gölge yok */
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            margin-top: 10px;
+        }
+    
+        /* Ana mega menüler için stil (masaüstü) - bunları etkileme */
+        #sunucumweb2023-domain-mega-menu, #sunucumweb2023-hosting-mega-menu, #sunucumweb2023-sunucu-mega-menu, 
+        #sunucumweb2023-veri-merkezi-mega-menu, #sunucumweb2023-gre-tunnel-mega-menu, #sunucumweb2023-hakkimizda-mega-menu {
+            position: absolute;
+            top: 127px;
+            height: auto; /* Dinamik yükseklik için değiştirildi */
+            min-height: 140px;
+            max-height: 260px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .sunucumweb2023-mobile-menu .sunucumweb2023-mega-menu-container {
+            display: flex;
+            flex-direction: column;
+            grid-template-columns: none;
+            grid-template-rows: none;
+            gap: 0;
+        }
+    
+        .sunucumweb2023-mobile-menu .sunucumweb2023-hosting-card {
+            height: auto;
+            padding: 8px 15px;
+            border: none;
+            border-bottom: 1px solid #f5f5f5;
+        }
+    
+        .sunucumweb2023-mobile-menu .sunucumweb2023-hosting-card-icon-container {
+            display: none; /* İkonları gizle */
+        }
+    
+        .sunucumweb2023-mobile-menu .sunucumweb2023-hosting-card-description {
+            display: none; /* Açıklamaları gizle */
+        }
+    
+        .sunucumweb2023-mobile-menu .sunucumweb2023-hosting-card-title {
+            font-size: 14px;
+            margin-bottom: 0;
+        }
+    
+        /* Ana mega menüler için grid yapısını koru */
+        #sunucumweb2023-domain-mega-menu .sunucumweb2023-mega-menu-container,
+        #sunucumweb2023-hosting-mega-menu .sunucumweb2023-mega-menu-container,
+        #sunucumweb2023-sunucu-mega-menu .sunucumweb2023-mega-menu-container,
+        #sunucumweb2023-veri-merkezi-mega-menu .sunucumweb2023-mega-menu-container,
+        #sunucumweb2023-gre-tunnel-mega-menu .sunucumweb2023-mega-menu-container,
+        #sunucumweb2023-hakkimizda-mega-menu .sunucumweb2023-mega-menu-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, auto);
+            gap: 12px;
+        }
+		
+        
+        /* Hide blur overlay on mobile */
+        .sunucumweb2023-blur-overlay {
+            display: none !important;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .sunucumweb2023-main-header {
+            height: 70px; /* Smaller header height on mobile */
+        }
+        
+        .sunucumweb2023-topbar-container, .sunucumweb2023-header-container, .sunucumweb2023-mega-menu-container {
+            max-width: 100%;
+            padding: 0 15px;
+        }
+        
+        .sunucumweb2023-logo img {
+            height: 40px; /* Smaller logo on mobile */
+        }
+        
+        /* Adjust topbar on mobile */
+        .sunucumweb2023-topbar {
+            height: auto; /* Allow height to adjust based on content */
+            padding: 8px 0;
+        }
+        
+        .sunucumweb2023-topbar-container {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .sunucumweb2023-topbar-right {
+            display: none; /* Hide right side of topbar on very small screens */
+        }
+        
+        .sunucumweb2023-topbar-left {
+            flex-wrap: wrap; /* Allow items to wrap */
+            justify-content: center;
+            width: 100%;
+        }
+        
+        .sunucumweb2023-topbar-left a {
+            margin: 3px 0;
+            font-size: 11px;
+        }
+        
+        .sunucumweb2023-divider {
+            margin: 0 5px;
+        }
+        
+        .sunucumweb2023-topbar i {
+            font-size: 12px;
+            margin-right: 3px;
+        }
+        
+        /* Mobile header layout */
+        .sunucumweb2023-mobile-menu-btn {
+            font-size: 22px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .sunucumweb2023-topbar {
+            display: none; /* Hide topbar on very small screens */
+        }
+        
+        .sunucumweb2023-main-header {
+            height: 60px;
+        }
+        
+        .sunucumweb2023-logo img {
+            height: 35px;
+        }
+        
+        .sunucumweb2023-cart-icon-container {
+            width: 40px;
+            height: 36px;
+        }
+        
+        .sunucumweb2023-cart-badge {
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+            top: -8px;
+            right: -8px;
+        }
+        
+        .sunucumweb2023-mobile-menu-btn {
+            font-size: 20px;
+        }
+        
+        .sunucumweb2023-mega-menu-wrapper {
+            top: 60px; /* Adjust for mobile header height */
+        }
+    }
+    
+    /* Mobile menu (hidden by default) */
+    .sunucumweb2023-mobile-menu {
+        display: none;
+        background-color: white;
+        width: 100%;
+        padding: 15px 20px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        z-index: 110; /* Ensure mobile menu is above the blur overlay */
+    }
+    
+    .sunucumweb2023-mobile-menu a {
+        display: block;
+        padding: 12px 0;
+        font-size: 16px;
+        font-weight: 600; /* Increased from 400 to 600 for bolder text */
+        color: #333;
+        text-decoration: none;
+        border-bottom: 1px solid #eee;
+        transition: color 0.3s ease;
+    }
+    
+    .sunucumweb2023-mobile-menu a:hover {
+        color: #0046B8; /* Standard blue color */
+    }
+    
+    /* Show mobile menu when active */
+    .sunucumweb2023-mobile-menu.active {
+        display: block;
+    }
+    
+    /* Mobil menü içindeki mega menüler için stil */
+    .sunucumweb2023-mobile-menu .sunucumweb2023-mega-menu-wrapper {
+        background-color: #f9f9f9;
+        padding: 5px 0;
+        margin-bottom: 10px;
+    }
+    
+    .sunucumweb2023-mobile-menu .sunucumweb2023-mega-menu-container {
+        padding: 0;
+    }
+    
+    .sunucumweb2023-mobile-menu .sunucumweb2023-hosting-card {
+        padding: 8px 0 8px 15px;
+    }
+    
+    /* Mobil menüde açık olan menü için stil */
+    .sunucumweb2023-mobile-menu a.active {
+        color: #0046B8;
+        border-bottom-color: #0046B8;
+    }
+    
+    /* Sayfa içeriği için stil */
+    .sunucumweb2023-page-content {
+        padding: 30px;
+        max-width: calc(100% - 600px);
+        margin: 0 auto;
+    }
+    
+    /* Sayfa içeriği için örnek stil */
+    .sunucumweb2023-page-content h1 {
+        font-size: 32px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+    
+    .sunucumweb2023-page-content p {
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 15px;
+        color: #555;
+    }
+    
+    .sunucumweb2023-hosting-card.standard-card {
+  background: #f9f9f9;
+  border: 1.5px solid #3f51b5;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 3px 10px rgba(63, 81, 181, 0.15);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.sunucumweb2023-hosting-card.standard-card:hover {
+  box-shadow: 0 6px 25px rgba(63, 81, 181, 0.3);
+  transform: translateY(-6px);
+}
+
+.sunucumweb2023-hosting-card-icon-container {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background: #e8eaf6;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(63, 81, 181, 0.1);
+  transition: background 0.3s ease;
+}
+
+.sunucumweb2023-hosting-card.standard-card:hover .sunucumweb2023-hosting-card-icon-container {
+  background: #c5cae9;
+}
+
+.sunucumweb2023-hosting-card-icon {
+  font-size: 32px;
+  color: #3f51b5;
+  transition: color 0.3s ease;
+}
+
+.sunucumweb2023-hosting-card.standard-card:hover .sunucumweb2023-hosting-card-icon {
+  color: #303f9f;
+}
+
+.sunucumweb2023-hosting-card-content {
+  flex-grow: 1;
+}
+
+.sunucumweb2023-hosting-card-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #222;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.discount-badge {
+  background: #3f51b5;
+  color: white;
+  font-size: 0.85rem;
+  padding: 3px 10px;
+  border-radius: 15px;
+  font-weight: 600;
+  box-shadow: 0 0 8px rgba(63, 81, 181, 0.4);
+  user-select: none;
+}
+
+.sunucumweb2023-hosting-card-description {
+  font-size: 1rem;
+  color: #555;
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+    
+    
+    
+    
+    
+.sunucumweb2023-hosting-card.premium-card {
+    position: relative;
+    border: 2px solid #ff9800;
+    border-radius: 12px;
+    box-shadow:
+        0 0 15px #ff9800,
+        0 4px 10px rgba(255, 152, 0, 0.4);
+    background: #fff8e1; /* Hafif sıcak tonlu arka plan */
+    animation: glow 2.5s infinite alternate;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    padding: 20px;
+}
+
+.sunucumweb2023-hosting-card.premium-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow:
+        0 0 30px #ffb300,
+        0 10px 20px rgba(255, 152, 0, 0.6);
+    background-color: #fff3cd; /* Hoverda biraz daha belirgin */
+}
+
+.premium-badge {
+    position: absolute;
+    top: 8px;          /* Biraz daha aşağı çek */
+    right: 8px;        /* Daha içerden konumlandır */
+    background: linear-gradient(45deg, #ff9800, #ffc107);
+    color: white;
+    font-weight: 700;
+    padding: 3px 8px;  /* Daha küçük padding */
+    border-radius: 16px;
+    font-size: 0.75rem; /* Daha küçük font */
+    line-height: 1.1;  /* Satır yüksekliği azaltıldı */
+    box-shadow: 0 0 6px #ff9800;
+    animation: pulse 2s infinite;
+    user-select: none;
+    pointer-events: none;
+    height: auto;
+    white-space: nowrap;
+}
+
+@keyframes glow {
+    from {
+        box-shadow:
+            0 0 10px #ff9800,
+            0 4px 12px rgba(255, 152, 0, 0.5);
+    }
+    to {
+        box-shadow:
+            0 0 25px #ffb300,
+            0 6px 18px rgba(255, 183, 77, 0.7);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.1);
+    }
+}
+
+
+
+
+
+
+
+/* Kart Arka Plan ve Hover */
+.usa-card {
+    background: linear-gradient(135deg, #e8f0fe, #ffffff);
+    border: 2px solid #1a73e8;
+    border-radius: 10px;
+    box-shadow: 0 6px 16px rgba(26,115,232,0.25);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+.usa-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(26,115,232,0.35);
+}
+
+/* Badge */
+.usa-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background-color: #1a73e8;
+    color: #fff;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+}
+
+/* Kart İkonu */
+.sunucumweb2023-hosting-card-icon {
+    font-size: 2.5rem;
+    color: #1a73e8;
+}
+
+/* Başlık */
+.sunucumweb2023-hosting-card-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+/* Açıklama */
+.sunucumweb2023-hosting-card-description {
+    font-size: 0.95rem;
+}
+  
+  
+  
+  
+  .isp-card {
+    position: relative;
+    background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+    color: #f5f5f5;
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    overflow: hidden;
+  }
+
+  /* Ağ deseni filigranı */
+  .isp-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("assets/_external/www.transparenttextures.com/patterns/cubes.png");
+    opacity: 0.05;
+    pointer-events: none;
+  }
+
+  /* Altın parıltı efekti */
+  .isp-card::after {
+    content: "";
+    position: absolute;
+    bottom: -30%;
+    right: -30%;
+    width: 80%;
+    height: 80%;
+    background: radial-gradient(circle, rgba(255,215,0,0.35) 0%, transparent 70%);
+    filter: blur(40px);
+    pointer-events: none;
+  }
+
+  .isp-card .sunucumweb2023-hosting-card-icon {
+    font-size: 34px;
+    color: #ffd700;
+    text-shadow: 0 0 10px rgba(255,215,0,0.6);
+  }
+
+  .premium-badge {
+    background: #ffd700;
+    color: #000;
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 2px 8px;
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.7);
+  }
+  
+.turkcell-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #ffdd00;
+    color: #005baa;
+    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.turkcell-logo {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.turkcell-card {
+    border: 1px solid #005baa;
+    background-color: #f5faff; /* Hafif mavi ton */
+}
+
+.turkcell-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,91,170,0.25); /* Turkcell mavisi gölge */
+    transition: all 0.3s ease;
+}
+
+
+.sunucumweb2023-cart-section {
+    display: flex;
+    justify-content: flex-end; /* Sağ tarafa yasla */
+    padding: 0 1rem;
+}
+
+.sunucumweb2023-cart-wrapper {
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sunucumweb2023-cart-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: #f7f9fc; /* Açık ve profesyonel ton */
+    border-radius: 12px;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sunucumweb2023-cart-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.sunucumweb2023-cart-icon-container {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e1efff;
+    border-radius: 50%;
+}
+
+.sunucumweb2023-cart-icon {
+    font-size: 20px;
+    color: #0073e6; /* Kurumsal mavi ton */
+}
+
+.sunucumweb2023-cart-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background-color: #ff4d4f; /* Uyarı kırmızısı */
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.sunucumweb2023-cart-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.sunucumweb2023-cart-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+.sunucumweb2023-cart-price {
+    font-size: 12px;
+    color: #555;
+}
+
+.sunucumweb2023-cart-section {
+    display: flex;
+    justify-content: flex-end; /* Sağ tarafa yasla */
+    padding: 0 1rem;
+}
+
+.sunucumweb2023-cart-wrapper {
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sunucumweb2023-cart-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: #f7f9fc; /* Açık ve profesyonel ton */
+    border-radius: 12px;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sunucumweb2023-cart-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.sunucumweb2023-cart-icon-container {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e1efff;
+    border-radius: 50%;
+}
+
+.sunucumweb2023-cart-icon {
+    font-size: 20px;
+    color: #0073e6; /* Kurumsal mavi ton */
+}
+
+.sunucumweb2023-cart-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background-color: #ff4d4f; /* Uyarı kırmızısı */
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.sunucumweb2023-cart-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.sunucumweb2023-cart-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+.sunucumweb2023-cart-price {
+    font-size: 12px;
+    color: #555;
+}
+
+.sunucumweb2023-hosting-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sunucumweb2023-hosting-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12);
+}
+
+
+
+
+
+
+.network-status-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:#0f2a1a;
+    color:#22c55e;
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:13px;
+    text-decoration:none;
+    font-weight:500;
+}
+
+.status-dot{
+    width:8px;
+    height:8px;
+    background:#22c55e;
+    border-radius:50%;
+    position:relative;
+}
+
+.status-dot::after{
+    content:"";
+    position:absolute;
+    width:8px;
+    height:8px;
+    background:#22c55e;
+    border-radius:50%;
+    animation:ping 1.5s infinite;
+    opacity:.6;
+}
+
+@keyframes ping{
+    0%{transform:scale(1);opacity:.7;}
+    70%{transform:scale(2.2);opacity:0;}
+    100%{opacity:0;}
+}
+

@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================
+   TEMA RENKLERI
+   Tek dogruluk kaynagi burasi. Bilesenler bg-surface / text-body
+   gibi semantik siniflari kullanir; acik/koyu gecisi burada olur.
+   Degerler "R G B" uclusu (Tailwind <alpha-value> destegi icin).
+   ========================================================= */
+:root {
+  /* ACIK MOD - saf beyaz yerine yumusak kirik beyaz (goz yormaz) */
+  --c-page: 246 248 250;
+  --c-surface: 255 255 255;
+  --c-surface2: 238 244 244;
+  --c-line: 225 231 238;
+  --c-strong: 15 41 66;
+  --c-body: 74 92 114;
+  --c-muted: 132 148 168;
+  --c-brandsoft: 240 253 250;
+  --c-brandtext: 13 148 136;
+  --c-brandline: 153 246 228;
+  --c-grid: 15 41 66 / 0.045; /* hero arka plan izgarasi */
+  color-scheme: light;
+}
+
+.dark {
+  /* KOYU MOD */
+  --c-page: 11 16 23;
+  --c-surface: 20 27 36;
+  --c-surface2: 16 22 30;
+  --c-line: 35 46 59;
+  --c-strong: 232 238 245;
+  --c-body: 159 176 194;
+  --c-muted: 107 125 145;
+  --c-brandsoft: 17 45 47;
+  --c-brandtext: 45 212 191;
+  --c-brandline: 24 68 68;
+  --c-grid: 255 255 255 / 0.055;
+  color-scheme: dark;
+}
+
+html {
+  background-color: rgb(var(--c-page));
+}
+
+/* TEMA GECISI - KRITIK
+   Chromium'da background-color'i var() ile gelen ve uzerinde transition olan
+   elemanlar, sadece degisken degisince gecisi tamamlamiyor ve ESKI renkte
+   donup kaliyor. Bu yuzden tema degisirken TUM gecisleri kisa sureligine
+   kapatiyoruz; renkler tek karede, temiz sekilde yerine oturuyor. */
+html.tema-kilit,
+html.tema-kilit *,
+html.tema-kilit *::before,
+html.tema-kilit *::after {
+  transition: none !important;
+  animation-duration: 0s !important;
+}
+
+/* Yeni tasarimda kullanilan animasyonlar.
+   animate-[fadeup_...] gibi arbitrary utility'ler icin @keyframes'i
+   Tailwind uretmez; burada elle tanimliyoruz. */
+@keyframes fadeup {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+  html.tema-kilit, html.tema-kilit * { transition: none !important; }
+}
