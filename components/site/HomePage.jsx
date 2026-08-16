@@ -44,7 +44,7 @@ const SLIDES = [
 
 const FEATURES = [
   { t: 'NVMe SSD Altyapı', d: 'En son nesil NVMe diskler ve LiteSpeed ile sitenizi rakiplerinizden kat kat hızlı sunun.', icon: 'bolt' },
-  { t: '%99.9 Uptime Garantisi', d: 'Yedekli ağ, kesintisiz güç ve 7/24 izleme ile siteniz her zaman erişilebilir kalır.', icon: 'shield' },
+  { t: 'Yedekli Ağ & Güç', d: 'Çift hatlı ağ, kesintisiz güç kaynağı ve 7/24 izleme ile siteniz her zaman erişilebilir kalır.', icon: 'shield' },
   { t: '7/24 Uzman Destek', d: 'Gerçek insanlardan, ortalama 5 dakikada yanıt. Ticket, canlı destek ve telefon.', icon: 'headset' },
   { t: 'Ücretsiz SSL & Yedek', d: 'Tüm paketlerde ücretsiz SSL sertifikası ve otomatik günlük yedekleme dahildir.', icon: 'lock' },
 ];
@@ -185,25 +185,44 @@ function Hero() {
           </div>
         </div>
 
-        {/* ---- kontroller ---- */}
-        <div className="absolute bottom-5 left-0 right-0">
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-5 lg:px-8">
-            <div className="flex items-center gap-2">
-              {SLIDES.map((_, n) => (
-                <button
-                  key={n}
-                  onClick={() => go(n)}
-                  aria-label={`Slayt ${n + 1}`}
-                  aria-current={n === i}
-                  className={`h-1.5 rounded-full transition-[transform,box-shadow,border-color,opacity] ${n === i ? 'w-8 bg-brand-400' : 'w-4 bg-white/40 hover:bg-white/70'}`}
-                />
-              ))}
-            </div>
-            <div className="flex gap-2">
-              <button onClick={() => go(i - 1)} aria-label="Önceki" className="grid h-9 w-9 place-items-center rounded-full bg-white/10 text-white ring-1 ring-white/25 backdrop-blur-sm transition-colors hover:bg-white/25">
+        {/* ---- yan oklar (sol / sag) ---- */}
+        <button
+          onClick={() => go(i - 1)}
+          aria-label="Önceki slayt"
+          className="group absolute left-3 top-1/2 z-20 hidden -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-ink/35 p-3 text-white backdrop-blur-sm transition-[background-color,border-color,transform] hover:scale-110 hover:border-white/50 hover:bg-ink/60 sm:grid lg:left-6"
+        >
+          <Icon name="arrow" className="w-5 h-5 rotate-180 transition-transform group-hover:-translate-x-0.5" />
+        </button>
+        <button
+          onClick={() => go(i + 1)}
+          aria-label="Sonraki slayt"
+          className="group absolute right-3 top-1/2 z-20 hidden -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-ink/35 p-3 text-white backdrop-blur-sm transition-[background-color,border-color,transform] hover:scale-110 hover:border-white/50 hover:bg-ink/60 sm:grid lg:right-6"
+        >
+          <Icon name="arrow" className="w-5 h-5 transition-transform group-hover:translate-x-0.5" />
+        </button>
+
+        {/* ---- alt noktalar: ilerleme cubuklu ---- */}
+        <div className="absolute bottom-5 left-0 right-0 z-20">
+          <div className="mx-auto flex max-w-7xl items-center gap-2 px-5 lg:px-8">
+            {SLIDES.map((_, n) => (
+              <button key={n} onClick={() => go(n)} aria-label={`Slayt ${n + 1}`} aria-current={n === i} className="group/n py-2">
+                <span className={`block h-1 overflow-hidden rounded-full bg-white/30 transition-[width] duration-300 ${n === i ? 'w-12' : 'w-6 group-hover/n:bg-white/60'}`}>
+                  {n === i && (
+                    <span
+                      key={`ilerleme-${i}-${duraklat}`}
+                      className="block h-full rounded-full bg-brand-400"
+                      style={duraklat ? { width: '100%' } : { animation: 'slaytIlerle 7s linear forwards' }}
+                    />
+                  )}
+                </span>
+              </button>
+            ))}
+            {/* mobilde oklar burada */}
+            <div className="ml-auto flex gap-2 sm:hidden">
+              <button onClick={() => go(i - 1)} aria-label="Önceki" className="grid h-9 w-9 place-items-center rounded-full border border-white/25 bg-ink/35 text-white backdrop-blur-sm">
                 <Icon name="arrow" className="w-4 h-4 rotate-180" />
               </button>
-              <button onClick={() => go(i + 1)} aria-label="Sonraki" className="grid h-9 w-9 place-items-center rounded-full bg-white/10 text-white ring-1 ring-white/25 backdrop-blur-sm transition-colors hover:bg-white/25">
+              <button onClick={() => go(i + 1)} aria-label="Sonraki" className="grid h-9 w-9 place-items-center rounded-full border border-white/25 bg-ink/35 text-white backdrop-blur-sm">
                 <Icon name="arrow" className="w-4 h-4" />
               </button>
             </div>
@@ -296,22 +315,20 @@ function FinderBanner({ onOpen }) {
               </p>
             </div>
           </div>
-          <button
-            onClick={onOpen}
-            className="shrink-0 inline-flex items-center justify-center gap-2 rounded-xl bg-ink px-6 py-3.5 text-[15px] font-semibold text-white shadow-lg shadow-ink/20 transition-colors hover:bg-brand-600"
-          >
-            Size Uygun Ürünü Bulalım <Icon name="arrow" className="w-4 h-4" />
-          </button>
-        </div>
-
-        {/* aynı bölümün devamı: güven şeridi */}
-        <div className="mt-10 grid grid-cols-2 gap-6 border-t border-line pt-8 md:grid-cols-4">
-          {STATS.map(([n, l]) => (
-            <div key={l} className="text-center md:text-left">
-              <div className="text-2xl md:text-3xl font-extrabold text-strong">{n}</div>
-              <div className="mt-0.5 text-sm text-body">{l}</div>
-            </div>
-          ))}
+          <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
+            <button
+              onClick={onOpen}
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-ink px-6 py-3.5 text-[15px] font-semibold text-white shadow-lg shadow-ink/20 transition-colors hover:bg-brand-600"
+            >
+              Size Uygun Ürünü Bulalım <Icon name="arrow" className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => document.getElementById('cozumler')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-line bg-surface px-6 py-3.5 text-[15px] font-semibold text-strong transition-colors hover:border-brandline hover:text-brandtext"
+            >
+              <Icon name="layers" className="w-4 h-4 text-brandtext" /> Tüm Ürünleri Keşfet
+            </button>
+          </div>
         </div>
       </div>
 
@@ -342,20 +359,26 @@ export default function HomePage() {
       <FinderTab onOpen={openF} />
       <ProductFinder open={finder} onClose={closeF} />
 
-      {/* güven şeridi */}
-      <section className="mt-4 border-y border-line bg-surface2"><div className="mx-auto max-w-7xl px-5 lg:px-8 py-7"><div className="grid grid-cols-2 md:grid-cols-4 gap-6">{STATS.map(([n, l]) => (<div key={l} className="text-center md:text-left"><div className="text-2xl md:text-3xl font-extrabold text-strong">{n}</div><div className="mt-0.5 text-sm text-body">{l}</div></div>))}</div></div></section>
-
       {/* AI alan adi bulucu (motor kapaliysa hic basilmaz) */}
       <DomainAI />
 
       {/* özellikler */}
       <section className="mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-28">
         <div className="max-w-2xl"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Neden SunucumWEB</span><h2 className="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight text-strong text-balance">Performans ve güveni bir arada sunuyoruz</h2><p className="mt-4 text-lg text-body">Altyapımızı; hız, kesintisizlik ve destek üçgeninde kurduk. Teknik detayları biz düşünelim, siz işinize odaklanın.</p></div>
+        {/* rakamlarla biz */}
+        <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-8 border-y border-line py-8 md:grid-cols-4">
+          {STATS.map(([n, l]) => (
+            <div key={l}>
+              <div className="text-3xl lg:text-4xl font-extrabold tracking-tight text-brandtext">{n}</div>
+              <div className="mt-1 text-[14px] font-medium text-body">{l}</div>
+            </div>
+          ))}
+        </div>
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">{FEATURES.map((f) => (<div key={f.t} className="group rounded-2xl border border-line bg-surface p-6 shadow-[0_10px_40px_-20px_rgba(15,41,66,0.18)] hover:shadow-[0_24px_60px_-24px_rgba(20,184,166,0.35)] hover:-translate-y-1 transition-[transform,box-shadow,border-color,opacity] duration-300"><span className="grid h-12 w-12 place-items-center rounded-2xl bg-brandsoft text-brandtext group-hover:bg-brand-500 group-hover:text-white transition-colors"><Icon name={f.icon} /></span><h3 className="mt-5 text-lg font-bold text-strong">{f.t}</h3><p className="mt-2 text-[15px] leading-relaxed text-body">{f.d}</p></div>))}</div>
       </section>
 
       {/* çözümler: gerçek kategoriler, tıklanınca ilgili sayfaya gider */}
-      <section className="relative bg-surface2 border-y border-line">
+      <section id="cozumler" className="relative scroll-mt-28 bg-surface2 border-y border-line">
         <div className="mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-28">
           <div className="mx-auto max-w-2xl text-center">
             <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Çözümlerimiz</span>

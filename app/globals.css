@@ -64,6 +64,11 @@ html.tema-kilit *::after {
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+/* slider alt noktalarindaki ilerleme cubugu */
+@keyframes slaytIlerle {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50%      { transform: translateY(-10px); }

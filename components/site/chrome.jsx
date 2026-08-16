@@ -58,79 +58,69 @@ export function Icon({ name, className = 'w-6 h-6' }) {
 }
 
 /* ---------------- navigasyon (eski site mega menü yapısı) ---------------- */
-/* one: mega menunun sag kolonundaki tanitim karti (opsiyonel) */
+/* rozet (r): kartin uzerindeki kucuk etiket · vurgu: one cikan kart */
 export const MENU = [
-  { label: 'Domain', one: { t: 'AI Alan Adı Bulucu', d: 'İşinizi anlatın, yapay zekâ size uygun alan adlarını bulsun ve müsaitliğini kontrol etsin.', href: '/alan-adi', icon: 'sparkles' }, items: [
-    { t: 'Domain Tescil', d: 'Yeni alan adı kaydı', href: '/alan-adi', icon: 'globe' },
-    { t: 'Domain Transfer', d: 'Mevcut domaininizi taşıyın', href: '/transfer', icon: 'refresh' },
-    { t: 'Domain Sorgulama', d: 'WHOIS sorgulama', href: '/whois', icon: 'search' },
+  { label: 'Domain', kolon: 3, items: [
+    { t: 'Domain Tescil', d: 'Yeni domain tescil işlemleri için hemen tıklayın.', href: '/alan-adi', icon: 'globe', r: '%20 İndirim', rTon: 'yesil' },
+    { t: 'Domain Transfer', d: 'Mevcut domaininizi güvenle bize transfer edin.', href: '/transfer', icon: 'refresh' },
+    { t: 'Domain Sorgulama', d: 'Hayalinizdeki domain adını hemen sorgulayın ve uygunluğunu görün.', href: '/whois', icon: 'search' },
   ]},
-  { label: 'Hosting', one: { t: 'Hangi paket bana uygun?', d: '3 kısa soruya cevap verin, ihtiyacınıza en uygun çözümü birlikte bulalım.', href: '/web-hosting', icon: 'chat' }, items: [
-    { t: 'Web Hosting', d: 'Bireysel & KOBİ siteleri', href: '/web-hosting', icon: 'globe' },
-    { t: 'WordPress Hosting', d: 'WordPress için optimize', href: '/wordpress-hosting', icon: 'bolt' },
-    { t: 'Reseller Hosting', d: 'Kendi hosting işinizi kurun', href: '/reseller-hosting', icon: 'users' },
-    { t: 'Kurumsal Hosting', d: 'Yüksek trafik & izole kaynak', href: '/kurumsal-hosting', icon: 'layers' },
+  { label: 'Hosting', kolon: 4, items: [
+    { t: 'Web Hosting', d: 'Sınırsız hosting paketlerini deneyin, dakikalar içinde yayında olun.', href: '/web-hosting', icon: 'globe', r: '%20 İndirim', rTon: 'yesil' },
+    { t: 'WordPress Hosting', d: 'WordPress için optimize edilmiş, hızlı ve güvenli altyapı.', href: '/wordpress-hosting', icon: 'bolt' },
+    { t: 'Reseller Hosting', d: 'Linux hosting paketleri ile kendi hosting işinizi başlatın.', href: '/reseller-hosting', icon: 'users', r: 'Fırsatı Yakala', rTon: 'sari' },
+    { t: 'Kurumsal Hosting', d: 'Yüksek trafik ve izole kaynak gerektiren projeler için.', href: '/kurumsal-hosting', icon: 'layers' },
   ]},
-  { label: 'Sunucu', wide: true, one: { t: 'Kurumsal SLA', d: '%99.9 uptime garantisi, DDoS koruması ve 7/24 uzman destek tüm sunucularda dahil.', href: '/dedicated-sunucu', icon: 'shield' }, items: [
-    { t: 'Sanal Sunucu (VDS)', d: 'Root erişimli, ölçeklenebilir', href: '/sanal-sunucu', icon: 'server' },
-    { t: 'Premium Sunucu', d: 'Premium işlemci gücü', href: '/premium-sunucu', icon: 'rocket' },
-    { t: 'Dedicated Sunucu', d: 'Fiziksel, tam kontrol', href: '/dedicated-sunucu', icon: 'server' },
-    { t: 'GPU Sunucu', d: 'AI, render, hesaplama', href: '/gpu-sunucu', icon: 'cpu' },
-    { t: 'ISP Sunucu', d: 'Servis sağlayıcılar için', href: '/isp-sunucu', icon: 'wifi' },
-    { t: 'ABD Sunucu', d: 'Amerika lokasyonu', href: '/abd-sunucu', icon: 'globe' },
+  { label: 'Sunucu', kolon: 3, items: [
+    { t: 'Sanal Sunucu (VDS)', d: 'E5-2699 v4 sanal sunucularla projelerinizi başlatın.', href: '/sanal-sunucu', icon: 'server', r: 'Kampanya', rTon: 'mavi' },
+    { t: 'Premium Sunucu', d: 'Jet hızında diskler ve Xeon Platinum ile tam güç!', href: '/premium-sunucu', icon: 'rocket', r: 'PREMIUM', rTon: 'sari', vurgu: true },
+    { t: 'Dedicated Sunucu', d: 'Fiziksel sunucular ile maksimum performans elde edin.', href: '/dedicated-sunucu', icon: 'cpu' },
+    { t: 'GPU Sunucu', d: 'Yüksek performanslı GPU ile AI ve grafik iş yükleriniz için ideal.', href: '/gpu-sunucu', icon: 'cpu', r: 'Popüler', rTon: 'kirmizi' },
+    { t: 'ISP Sunucu', d: 'Servis sağlayıcılar için özelleştirilmiş sunucu çözümleri.', href: '/isp-sunucu', icon: 'wifi' },
+    { t: 'ABD Sunucu', d: 'Amerika lokasyonunda düşük gecikmeli sunucu seçenekleri.', href: '/abd-sunucu', icon: 'globe' },
   ]},
-  { label: 'Veri Merkezi', one: { t: 'Tier-3 İstanbul', d: 'Yedekli enerji, yedekli ağ ve 7/24 fiziksel güvenlik ile kesintisiz altyapı.', href: '/sunucu-barindirma', icon: 'database' }, items: [
-    { t: 'Sunucu Barındırma', d: 'Tier-3 colocation', href: '/sunucu-barindirma', icon: 'database' },
-    { t: 'IP Kiralama', d: 'Temiz IPv4 / IPv6 blokları', href: '/ip-kiralama', icon: 'globe' },
+  { label: 'Veri Merkezi', kolon: 2, items: [
+    { t: 'Sunucu Barındırma', d: 'Kendi donanımınız bizim Tier-3 veri merkezimizde güvende.', href: '/sunucu-barindirma', icon: 'database', r: 'TIER III', rTon: 'yesil' },
+    { t: 'IP Kiralama', d: 'Kolay ve hızlı IP kiralama seçenekleri ile ihtiyacınız olan adresleri hemen edinin.', href: '/ip-kiralama', icon: 'globe', r: 'Özel', rTon: 'yesil' },
   ]},
-  { label: 'Kurumsal', one: { t: 'Bize ulaşın', d: 'Sorularınız için 7/24 uzman ekibimiz yanınızda. Ortalama yanıt süresi 5 dakika.', href: '/iletisim', icon: 'headset' }, items: [
-    { t: 'Şirket Profili', d: 'Hakkımızda', href: '/hakkimizda', icon: 'users' },
-    { t: 'Ticari Bilgiler', d: 'Resmi şirket bilgileri', href: '/ticari-bilgiler', icon: 'doc' },
-    { t: 'İletişim', d: 'Bize ulaşın', href: '/iletisim', icon: 'phone' },
-    { t: 'İade Politikası', d: 'İade koşulları', href: '/iade-politikasi', icon: 'refresh' },
-    { t: 'Kullanım Koşulları', d: 'Hizmet şartları', href: '/kullanim-kosullari', icon: 'doc' },
+  { label: 'Kurumsal', kolon: 4, items: [
+    { t: 'Şirket Profili', d: 'SunucumWEB hakkında detaylı bilgi alın.', href: '/hakkimizda', icon: 'users' },
+    { t: 'Ticari Bilgiler', d: 'Resmi ticari bilgilerimiz.', href: '/ticari-bilgiler', icon: 'star' },
+    { t: 'İade Sözleşmesi', d: 'İade politikamız ve koşulları.', href: '/iade-politikasi', icon: 'refresh' },
+    { t: 'Kullanım Koşulları', d: 'Hizmet kullanım koşullarımız.', href: '/kullanim-kosullari', icon: 'doc' },
   ]},
 ];
 
+const ROZET_TON = {
+  yesil: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 ring-emerald-500/30',
+  sari: 'bg-amber-500/15 text-amber-600 dark:text-amber-400 ring-amber-500/30',
+  mavi: 'bg-sky-500/15 text-sky-600 dark:text-sky-400 ring-sky-500/30',
+  kirmizi: 'bg-rose-500/15 text-rose-600 dark:text-rose-400 ring-rose-500/30',
+};
+
+/* mega menu kartı - gercek sitedeki yatay kart yapisi */
 function MegaItem({ it, onClick }) {
   return (
     <Link
       href={it.href}
       onClick={onClick}
-      className="group/i flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-brandsoft"
+      className={`group/i flex items-start gap-3.5 rounded-2xl border bg-surface p-4 transition-[transform,box-shadow,border-color] hover:-translate-y-0.5 hover:shadow-[0_16px_40px_-20px_rgba(15,41,66,0.35)] ${
+        it.vurgu ? 'border-amber-400/60 ring-1 ring-amber-400/30' : 'border-line hover:border-brandline'
+      }`}
     >
-      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-brandsoft text-brandtext transition-colors group-hover/i:bg-brand-500 group-hover/i:text-white">
+      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-brandsoft text-brandtext transition-colors group-hover/i:bg-brand-500 group-hover/i:text-white">
         <Icon name={it.icon} className="w-5 h-5" />
       </span>
       <span className="min-w-0 flex-1">
-        <span className="flex items-center gap-1 text-[14px] font-semibold text-strong">
-          {it.t}
-          <Icon name="arrow" className="w-3.5 h-3.5 shrink-0 -translate-x-1 text-brandtext opacity-0 transition-[transform,box-shadow,border-color,opacity] group-hover/i:translate-x-0 group-hover/i:opacity-100" />
+        <span className="flex flex-wrap items-center gap-2">
+          <span className="text-[15px] font-bold text-strong">{it.t}</span>
+          {it.r && (
+            <span className={`rounded-md px-1.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wide ring-1 ${ROZET_TON[it.rTon] || ROZET_TON.yesil}`}>
+              {it.r}
+            </span>
+          )}
         </span>
-        <span className="mt-0.5 block text-[12.5px] leading-snug text-body">{it.d}</span>
-      </span>
-    </Link>
-  );
-}
-
-/* mega menunun sag kolonundaki tanitim karti */
-function MegaOne({ one, onClick }) {
-  if (!one) return null;
-  return (
-    <Link
-      href={one.href}
-      onClick={onClick}
-      className="group/o flex flex-col justify-between rounded-xl bg-gradient-to-br from-brand-600 to-brand-800 p-4 text-white transition-shadow hover:shadow-lg hover:shadow-brand-700/40"
-    >
-      <span>
-        <span className="grid h-9 w-9 place-items-center rounded-lg bg-white/15">
-          <Icon name={one.icon} className="w-5 h-5" />
-        </span>
-        <span className="mt-3 block text-[14px] font-bold">{one.t}</span>
-        <span className="mt-1 block text-[12.5px] leading-snug text-white/80">{one.d}</span>
-      </span>
-      <span className="mt-4 inline-flex items-center gap-1 text-[12.5px] font-bold">
-        İncele <Icon name="arrow" className="w-3.5 h-3.5 transition-transform group-hover/o:translate-x-0.5" />
+        <span className="mt-1 block text-[12.5px] leading-snug text-body">{it.d}</span>
       </span>
     </Link>
   );
@@ -417,15 +407,10 @@ export function SiteHeader() {
                       onMouseEnter={() => menuAc(n)}
                     >
                       <div className="mx-auto max-w-7xl px-4 sm:px-5 lg:px-8">
-                        <div className={`overflow-hidden rounded-2xl border border-line bg-surface shadow-[0_30px_70px_-25px_rgba(15,41,66,0.45)] ${m.one ? 'grid grid-cols-[1fr_280px]' : ''}`}>
-                          <div className={`p-3 ${m.wide ? 'grid grid-cols-3 gap-1' : 'grid grid-cols-2 gap-1'}`}>
+                        <div className="rounded-2xl border border-line bg-surface2 p-3 shadow-[0_30px_70px_-25px_rgba(15,41,66,0.45)]">
+                          <div className={`grid gap-3 ${m.kolon === 2 ? 'grid-cols-2' : m.kolon === 3 ? 'grid-cols-3' : 'grid-cols-4'}`}>
                             {m.items.map((it) => <MegaItem key={it.href + it.t} it={it} onClick={menuKapatHemen} />)}
                           </div>
-                          {m.one && (
-                            <div className="border-l border-line bg-surface2/60 p-3">
-                              <MegaOne one={m.one} onClick={menuKapatHemen} />
-                            </div>
-                          )}
                         </div>
                       </div>
                     </div>
@@ -486,7 +471,6 @@ export function SiteHeader() {
                     <div className="grid gap-1 pb-3 animate-[fadeup_0.25s_ease-out]">
                       {/* mobilde de mega menu icerigi: ikon + baslik + aciklama */}
                       {m.items.map((it) => <MegaItem key={it.href + it.t} it={it} onClick={() => setOpen(false)} />)}
-                      {m.one && <div className="mt-1"><MegaOne one={m.one} onClick={() => setOpen(false)} /></div>}
                     </div>
                   )}
                 </div>
