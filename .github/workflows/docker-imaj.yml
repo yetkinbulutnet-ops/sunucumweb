@@ -51,6 +51,8 @@ jobs:
         with:
           context: .
           push: true
+          # Bunny Magic Containers SADECE linux/amd64 imajlarini kabul eder
+          platforms: linux/amd64
           tags: |
             ${{ steps.ad.outputs.yol }}:latest
             ${{ steps.ad.outputs.yol }}:${{ github.sha }}

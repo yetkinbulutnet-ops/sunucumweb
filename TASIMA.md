@@ -33,39 +33,30 @@ Bunlar bende bitti, senin yapman gereken yok:
 
 ---
 
-## SENİN ADIMLARIN
+## SENİN ADIMLARIN — hiçbir şey kurmana gerek yok
 
-### 1. GitHub CLI kur ve giriş yap
+Bilgisayarda **Git Credential Manager zaten kurulu** (v2.7.3), o yüzden
+GitHub CLI vs. kurmana gerek yok. Sadece tarayıcıdan onay vereceksin.
 
-PowerShell'de:
+### 1. GitHub'da boş depo aç (tarayıcı, ~30 saniye)
 
-```bash
-winget install --id GitHub.cli -e
-```
+github.com → sağ üst **+** → **New repository**
 
-Kurulumdan sonra **terminali kapatıp yeniden aç**, sonra:
+| Alan | Değer |
+|---|---|
+| Repository name | `sunucumweb` |
+| Görünürlük | **Private** (gizli) |
+| Add README / .gitignore / license | **HİÇBİRİNİ İŞARETLEME** |
 
-```bash
-gh auth login
-```
+**Create repository** → sonra bana kullanıcı adını söyle.
 
-Sorulara: `GitHub.com` → `HTTPS` → `Y` (git kimlik doğrulaması) → `Login with a web browser`
-→ çıkan kodu tarayıcıya gir.
+> GitHub hesabın yoksa önce github.com'dan aç (ücretsiz, 1 dakika).
 
-> GitHub hesabın yoksa önce github.com'dan aç (ücretsiz).
+### 2. Kodu ben göndereceğim
 
-### 2. Bana haber ver
-
-"gh hazır" de — depoyu oluşturup kodu ben göndereceğim ve Actions'ı ben tetikleyeceğim.
-
-<details>
-<summary>Kendin yapmak istersen (opsiyonel)</summary>
-
-```bash
-cd "C:\Users\alike\Desktop\SunucumWEB Site\sunucumweb-next"
-gh repo create sunucumweb --private --source=. --push
-```
-</details>
+Ben `git push` çalıştıracağım, ekrana bir **tarayıcı penceresi** açılacak →
+GitHub hesabınla **Authorize** de. Tek tıklama. Gerisi otomatik:
+Actions imajı derleyip GHCR'ye koyacak (~3-5 dk).
 
 ### 3. İmaj paketini herkese açık yap
 
