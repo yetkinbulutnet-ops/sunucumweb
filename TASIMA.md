@@ -50,8 +50,10 @@ Actions bitince (~3-5 dk) GitHub'da imaj oluşur. Bunny'nin onu çekebilmesi iç
 Önce derlemenin bittiğini gör: https://github.com/yetkinbulutnet-ops/sunucumweb/actions
 (yeşil tik ✅ = hazır, ~3-5 dk sürer)
 
-Sonra: https://github.com/orgs/yetkinbulutnet-ops/packages →
-`sunucumweb` paketi → **Package settings** → en altta **Change visibility** → **Public**
+Sonra paketler sayfası (hesap **kullanıcı** tipinde, /orgs/ DEĞİL):
+https://github.com/yetkinbulutnet-ops?tab=packages
+→ `sunucumweb` paketi → sağdaki **Package settings** → en altta
+**Danger Zone → Change visibility** → **Public** → paket adını yazıp onayla
 
 > Depo (repo) gizli kalabilir, sorun değil. Sadece **imaj paketi** herkese açık olmalı
 > ki Bunny "GitHub Public" seçeneğiyle kimlik doğrulamadan çekebilsin.
