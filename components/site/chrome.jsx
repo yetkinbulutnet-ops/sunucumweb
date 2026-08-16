@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { currentTheme, toggleTheme } from '@/lib/engines/theme';
 import { formatTRY, CHECKOUT_URL } from '@/lib/engines/cart';
@@ -345,6 +345,29 @@ export function SiteHeader() {
   const [acc, setAcc] = useState(-1);
   const [scrolled, setScrolled] = useState(false);
 
+  /* Mega menu: fare panele giderken aradaki bosluktan gecince kapanmasin diye
+     CSS :hover yerine gecikmeli JS kontrolu kullaniyoruz. */
+  const [acikMenu, setAcikMenu] = useState(-1);
+  const kapatmaZamani = useRef(null);
+  const menuAc = useCallback((n) => {
+    if (kapatmaZamani.current) clearTimeout(kapatmaZamani.current);
+    setAcikMenu(n);
+  }, []);
+  const menuKapatGecikmeli = useCallback(() => {
+    if (kapatmaZamani.current) clearTimeout(kapatmaZamani.current);
+    kapatmaZamani.current = setTimeout(() => setAcikMenu(-1), 260);
+  }, []);
+  const menuKapatHemen = useCallback(() => {
+    if (kapatmaZamani.current) clearTimeout(kapatmaZamani.current);
+    setAcikMenu(-1);
+  }, []);
+  useEffect(() => () => { if (kapatmaZamani.current) clearTimeout(kapatmaZamani.current); }, []);
+  useEffect(() => {
+    const esc = (e) => e.key === 'Escape' && menuKapatHemen();
+    window.addEventListener('keydown', esc);
+    return () => window.removeEventListener('keydown', esc);
+  }, [menuKapatHemen]);
+
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 8);
     on();
@@ -360,8 +383,10 @@ export function SiteHeader() {
 
   return (
     <>
+      {/* ust menu + header BIRLIKTE sticky */}
+      <div className="sticky top-0 z-50">
       <TopBar />
-      <header className={`relative sticky top-0 z-50 transition-shadow duration-300 ${scrolled ? 'bg-surface/90 backdrop-blur-xl border-b border-line shadow-[0_4px_30px_-12px_rgba(15,41,66,0.15)]' : 'bg-surface border-b border-line'}`}>
+      <header className={`relative transition-shadow duration-300 ${scrolled ? 'bg-surface/90 backdrop-blur-xl border-b border-line shadow-[0_4px_30px_-12px_rgba(15,41,66,0.15)]' : 'bg-surface border-b border-line'}`}>
         <div className="mx-auto max-w-7xl px-4 sm:px-5 lg:px-8">
           <div className="flex h-[68px] lg:h-[74px] items-center justify-between gap-3">
             <Link href="/" className="flex shrink-0 items-center">
@@ -369,31 +394,45 @@ export function SiteHeader() {
             </Link>
 
             {/* masaustu mega menu */}
-            <nav className="hidden lg:flex items-center gap-0.5">
-              {MENU.map((m) => (
-                <div key={m.label} className="group static">
-                  <button className="inline-flex items-center gap-1 rounded-lg px-3.5 py-2 text-[15px] font-medium text-strong/80 transition-colors group-hover:bg-brandsoft/60 group-hover:text-brandtext">
-                    {m.label}
-                    <Icon name="chevron" className="mt-0.5 w-3.5 h-3.5 transition-transform group-hover:rotate-180" />
-                  </button>
+            <nav className="hidden lg:flex items-center gap-0.5" onMouseLeave={menuKapatGecikmeli}>
+              {MENU.map((m, n) => {
+                const acikMi = acikMenu === n;
+                return (
+                  <div key={m.label} className="static" onMouseEnter={() => menuAc(n)}>
+                    <button
+                      aria-expanded={acikMi}
+                      onClick={() => (acikMi ? menuKapatHemen() : menuAc(n))}
+                      className={`inline-flex items-center gap-1 rounded-lg px-3.5 py-2 text-[15px] font-medium transition-colors ${acikMi ? 'bg-brandsoft/60 text-brandtext' : 'text-strong/80 hover:text-brandtext'}`}
+                    >
+                      {m.label}
+                      <Icon name="chevron" className={`mt-0.5 w-3.5 h-3.5 transition-transform ${acikMi ? 'rotate-180' : ''}`} />
+                    </button>
 
-                  {/* panel: header genisliginde, ortalanmis */}
-                  <div className="invisible absolute left-0 right-0 top-full z-40 translate-y-1 pt-2 opacity-0 transition-[transform,box-shadow,border-color,opacity] duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-                    <div className="mx-auto max-w-7xl px-4 sm:px-5 lg:px-8">
-                      <div className={`overflow-hidden rounded-2xl border border-line bg-surface shadow-[0_30px_70px_-25px_rgba(15,41,66,0.45)] ${m.one ? 'grid grid-cols-[1fr_280px]' : ''}`}>
-                        <div className={`p-3 ${m.wide ? 'grid grid-cols-3 gap-1' : 'grid grid-cols-2 gap-1'}`}>
-                          {m.items.map((it) => <MegaItem key={it.href + it.t} it={it} />)}
-                        </div>
-                        {m.one && (
-                          <div className="border-l border-line bg-surface2/60 p-3">
-                            <MegaOne one={m.one} />
+                    {/* panel: header genisliginde. pt-2 fare koprusu gorevi gorur.
+                        NOT: opacity/transform gecisi yerine kosullu render + hazir animasyon
+                        kullaniyoruz; Chromium'da bu tur gecisler eski degerde donabiliyor. */}
+                    {acikMi && (
+                    <div
+                      className="absolute left-0 right-0 top-full z-40 pt-2 animate-[fadeup_0.18s_ease-out]"
+                      onMouseEnter={() => menuAc(n)}
+                    >
+                      <div className="mx-auto max-w-7xl px-4 sm:px-5 lg:px-8">
+                        <div className={`overflow-hidden rounded-2xl border border-line bg-surface shadow-[0_30px_70px_-25px_rgba(15,41,66,0.45)] ${m.one ? 'grid grid-cols-[1fr_280px]' : ''}`}>
+                          <div className={`p-3 ${m.wide ? 'grid grid-cols-3 gap-1' : 'grid grid-cols-2 gap-1'}`}>
+                            {m.items.map((it) => <MegaItem key={it.href + it.t} it={it} onClick={menuKapatHemen} />)}
                           </div>
-                        )}
+                          {m.one && (
+                            <div className="border-l border-line bg-surface2/60 p-3">
+                              <MegaOne one={m.one} onClick={menuKapatHemen} />
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
+                    )}
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </nav>
 
             {/* sag: sepet + CTA */}
@@ -412,6 +451,7 @@ export function SiteHeader() {
         </div>
 
       </header>
+      </div>
 
       {/* ---- mobil menu: SAYFAYI ITMEZ, ustune acilir ---- */}
       {open && (

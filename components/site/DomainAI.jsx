@@ -59,6 +59,7 @@ export default function DomainAI() {
   const [tlds, setTlds] = useState([]);
   const [filtreAcik, setFiltreAcik] = useState(false);
   const [sadeceMusait, setSadeceMusait] = useState(false);
+  const [dogrudan, setDogrudan] = useState('');   // 'aklimda bir isim var' kutusu
 
   const taRef = useRef(null);
   const sonucRef = useRef(null);
@@ -301,6 +302,30 @@ export default function DomainAI() {
               </p>
             )}
           </div>
+        </div>
+
+        {/* ---- aklında isim varsa: doğrudan sorgula (ikincil, AI öne çıkmaya devam eder) ---- */}
+        <div className="mt-5 flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 sm:flex-row sm:items-center">
+          <div className="shrink-0 text-[13.5px] text-slate-300">
+            <span className="font-semibold text-white">Aklınızda bir isim var mı?</span>
+            <span className="hidden sm:inline"> Doğrudan sorgulayın.</span>
+          </div>
+          <form
+            onSubmit={(e) => { e.preventDefault(); window.location.href = 'https://my.sunucumweb.com'; }}
+            className="flex flex-1 items-center gap-2 rounded-xl border border-white/15 bg-ink/40 p-1.5"
+          >
+            <span className="pl-2 text-slate-400"><Icon name="search" className="w-4 h-4" /></span>
+            <input
+              value={dogrudan}
+              onChange={(e) => setDogrudan(e.target.value)}
+              placeholder="firmaadi.com"
+              aria-label="Alan adı sorgula"
+              className="min-w-0 flex-1 bg-transparent py-1.5 text-[14px] text-white placeholder:text-slate-500 outline-none"
+            />
+            <button type="submit" className="shrink-0 rounded-lg bg-white/10 px-4 py-2 text-[13px] font-bold text-white ring-1 ring-white/20 transition-colors hover:bg-white/20">
+              Sorgula
+            </button>
+          </form>
         </div>
 
         {/* ---- sonuçlar ---- */}
