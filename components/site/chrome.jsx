@@ -5,6 +5,7 @@ import { currentTheme, toggleTheme } from '@/lib/engines/theme';
 import { formatTRY, CHECKOUT_URL } from '@/lib/engines/cart';
 import { CartProvider, useCart } from './CartProvider';
 import OdemeLogolari from './OdemeLogolari';
+import DurumRozeti from './DurumRozeti';
 
 const PATHS = {
   bolt: 'M13 2 3 14h7l-1 8 10-12h-7z',
@@ -504,9 +505,6 @@ const BTK = {
   logo: 'https://cdn.yetkinweb.com/genel/genel/btklogo_320x320.png',
 };
 
-const DURUM_SAYFASI = 'https://durum.yetkinbulut.net';
-const DURUM_ROZETI = 'https://durum.yetkinbulut.net/b/overall-glass.svg';
-
 const GOOGLE_YORUM_URL = 'https://www.google.com/search?q=SunucumWEB&rldimm=10560064220033697496&tbm=lcl#lkt=LocalPoiReviews';
 
 const FOOT_KOLON = [
@@ -708,9 +706,7 @@ export function SiteFooter() {
           <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm text-slate-400">
             <span>© 2026 {FIRMA.unvan}</span>
             <span className="hidden text-white/20 sm:inline">|</span>
-            <a href={DURUM_SAYFASI} target="_blank" rel="noopener noreferrer" title="Sistem durumu">
-              <img src={DURUM_ROZETI} alt="YetkinBulut.Net durum" height={20} className="h-5 w-auto" loading="lazy" />
-            </a>
+            <DurumRozeti />
           </div>
 
           <OdemeLogolari />
