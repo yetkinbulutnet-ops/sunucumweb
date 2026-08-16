@@ -8,18 +8,21 @@ export const ODEME = [
 
 export default function OdemeLogolari({ className = '' }) {
   return (
-    <ul className={`flex flex-wrap items-center gap-2 ${className}`}>
+    <ul className={`flex flex-wrap items-center gap-1.5 ${className}`}>
       {ODEME.map(({ ad, dosya }) => (
-        <li key={ad}>
+        <li
+          key={ad}
+          title={ad}
+          className="grid h-[26px] w-[40px] place-items-center rounded-[5px] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.25)] ring-1 ring-black/10"
+        >
           <img
             src={dosya}
             alt={ad}
-            title={ad}
             width={512}
             height={320}
             loading="lazy"
             decoding="async"
-            className="h-9 w-auto opacity-90 transition-opacity hover:opacity-100"
+            className="h-[18px] w-auto max-w-[32px] object-contain"
           />
         </li>
       ))}
