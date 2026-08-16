@@ -348,7 +348,7 @@ export default function DomainAI() {
                     return (
                       <div
                         key={i.domain}
-                        className={`group relative overflow-hidden rounded-2xl border p-5 transition-all duration-300 ${
+                        className={`group relative overflow-hidden rounded-2xl border p-5 transition-[transform,box-shadow,border-color,opacity] duration-300 ${
                           alinmis
                             ? 'border-white/5 bg-white/[0.03] opacity-70'
                             : 'border-white/10 bg-white/[0.07] hover:-translate-y-1 hover:border-brand-400/40 hover:bg-white/[0.1]'

@@ -38,7 +38,7 @@ export default function AddToCartButton({ item, tema = 'acik', className = '' })
       type="button"
       onClick={tikla}
       aria-label={`${item.name} paketini sepete ekle`}
-      className={`inline-flex items-center justify-center gap-1.5 rounded-xl px-5 py-3 text-[14px] font-semibold transition-all ${stiller[tema] || stiller.acik} ${className}`}
+      className={`inline-flex items-center justify-center gap-1.5 rounded-xl px-5 py-3 text-[14px] font-semibold transition-[transform,box-shadow,border-color,opacity] ${stiller[tema] || stiller.acik} ${className}`}
     >
       <Icon name={eklendi ? 'check' : 'cart'} className="w-4 h-4" />
       {eklendi ? 'Sepete eklendi' : 'Sepete Ekle'}

@@ -28,7 +28,7 @@ export default function ContactPage() {
                 </>
               );
               return c.href
-                ? <a key={c.t} href={c.href} className="group rounded-2xl border border-line bg-surface p-6 shadow-[0_10px_40px_-24px_rgba(15,41,66,0.25)] hover:-translate-y-1 transition-all">{inner}</a>
+                ? <a key={c.t} href={c.href} className="group rounded-2xl border border-line bg-surface p-6 shadow-[0_10px_40px_-24px_rgba(15,41,66,0.25)] hover:-translate-y-1 transition-[transform,box-shadow,border-color,opacity]">{inner}</a>
                 : <div key={c.t} className="group rounded-2xl border border-line bg-surface p-6 shadow-[0_10px_40px_-24px_rgba(15,41,66,0.25)]">{inner}</div>;
             })}
             <div className="sm:col-span-2 rounded-2xl bg-ink p-6 text-white">

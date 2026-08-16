@@ -69,7 +69,7 @@ export default function DomainPage({ mode = 'register' }) {
           <div className="text-center max-w-2xl mx-auto mb-10"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Fiyatlar</span><h2 className="mt-3 text-3xl font-extrabold tracking-tight text-strong">Popüler uzantı fiyatları</h2></div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {TLDS.map(([t, p]) => (
-              <div key={t} className="rounded-2xl border border-line bg-surface p-6 text-center shadow-[0_10px_40px_-24px_rgba(15,41,66,0.25)] hover:-translate-y-1 hover:border-brandline transition-all">
+              <div key={t} className="rounded-2xl border border-line bg-surface p-6 text-center shadow-[0_10px_40px_-24px_rgba(15,41,66,0.25)] hover:-translate-y-1 hover:border-brandline transition-[transform,box-shadow,border-color,opacity]">
                 <div className="text-2xl font-extrabold text-strong">{t}</div>
                 <div className="mt-2 text-brandtext font-bold">₺{p}<span className="text-sm font-medium text-muted">/yıl</span></div>
               </div>
@@ -98,7 +98,7 @@ export default function DomainPage({ mode = 'register' }) {
       {/* özellikler */}
       <section className="mx-auto max-w-7xl px-5 lg:px-8 py-16 lg:py-20">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {DFEATURES.map((f) => (<div key={f.t} className="group rounded-2xl border border-line bg-surface p-6 shadow-[0_10px_40px_-24px_rgba(15,41,66,0.2)] hover:-translate-y-1 transition-all"><span className="grid h-12 w-12 place-items-center rounded-2xl bg-brandsoft text-brandtext group-hover:bg-brand-500 group-hover:text-white transition-colors"><Icon name={f.icon} /></span><h3 className="mt-4 text-[17px] font-bold text-strong">{f.t}</h3><p className="mt-2 text-sm leading-relaxed text-body">{f.d}</p></div>))}
+          {DFEATURES.map((f) => (<div key={f.t} className="group rounded-2xl border border-line bg-surface p-6 shadow-[0_10px_40px_-24px_rgba(15,41,66,0.2)] hover:-translate-y-1 transition-[transform,box-shadow,border-color,opacity]"><span className="grid h-12 w-12 place-items-center rounded-2xl bg-brandsoft text-brandtext group-hover:bg-brand-500 group-hover:text-white transition-colors"><Icon name={f.icon} /></span><h3 className="mt-4 text-[17px] font-bold text-strong">{f.t}</h3><p className="mt-2 text-sm leading-relaxed text-body">{f.d}</p></div>))}
         </div>
       </section>
 

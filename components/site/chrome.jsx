@@ -58,19 +58,20 @@ export function Icon({ name, className = 'w-6 h-6' }) {
 }
 
 /* ---------------- navigasyon (eski site mega menü yapısı) ---------------- */
+/* one: mega menunun sag kolonundaki tanitim karti (opsiyonel) */
 export const MENU = [
-  { label: 'Domain', items: [
+  { label: 'Domain', one: { t: 'AI Alan Adı Bulucu', d: 'İşinizi anlatın, yapay zekâ size uygun alan adlarını bulsun ve müsaitliğini kontrol etsin.', href: '/alan-adi', icon: 'sparkles' }, items: [
     { t: 'Domain Tescil', d: 'Yeni alan adı kaydı', href: '/alan-adi', icon: 'globe' },
     { t: 'Domain Transfer', d: 'Mevcut domaininizi taşıyın', href: '/transfer', icon: 'refresh' },
     { t: 'Domain Sorgulama', d: 'WHOIS sorgulama', href: '/whois', icon: 'search' },
   ]},
-  { label: 'Hosting', items: [
+  { label: 'Hosting', one: { t: 'Hangi paket bana uygun?', d: '3 kısa soruya cevap verin, ihtiyacınıza en uygun çözümü birlikte bulalım.', href: '/web-hosting', icon: 'chat' }, items: [
     { t: 'Web Hosting', d: 'Bireysel & KOBİ siteleri', href: '/web-hosting', icon: 'globe' },
     { t: 'WordPress Hosting', d: 'WordPress için optimize', href: '/wordpress-hosting', icon: 'bolt' },
     { t: 'Reseller Hosting', d: 'Kendi hosting işinizi kurun', href: '/reseller-hosting', icon: 'users' },
     { t: 'Kurumsal Hosting', d: 'Yüksek trafik & izole kaynak', href: '/kurumsal-hosting', icon: 'layers' },
   ]},
-  { label: 'Sunucu', wide: true, items: [
+  { label: 'Sunucu', wide: true, one: { t: 'Kurumsal SLA', d: '%99.9 uptime garantisi, DDoS koruması ve 7/24 uzman destek tüm sunucularda dahil.', href: '/dedicated-sunucu', icon: 'shield' }, items: [
     { t: 'Sanal Sunucu (VDS)', d: 'Root erişimli, ölçeklenebilir', href: '/sanal-sunucu', icon: 'server' },
     { t: 'Premium Sunucu', d: 'Premium işlemci gücü', href: '/premium-sunucu', icon: 'rocket' },
     { t: 'Dedicated Sunucu', d: 'Fiziksel, tam kontrol', href: '/dedicated-sunucu', icon: 'server' },
@@ -78,11 +79,11 @@ export const MENU = [
     { t: 'ISP Sunucu', d: 'Servis sağlayıcılar için', href: '/isp-sunucu', icon: 'wifi' },
     { t: 'ABD Sunucu', d: 'Amerika lokasyonu', href: '/abd-sunucu', icon: 'globe' },
   ]},
-  { label: 'Veri Merkezi', items: [
+  { label: 'Veri Merkezi', one: { t: 'Tier-3 İstanbul', d: 'Yedekli enerji, yedekli ağ ve 7/24 fiziksel güvenlik ile kesintisiz altyapı.', href: '/sunucu-barindirma', icon: 'database' }, items: [
     { t: 'Sunucu Barındırma', d: 'Tier-3 colocation', href: '/sunucu-barindirma', icon: 'database' },
     { t: 'IP Kiralama', d: 'Temiz IPv4 / IPv6 blokları', href: '/ip-kiralama', icon: 'globe' },
   ]},
-  { label: 'Kurumsal', items: [
+  { label: 'Kurumsal', one: { t: 'Bize ulaşın', d: 'Sorularınız için 7/24 uzman ekibimiz yanınızda. Ortalama yanıt süresi 5 dakika.', href: '/iletisim', icon: 'headset' }, items: [
     { t: 'Şirket Profili', d: 'Hakkımızda', href: '/hakkimizda', icon: 'users' },
     { t: 'Ticari Bilgiler', d: 'Resmi şirket bilgileri', href: '/ticari-bilgiler', icon: 'doc' },
     { t: 'İletişim', d: 'Bize ulaşın', href: '/iletisim', icon: 'phone' },
@@ -91,13 +92,45 @@ export const MENU = [
   ]},
 ];
 
-function MegaItem({ it }) {
+function MegaItem({ it, onClick }) {
   return (
-    <Link href={it.href} className="group/i flex items-start gap-3 rounded-xl p-3 hover:bg-brandsoft/70 transition-colors">
-      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-brandsoft text-brandtext group-hover/i:bg-brand-500 group-hover/i:text-white transition-colors"><Icon name={it.icon} className="w-5 h-5" /></span>
-      <span className="min-w-0">
-        <span className="block text-[14px] font-semibold text-strong">{it.t}</span>
-        <span className="block text-[12.5px] text-body">{it.d}</span>
+    <Link
+      href={it.href}
+      onClick={onClick}
+      className="group/i flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-brandsoft"
+    >
+      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-brandsoft text-brandtext transition-colors group-hover/i:bg-brand-500 group-hover/i:text-white">
+        <Icon name={it.icon} className="w-5 h-5" />
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="flex items-center gap-1 text-[14px] font-semibold text-strong">
+          {it.t}
+          <Icon name="arrow" className="w-3.5 h-3.5 shrink-0 -translate-x-1 text-brandtext opacity-0 transition-[transform,box-shadow,border-color,opacity] group-hover/i:translate-x-0 group-hover/i:opacity-100" />
+        </span>
+        <span className="mt-0.5 block text-[12.5px] leading-snug text-body">{it.d}</span>
+      </span>
+    </Link>
+  );
+}
+
+/* mega menunun sag kolonundaki tanitim karti */
+function MegaOne({ one, onClick }) {
+  if (!one) return null;
+  return (
+    <Link
+      href={one.href}
+      onClick={onClick}
+      className="group/o flex flex-col justify-between rounded-xl bg-gradient-to-br from-brand-600 to-brand-800 p-4 text-white transition-shadow hover:shadow-lg hover:shadow-brand-700/40"
+    >
+      <span>
+        <span className="grid h-9 w-9 place-items-center rounded-lg bg-white/15">
+          <Icon name={one.icon} className="w-5 h-5" />
+        </span>
+        <span className="mt-3 block text-[14px] font-bold">{one.t}</span>
+        <span className="mt-1 block text-[12.5px] leading-snug text-white/80">{one.d}</span>
+      </span>
+      <span className="mt-4 inline-flex items-center gap-1 text-[12.5px] font-bold">
+        İncele <Icon name="arrow" className="w-3.5 h-3.5 transition-transform group-hover/o:translate-x-0.5" />
       </span>
     </Link>
   );
@@ -125,7 +158,7 @@ export function ThemeToggle({ variant = 'topbar' }) {
           {monte ? (koyu ? 'Açık mod' : 'Koyu mod') : 'Tema'}
         </span>
         <span className={`relative h-6 w-11 rounded-full transition-colors ${monte && koyu ? 'bg-brand-500' : 'bg-line'}`}>
-          <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-all ${monte && koyu ? 'left-[22px]' : 'left-0.5'}`} />
+          <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-[transform,box-shadow,border-color,opacity] ${monte && koyu ? 'left-[22px]' : 'left-0.5'}`} />
         </span>
       </button>
     );
@@ -328,7 +361,7 @@ export function SiteHeader() {
   return (
     <>
       <TopBar />
-      <header className={`sticky top-0 z-50 transition-shadow duration-300 ${scrolled ? 'bg-surface/90 backdrop-blur-xl border-b border-line shadow-[0_4px_30px_-12px_rgba(15,41,66,0.15)]' : 'bg-surface border-b border-line'}`}>
+      <header className={`relative sticky top-0 z-50 transition-shadow duration-300 ${scrolled ? 'bg-surface/90 backdrop-blur-xl border-b border-line shadow-[0_4px_30px_-12px_rgba(15,41,66,0.15)]' : 'bg-surface border-b border-line'}`}>
         <div className="mx-auto max-w-7xl px-4 sm:px-5 lg:px-8">
           <div className="flex h-[68px] lg:h-[74px] items-center justify-between gap-3">
             <Link href="/" className="flex shrink-0 items-center">
@@ -338,13 +371,25 @@ export function SiteHeader() {
             {/* masaustu mega menu */}
             <nav className="hidden lg:flex items-center gap-0.5">
               {MENU.map((m) => (
-                <div key={m.label} className="group relative">
+                <div key={m.label} className="group static">
                   <button className="inline-flex items-center gap-1 rounded-lg px-3.5 py-2 text-[15px] font-medium text-strong/80 transition-colors group-hover:bg-brandsoft/60 group-hover:text-brandtext">
-                    {m.label}<Icon name="chevron" className="mt-0.5 w-3.5 h-3.5 transition-transform group-hover:rotate-180" />
+                    {m.label}
+                    <Icon name="chevron" className="mt-0.5 w-3.5 h-3.5 transition-transform group-hover:rotate-180" />
                   </button>
-                  <div className="invisible absolute left-1/2 top-full -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-                    <div className={`rounded-2xl border border-line bg-surface p-2.5 shadow-[0_30px_70px_-25px_rgba(15,41,66,0.4)] ${m.wide ? 'grid w-[560px] grid-cols-2 gap-1' : 'w-[320px]'}`}>
-                      {m.items.map((it) => <MegaItem key={it.href + it.t} it={it} />)}
+
+                  {/* panel: header genisliginde, ortalanmis */}
+                  <div className="invisible absolute left-0 right-0 top-full z-40 translate-y-1 pt-2 opacity-0 transition-[transform,box-shadow,border-color,opacity] duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                    <div className="mx-auto max-w-7xl px-4 sm:px-5 lg:px-8">
+                      <div className={`overflow-hidden rounded-2xl border border-line bg-surface shadow-[0_30px_70px_-25px_rgba(15,41,66,0.45)] ${m.one ? 'grid grid-cols-[1fr_280px]' : ''}`}>
+                        <div className={`p-3 ${m.wide ? 'grid grid-cols-3 gap-1' : 'grid grid-cols-2 gap-1'}`}>
+                          {m.items.map((it) => <MegaItem key={it.href + it.t} it={it} />)}
+                        </div>
+                        {m.one && (
+                          <div className="border-l border-line bg-surface2/60 p-3">
+                            <MegaOne one={m.one} />
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -354,7 +399,7 @@ export function SiteHeader() {
             {/* sag: sepet + CTA */}
             <div className="flex shrink-0 items-center gap-1 sm:gap-2">
               <CartButton />
-              <Link href="/web-hosting" className="group hidden sm:inline-flex items-center gap-1.5 rounded-xl bg-brand-500 px-4 py-2.5 text-[14px] font-semibold text-white shadow-lg shadow-brand-500/25 transition-all hover:bg-brand-600 lg:px-5 lg:text-[15px]">
+              <Link href="/web-hosting" className="group hidden sm:inline-flex items-center gap-1.5 rounded-xl bg-brand-500 px-4 py-2.5 text-[14px] font-semibold text-white shadow-lg shadow-brand-500/25 transition-[transform,box-shadow,border-color,opacity] hover:bg-brand-600 lg:px-5 lg:text-[15px]">
                 Hemen Başla <Icon name="arrow" className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
               </Link>
               <button onClick={() => setOpen((v) => !v)} className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-strong transition-colors hover:bg-surface2 lg:hidden" aria-label="Menü" aria-expanded={open}>
@@ -366,55 +411,79 @@ export function SiteHeader() {
           </div>
         </div>
 
-        {/* mobil menu */}
-        {open && (
-          <div className="max-h-[calc(100vh-108px)] overflow-y-auto border-t border-line bg-surface px-4 pb-6 pt-2 lg:hidden">
-            {MENU.map((m, i) => (
-              <div key={m.label} className="border-b border-line/60">
-                <button onClick={() => setAcc(acc === i ? -1 : i)} className="flex w-full items-center justify-between py-3.5 text-[15px] font-semibold text-strong">
-                  {m.label}<Icon name="chevron" className={`w-4 h-4 transition-transform ${acc === i ? 'rotate-180' : ''}`} />
-                </button>
-                {acc === i && (
-                  <div className="pb-2 pl-1">
-                    {m.items.map((it) => (
-                      <Link key={it.href + it.t} href={it.href} onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-lg px-2 py-2.5 hover:bg-brandsoft">
-                        <span className="grid h-8 w-8 place-items-center rounded-lg bg-brandsoft text-brandtext"><Icon name={it.icon} className="w-4 h-4" /></span>
-                        <span className="text-[14px] font-medium text-strong/90">{it.t}</span>
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+      </header>
 
-            <Link href="/web-hosting" onClick={() => setOpen(false)} className="mt-4 block rounded-xl bg-brand-500 px-5 py-3 text-center font-semibold text-white">Hemen Başla</Link>
+      {/* ---- mobil menu: SAYFAYI ITMEZ, ustune acilir ---- */}
+      {open && (
+        <div className="fixed inset-0 z-[80] lg:hidden" role="dialog" aria-modal="true" aria-label="Menü">
+          {/* arka plan: sade koyu perde (blur yok - renk bozulmasin) */}
+          <div onClick={() => setOpen(false)} className="absolute inset-0 bg-ink/70 animate-[fadeup_0.2s_ease-out]" />
 
-            {/* ust menunun mobil karsiligi */}
-            <div className="mt-5 rounded-2xl border border-line bg-surface2/60 p-3">
-              <div className="px-1 pb-2 text-[11px] font-bold uppercase tracking-wider text-muted">Hızlı erişim</div>
-              <div className="grid grid-cols-2 gap-2">
-                <a href="tel:08503025809" className="flex items-center gap-2 rounded-xl bg-surface px-3 py-2.5 text-[13px] font-semibold text-strong ring-1 ring-line">
-                  <Icon name="phone" className="w-4 h-4 text-brandtext" /> Ara
-                </a>
-                <a href="https://my.sunucumweb.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-xl bg-surface px-3 py-2.5 text-[13px] font-semibold text-strong ring-1 ring-line">
-                  <Icon name="user" className="w-4 h-4 text-brandtext" /> Müşteri Girişi
-                </a>
-                <a href="https://my.sunucumweb.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-xl bg-surface px-3 py-2.5 text-[13px] font-semibold text-strong ring-1 ring-line">
-                  <Icon name="chat" className="w-4 h-4 text-brandtext" /> Canlı Destek
-                </a>
-                <span className="flex items-center gap-2 rounded-xl bg-surface px-3 py-2.5 text-[13px] font-semibold text-strong ring-1 ring-line">
-                  <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+          <div className="absolute inset-x-0 top-0 flex max-h-full flex-col bg-surface shadow-2xl animate-[fadeup_0.3s_ease-out]">
+            {/* baslik */}
+            <div className="flex shrink-0 items-center justify-between border-b border-line px-4 py-3">
+              <Link href="/" onClick={() => setOpen(false)} className="flex items-center">
+                <img src="/icon/logo.png" alt="SunucumWEB" className="h-7 w-auto dark:brightness-0 dark:invert" />
+              </Link>
+              <button onClick={() => setOpen(false)} aria-label="Kapat" className="grid h-10 w-10 place-items-center rounded-xl text-strong transition-colors hover:bg-surface2">
+                <Icon name="xmark" className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* icerik */}
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-6 pt-2">
+              {MENU.map((m, i) => (
+                <div key={m.label} className="border-b border-line/60">
+                  <button
+                    onClick={() => setAcc(acc === i ? -1 : i)}
+                    aria-expanded={acc === i}
+                    className="flex w-full items-center justify-between py-3.5 text-[15px] font-semibold text-strong"
+                  >
+                    {m.label}
+                    <Icon name="chevron" className={`w-4 h-4 text-muted transition-transform ${acc === i ? 'rotate-180' : ''}`} />
+                  </button>
+                  {acc === i && (
+                    <div className="grid gap-1 pb-3 animate-[fadeup_0.25s_ease-out]">
+                      {/* mobilde de mega menu icerigi: ikon + baslik + aciklama */}
+                      {m.items.map((it) => <MegaItem key={it.href + it.t} it={it} onClick={() => setOpen(false)} />)}
+                      {m.one && <div className="mt-1"><MegaOne one={m.one} onClick={() => setOpen(false)} /></div>}
+                    </div>
+                  )}
+                </div>
+              ))}
+
+              <Link href="/web-hosting" onClick={() => setOpen(false)} className="mt-4 block rounded-xl bg-brand-500 px-5 py-3.5 text-center font-bold text-white shadow-lg shadow-brand-500/25">
+                Hemen Başla
+              </Link>
+
+              {/* ust menunun mobil karsiligi */}
+              <div className="mt-4 rounded-2xl border border-line bg-surface2/60 p-3">
+                <div className="px-1 pb-2 text-[11px] font-bold uppercase tracking-wider text-muted">Hızlı erişim</div>
+                <div className="grid grid-cols-2 gap-2">
+                  <a href="tel:08503025809" className="flex items-center gap-2 rounded-xl bg-surface px-3 py-2.5 text-[13px] font-semibold text-strong ring-1 ring-line">
+                    <Icon name="phone" className="w-4 h-4 text-brandtext" /> Ara
+                  </a>
+                  <a href="https://my.sunucumweb.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-xl bg-surface px-3 py-2.5 text-[13px] font-semibold text-strong ring-1 ring-line">
+                    <Icon name="user" className="w-4 h-4 text-brandtext" /> Müşteri Girişi
+                  </a>
+                  <a href="https://my.sunucumweb.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-xl bg-surface px-3 py-2.5 text-[13px] font-semibold text-strong ring-1 ring-line">
+                    <Icon name="chat" className="w-4 h-4 text-brandtext" /> Canlı Destek
+                  </a>
+                  <span className="flex items-center gap-2 rounded-xl bg-surface px-3 py-2.5 text-[13px] font-semibold text-strong ring-1 ring-line">
+                    <span className="relative flex h-2 w-2">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                      <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                    </span>
+                    Ağ Durumu
                   </span>
-                  Ağ Durumu
-                </span>
+                </div>
+                <div className="mt-2"><ThemeToggle variant="satir" /></div>
               </div>
-              <div className="mt-2"><ThemeToggle variant="satir" /></div>
             </div>
           </div>
-        )}
-      </header>
+        </div>
+      )}
+
       <CartDrawer />
     </>
   );
@@ -458,7 +527,7 @@ export function SiteFooter() {
 export function CtaBand({ title = 'Bugün başlayın, farkı hemen hissedin', text = 'Dakikalar içinde kurulum, 30 gün içinde memnun kalmazsanız iade garantisi.' }) {
   return (
     <section className="mx-auto max-w-7xl px-5 lg:px-8 py-20">
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-500 to-brand-700 px-8 py-14 sm:px-14 text-center shadow-[0_40px_90px_-40px_rgba(13,148,136,0.7)]">
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-600 to-brand-800 px-8 py-14 sm:px-14 text-center shadow-[0_40px_90px_-40px_rgba(15,118,110,0.7)]">
         <div aria-hidden className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.25),transparent_55%)]" />
         <div className="relative">
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white text-balance">{title}</h2>

@@ -7,13 +7,43 @@ import { QUESTIONS, recommend } from '@/lib/engines/product-finder';
 import AddToCartButton from './AddToCartButton';
 import DomainAI from './DomainAI';
 
-/* ---------------- hero slider verisi ---------------- */
+/* ---------------- hero slider verisi ----------------
+   ALTIN KURAL: banner gorselleri HER ZAMAN 1920x1080 (public/img/slider/).
+   karartma: 0-100 arasi, gorselin uzerindeki koyulugu ayarlar (metin okunurlugu icin). */
 const SLIDES = [
-  { eyebrow: 'Türkiye\'nin güvenilir sunucu sağlayıcısı', pre: 'İşinizi', hl: 'güçlü sunuculara', post: 'taşıyın', text: 'Hızlı NVMe hosting, ölçeklenebilir sanal sunucular ve kurumsal dedicated çözümler. Ücretsiz SSL, günlük yedek ve gerçek 7/24 destekle.', badge: ['%99.9 Uptime', '30 gün kesintisiz', 'shield'] },
-  { eyebrow: 'Saniyeler içinde online olun', pre: 'Alan adınızı', hl: 'hemen alın', post: '', text: 'Yüzlerce uzantı, uygun fiyatlar ve ücretsiz WHOIS gizliliği ile markanızı bugün güvence altına alın.', badge: ['firmaadi.com', 'Uygun · hemen al', 'check'] },
-  { eyebrow: 'Kesintisiz, güvenli altyapı', pre: 'Siteniz', hl: 'her zaman ayakta', post: 'kalsın', text: 'Yedekli ağ, kesintisiz güç kaynağı ve 7/24 izleme ile hizmetiniz asla durmaz. DDoS koruması tüm paketlerde dahil.', badge: ['DDoS Korumalı', 'Aktif kalkan', 'shield'] },
+  {
+    img: '/img/slider/sunucu-rack.jpg',
+    karartma: 68,
+    eyebrow: 'Türkiye\'nin güvenilir sunucu sağlayıcısı',
+    pre: 'İşinizi', hl: 'güçlü sunuculara', post: 'taşıyın',
+    text: 'Hızlı NVMe hosting, ölçeklenebilir sanal sunucular ve kurumsal dedicated çözümler. Ücretsiz SSL, günlük yedek ve gerçek 7/24 destekle.',
+    cta: { t: 'Paketleri İncele', href: '/web-hosting' },
+    cta2: { t: 'Sunucu Çözümleri', href: '/sanal-sunucu' },
+    rozet: ['%99.9 Uptime', 'shield'],
+  },
+  {
+    img: '/img/slider/devre-karti.jpg',
+    karartma: 72,
+    eyebrow: 'Saniyeler içinde online olun',
+    pre: 'Alan adınızı', hl: 'hemen alın', post: '',
+    text: 'Yüzlerce uzantı, uygun fiyatlar ve ücretsiz WHOIS gizliliği ile markanızı bugün güvence altına alın. Yapay zekâ destekli alan adı bulucumuzu deneyin.',
+    cta: { t: 'Alan Adı Bul', href: '/alan-adi' },
+    cta2: { t: 'Transfer Et', href: '/transfer' },
+    rozet: ['Ücretsiz WHOIS gizliliği', 'lock'],
+  },
+  {
+    img: '/img/slider/veri-merkezi.jpg',
+    karartma: 66,
+    eyebrow: 'Kesintisiz, güvenli altyapı',
+    pre: 'Siteniz', hl: 'her zaman ayakta', post: 'kalsın',
+    text: 'Yedekli ağ, kesintisiz güç kaynağı ve 7/24 izleme ile hizmetiniz asla durmaz. DDoS koruması tüm paketlerde dahildir.',
+    cta: { t: 'Veri Merkezimiz', href: '/sunucu-barindirma' },
+    cta2: { t: 'Bize Ulaşın', href: '/iletisim' },
+    rozet: ['DDoS Korumalı', 'shield'],
+  },
 ];
 const TLDS = ['.com', '.net', '.com.tr', '.org', '.xyz'];
+
 const FEATURES = [
   { t: 'NVMe SSD Altyapı', d: 'En son nesil NVMe diskler ve LiteSpeed ile sitenizi rakiplerinizden kat kat hızlı sunun.', icon: 'bolt' },
   { t: '%99.9 Uptime Garantisi', d: 'Yedekli ağ, kesintisiz güç ve 7/24 izleme ile siteniz her zaman erişilebilir kalır.', icon: 'shield' },
@@ -27,71 +57,157 @@ const PLANS = [
 ];
 const STATS = [['%99.9', 'Uptime Garantisi'], ['10.000+', 'Mutlu Müşteri'], ['7/24', 'Uzman Destek'], ['<5dk', 'Ortalama Yanıt']];
 
-/* ================= HERO SLIDER ================= */
+/* ================= HERO SLIDER (gorselli) ================= */
 function Hero() {
   const [i, setI] = useState(0);
   const [domain, setDomain] = useState('');
+  const [duraklat, setDuraklat] = useState(false);
   const go = useCallback((n) => setI((n + SLIDES.length) % SLIDES.length), []);
+
   useEffect(() => {
-    const t = setInterval(() => setI((v) => (v + 1) % SLIDES.length), 6500);
+    if (duraklat) return;
+    const t = setInterval(() => setI((v) => (v + 1) % SLIDES.length), 7000);
     return () => clearInterval(t);
-  }, []);
-  const s = SLIDES[i];
+  }, [duraklat]);
+
   return (
-    <section className="relative overflow-hidden">
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute -top-40 right-[-10%] h-[560px] w-[560px] rounded-full bg-brand-300/30 blur-[120px]" />
-        <div className="absolute top-40 left-[-10%] h-[420px] w-[420px] rounded-full bg-brand-200/40 blur-[120px]" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgb(var(--c-grid))_1px,transparent_1px),linear-gradient(to_bottom,rgb(var(--c-grid))_1px,transparent_1px)] bg-[size:44px_44px] [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
-      </div>
-      <div className="mx-auto max-w-7xl px-5 lg:px-8 pt-14 lg:pt-16 pb-14">
-        <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-14 items-center">
-          {/* sol - slider içeriği */}
-          <div>
-            <div key={i} className="animate-[fadeup_0.6s_ease-out] min-h-[300px] sm:min-h-[330px] lg:min-h-[352px]">
-              <span className="inline-flex items-center gap-2 rounded-full border border-brandline bg-brandsoft/80 px-3.5 py-1.5 text-[13px] font-semibold text-brandtext">
-                <span className="relative flex h-2 w-2"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-400 opacity-75" /><span className="relative inline-flex h-2 w-2 rounded-full bg-brand-500" /></span>
-                {s.eyebrow}
+    <section>
+      {/* ---- banner: sabit yukseklik, gorsel arkada, metin onde ---- */}
+      <div
+        className="relative h-[440px] sm:h-[500px] lg:h-[580px] xl:h-[640px] overflow-hidden bg-ink"
+        onMouseEnter={() => setDuraklat(true)}
+        onMouseLeave={() => setDuraklat(false)}
+      >
+        {SLIDES.map((s, n) => (
+          <div
+            key={s.img}
+            aria-hidden={n !== i}
+            className={`absolute inset-0 transition-opacity duration-700 ease-out ${n === i ? 'opacity-100' : 'opacity-0'}`}
+          >
+            {/* 1920x1080 banner - kap sabit, gorsel object-cover */}
+            <img
+              src={s.img}
+              alt=""
+              width={1920}
+              height={1080}
+              loading={n === 0 ? 'eager' : 'lazy'}
+              fetchPriority={n === 0 ? 'high' : 'auto'}
+              className="h-full w-full object-cover"
+            />
+            {/* karartma: soldan saga koyudan aciga + genel bir kat */}
+            <div
+              aria-hidden
+              className="absolute inset-0"
+              style={{
+                background:
+                  `linear-gradient(90deg, rgba(8,20,33,${s.karartma / 100}) 0%, rgba(8,20,33,${(s.karartma - 18) / 100}) 45%, rgba(8,20,33,${(s.karartma - 40) / 100}) 100%)`,
+              }}
+            />
+            <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-ink/25" />
+          </div>
+        ))}
+
+        {/* ---- onde duran icerik ---- */}
+        <div className="absolute inset-0 flex items-center">
+          <div className="mx-auto w-full max-w-7xl px-5 lg:px-8">
+            <div key={i} className="max-w-2xl animate-[fadeup_0.7s_ease-out]">
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-[12px] sm:text-[13px] font-semibold text-white backdrop-blur-sm">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-300 opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-400" />
+                </span>
+                {SLIDES[i].eyebrow}
               </span>
-              <h1 className="mt-6 text-[2.6rem] leading-[1.08] sm:text-6xl font-extrabold tracking-tight text-strong text-balance">
-                {s.pre} <span className="relative whitespace-nowrap"><span className="relative z-10 text-brandtext">{s.hl}</span><span className="absolute bottom-1 left-0 z-0 h-3 w-full bg-brand-200/60" /></span> {s.post}
+
+              <h1 className="mt-5 text-[2rem] leading-[1.1] sm:text-[2.75rem] lg:text-5xl xl:text-[3.5rem] font-extrabold tracking-tight text-white text-balance [text-shadow:0_2px_24px_rgba(0,0,0,0.45)]">
+                {SLIDES[i].pre}{' '}
+                <span className="relative whitespace-nowrap">
+                  <span className="relative z-10 text-brand-300">{SLIDES[i].hl}</span>
+                  <span className="absolute bottom-1 left-0 z-0 h-2.5 w-full rounded bg-brand-400/25" />
+                </span>{' '}
+                {SLIDES[i].post}
               </h1>
-              <p className="mt-5 max-w-xl text-lg leading-relaxed text-body">{s.text}</p>
-            </div>
 
-            {/* domain arama - sabit */}
-            <form onSubmit={(e) => { e.preventDefault(); window.location.href = '/alan-adi'; }} className="mt-8 max-w-xl">
-              <div className="flex items-center gap-2 rounded-2xl border border-line bg-surface p-2 shadow-[0_20px_50px_-25px_rgba(15,41,66,0.35)] focus-within:border-brand-400 focus-within:ring-4 focus-within:ring-brand-100 transition">
-                <span className="pl-3 text-muted"><Icon name="search" className="w-5 h-5" /></span>
-                <input value={domain} onChange={(e) => setDomain(e.target.value)} placeholder="Alan adınızı arayın: firmaadi.com" className="flex-1 bg-transparent py-2.5 text-[15px] text-strong placeholder:text-muted outline-none" />
-                <button type="submit" className="inline-flex items-center gap-1.5 rounded-xl bg-ink px-5 py-3 text-[15px] font-semibold text-white hover:bg-brand-600 transition-colors">Ara <Icon name="arrow" className="w-4 h-4" /></button>
-              </div>
-              <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 pl-1 text-[13px] text-body"><span className="font-medium text-muted">Popüler:</span>{TLDS.map((t) => <span key={t} className="font-semibold text-strong/70">{t}</span>)}</div>
-            </form>
+              <p className="mt-4 max-w-xl text-[15px] sm:text-[17px] leading-relaxed text-slate-200 [text-shadow:0_1px_12px_rgba(0,0,0,0.4)]">
+                {SLIDES[i].text}
+              </p>
 
-            {/* slider kontrolleri */}
-            <div className="mt-8 flex items-center gap-4">
-              <div className="flex gap-2">
-                {SLIDES.map((_, n) => (
-                  <button key={n} onClick={() => go(n)} aria-label={`Slayt ${n + 1}`} className={`h-2 rounded-full transition-all ${n === i ? 'w-7 bg-brand-500' : 'w-2 bg-slate-300 hover:bg-slate-400'}`} />
-                ))}
+              <div className="mt-7 flex flex-wrap items-center gap-3">
+                <Link
+                  href={SLIDES[i].cta.href}
+                  className="inline-flex items-center gap-2 rounded-xl bg-brand-500 px-5 py-3 text-[14px] sm:px-6 sm:py-3.5 sm:text-[15px] font-bold text-white shadow-lg shadow-brand-900/40 transition-colors hover:bg-brand-400"
+                >
+                  {SLIDES[i].cta.t} <Icon name="arrow" className="w-4 h-4" />
+                </Link>
+                <Link
+                  href={SLIDES[i].cta2.href}
+                  className="inline-flex items-center gap-2 rounded-xl bg-white/10 px-5 py-3 text-[14px] sm:px-6 sm:py-3.5 sm:text-[15px] font-semibold text-white ring-1 ring-white/25 backdrop-blur-sm transition-colors hover:bg-white/20"
+                >
+                  {SLIDES[i].cta2.t}
+                </Link>
               </div>
-              <div className="flex gap-2">
-                <button onClick={() => go(i - 1)} aria-label="Önceki" className="grid h-9 w-9 place-items-center rounded-full border border-line text-strong/70 hover:border-brandtext/50 hover:text-brandtext transition"><Icon name="arrow" className="w-4 h-4 rotate-180" /></button>
-                <button onClick={() => go(i + 1)} aria-label="Sonraki" className="grid h-9 w-9 place-items-center rounded-full border border-line text-strong/70 hover:border-brandtext/50 hover:text-brandtext transition"><Icon name="arrow" className="w-4 h-4" /></button>
+
+              <div className="mt-6 hidden sm:flex items-center gap-2 text-[13px] font-semibold text-slate-200">
+                <Icon name={SLIDES[i].rozet[1]} className="w-4 h-4 text-brand-300" />
+                {SLIDES[i].rozet[0]}
               </div>
             </div>
           </div>
+        </div>
 
-          {/* sağ görsel */}
-          <div className="relative hidden lg:block animate-[fadeup_0.9s_ease-out]">
-            <div className="relative rounded-3xl border border-line/80 bg-surface/90 backdrop-blur p-6 shadow-[0_40px_80px_-30px_rgba(15,41,66,0.35)]">
-              <div className="flex items-center justify-between"><div className="flex items-center gap-2.5"><span className="h-2.5 w-2.5 rounded-full bg-brand-500" /><span className="text-sm font-semibold text-strong">sunucu-01 · İstanbul</span></div><span className="rounded-full bg-brandsoft px-2.5 py-1 text-[11px] font-bold text-brandtext">AKTİF</span></div>
-              <div className="mt-5 grid grid-cols-3 gap-3">{[['CPU', '38%', 'w-[38%]'], ['RAM', '54%', 'w-[54%]'], ['Disk', '29%', 'w-[29%]']].map(([k, v, w]) => (<div key={k} className="rounded-xl bg-surface2 p-3"><div className="flex items-baseline justify-between"><span className="text-[11px] font-semibold text-body">{k}</span><span className="text-[11px] font-bold text-strong">{v}</span></div><div className="mt-2 h-1.5 rounded-full bg-line"><div className={`h-full rounded-full bg-gradient-to-r from-brand-400 to-brand-600 ${w}`} /></div></div>))}</div>
-              <div className="mt-5 rounded-xl border border-line p-4"><div className="flex items-end justify-between gap-2 h-24">{[40, 55, 45, 70, 60, 85, 75, 95, 80, 90].map((h, n) => (<div key={n} className="flex-1 rounded-t bg-gradient-to-t from-brand-200 to-brand-500" style={{ height: `${h}%` }} />))}</div><div className="mt-3 flex items-center justify-between text-[11px] text-muted"><span>Trafik · son 24 saat</span><span className="font-bold text-brandtext">▲ %24</span></div></div>
+        {/* ---- kontroller ---- */}
+        <div className="absolute bottom-5 left-0 right-0">
+          <div className="mx-auto flex max-w-7xl items-center justify-between px-5 lg:px-8">
+            <div className="flex items-center gap-2">
+              {SLIDES.map((_, n) => (
+                <button
+                  key={n}
+                  onClick={() => go(n)}
+                  aria-label={`Slayt ${n + 1}`}
+                  aria-current={n === i}
+                  className={`h-1.5 rounded-full transition-[transform,box-shadow,border-color,opacity] ${n === i ? 'w-8 bg-brand-400' : 'w-4 bg-white/40 hover:bg-white/70'}`}
+                />
+              ))}
             </div>
-            <div key={'b' + i} className="absolute -top-6 -right-4 rounded-2xl border border-line bg-surface px-4 py-3 shadow-xl shadow-ink/10 animate-[fadeup_0.5s_ease-out]"><div className="flex items-center gap-2.5"><span className="grid h-9 w-9 place-items-center rounded-xl bg-brandsoft text-brandtext"><Icon name={s.badge[2]} className="w-5 h-5" /></span><div><div className="text-sm font-extrabold text-strong">{s.badge[0]}</div><div className="text-[11px] text-muted">{s.badge[1]}</div></div></div></div>
-            <div className="absolute -bottom-6 -left-5 rounded-2xl border border-line bg-surface px-4 py-3 shadow-xl shadow-ink/10 animate-[float_6s_ease-in-out_infinite]"><div className="flex items-center gap-2.5"><span className="grid h-9 w-9 place-items-center rounded-xl bg-brand-500 text-white"><Icon name="headset" className="w-5 h-5" /></span><div><div className="text-sm font-extrabold text-strong">7/24 Destek</div><div className="text-[11px] text-brandtext font-semibold">Ort. 5dk yanıt</div></div></div></div>
+            <div className="flex gap-2">
+              <button onClick={() => go(i - 1)} aria-label="Önceki" className="grid h-9 w-9 place-items-center rounded-full bg-white/10 text-white ring-1 ring-white/25 backdrop-blur-sm transition-colors hover:bg-white/25">
+                <Icon name="arrow" className="w-4 h-4 rotate-180" />
+              </button>
+              <button onClick={() => go(i + 1)} aria-label="Sonraki" className="grid h-9 w-9 place-items-center rounded-full bg-white/10 text-white ring-1 ring-white/25 backdrop-blur-sm transition-colors hover:bg-white/25">
+                <Icon name="arrow" className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ---- banner altinda alan adi arama seridi (temali) ---- */}
+      <div className="border-b border-line bg-surface">
+        <div className="mx-auto max-w-7xl px-5 lg:px-8 py-6 lg:py-7">
+          <div className="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-8">
+            <div className="shrink-0">
+              <div className="text-[15px] font-extrabold text-strong">Alan adınızı hemen sorgulayın</div>
+              <div className="mt-0.5 text-[13px] text-muted">Yüzlerce uzantı, ücretsiz WHOIS gizliliği</div>
+            </div>
+            <form onSubmit={(e) => { e.preventDefault(); window.location.href = '/alan-adi'; }} className="flex-1">
+              <div className="flex items-center gap-2 rounded-2xl border border-line bg-page p-2 transition focus-within:border-brand-400 focus-within:ring-4 focus-within:ring-brandline/40">
+                <span className="pl-3 text-muted"><Icon name="search" className="w-5 h-5" /></span>
+                <input
+                  value={domain}
+                  onChange={(e) => setDomain(e.target.value)}
+                  placeholder="firmaadi.com"
+                  aria-label="Alan adı"
+                  className="min-w-0 flex-1 bg-transparent py-2.5 text-[15px] text-strong placeholder:text-muted outline-none"
+                />
+                <button type="submit" className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-ink px-4 py-3 text-[14px] font-semibold text-white transition-colors hover:bg-brand-600 sm:px-5 sm:text-[15px]">
+                  Sorgula <Icon name="arrow" className="w-4 h-4" />
+                </button>
+              </div>
+              <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1 pl-1 text-[13px]">
+                <span className="font-medium text-muted">Popüler:</span>
+                {TLDS.map((t) => <span key={t} className="font-semibold text-body">{t}</span>)}
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -129,10 +245,10 @@ function ProductFinder({ open, onClose }) {
             <h3 className="mt-2 text-2xl font-extrabold tracking-tight text-strong text-balance">{QUESTIONS[step].q}</h3>
             <div className="mt-6 grid gap-3">
               {QUESTIONS[step].opts.map((o) => (
-                <button key={o.v} onClick={() => pick(QUESTIONS[step].key, o.v)} className="group flex items-center gap-4 rounded-2xl border border-line bg-surface px-5 py-4 text-left hover:border-brand-400 hover:bg-brandsoft/50 transition-all">
+                <button key={o.v} onClick={() => pick(QUESTIONS[step].key, o.v)} className="group flex items-center gap-4 rounded-2xl border border-line bg-surface px-5 py-4 text-left hover:border-brand-400 hover:bg-brandsoft/50 transition-[transform,box-shadow,border-color,opacity]">
                   <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-brandsoft text-brandtext group-hover:bg-brand-500 group-hover:text-white transition-colors"><Icon name={o.icon} className="w-5 h-5" /></span>
                   <span className="flex-1 text-[15px] font-semibold text-strong">{o.l}</span>
-                  <Icon name="arrow" className="w-5 h-5 text-slate-300 group-hover:text-brand-500 group-hover:translate-x-0.5 transition-all" />
+                  <Icon name="arrow" className="w-5 h-5 text-slate-300 group-hover:text-brand-500 group-hover:translate-x-0.5 transition-[transform,box-shadow,border-color,opacity]" />
                 </button>
               ))}
             </div>
@@ -159,7 +275,7 @@ function ProductFinder({ open, onClose }) {
 function FinderBanner({ onOpen }) {
   return (
     <section className="mx-auto max-w-7xl px-5 lg:px-8 pt-4">
-      <div className="relative overflow-hidden rounded-3xl border border-brandline/70 bg-gradient-to-br from-brand-50 to-white px-7 py-8 sm:px-10 shadow-[0_20px_50px_-30px_rgba(13,148,136,0.4)]">
+      <div className="relative overflow-hidden rounded-3xl border border-brandline/70 bg-gradient-to-br from-brandsoft to-surface px-7 py-8 sm:px-10 shadow-[0_20px_50px_-30px_rgba(13,148,136,0.4)]">
         <div aria-hidden className="pointer-events-none absolute -right-10 -top-10 h-48 w-48 rounded-full bg-brand-200/40 blur-3xl" />
         <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-start gap-4">
@@ -181,7 +297,7 @@ function FinderBanner({ onOpen }) {
 /* ---------------- yan floating buton ---------------- */
 function FinderTab({ onOpen }) {
   return (
-    <button onClick={onOpen} className="fixed right-0 top-1/2 -translate-y-1/2 z-40 hidden md:flex items-center gap-2 rounded-l-2xl bg-brand-500 px-3 py-4 text-white shadow-lg shadow-brand-500/30 hover:bg-brand-600 hover:pr-5 transition-all [writing-mode:vertical-rl] rotate-180" aria-label="Ürün bulucu">
+    <button onClick={onOpen} className="fixed right-0 top-1/2 -translate-y-1/2 z-40 hidden md:flex items-center gap-2 rounded-l-2xl bg-brand-600 px-3 py-4 text-white shadow-lg shadow-brand-600/30 hover:bg-brand-700 hover:pr-5 transition-[transform,box-shadow,border-color,opacity] [writing-mode:vertical-rl] rotate-180" aria-label="Ürün bulucu">
       <Icon name="chat" className="w-5 h-5 rotate-90" /> <span className="text-[13px] font-bold tracking-wide">Sana Uygun Ürün?</span>
     </button>
   );
@@ -208,13 +324,13 @@ export default function HomePage() {
       {/* özellikler */}
       <section className="mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-28">
         <div className="max-w-2xl"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Neden SunucumWEB</span><h2 className="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight text-strong text-balance">Performans ve güveni bir arada sunuyoruz</h2><p className="mt-4 text-lg text-body">Altyapımızı; hız, kesintisizlik ve destek üçgeninde kurduk. Teknik detayları biz düşünelim, siz işinize odaklanın.</p></div>
-        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">{FEATURES.map((f) => (<div key={f.t} className="group rounded-2xl border border-line bg-surface p-6 shadow-[0_10px_40px_-20px_rgba(15,41,66,0.18)] hover:shadow-[0_24px_60px_-24px_rgba(20,184,166,0.35)] hover:-translate-y-1 transition-all duration-300"><span className="grid h-12 w-12 place-items-center rounded-2xl bg-brandsoft text-brandtext group-hover:bg-brand-500 group-hover:text-white transition-colors"><Icon name={f.icon} /></span><h3 className="mt-5 text-lg font-bold text-strong">{f.t}</h3><p className="mt-2 text-[15px] leading-relaxed text-body">{f.d}</p></div>))}</div>
+        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">{FEATURES.map((f) => (<div key={f.t} className="group rounded-2xl border border-line bg-surface p-6 shadow-[0_10px_40px_-20px_rgba(15,41,66,0.18)] hover:shadow-[0_24px_60px_-24px_rgba(20,184,166,0.35)] hover:-translate-y-1 transition-[transform,box-shadow,border-color,opacity] duration-300"><span className="grid h-12 w-12 place-items-center rounded-2xl bg-brandsoft text-brandtext group-hover:bg-brand-500 group-hover:text-white transition-colors"><Icon name={f.icon} /></span><h3 className="mt-5 text-lg font-bold text-strong">{f.t}</h3><p className="mt-2 text-[15px] leading-relaxed text-body">{f.d}</p></div>))}</div>
       </section>
 
       {/* paketler */}
       <section className="bg-surface2 border-y border-line"><div className="mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-28">
         <div className="text-center max-w-2xl mx-auto"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Paketler</span><h2 className="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight text-strong text-balance">Size uygun çözümü seçin</h2><p className="mt-4 text-lg text-body">Küçük bir web sitesinden kurumsal altyapıya kadar, ihtiyacınıza göre ölçeklenen paketler.</p></div>
-        <div className="mt-14 grid lg:grid-cols-3 gap-6 lg:gap-5 items-stretch">{PLANS.map((p) => (<div key={p.name} className={`relative flex flex-col rounded-3xl p-7 transition-all duration-300 ${p.popular ? 'bg-ink text-white shadow-[0_40px_80px_-30px_rgba(15,41,66,0.6)] lg:-translate-y-4 ring-1 ring-brand-400/40' : 'bg-surface border border-line shadow-[0_20px_50px_-30px_rgba(15,41,66,0.3)]'}`}>{p.popular && <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-brand-600 px-4 py-1 text-xs font-bold text-white shadow-lg shadow-brand-500/40">EN POPÜLER</span>}<div className={`text-xs font-bold uppercase tracking-wider ${p.popular ? 'text-brand-300' : 'text-brandtext'}`}>{p.tag}</div><div className={`mt-1.5 text-xl font-extrabold ${p.popular ? 'text-white' : 'text-strong'}`}>{p.name}</div><div className="mt-5 flex items-baseline gap-1"><span className={`text-sm font-semibold ${p.popular ? 'text-slate-300' : 'text-muted'}`}>₺</span><span className={`text-5xl font-extrabold tracking-tight ${p.popular ? 'text-white' : 'text-strong'}`}>{p.price}</span><span className={`text-sm ${p.popular ? 'text-slate-300' : 'text-muted'}`}>/ay</span></div><ul className="mt-6 space-y-3 flex-1">{p.feats.map((ft) => (<li key={ft} className="flex items-center gap-3 text-[15px]"><span className={`grid h-5 w-5 shrink-0 place-items-center rounded-full ${p.popular ? 'bg-brand-500/20 text-brand-300' : 'bg-brandsoft text-brandtext'}`}><Icon name="check" className="w-3 h-3" /></span><span className={p.popular ? 'text-slate-200' : 'text-body'}>{ft}</span></li>))}</ul><Link href={p.href} className={`mt-8 inline-flex items-center justify-center gap-1.5 rounded-xl px-5 py-3.5 text-[15px] font-semibold transition-all ${p.popular ? 'bg-brand-500 text-white hover:bg-brand-400 shadow-lg shadow-brand-500/30' : 'bg-ink text-white hover:bg-brand-600'}`}>İncele <Icon name="arrow" className="w-4 h-4" /></Link><AddToCartButton item={{ name: p.name, product: p.tag, price: p.price }} tema={p.popular ? 'koyu' : 'acik'} className="mt-2 w-full" /></div>))}</div>
+        <div className="mt-14 grid lg:grid-cols-3 gap-6 lg:gap-5 items-stretch">{PLANS.map((p) => (<div key={p.name} className={`relative flex flex-col rounded-3xl p-7 transition-[transform,box-shadow,border-color,opacity] duration-300 ${p.popular ? 'bg-ink text-white shadow-[0_40px_80px_-30px_rgba(15,41,66,0.6)] lg:-translate-y-4 ring-1 ring-brand-400/40' : 'bg-surface border border-line shadow-[0_20px_50px_-30px_rgba(15,41,66,0.3)]'}`}>{p.popular && <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-brand-600 px-4 py-1 text-xs font-bold text-white shadow-lg shadow-brand-500/40">EN POPÜLER</span>}<div className={`text-xs font-bold uppercase tracking-wider ${p.popular ? 'text-brand-300' : 'text-brandtext'}`}>{p.tag}</div><div className={`mt-1.5 text-xl font-extrabold ${p.popular ? 'text-white' : 'text-strong'}`}>{p.name}</div><div className="mt-5 flex items-baseline gap-1"><span className={`text-sm font-semibold ${p.popular ? 'text-slate-300' : 'text-muted'}`}>₺</span><span className={`text-5xl font-extrabold tracking-tight ${p.popular ? 'text-white' : 'text-strong'}`}>{p.price}</span><span className={`text-sm ${p.popular ? 'text-slate-300' : 'text-muted'}`}>/ay</span></div><ul className="mt-6 space-y-3 flex-1">{p.feats.map((ft) => (<li key={ft} className="flex items-center gap-3 text-[15px]"><span className={`grid h-5 w-5 shrink-0 place-items-center rounded-full ${p.popular ? 'bg-brand-500/20 text-brand-300' : 'bg-brandsoft text-brandtext'}`}><Icon name="check" className="w-3 h-3" /></span><span className={p.popular ? 'text-slate-200' : 'text-body'}>{ft}</span></li>))}</ul><Link href={p.href} className={`mt-8 inline-flex items-center justify-center gap-1.5 rounded-xl px-5 py-3.5 text-[15px] font-semibold transition-[transform,box-shadow,border-color,opacity] ${p.popular ? 'bg-brand-500 text-white hover:bg-brand-400 shadow-lg shadow-brand-500/30' : 'bg-ink text-white hover:bg-brand-600'}`}>İncele <Icon name="arrow" className="w-4 h-4" /></Link><AddToCartButton item={{ name: p.name, product: p.tag, price: p.price }} tema={p.popular ? 'koyu' : 'acik'} className="mt-2 w-full" /></div>))}</div>
         <p className="mt-6 text-center text-sm text-muted">* Fiyatlar temsilîdir; gerçek paket fiyatlarınızı buraya girebilirsiniz.</p>
       </div></section>
 
