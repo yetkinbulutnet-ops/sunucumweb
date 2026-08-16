@@ -182,13 +182,13 @@ export function TopBar() {
           </div>
 
           <div className="flex shrink-0 items-center gap-1.5 sm:gap-3">
-            <span className="hidden md:inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-1 font-semibold text-emerald-300 ring-1 ring-emerald-400/20" title="Tüm sistemler çalışıyor">
+            <a href="https://durum.yetkinbulut.net" target="_blank" rel="noopener noreferrer" className="hidden md:inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-1 font-semibold text-emerald-300 ring-1 ring-emerald-400/20 transition-colors hover:bg-emerald-500/20">
               <span className="relative flex h-1.5 w-1.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
               </span>
               Ağ Durumu
-            </span>
+            </a>
             <a href="https://my.sunucumweb.com" target="_blank" rel="noopener noreferrer" className="hidden sm:inline-flex items-center gap-1.5 transition-colors hover:text-white">
               <Icon name="chat" className="w-[14px] h-[14px]" /> Canlı Destek
             </a>
