@@ -65,7 +65,7 @@ export const MENU = [
   { label: 'Domain', kolon: 3, items: [
     { t: 'Domain Tescil', d: 'Yeni domain tescil işlemleri için hemen tıklayın.', href: '/alan-adi', icon: 'globe', r: '%20 İndirim', rTon: 'yesil' },
     { t: 'Domain Transfer', d: 'Mevcut domaininizi güvenle bize transfer edin.', href: '/transfer', icon: 'refresh' },
-    { t: 'Domain Sorgulama', d: 'Hayalinizdeki domain adını hemen sorgulayın ve uygunluğunu görün.', href: '/whois', icon: 'search' },
+    { t: 'Domain Sorgulama', d: 'Kayıt firması, tescil ve bitiş tarihi ile isim sunucularını görün.', href: '/araclar/whois', icon: 'search' },
   ]},
   { label: 'Hosting', kolon: 4, items: [
     { t: 'Web Hosting', d: 'Sınırsız hosting paketlerini deneyin, dakikalar içinde yayında olun.', href: '/web-hosting', icon: 'globe', r: '%20 İndirim', rTon: 'yesil', logo: '/img/marka/cpanel.svg' },
@@ -564,7 +564,7 @@ const FOOT_KOLON = [
   { h: 'Alan Adı', items: [
     ['Alan Adı Tescil', '/alan-adi'],
     ['Alan Adı Transfer', '/transfer'],
-    ['WHOIS Sorgulama', '/whois'],
+    ['WHOIS Sorgulama', '/araclar/whois'],
   ]},
   { h: 'Veri Merkezi', items: [
     ['Sunucu Barındırma', '/sunucu-barindirma'],

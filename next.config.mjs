@@ -18,6 +18,7 @@ const nextConfig = {
     return [
       { source: '/sozlesmeler', destination: '/legal', permanent: true },
       { source: '/ticari-bilgiler', destination: '/legal', permanent: true },
+      { source: '/whois', destination: '/araclar/whois', permanent: true },
     ];
   },
 

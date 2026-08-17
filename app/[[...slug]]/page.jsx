@@ -29,7 +29,7 @@ const YASAL_METINLER = {
 
 export const dynamicParams = false;
 
-const YONLENDIRILEN = ['ticari-bilgiler', 'sozlesmeler'];
+const YONLENDIRILEN = ['ticari-bilgiler', 'sozlesmeler', 'whois'];
 
 export function generateStaticParams() {
   const manifestten = getManifest()
@@ -91,7 +91,6 @@ export default async function Page({ params }) {
 
   if (slug === 'alan-adi') return <DomainPage mode="register" />;
   if (slug === 'transfer') return <DomainPage mode="transfer" />;
-  if (slug === 'whois') return <DomainPage mode="whois" />;
 
   if (YASAL_METINLER[slug]) {
     return <LegalPage title={YASAL_METINLER[slug].title} eyebrow={YASAL_METINLER[slug].eyebrow} html={getLegalHtml(slug)} />;
