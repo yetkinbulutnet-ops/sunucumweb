@@ -62,13 +62,11 @@ export default function AboutPage() {
             </a>
           </div>
 
-          <dl className="mt-14 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-line pt-9 lg:grid-cols-4 lg:gap-x-10">
+          <dl className="mt-14 grid grid-cols-2 gap-4 lg:grid-cols-4">
             {C.rakamlar.map(([sayi, etiket]) => (
-              <div key={etiket} className="flex flex-col-reverse gap-1.5">
-                <dt className="text-[13px] font-medium text-muted sm:text-[14px]">{etiket}</dt>
-                <dd className="text-[2rem] font-extrabold leading-none tracking-tight text-strong sm:text-[2.5rem] lg:text-[2.75rem]">
-                  {sayi}
-                </dd>
+              <div key={etiket} className="flex flex-col-reverse rounded-2xl bg-surface2/70 p-6 ring-1 ring-line">
+                <dt className="mt-1 text-sm text-body">{etiket}</dt>
+                <dd className="text-3xl font-extrabold text-brandtext sm:text-4xl">{sayi}</dd>
               </div>
             ))}
           </dl>
