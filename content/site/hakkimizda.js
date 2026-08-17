@@ -2,7 +2,7 @@ export const HAKKIMIZDA = {
   seo: {
     title: 'Şirket Profili',
     description:
-      'SunucumWEB 2023’te kuruldu; Keçiborlu / Isparta merkezli, BTK kayıtlı yer sağlayıcı. Hosting, sunucu, veri merkezi ve alan adı hizmetleri, şirket künyesi ve resmî bilgiler.',
+      'SunucumWEB 2023’te kuruldu; Keçiborlu / Isparta merkezli, BTK kayıtlı yer sağlayıcı. Kendi kabinlerimizden fotoğraflar ve çalışma biçimimiz.',
   },
   eyebrow: 'Kurumsal',
   title: 'Şirket Profili',
@@ -24,31 +24,19 @@ export const HAKKIMIZDA = {
       'Şirketi kurarken derdimiz basitti: Türkiye’de hosting almak, fiyatın gerçekte ne olduğunu anlamak ve bir sorun çıktığında insana ulaşmak gereğinden zordu. Kendi projelerimizde yaşadığımız bu sıkıntıları çözmek için işe koyulduk.',
       'Bugün bireysel kullanıcıdan kurumsal firmaya kadar geniş bir müşteri grubuna hizmet veriyoruz. Sunucuyu kuran ekiple destek talebinize bakan ekip aynı; arada aracı bir çağrı merkezi katmanı yok.',
     ],
-    gorsel: {
-      src: '/img/slider/veri-merkezi.jpg',
-      alt: 'SunucumWEB veri merkezindeki sunucu kabinleri',
-      genislik: 1920,
-      yukseklik: 1080,
-    },
-    rozet: { baslik: 'Tier-3 veri merkezi', alt: 'Yedekli güç ve ağ', icon: 'database' },
   },
 
-  rakamlar: [
-    ['%99.9', 'Uptime garantisi'],
-    ['10.000+', 'Aktif müşteri'],
-    ['7/24', 'Teknik destek'],
-    ['<5dk', 'Ortalama ilk yanıt'],
-  ],
-
-  alanlar: {
-    eyebrow: 'Ne yapıyoruz',
-    baslik: 'Dört ana hizmet alanı',
-    ozet: 'Bir siteyi yayına almak için gereken her parça tek çatı altında; ayrı ayrı sağlayıcılarla uğraşmıyorsunuz.',
-    items: [
-      { t: 'Hosting', d: 'Paylaşımlı, WordPress ve kurumsal hosting paketleri. NVMe disk, LiteSpeed, ücretsiz SSL ve günlük yedek.', href: '/web-hosting', icon: 'globe' },
-      { t: 'Sunucular', d: 'Sanal sunucudan dedicated ve GPU sunucuya kadar root erişimli, ölçeklenebilir donanım.', href: '/sanal-sunucu', icon: 'server' },
-      { t: 'Veri merkezi', d: 'Kendi donanımınızı bizim kabinlerimizde barındırın; yedekli enerji, ağ ve 7/24 izleme dahil.', href: '/sunucu-barindirma', icon: 'database' },
-      { t: 'Alan adı', d: 'Yüzlerce uzantıda tescil ve transfer, ücretsiz WHOIS gizliliği, tek panelden yönetim.', href: '/alan-adi', icon: 'search' },
+  galeri: {
+    eyebrow: 'Veri merkezimiz',
+    baslik: 'Kendi kabinlerimizden',
+    ozet: 'Fotoğraflar stok değil; hizmet verdiğimiz kabinlerin kendisi.',
+    fotograflar: [
+      { src: '/img/galeri/kabin-yogun.webp', alt: 'Etiketlenmiş sunucuların yerleştiği dolu bir kabin', g: 382, y: 510 },
+      { src: '/img/galeri/ekip-kabin.webp', alt: 'SunucumWEB tişörtlü teknisyen kabin arkasında kablolama yaparken', g: 382, y: 510 },
+      { src: '/img/galeri/kabin-dellemc.webp', alt: 'Dell EMC sunucuların bulunduğu kabinin ön yüzü', g: 382, y: 510 },
+      { src: '/img/galeri/kabin-anahtar.webp', alt: 'Ağ anahtarı ve blade sunucuların bulunduğu kabin', g: 287, y: 510 },
+      { src: '/img/galeri/kabin-gpu.webp', alt: 'GPU sunucunun yerleştirildiği kabin bölümü', g: 287, y: 510 },
+      { src: '/img/galeri/kabin-acik.webp', alt: 'Kapağı açık kabinde çalışan sunucular ve kablolama', g: 287, y: 510 },
     ],
   },
 
@@ -61,24 +49,5 @@ export const HAKKIMIZDA = {
       { t: 'Altyapıyı kendimiz işletiyoruz', d: 'Yedekli güç ve ağ, DDoS koruması, 7/24 izleme. Bir aksaklıkta beklenecek üçüncü bir sağlayıcı yok.' },
       { t: 'Verinizin nerede olduğu bellidir', d: 'Sunucularımız Türkiye’de. İhtiyaç duyan müşteriler için ayrıca ABD lokasyonu sunuyoruz.' },
     ],
-  },
-
-  kunye: {
-    eyebrow: 'Resmî bilgiler',
-    baslik: 'Şirket künyesi',
-    ozet: 'Faturalandırma ve sözleşmelerde geçerli olan resmî bilgilerimiz.',
-    satirlar: [
-      ['Şirket ünvanı', 'SunucumWEB Bilişim Hizmetleri'],
-      ['Ticari ünvan', 'Ortam Medya Bilişim Teknolojileri'],
-      ['Vergi dairesi', 'Keçiborlu V.D.'],
-      ['Vergi numarası', '2220195996'],
-      ['Adres', 'Hasanbey Mahallesi, Sokullu Sokak No: 16, Keçiborlu / Isparta'],
-      ['Telefon', '0(850) 302 5809'],
-      ['E-posta', 'destek@sunucumweb.com'],
-      ['Yer sağlayıcı', 'SunucumWEB Internet Hizmetleri'],
-    ],
-    btkMetin:
-      '5651 sayılı kanun kapsamında Bilgi Teknolojileri ve İletişim Kurumu tarafından yetkilendirilmiş Yer Sağlayıcı’yız.',
-    btkHref: 'https://internet.btk.gov.tr/yer-saglayici-listesi?page=1&q=SunucumWEB',
   },
 };
