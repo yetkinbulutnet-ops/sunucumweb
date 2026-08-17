@@ -584,7 +584,7 @@ const FOOT_KOLON = [
   ]},
 ];
 
-const SOSYAL = [
+export const SOSYAL = [
   { ad: 'Facebook', href: 'https://facebook.com/sunucumweb', d: 'M14 8h-2a1 1 0 0 0-1 1v2h3l-.4 3H11v7H8v-7H6v-3h2V9a4 4 0 0 1 4-4h2z' },
   { ad: 'X', href: 'https://x.com/sunucumweb', d: 'M4 4l7.6 9.6L4.4 20h2.1l5.9-6.4 5 6.4H20l-7.6-9.6L19.5 4h-2.1l-5.4 5.9L7.4 4z' },
   { ad: 'Instagram', href: 'https://instagram.com/sunucumweb', d: 'M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4zM12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zM17.5 6.5h.01' },
