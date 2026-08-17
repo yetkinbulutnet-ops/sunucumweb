@@ -200,29 +200,21 @@ export function TopBar() {
               <Icon name="terminal" className="h-[14px] w-[14px] text-brand-400" />
               Ücretsiz Araçlar
             </Link>
-            <span className="hidden md:block h-3.5 w-px bg-white/15" />
-            <Link href="/iletisim" className="hidden md:inline-block transition-colors hover:text-white">İletişim</Link>
-            <span className="hidden lg:block h-3.5 w-px bg-white/15" />
-            <a href="https://my.sunucumweb.com" target="_blank" rel="noopener noreferrer" className="hidden lg:inline-block transition-colors hover:text-white">Hızlı Destek</a>
           </div>
 
-          <div className="flex shrink-0 items-center gap-1.5 sm:gap-3">
-            <a href="https://durum.yetkinbulut.net" target="_blank" rel="noopener noreferrer" className="hidden md:inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-1 font-semibold text-emerald-300 ring-1 ring-emerald-400/20 transition-colors hover:bg-emerald-500/20">
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+            <ThemeToggle />
+            <a href="https://durum.yetkinbulut.net" target="_blank" rel="noopener noreferrer" className="hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-emerald-500/10 px-2.5 py-1 font-semibold text-emerald-300 ring-1 ring-emerald-400/20 transition-colors hover:bg-emerald-500/20">
               <span className="relative flex h-1.5 w-1.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
               </span>
               Ağ Durumu
             </a>
-            <a href="https://my.sunucumweb.com" target="_blank" rel="noopener noreferrer" className="hidden sm:inline-flex items-center gap-1.5 transition-colors hover:text-white">
-              <Icon name="chat" className="w-[14px] h-[14px]" /> Canlı Destek
-            </a>
-            <span className="hidden sm:block h-3.5 w-px bg-white/15" />
-            <a href="https://my.sunucumweb.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 font-semibold text-white transition-colors hover:text-brand-300">
+            <a href="https://my.sunucumweb.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 whitespace-nowrap font-semibold text-white transition-colors hover:text-brand-300">
               <Icon name="user" className="w-[14px] h-[14px]" />
-              <span className="hidden sm:inline">Müşteri Girişi</span>
+              <span className="hidden sm:inline">Müşteri Paneli</span>
             </a>
-            <ThemeToggle />
           </div>
         </div>
       </div>
