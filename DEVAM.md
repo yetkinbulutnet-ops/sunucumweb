@@ -152,6 +152,11 @@ görünümleri `components/site/sonuc/<arac>.jsx` altına bölmek gerekecek.
 - **`fetchWithTimeout` `AbortSignal` kullanıyor, bu yüzden Next o fetch'i
   önbelleğe almaz.** Sunucuda basılan sayfalarda sonucu `unstable_cache` ile
   sarmalayın (`lib/dns-onbellek.js` örnek), yoksa her istek dış sorgu tetikler.
+- **Giden bağlantı `ETIMEDOUT` veriyorsa önce ham TCP'yi dene** (`net.connect`).
+  Port açıksa sebep Node 20'nin Happy Eyeballs'ıdır: her adres için yalnız 250 ms
+  bekler, yavaş sunucularda hepsi düşer. `core/http.js` bunu
+  `setDefaultAutoSelectFamilyAttemptTimeout(2500)` ile açıyor. Uzun süre bunu
+  "sunucuda IPv6 yok" sandık, IPv6'yla ilgisi yoktu.
 - Kara liste sorgularında `127.255.255.25x` yanıtları **listeleme değil hata
   kodudur** (genel çözümleyiciden sorgu reddi). Spamhaus bu yüzden hep bu kodu
   döndürür; "listede" saymayın.
