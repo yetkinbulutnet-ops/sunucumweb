@@ -3,7 +3,7 @@
 Bu dosya önceki oturumun sonunda yazıldı. Sırayla oku:
 `DEVAM.md` (bu dosya) → `TASARIM-KURALLARI.md` → `lib/engines/README.md` → `TASIMA.md`.
 
-Son commit: `b5d8605`. Çalışma ağacı temiz, her şey `main` dalında ve canlıda.
+Çalışma ağacı temiz, her şey `main` dalında.
 
 ---
 
@@ -15,118 +15,98 @@ Son commit: `b5d8605`. Çalışma ağacı temiz, her şey `main` dalında ve can
 | Şirket Profili (`/hakkimizda`) | Bitti — gerçek kabin fotoğraflarıyla deste slaytı |
 | Legal (`/legal`) | Bitti — sözleşmeler + ticari bilgiler tek sayfa |
 | İletişim (`/iletisim`) | Bitti — gerçek form, mesai rozeti, sosyal medya |
-| Araçlar (`/araclar`) | 5 araç çalışıyor: DNS, WHOIS, SSL, e-posta, IP |
 | Yumuşak kaydırma (Lenis) | Bitti — sadece ince imleç, dokunmatikte kapalı |
 | Google yorum rozeti | Altyapı hazır, Places API anahtarı bekliyor |
-| **Araçlar 2.0 (bu notun konusu)** | **YAPILACAK — sıradaki iş** |
+| **Araçlar 2.0** | **BİTTİ** — aşağıda ayrıntısı |
 | **Ürün sayfaları** | **YAPILMADI** — 12 sayfa hâlâ eski `ProductPage.jsx` şablonunda |
-| **SEO uygulaması** | **YAPILMADI** — 5. altın kural yazıldı, uygulanmadı |
+| **SEO uygulaması** | Kısmen — `sitemap.js` ve DNS canonical'ları yazıldı, gerisi duruyor |
+
+### Araçlar 2.0'da ne yapıldı (2026-08-18)
+
+- **DNS kayıt tipi seçici**: A, AAAA, CNAME, MX, NS, TXT, SOA, SRV, CAA, PTR + "Tümü".
+- **SEO URL şeması**: `/araclar/dns/{alan}` ve `/araclar/dns/{alan}/{tip}` — sonuç
+  sunucuda basılıyor (SSR), her kombinasyonun kendi `<title>`, açıklama ve
+  canonical'ı var; hatalı biçim (büyük harf, `www.`) 308 ile normalize ediliyor.
+  PTR'de IP girilirse `in-addr.arpa` çevrimi yapılıyor.
+- **Yayılım kontrolü 4 → 9 çözümleyici** (Cloudflare, Google, AdGuard, NextDNS,
+  DNS.SB, Crypto.sx, Tiar, Alibaba, DNSPod). Sorgular **sayısal tip koduyla**
+  gönderiliyor — iki çözümleyici alfabetik tip adını yok sayıp A kaydı döndürüyordu.
+- **Tip başına açıklama içeriği**: `content/site/dns-tipleri.js` (açıklama + örnek
+  değer + pratik ipucu), tip sayfasının altında basılıyor.
+- **localStorage sorgu geçmişi** (son 8 sorgu, çip olarak).
+- **Yeni araç: kara liste (RBL)** — `/araclar/karaliste`. Alan adının A kaydı ve MX
+  sunucularının IP'leri 12 DNSBL bölgesinde sorgulanıyor, listeleme sebebi ve PTR
+  gösteriliyor.
+- **Yeni araç: HTTP güvenlik başlıkları** — `/araclar/basliklar`. Zincir `http://`
+  ile başlatılıp izleniyor (her atlamada `core/ag.js` süzgeci), HSTS/CSP/nosniff/
+  çerçeveleme/referrer/izin başlıkları puanlanıyor, çerez bayrakları ve sürüm
+  ifşası kontrol ediliyor.
+- **Önbellek**: DNS SEO sayfaları `unstable_cache` ile (alan, tip) anahtarında
+  15 dakika önbellekli. Motor zaman aşımı için `AbortSignal` kullandığından Next'in
+  fetch önbelleği devreye girmiyor — bu yüzden sonucun kendisi önbelleğe alınıyor.
+  İlk istek ~1,4 sn, sonrakiler ~95 ms.
 
 ---
 
-## 2. SIRADAKİ İŞ — Araçlar 2.0
+## 2. Araçlarda kalan iş
 
-Hedef: `/araclar` bölümünü rakip seviyesine çıkarmak. İki ayağı var —
-(a) **DNS aracını kullanıcının kendi projesindeki kalıba geçirmek**,
-(b) **rakiplerde olup bizde olmayan araçları eklemek**.
+Rakip taraması: dnschecker.org, mxtoolbox.com, whatsmydns.net, securityheaders.com,
+intodns.com + yerel rakipler (natro, turhost, isimtescil).
 
-### 2.1 Referans proje: dnschecker.website (kullanıcının kendi ürünü)
-
-Kaynak kodun kopyası: `../dnschecker-referans/` (git dışında, kasıtlı).
-PHP, ~104 KB. Bakılacak dosyalar: `config.php`, `index.php`, `api.php`,
-`inc/functions.php`, `lang/tr.json`.
-
-**Kopyalanacak iki şey:**
-
-1. **Kayıt tipi seçici** — `config.php:11`
-   ```php
-   $RECORD_TYPES = ['A','AAAA','MX','NS','TXT','CNAME','SOA','PTR','SRV','CAA'];
-   ```
-   Bizim DNS aracımız şu an 9 tipi **birden** sorguluyor (`lib/engines/tools/index.js`
-   içindeki `DNS_TIPLERI`). Rakipler gibi **tip seçmeli** olacak: varsayılan `A`,
-   yatay sekme/çip şeridi, ayrıca "Tümü" seçeneği (bugünkü davranış) kalsın.
-
-2. **SEO URL şeması — asıl değerli kısım.** Referansta:
-   ```
-   /{dil}/{alan}/{tip}   →  /tr/google.com/mx
-   ```
-   Başlık `config.php:31` içinde üretiliyor:
-   `google.com (MX) DNS Records — DNS Checker`. Yanlış biçimli istek (büyük harf
-   tip, farklı yazım) `config.php:44-56`'da **301 ile normalize** ediliyor.
-   Canonical her zaman küçük harfli tek biçim.
-
-   **Bizdeki karşılığı:** `/araclar/dns/{alan}/{tip}`
-   - `app/araclar/dns/[alan]/[tip]/page.jsx` — yeni route
-   - `generateMetadata` ile dinamik title/description/canonical
-     (`sunucumweb.com MX kayıtları — DNS sorgulama | SunucumWEB`)
-   - Sayfa **sunucuda sorguyu çalıştırıp sonucu HTML'e basmalı** (SSR/ISR),
-     yoksa arama motoru boş sayfa görür. `revalidate` 300-900 sn arası uygun.
-   - Formdan sorgu yapılınca `router.push('/araclar/dns/'+alan+'/'+tip)` ile
-     bu URL'e gidilsin — her sorgu paylaşılabilir/indekslenebilir adres üretsin.
-   - Hatalı biçim (büyük harf, `www.`, sonda nokta) → `redirect()` ile 301.
-   - `dynamicParams = true` gerekir; `generateStaticParams` ile sadece popüler
-     alanlar (kendi alanlarımız + birkaç örnek) önceden basılsın.
-   - **`app/sitemap.js`'e** bu şemadan üretilmiş bir örnek küme girsin
-     (tüm kombinasyonlar değil — kendi alan adlarımız × 10 tip yeter).
-
-3. **Tip başına açıklama metni** — referansta `index.php:106` + `lang/tr.json`
-   içinde `rec_a_desc`, `rec_mx_desc` … Her tip için 2-3 cümle. Bizde
-   `content/site/araclar.js`'e `DNS_TIP_ACIKLAMALARI` olarak girecek; tip
-   sayfasının altında "MX kaydı nedir?" bloğu olarak basılacak. Bu metinler
-   sayfanın indekslenmesini sağlayan asıl içerik, geçiştirme.
-
-4. **Sorgu geçmişi** — referansta localStorage (`historyRead/historyWrite`).
-   Bizde de: son 10 sorgu, çip olarak form altında, tek tıkla tekrar.
-
-**Referanstan ALINMAYACAKLAR:** reCAPTCHA sorgu kapısı (bizde IP başına oran
-sınırı var, yeterli), Discord webhook bildirimi, ip-api.com geo çağrısı,
-`checks.json`/`stats.json` dosyasına log yazma, sahte ziyaretçi sayacı
-(`$queryCount = $visitorCount * 3.5` — bunu kopyalama, uydurma sayı).
-
-> ⚠️ `dnschecker-referans/api.php` içinde **canlı Discord webhook adresi ve
-> reCAPTCHA gizli anahtarı düz metin** duruyor, `config.php`'de Umami ID var.
-> Klasör kasıtlı olarak git dışında. Bu satırları SunucumWEB deposuna taşıma.
-> Kullanıcıya o anahtarları yenilemesi söylendi.
-
-### 2.2 Rakiplerden bakılıp eklenecek araçlar
-
-Kullanıcı "tüm araçları rakiplerden bakıp geliştir" dedi. Bakılacak rakipler:
-dnschecker.org, mxtoolbox.com, whatsmydns.net, ssllabs, securityheaders.com,
-intodns.com, natro/turhost/isimtescil'in araç sayfaları (yerel rakip dili için).
-
-Öncelik sırasıyla eklenecekler:
-
-| Araç | Neden | Not |
+| Araç | Durum | Not |
 |---|---|---|
-| **Blacklist / RBL kontrolü** | mxtoolbox'ın en çok kullanılan aracı | MX IP'lerini ~20 DNSBL bölgesinde sorgula (Spamhaus zen, SpamCop, Barracuda…). Saf DNS sorgusu, API anahtarı gerekmez |
-| **HTTP başlık + güvenlik denetimi** | securityheaders.com karşılığı | HSTS, CSP, X-Frame-Options, referrer-policy + yönlendirme zinciri + sunucu imzası. **`core/ag.js` süzgeci ZORUNLU** (SSRF) |
-| **DNS yayılım haritası** | whatsmydns.net karşılığı | Şu an 4 çözümleyici var (`dns.js:COZUMLEYICILER`). Kıtalara yayılmış 12-20 genel çözümleyiciye çıkar, harita/liste göster |
-| **DNS sağlık denetimi** | intodns.com karşılığı | NS tutarlılığı, glue kaydı, SOA değerleri, açık özyineleme, TTL makullüğü → puanlı rapor |
-| **Ping / port durumu** | Hosting firması için doğal | Sadece yaygın portlar (80/443/21/22/25/3306), oran sınırlı, özel ağ engelli. Kötüye kullanım riski var, dikkatli |
-| **Alan adı yaşı / otorite özeti** | Uzun kuyruk SEO | WHOIS tescil tarihinden yaş + mevcut verilerin özeti |
+| Kayıt tipi seçici + `/{alan}/{tip}` SEO şeması | **Bitti** | Referans: kullanıcının kendi `dnschecker.website` projesi |
+| Kara liste / RBL | **Bitti** | 12 bölge; Spamhaus genel çözümleyicileri reddediyor, ayrıca işaretli |
+| HTTP güvenlik başlıkları | **Bitti** | SSRF süzgeci her atlamada uygulanıyor |
+| DNS yayılım (9 çözümleyici) | **Bitti** | Harita görselleştirmesi yok, liste hâlinde |
+| **DNS sağlık denetimi** | Yapılmadı | intodns karşılığı: NS tutarlılığı, glue kaydı, SOA değerleri, TTL makullüğü → puanlı rapor |
+| **Ping / port durumu** | Yapılmadı | Yalnız yaygın portlar, oran sınırlı, özel ağ engelli. Kötüye kullanım riski var |
+| **Alan adı yaşı / otorite özeti** | Yapılmadı | WHOIS tescil tarihinden yaş + mevcut verilerin özeti |
 
-Her yeni araç: `lib/engines/tools/<ad>.js` motoru + `ARACLAR` kaydına giriş +
-`content/site/araclar.js`'e sayfa metni. Motor mimarisi kuralları
-`lib/engines/README.md`'de — motorlar birbirini import etmez, `core/` kullanır,
-throw etmez, `{ok,data}`/`{ok,error}` döner.
+Her yeni araç: `lib/engines/tools/<ad>.js` motoru + `ARACLAR` kayıt defterine giriş +
+`content/site/araclar.js`'e sayfa metni. Motor kuralları `lib/engines/README.md`'de —
+motorlar birbirini import etmez, `core/` kullanır, throw etmez, `{ok,data}`/`{ok,error}` döner.
 
-### 2.3 Bu işin dosya haritası (bugünkü hâl)
+### Referans proje notları (dnschecker.website)
+
+Kaynak kopyası `../dnschecker-referans/` (git dışında). Alınanlar: kayıt tipi listesi
+(`config.php:11`), `/{dil}/{alan}/{tip}` URL şeması ve 301 normalizasyonu
+(`config.php:31,44-56`), tip açıklamaları (`lang/tr.json` → `rec_*_desc`),
+localStorage sorgu geçmişi.
+
+**Alınmayanlar:** reCAPTCHA sorgu kapısı (bizde IP başına oran sınırı var), Discord
+webhook bildirimi, ip-api.com geo çağrısı, `checks.json`/`stats.json` log dosyası,
+sahte ziyaretçi sayacı (`$queryCount = $visitorCount * 3.5`), dekoratif 18 noktalı
+"dünya haritası" (aslında yalnız 2 çözümleyiciye soruyor).
+
+> ⚠️ `dnschecker-referans/api.php` içinde **canlı Discord webhook adresi ve reCAPTCHA
+> gizli anahtarı düz metin** duruyor, `config.php`'de Umami ID var. Bu satırlar
+> SunucumWEB deposuna taşınmadı; kullanıcıya anahtarları yenilemesi söylendi.
+
+### Araçlar bölümünün dosya haritası
 
 ```
-app/araclar/page.jsx                 11 sat.  hub
-app/araclar/[arac]/page.jsx          23 sat.  araç sayfası (statik param)
-app/api/araclar/[arac]/route.js      37 sat.  POST, oran sınırı 20/dk
-components/site/ToolsPage.jsx       105 sat.  hub + detay kabuğu
-components/site/ToolRunner.jsx      526 sat.  form + 5 aracın sonuç görünümü
-content/site/araclar.js              72 sat.  ARAC_LISTESI (5 kayıt)
-lib/engines/tools/index.js          121 sat.  ARACLAR kayıt defteri
-lib/engines/tools/{dns,whois,ssl,eposta,ip}.js
+app/araclar/page.jsx                        hub
+app/araclar/[arac]/page.jsx                 statik araç sayfaları (dns hariç)
+app/araclar/dns/page.jsx                    DNS aracı giriş sayfası
+app/araclar/dns/[alan]/page.jsx             tüm kayıt tipleri, SSR
+app/araclar/dns/[alan]/[tip]/page.jsx       tek tip, SSR
+app/api/araclar/[arac]/route.js             POST, oran sınırı 20/dk
+components/site/ToolsPage.jsx               hub + AracKabugu + DigerAraclar
+components/site/DnsToolPage.jsx             DNS sayfa düzeni ve SEO metinleri
+components/site/DnsRapor.jsx                DNS sonuç görünümü (sunucuda basılabilir)
+components/site/tool-ui.jsx                 ortak Kutu/Satir/Rozet/Bos
+components/site/ToolRunner.jsx              form + diğer araçların sonuç görünümü
+content/site/araclar.js                     ARAC_LISTESI (7 kayıt)
+content/site/dns-tipleri.js                 10 tipin açıklama içeriği
+lib/dns-yol.js                              alan/tip normalleştirme, yol üretimi
+lib/dns-onbellek.js                         unstable_cache sarmalayıcı
+lib/engines/tools/{dns,whois,ssl,eposta,ip,blacklist,basliklar}.js
 lib/engines/core/{ag,flags,http,ratelimit,rdap,result,text,whois43}.js
 ```
 
-`ToolRunner.jsx` 526 satır ve 5 aracın görünümünü birlikte taşıyor. Araç sayısı
-10'a çıkarken **araç başına görünüm bileşenine bölünmeli**, yoksa dosya
-yönetilemez hâle gelir.
+`ToolRunner.jsx` hâlâ büyük (6 aracın görünümü bir arada). Yeni araç eklerken
+görünümleri `components/site/sonuc/<arac>.jsx` altına bölmek gerekecek.
 
 ---
 
@@ -135,7 +115,9 @@ yönetilemez hâle gelir.
 1. **Ürün sayfaları** — 12 sayfa hâlâ eski `ProductPage.jsx` şablonunda,
    içerik `content/site/products.js`. Ana sayfa/hakkımızda/iletişim seviyesine
    çekilecek. Fiyatlar temsilî, kullanıcı gerçeğini verecek.
-2. **SEO uygulaması** — `metadataBase`, `app/sitemap.js`, canonical'lar,
+2. **SEO uygulaması** — `app/sitemap.js` yazıldı (`lib/seo.js` içinde `SITE_URL`,
+   `mutlakUrl`, `kanonik` yardımcıları var, DNS sayfaları canonical veriyor).
+   Kalanlar: `metadataBase`, diğer sayfaların canonical'ları,
    JSON-LD (Organization / LocalBusiness / BreadcrumbList / Service / FAQPage),
    güvenlik başlıkları, `next/image` geçişi, font self-host.
    Referans dokümanlar: `Desktop\Altyapı Dokuman\NEXTJS\` altındaki 3 PDF.
@@ -164,6 +146,15 @@ yönetilemez hâle gelir.
 
 - Motorlar `lib/engines/` altında, **birbirini import etmez**; ortak şeyler
   `core/` içinde (`http`, `ratelimit`, `result`, `rdap`, `whois43`, `ag`, `flags`).
+- **DoH sorgularında tip adını değil sayısal kodu gönder** (`TIPLER` haritası).
+  Crypto.sx ve Tiar gibi çözümleyiciler `type=MX` yazısını yok sayıp sessizce
+  A kaydı döndürüyor; "kayıt yok" sanılıyordu.
+- **`fetchWithTimeout` `AbortSignal` kullanıyor, bu yüzden Next o fetch'i
+  önbelleğe almaz.** Sunucuda basılan sayfalarda sonucu `unstable_cache` ile
+  sarmalayın (`lib/dns-onbellek.js` örnek), yoksa her istek dış sorgu tetikler.
+- Kara liste sorgularında `127.255.255.25x` yanıtları **listeleme değil hata
+  kodudur** (genel çözümleyiciden sorgu reddi). Spamhaus bu yüzden hep bu kodu
+  döndürür; "listede" saymayın.
 - `core/ag.js` özel ağ süzgeci: kullanıcıdan gelen **her** hedefte zorunlu.
   Yoksa araçlarımız iç ağ taramasında kullanılır.
 - Sunucuda **IPv6 çıkışı yok** (`ENETUNREACH`). Giden bağlantılarda IPv4
