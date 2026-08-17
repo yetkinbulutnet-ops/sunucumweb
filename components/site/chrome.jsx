@@ -85,20 +85,25 @@ export const MENU = [
     { t: 'Sunucu Barındırma', d: 'Kendi donanımınız bizim Tier-3 veri merkezimizde güvende.', href: '/sunucu-barindirma', icon: 'database', r: 'TIER III', rTon: 'yesil' },
     { t: 'IP Kiralama', d: 'Kolay ve hızlı IP kiralama seçenekleri ile ihtiyacınız olan adresleri hemen edinin.', href: '/ip-kiralama', icon: 'globe', r: 'Özel', rTon: 'yesil' },
   ]},
-  { label: 'Araçlar', kolon: 3, items: [
-    { t: 'DNS Kayıt Sorgulama', d: 'A, AAAA, MX, NS, TXT ve CAA kayıtlarını anında listeleyin.', href: '/araclar/dns', icon: 'server' },
-    { t: 'WHOIS Sorgulama', d: 'Kayıt firması, tescil ve bitiş tarihi ile isim sunucuları.', href: '/araclar/whois', icon: 'search' },
-    { t: 'SSL Sertifika Kontrolü', d: 'Sertifika geçerli mi, kaç gün kaldı, kim sağlamış?', href: '/araclar/ssl', icon: 'lock' },
-    { t: 'E-posta Kayıt Kontrolü', d: 'MX, SPF ve DMARC ayarlarınızı denetleyin.', href: '/araclar/eposta', icon: 'mail' },
-    { t: 'IP Sorgulama', d: 'Kendi IP adresiniz ve ters DNS (PTR) kaydı.', href: '/araclar/ip', icon: 'globe' },
-    { t: 'Tüm araçlar', d: 'Ücretsiz ağ ve alan adı araçlarının tamamı.', href: '/araclar', icon: 'layers' },
-  ]},
   { label: 'Kurumsal', kolon: 3, items: [
     { t: 'Şirket Profili', d: 'SunucumWEB hakkında detaylı bilgi alın.', href: '/hakkimizda', icon: 'users' },
     { t: 'Legal', d: 'Sözleşmeler, yasal metinler ve resmî ticari bilgiler.', href: '/legal', icon: 'doc' },
     { t: 'İletişim', d: 'Telefon, e-posta ve destek kanallarımız.', href: '/iletisim', icon: 'chat' },
   ]},
 ];
+
+export const ARAC_MENU = {
+  label: 'Araçlar',
+  kolon: 3,
+  items: [
+    { t: 'DNS Kayıt Sorgulama', d: 'A, AAAA, MX, NS, TXT ve CAA kayıtlarını anında listeleyin.', href: '/araclar/dns', icon: 'server' },
+    { t: 'WHOIS Sorgulama', d: 'Kayıt firması, tescil ve bitiş tarihi ile isim sunucuları.', href: '/araclar/whois', icon: 'search' },
+    { t: 'SSL Sertifika Kontrolü', d: 'Sertifika geçerli mi, kaç gün kaldı, kim sağlamış?', href: '/araclar/ssl', icon: 'lock' },
+    { t: 'E-posta Kayıt Kontrolü', d: 'MX, SPF ve DMARC ayarlarınızı denetleyin.', href: '/araclar/eposta', icon: 'mail' },
+    { t: 'IP Sorgulama', d: 'Kendi IP adresiniz ve ters DNS (PTR) kaydı.', href: '/araclar/ip', icon: 'globe' },
+    { t: 'Tüm araçlar', d: 'Ücretsiz ağ ve alan adı araçlarının tamamı.', href: '/araclar', icon: 'layers' },
+  ],
+};
 
 const ROZET_TON = {
   yesil: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 ring-emerald-500/30',
@@ -188,9 +193,17 @@ export function TopBar() {
               <span className="whitespace-nowrap">0(850) 302 5809</span>
             </a>
             <span className="hidden sm:block h-3.5 w-px bg-white/15" />
-            <Link href="/iletisim" className="hidden sm:inline-block transition-colors hover:text-white">İletişim</Link>
+            <Link
+              href="/araclar"
+              className="hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap font-semibold text-white transition-colors hover:text-brand-300"
+            >
+              <Icon name="terminal" className="h-[14px] w-[14px] text-brand-400" />
+              Ücretsiz Araçlar
+            </Link>
             <span className="hidden md:block h-3.5 w-px bg-white/15" />
-            <a href="https://my.sunucumweb.com" target="_blank" rel="noopener noreferrer" className="hidden md:inline-block transition-colors hover:text-white">Hızlı Destek</a>
+            <Link href="/iletisim" className="hidden md:inline-block transition-colors hover:text-white">İletişim</Link>
+            <span className="hidden lg:block h-3.5 w-px bg-white/15" />
+            <a href="https://my.sunucumweb.com" target="_blank" rel="noopener noreferrer" className="hidden lg:inline-block transition-colors hover:text-white">Hızlı Destek</a>
           </div>
 
           <div className="flex shrink-0 items-center gap-1.5 sm:gap-3">
@@ -376,7 +389,7 @@ export function SiteHeader() {
       <div className="sticky top-0 z-50">
       <TopBar />
       <header className={`relative transition-shadow duration-300 ${scrolled ? 'bg-surface/90 backdrop-blur-xl border-b border-line shadow-[0_4px_30px_-12px_rgba(15,41,66,0.15)]' : 'bg-surface border-b border-line'}`}>
-        <div className="mx-auto max-w-7xl px-4 sm:px-5 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-5 lg:px-5 xl:px-8">
           <div className="flex h-[68px] lg:h-[74px] items-center justify-between gap-3">
             <Link href="/" className="flex shrink-0 items-center">
               <img src="/icon/logo.png" alt="SunucumWEB" className="h-7 w-auto sm:h-8 dark:brightness-0 dark:invert" />
@@ -391,7 +404,7 @@ export function SiteHeader() {
                       key={m.label}
                       href={m.href}
                       onMouseEnter={menuKapatHemen}
-                      className="rounded-lg px-3.5 py-2 text-[15px] font-medium text-strong/80 transition-colors hover:text-brandtext"
+                      className="whitespace-nowrap rounded-lg px-2 py-2 text-[14px] font-medium text-strong/80 transition-colors hover:text-brandtext xl:px-3.5 xl:text-[15px]"
                     >
                       {m.label}
                     </Link>
@@ -402,10 +415,10 @@ export function SiteHeader() {
                     <button
                       aria-expanded={acikMi}
                       onClick={() => (acikMi ? menuKapatHemen() : menuAc(n))}
-                      className={`inline-flex items-center gap-1 rounded-lg px-3.5 py-2 text-[15px] font-medium transition-colors ${acikMi ? 'bg-brandsoft/60 text-brandtext' : 'text-strong/80 hover:text-brandtext'}`}
+                      className={`inline-flex items-center gap-1 whitespace-nowrap rounded-lg px-2 py-2 text-[14px] font-medium transition-colors xl:px-3.5 xl:text-[15px] ${acikMi ? 'bg-brandsoft/60 text-brandtext' : 'text-strong/80 hover:text-brandtext'}`}
                     >
                       {m.label}
-                      <Icon name="chevron" className={`mt-0.5 w-3.5 h-3.5 transition-transform ${acikMi ? 'rotate-180' : ''}`} />
+                      <Icon name="chevron" className={`mt-0.5 w-3.5 h-3.5 shrink-0 transition-transform ${acikMi ? 'rotate-180' : ''}`} />
                     </button>
 
                     {acikMi && (
@@ -429,8 +442,8 @@ export function SiteHeader() {
 
             <div className="flex shrink-0 items-center gap-1 sm:gap-2">
               <CartButton />
-              <Link href="/web-hosting" className="group hidden sm:inline-flex items-center gap-1.5 rounded-xl bg-brand-500 px-4 py-2.5 text-[14px] font-semibold text-white shadow-lg shadow-brand-500/25 transition-[transform,box-shadow,border-color,opacity] hover:bg-brand-600 lg:px-5 lg:text-[15px]">
-                Hemen Başla <Icon name="arrow" className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+              <Link href="/web-hosting" className="group hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap rounded-xl bg-brand-500 px-4 py-2.5 text-[14px] font-semibold text-white shadow-lg shadow-brand-500/25 transition-[transform,box-shadow,border-color,opacity] hover:bg-brand-600 lg:px-3.5 lg:text-[13px] xl:px-5 xl:text-[15px]">
+                Hemen Başla <Icon name="arrow" className="hidden h-4 w-4 transition-transform group-hover:translate-x-0.5 sm:block lg:hidden xl:block" />
               </Link>
               <button onClick={() => setOpen((v) => !v)} className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-strong transition-colors hover:bg-surface2 lg:hidden" aria-label="Menü" aria-expanded={open}>
                 <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -459,7 +472,7 @@ export function SiteHeader() {
             </div>
 
             <div data-lenis-prevent className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-6 pt-2">
-              {MENU.map((m, i) => (
+              {[...MENU, ARAC_MENU].map((m, i) => (
                 <div key={m.label} className="border-b border-line/60">
                   {!m.items ? (
                     <Link
