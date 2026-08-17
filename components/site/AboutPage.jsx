@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { Icon, CtaBand, SiteShell } from './chrome';
+import { CtaBand, SiteShell } from './chrome';
+import KabinSlider from './KabinSlider';
 import { HAKKIMIZDA as C } from '@/content/site/hakkimizda';
 
 const SEMA = {
@@ -62,44 +63,19 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-5 lg:px-8 py-20 lg:py-24">
-        <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">{C.hikaye.eyebrow}</span>
-        <h2 className="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight text-strong text-balance">
-          {C.hikaye.baslik}
-        </h2>
-        {C.hikaye.paragraflar.map((p) => (
-          <p key={p.slice(0, 24)} className="mt-5 text-[17px] leading-relaxed text-body">{p}</p>
-        ))}
-      </section>
-
-      <section className="border-y border-line bg-surface2">
-        <div className="mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-24">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div className="max-w-2xl">
-              <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">{C.galeri.eyebrow}</span>
-              <h2 className="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight text-strong text-balance">
-                {C.galeri.baslik}
-              </h2>
-            </div>
-            <p className="text-[15px] text-muted">{C.galeri.ozet}</p>
-          </div>
-
-          <div className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
-            {C.galeri.fotograflar.map((f) => (
-              <figure key={f.src} className="group overflow-hidden rounded-2xl border border-line bg-surface">
-                <div className="aspect-[3/4] overflow-hidden">
-                  <img
-                    src={f.src}
-                    alt={f.alt}
-                    width={f.g}
-                    height={f.y}
-                    loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-              </figure>
+      <section className="mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-24">
+        <div className="grid items-center gap-14 lg:grid-cols-[1fr_0.8fr] lg:gap-20">
+          <div className="max-w-2xl">
+            <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">{C.hikaye.eyebrow}</span>
+            <h2 className="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight text-strong text-balance">
+              {C.hikaye.baslik}
+            </h2>
+            {C.hikaye.paragraflar.map((p) => (
+              <p key={p.slice(0, 24)} className="mt-5 text-[17px] leading-relaxed text-body">{p}</p>
             ))}
           </div>
+
+          <KabinSlider fotograflar={C.hikaye.fotograflar} />
         </div>
       </section>
 
@@ -124,10 +100,7 @@ export default function AboutPage() {
         </ol>
       </section>
 
-      <CtaBand
-        title="Altyapınızı birlikte konuşalım"
-        text="Hangi paketin işinize uyduğundan emin değilseniz arayın; teknik ekibimiz doğru yapılandırmayı çıkarsın."
-      />
+      <CtaBand title={C.cta.baslik} text={C.cta.metin} />
     </SiteShell>
   );
 }
