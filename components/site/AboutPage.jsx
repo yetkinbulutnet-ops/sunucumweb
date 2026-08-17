@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { CtaBand, SiteShell } from './chrome';
+import { Icon, CtaBand, SiteShell } from './chrome';
 import KabinSlider from './KabinSlider';
 import { HAKKIMIZDA as C } from '@/content/site/hakkimizda';
 
@@ -50,13 +50,25 @@ export default function AboutPage() {
               {C.title}
             </h1>
             <p className="mt-6 text-lg leading-relaxed text-body sm:text-xl">{C.lede}</p>
+
+            <a
+              href={C.btk.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-7 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2 text-[13px] font-semibold text-body transition-colors hover:border-brandline hover:text-brandtext"
+            >
+              <Icon name="shield" className="h-4 w-4 text-brandtext" />
+              {C.btk.metin}
+            </a>
           </div>
 
-          <dl className="mt-12 grid gap-x-8 gap-y-6 border-t border-line pt-8 sm:grid-cols-2 lg:grid-cols-4">
-            {C.kunyeSeritler.map(([etiket, deger]) => (
-              <div key={etiket}>
-                <dt className="text-[12px] font-bold uppercase tracking-[0.14em] text-muted">{etiket}</dt>
-                <dd className="mt-1.5 text-[17px] font-bold text-strong">{deger}</dd>
+          <dl className="mt-14 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-line pt-9 lg:grid-cols-4 lg:gap-x-10">
+            {C.rakamlar.map(([sayi, etiket]) => (
+              <div key={etiket} className="flex flex-col-reverse gap-1.5">
+                <dt className="text-[13px] font-medium text-muted sm:text-[14px]">{etiket}</dt>
+                <dd className="text-[2rem] font-extrabold leading-none tracking-tight text-strong sm:text-[2.5rem] lg:text-[2.75rem]">
+                  {sayi}
+                </dd>
               </div>
             ))}
           </dl>

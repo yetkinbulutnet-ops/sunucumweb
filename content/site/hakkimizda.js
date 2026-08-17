@@ -10,11 +10,16 @@ export const HAKKIMIZDA = {
     'SunucumWEB, 2023 yılından bu yana web hosting, sanal sunucu ve sunucu barındırma hizmeti sunmaktadır. ' +
     'Keçiborlu / Isparta’daki merkezimizden Türkiye genelindeki işletmelere altyapı hizmeti veriyoruz.',
 
-  kunyeSeritler: [
-    ['Kuruluş', '2023'],
-    ['Merkez', 'Keçiborlu / Isparta'],
-    ['Yasal statü', 'BTK kayıtlı yer sağlayıcı'],
-    ['Destek', '7/24 teknik ekip'],
+  btk: {
+    metin: 'BTK kayıtlı yer sağlayıcı',
+    href: 'https://internet.btk.gov.tr/yer-saglayici-listesi?page=1&q=SunucumWEB',
+  },
+
+  rakamlar: [
+    ['%99.9', 'Uptime garantisi'],
+    ['10.000+', 'Aktif müşteri'],
+    ['<5 dk', 'Ortalama ilk yanıt'],
+    ['7/24', 'Teknik destek'],
   ],
 
   hikaye: {
