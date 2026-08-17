@@ -5,6 +5,8 @@ import { rateLimit, clientKey } from '@/lib/engines/core/ratelimit';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+const ARAC_SINIRI = { karaliste: 6, basliklar: 10, ssl: 12 };
+
 const ziyaretciIpAl = (request) =>
   (request.headers.get('x-forwarded-for') || '').split(',')[0].trim() ||
   request.headers.get('x-real-ip') ||
@@ -13,7 +15,10 @@ const ziyaretciIpAl = (request) =>
 export async function POST(request, { params }) {
   const { arac } = await params;
 
-  const limit = rateLimit(clientKey(request, `arac:${arac}`), { limit: 20, windowMs: 60_000 });
+  const limit = rateLimit(clientKey(request, `arac:${arac}`), {
+    limit: ARAC_SINIRI[arac] ?? 20,
+    windowMs: 60_000,
+  });
   if (!limit.allowed) {
     return NextResponse.json(
       { ok: false, error: { code: 'RATE_LIMITED', message: 'Çok fazla sorgu gönderdiniz, biraz bekleyin.' } },
