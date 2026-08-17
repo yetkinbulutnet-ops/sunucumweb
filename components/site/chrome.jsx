@@ -614,12 +614,14 @@ function GoogleYorum() {
     );
   }
 
+  const puanYazi = ozet.puan.toLocaleString('tr-TR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+
   return (
     <a
       href={ozet.harita || GOOGLE_YORUM_URL}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`Google değerlendirmemiz ${ozet.puan} üzerinden 5, ${ozet.adet} yorum`}
+      aria-label={`Google değerlendirmemiz 5 üzerinden ${puanYazi}, ${ozet.adet} yorum`}
       className="group flex min-h-[46px] items-center gap-3 rounded-xl bg-white/5 px-4 py-2.5 ring-1 ring-white/10 transition-colors hover:bg-white/10"
     >
       <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0" aria-hidden>
@@ -628,9 +630,7 @@ function GoogleYorum() {
         <path fill="#FBBC05" d="M5.6 14.7a7.2 7.2 0 0 1 0-4.6v-3H1.8a12 12 0 0 0 0 10.7z" />
         <path fill="#EA4335" d="M12 4.8c1.7 0 3.2.6 4.4 1.7l3.3-3.3C17.7 1.2 15.1 0 12 0A12 12 0 0 0 1.8 7.1l3.8 3a7.2 7.2 0 0 1 6.4-5.3z" />
       </svg>
-      <span className="text-[15px] font-extrabold tabular-nums text-white">
-        {ozet.puan.toLocaleString('tr-TR', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}
-      </span>
+      <span className="text-[15px] font-extrabold tabular-nums text-white">{puanYazi}</span>
       <Yildizlar puan={ozet.puan} />
       <span className="text-[13px] tabular-nums text-slate-400 group-hover:text-slate-300">
         {ozet.adet.toLocaleString('tr-TR')} yorum
