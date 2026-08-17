@@ -44,6 +44,7 @@ lib/engines/
 | `domain-availability` | `checkDomains(domains)` | RDAP + Cloudflare DoH | `ENGINE_DOMAIN_AVAILABILITY` |
 | `product-finder` | `recommend(answers)` | yok (saf fonksiyon) | — |
 | `google-reviews` | `yorumOzeti({ zorla })` / `yorumDurumu()` | Google Places API (New) | `ENGINE_GOOGLE_REVIEWS` |
+| `tools` | `aracCalistir(id, girdi, baglam)` | Cloudflare DoH + RDAP + TLS | `ENGINE_TOOLS` |
 | `theme` | `applyTheme(t)` / `toggleTheme()` | yok (localStorage) | — |
 | `cart` | `cartReducer(items, action)` | yok (localStorage) | — |
 | `scroll-lock` | `scrollKilitle()` → çözme fonksiyonu | yok | — |
@@ -58,6 +59,22 @@ komutları `TASIMA.md` içinde.
 Çekim başarısız olursa **son iyi değer** korunur; hiç veri yoksa `GOOGLE_PUAN` /
 `GOOGLE_YORUM_ADEDI` yedekleri gösterilir ve yanıt `canli: false` döner —
 rozet hiçbir durumda boş kalmaz.
+
+## Ağ araçları (tools)
+
+`/araclar` altındaki beş ücretsiz sorgu aracını besler: DNS, WHOIS, SSL, e-posta
+kayıtları ve IP. Araçlar `ARACLAR` sabitinde tanımlıdır; yeni araç eklemek için
+o nesneye bir anahtar eklemek ve `content/site/araclar.js` içine sayfa metnini
+yazmak yeterli — route ve API kendiliğinden çalışır.
+
+**Güvenlik notları:**
+- Kullanıcıdan gelen hedefler `core/ag.js` üzerinden süzülür; özel ağ (10/8,
+  192.168/16, 127/8, 169.254/16, 100.64/10, fc00::/7 …) adreslerine bağlanılmaz.
+  Aksi hâlde araçlar iç ağı taramak için kullanılabilirdi.
+- SSL kontrolü yalnızca 443 portuna bağlanır, port taraması yapılmaz.
+- API ucu IP başına dakikada 20 sorguyla sınırlıdır (`core/ratelimit.js`).
+- RDAP sunucu listesi `core/rdap.js` içinde ortaktır; `domain-availability` ve
+  `tools` motorları aynı yardımcıyı kullanır, birbirlerini import etmez.
 
 ## Kaydırma kilidi (scroll-lock)
 

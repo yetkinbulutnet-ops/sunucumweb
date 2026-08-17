@@ -85,6 +85,14 @@ export const MENU = [
     { t: 'Sunucu Barındırma', d: 'Kendi donanımınız bizim Tier-3 veri merkezimizde güvende.', href: '/sunucu-barindirma', icon: 'database', r: 'TIER III', rTon: 'yesil' },
     { t: 'IP Kiralama', d: 'Kolay ve hızlı IP kiralama seçenekleri ile ihtiyacınız olan adresleri hemen edinin.', href: '/ip-kiralama', icon: 'globe', r: 'Özel', rTon: 'yesil' },
   ]},
+  { label: 'Araçlar', kolon: 3, items: [
+    { t: 'DNS Kayıt Sorgulama', d: 'A, AAAA, MX, NS, TXT ve CAA kayıtlarını anında listeleyin.', href: '/araclar/dns', icon: 'server' },
+    { t: 'WHOIS Sorgulama', d: 'Kayıt firması, tescil ve bitiş tarihi ile isim sunucuları.', href: '/araclar/whois', icon: 'search' },
+    { t: 'SSL Sertifika Kontrolü', d: 'Sertifika geçerli mi, kaç gün kaldı, kim sağlamış?', href: '/araclar/ssl', icon: 'lock' },
+    { t: 'E-posta Kayıt Kontrolü', d: 'MX, SPF ve DMARC ayarlarınızı denetleyin.', href: '/araclar/eposta', icon: 'mail' },
+    { t: 'IP Sorgulama', d: 'Kendi IP adresiniz ve ters DNS (PTR) kaydı.', href: '/araclar/ip', icon: 'globe' },
+    { t: 'Tüm araçlar', d: 'Ücretsiz ağ ve alan adı araçlarının tamamı.', href: '/araclar', icon: 'layers' },
+  ]},
   { label: 'Kurumsal', kolon: 3, items: [
     { t: 'Şirket Profili', d: 'SunucumWEB hakkında detaylı bilgi alın.', href: '/hakkimizda', icon: 'users' },
     { t: 'Legal', d: 'Sözleşmeler, yasal metinler ve resmî ticari bilgiler.', href: '/legal', icon: 'doc' },
@@ -556,6 +564,13 @@ const FOOT_KOLON = [
   { h: 'Veri Merkezi', items: [
     ['Sunucu Barındırma', '/sunucu-barindirma'],
     ['IP Kiralama', '/ip-kiralama'],
+  ]},
+  { h: 'Araçlar', items: [
+    ['DNS Sorgulama', '/araclar/dns'],
+    ['WHOIS Sorgulama', '/araclar/whois'],
+    ['SSL Kontrolü', '/araclar/ssl'],
+    ['E-posta Kayıtları', '/araclar/eposta'],
+    ['IP Sorgulama', '/araclar/ip'],
   ]},
   { h: 'Kurumsal', items: [
     ['Şirket Profili', '/hakkimizda'],
