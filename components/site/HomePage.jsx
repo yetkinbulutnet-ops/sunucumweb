@@ -315,7 +315,7 @@ function FinderBanner({ onOpen }) {
                 Hangi ürünü seçeceğinizden emin değil misiniz?
               </h2>
               <p className="mt-1.5 text-[15px] text-body">
-                3 kısa soru sorun, ihtiyacınıza en uygun çözümü birlikte bulalım.
+                3 kısa soruya cevap verin, size uygun paketi birlikte bulalım.
               </p>
             </div>
           </div>
