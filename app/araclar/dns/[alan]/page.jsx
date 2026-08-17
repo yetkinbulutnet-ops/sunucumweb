@@ -1,7 +1,7 @@
 import { notFound, permanentRedirect } from 'next/navigation';
 import DnsToolPage from '@/components/site/DnsToolPage';
 import { aracBul } from '@/content/site/araclar';
-import { dnsSorgula } from '@/lib/engines/tools';
+import { dnsSorgulaOnbellekli } from '@/lib/dns-onbellek';
 import { alanNormalle, gecerliAlan, dnsYolu } from '@/lib/dns-yol';
 import { kanonik } from '@/lib/seo';
 
@@ -32,7 +32,7 @@ export async function generateMetadata({ params }) {
 export default async function Page({ params }) {
   const { alan: ham } = await params;
   const alan = alanCoz(ham);
-  const sonuc = await dnsSorgula(alan, 'TUM');
+  const sonuc = await dnsSorgulaOnbellekli(alan, 'TUM');
 
   return (
     <DnsToolPage
