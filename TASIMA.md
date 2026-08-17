@@ -80,8 +80,11 @@ GOOGLE_YORUM_ADEDI=69
 **Crontab (root):**
 
 ```
-*/15 * * * * curl -s -m 20 -H "x-cron-token: <CRON_TOKEN>" http://127.0.0.1:3975/api/cron/yorumlar >> /var/log/sunucumweb-yorum.log 2>&1
+*/15 * * * * curl -s -m 20 -H "x-cron-token: <CRON_TOKEN>" http://127.0.0.1:3975/api/cron/yorumlar > /var/log/sunucumweb-yorum.log 2>&1
 ```
+
+Log dosyası **üzerine yazılır** (`>`): içinde her zaman son çalışmanın sonucu
+durur, büyümez. `cat /var/log/sunucumweb-yorum.log` son durumu gösterir.
 
 Durum kontrolü — `durum.hata` alanı neden canlı olmadığını söyler
 (`ANAHTAR_YOK`, `ISLETME_BULUNAMADI`, `DETAY_*`):
