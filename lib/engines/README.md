@@ -43,9 +43,21 @@ lib/engines/
 | `domain-ai` | `suggestDomains({ brief, count, tlds })` | Groq API | `ENGINE_DOMAIN_AI` |
 | `domain-availability` | `checkDomains(domains)` | RDAP + Cloudflare DoH | `ENGINE_DOMAIN_AVAILABILITY` |
 | `product-finder` | `recommend(answers)` | yok (saf fonksiyon) | — |
+| `google-reviews` | `yorumOzeti({ zorla })` / `yorumDurumu()` | Google Places API (New) | `ENGINE_GOOGLE_REVIEWS` |
 | `theme` | `applyTheme(t)` / `toggleTheme()` | yok (localStorage) | — |
 | `cart` | `cartReducer(items, action)` | yok (localStorage) | — |
 | `scroll-lock` | `scrollKilitle()` → çözme fonksiyonu | yok | — |
+
+## Google yorumları
+
+Footerdaki puan rozetini besler. `/api/health` bu motoru **anahtar var mı** diye
+raporlar (`ready: false` = `GOOGLE_PLACES_API_KEY` tanımsız), tazelemeyi sunucudaki
+cron `/api/cron/yorumlar` ucundan 15 dakikada bir tetikler. Kurulum ve tanı
+komutları `TASIMA.md` içinde.
+
+Çekim başarısız olursa **son iyi değer** korunur; hiç veri yoksa `GOOGLE_PUAN` /
+`GOOGLE_YORUM_ADEDI` yedekleri gösterilir ve yanıt `canli: false` döner —
+rozet hiçbir durumda boş kalmaz.
 
 ## Kaydırma kilidi (scroll-lock)
 
