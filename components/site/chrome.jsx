@@ -571,26 +571,56 @@ function Yildizlar({ puan }) {
   );
 }
 
+const YORUM_TAZELEME_MS = 5 * 60 * 1000;
+
 function GoogleYorum() {
-  const [ozet, setOzet] = useState({ puan: 4.8, adet: 327 });
+  const [ozet, setOzet] = useState(null);
 
   useEffect(() => {
     let iptal = false;
-    fetch('/api/google-reviews')
-      .then((r) => r.json())
-      .then((d) => {
-        if (!iptal && d?.ok) setOzet({ puan: d.puan, adet: d.adet });
-      })
-      .catch(() => {});
-    return () => { iptal = true; };
+    let sonCekim = 0;
+
+    const cek = async () => {
+      try {
+        const r = await fetch('/api/google-reviews', { cache: 'no-store' });
+        const d = await r.json();
+        if (!iptal && d?.ok) {
+          sonCekim = Date.now();
+          setOzet({ puan: d.puan, adet: d.adet, harita: d.harita, canli: d.canli });
+        }
+      } catch {  }
+    };
+
+    cek();
+    const zamanlayici = setInterval(() => { if (!document.hidden) cek(); }, YORUM_TAZELEME_MS);
+    const gorunurluk = () => { if (!document.hidden && Date.now() - sonCekim > YORUM_TAZELEME_MS) cek(); };
+    document.addEventListener('visibilitychange', gorunurluk);
+
+    return () => {
+      iptal = true;
+      clearInterval(zamanlayici);
+      document.removeEventListener('visibilitychange', gorunurluk);
+    };
   }, []);
+
+  if (!ozet) {
+    return (
+      <span className="flex min-h-[46px] items-center gap-3 rounded-xl bg-white/5 px-4 py-2.5 ring-1 ring-white/10" aria-hidden>
+        <span className="h-5 w-5 shrink-0 rounded-full bg-white/10" />
+        <span className="h-3.5 w-8 rounded bg-white/10" />
+        <span className="h-3.5 w-[86px] rounded bg-white/10" />
+        <span className="h-3.5 w-16 rounded bg-white/10" />
+      </span>
+    );
+  }
 
   return (
     <a
-      href={GOOGLE_YORUM_URL}
+      href={ozet.harita || GOOGLE_YORUM_URL}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex items-center gap-3 rounded-xl bg-white/5 px-4 py-2.5 ring-1 ring-white/10 transition-colors hover:bg-white/10"
+      aria-label={`Google değerlendirmemiz ${ozet.puan} üzerinden 5, ${ozet.adet} yorum`}
+      className="group flex min-h-[46px] items-center gap-3 rounded-xl bg-white/5 px-4 py-2.5 ring-1 ring-white/10 transition-colors hover:bg-white/10"
     >
       <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0" aria-hidden>
         <path fill="#4285F4" d="M23 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.2a5.3 5.3 0 0 1-2.3 3.5v2.9h3.7c2.2-2 3.4-5 3.4-8.6z" />
@@ -598,10 +628,12 @@ function GoogleYorum() {
         <path fill="#FBBC05" d="M5.6 14.7a7.2 7.2 0 0 1 0-4.6v-3H1.8a12 12 0 0 0 0 10.7z" />
         <path fill="#EA4335" d="M12 4.8c1.7 0 3.2.6 4.4 1.7l3.3-3.3C17.7 1.2 15.1 0 12 0A12 12 0 0 0 1.8 7.1l3.8 3a7.2 7.2 0 0 1 6.4-5.3z" />
       </svg>
-      <span className="text-[15px] font-extrabold text-white">{String(ozet.puan).replace('.', ',')}</span>
+      <span className="text-[15px] font-extrabold tabular-nums text-white">
+        {ozet.puan.toLocaleString('tr-TR', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}
+      </span>
       <Yildizlar puan={ozet.puan} />
-      <span className="text-[13px] text-slate-400 group-hover:text-slate-300">
-        {ozet.adet} yorum
+      <span className="text-[13px] tabular-nums text-slate-400 group-hover:text-slate-300">
+        {ozet.adet.toLocaleString('tr-TR')} yorum
       </span>
       <Icon name="arrow" className="h-3.5 w-3.5 shrink-0 text-slate-500 transition-transform group-hover:translate-x-0.5 group-hover:text-brand-300" />
     </a>

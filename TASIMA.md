@@ -54,6 +54,47 @@ curl -s localhost:3975/api/health                     # motor durumu
 
 ---
 
+## Google yorum rozeti (footer) — otomatik güncelleme
+
+Footerdaki puan/yorum sayısı **Google Places API'den** çekilir, sunucudaki cron
+15 dakikada bir tazeler. Kullanıcı sayfayı açtığında hazır değeri görür; sekme
+açık kalırsa 5 dakikada bir kendi de yeniler.
+
+| Parça | Yer |
+|---|---|
+| Motor | `lib/engines/google-reviews/` (15 dk bellek önbelleği, son iyi değeri korur) |
+| Rozet ucu | `GET /api/google-reviews` (herkese açık, 5 dk tarayıcı önbelleği) |
+| Cron ucu | `GET /api/cron/yorumlar` (`x-cron-token` başlığı ile korumalı) |
+
+**Gerekli ortam değişkenleri** (`/etc/sunucumweb-demo.env`):
+
+```
+GOOGLE_PLACES_API_KEY=...      # Google Cloud > Places API (New)
+GOOGLE_PLACE_ID=               # boş bırakılırsa işletme adından otomatik bulunur
+GOOGLE_PLACE_ADI=SunucumWEB
+CRON_TOKEN=...                 # crontab satırındaki değerle aynı
+GOOGLE_PUAN=4.8                # API erişilemezse gösterilecek yedek
+GOOGLE_YORUM_ADEDI=327
+```
+
+**Crontab (root):**
+
+```
+*/15 * * * * curl -s -m 20 -H "x-cron-token: <CRON_TOKEN>" http://127.0.0.1:3975/api/cron/yorumlar >> /var/log/sunucumweb-yorum.log 2>&1
+```
+
+Durum kontrolü — `durum.hata` alanı neden canlı olmadığını söyler
+(`ANAHTAR_YOK`, `ISLETME_BULUNAMADI`, `DETAY_*`):
+
+```bash
+curl -s -H "x-cron-token: <CRON_TOKEN>" http://127.0.0.1:3975/api/cron/yorumlar
+```
+
+> API anahtarı yoksa site bozulmaz: rozet `GOOGLE_PUAN` / `GOOGLE_YORUM_ADEDI`
+> yedek değerlerini gösterir ve `canli: false` döner.
+
+---
+
 ## Doğrulanan testler (canlı)
 
 - Tüm sayfalar HTTP 200 (`/`, `/alan-adi`, `/sanal-sunucu`, `/iletisim`, `/hakkimizda`, `/transfer`, `/whois`, yasal sayfalar)

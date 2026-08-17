@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { yorumOzeti } from '@/lib/engines/google-reviews';
 
 export const runtime = 'nodejs';
-export const revalidate = 21600;
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   const sonuc = await yorumOzeti();
@@ -11,6 +11,6 @@ export async function GET() {
   }
   return NextResponse.json(
     { ok: true, ...sonuc.data },
-    { headers: { 'Cache-Control': 'public, s-maxage=21600, stale-while-revalidate=86400' } },
+    { headers: { 'Cache-Control': 'public, max-age=300, s-maxage=300, stale-while-revalidate=86400' } },
   );
 }
