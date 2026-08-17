@@ -60,6 +60,7 @@ export function Icon({ name, className = 'w-6 h-6' }) {
 }
 
 export const MENU = [
+  { label: 'Ana Sayfa', href: '/' },
   { label: 'Domain', kolon: 3, items: [
     { t: 'Domain Tescil', d: 'Yeni domain tescil işlemleri için hemen tıklayın.', href: '/alan-adi', icon: 'globe', r: '%20 İndirim', rTon: 'yesil' },
     { t: 'Domain Transfer', d: 'Mevcut domaininizi güvenle bize transfer edin.', href: '/transfer', icon: 'refresh' },
@@ -85,8 +86,8 @@ export const MENU = [
   ]},
   { label: 'Kurumsal', kolon: 3, items: [
     { t: 'Şirket Profili', d: 'SunucumWEB hakkında detaylı bilgi alın.', href: '/hakkimizda', icon: 'users' },
-    { t: 'Ticari Bilgiler', d: 'Resmi ticari bilgilerimiz.', href: '/ticari-bilgiler', icon: 'star' },
-    { t: 'Sözleşmeler', d: 'Kullanım koşulları, gizlilik, iade ve tüm yasal belgeler.', href: '/sozlesmeler', icon: 'doc' },
+    { t: 'Legal', d: 'Sözleşmeler, yasal metinler ve resmî ticari bilgiler.', href: '/legal', icon: 'doc' },
+    { t: 'İletişim', d: 'Telefon, e-posta ve destek kanallarımız.', href: '/iletisim', icon: 'chat' },
   ]},
 ];
 
@@ -375,6 +376,18 @@ export function SiteHeader() {
             <nav className="hidden lg:flex items-center gap-0.5" onMouseLeave={menuKapatGecikmeli}>
               {MENU.map((m, n) => {
                 const acikMi = acikMenu === n;
+                if (!m.items) {
+                  return (
+                    <Link
+                      key={m.label}
+                      href={m.href}
+                      onMouseEnter={menuKapatHemen}
+                      className="rounded-lg px-3.5 py-2 text-[15px] font-medium text-strong/80 transition-colors hover:text-brandtext"
+                    >
+                      {m.label}
+                    </Link>
+                  );
+                }
                 return (
                   <div key={m.label} className="static" onMouseEnter={() => menuAc(n)}>
                     <button
@@ -439,6 +452,16 @@ export function SiteHeader() {
             <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-6 pt-2">
               {MENU.map((m, i) => (
                 <div key={m.label} className="border-b border-line/60">
+                  {!m.items ? (
+                    <Link
+                      href={m.href}
+                      onClick={() => setOpen(false)}
+                      className="flex w-full items-center justify-between py-3.5 text-[15px] font-semibold text-strong"
+                    >
+                      {m.label}
+                      <Icon name="arrow" className="w-4 h-4 text-muted" />
+                    </Link>
+                  ) : (
                   <button
                     onClick={() => setAcc(acc === i ? -1 : i)}
                     aria-expanded={acc === i}
@@ -447,7 +470,8 @@ export function SiteHeader() {
                     {m.label}
                     <Icon name="chevron" className={`w-4 h-4 text-muted transition-transform ${acc === i ? 'rotate-180' : ''}`} />
                   </button>
-                  {acc === i && (
+                  )}
+                  {m.items && acc === i && (
                     <div className="grid gap-1 pb-3 animate-[fadeup_0.25s_ease-out]">
                       {m.items.map((it) => <MegaItem key={it.href + it.t} it={it} onClick={() => setOpen(false)} />)}
                     </div>
@@ -533,10 +557,9 @@ const FOOT_KOLON = [
     ['IP Kiralama', '/ip-kiralama'],
   ]},
   { h: 'Kurumsal', items: [
-    ['Hakkımızda', '/hakkimizda'],
-    ['Ticari Bilgiler', '/ticari-bilgiler'],
+    ['Şirket Profili', '/hakkimizda'],
+    ['Legal', '/legal'],
     ['İletişim', '/iletisim'],
-    ['Sözleşmeler', '/sozlesmeler'],
   ]},
 ];
 

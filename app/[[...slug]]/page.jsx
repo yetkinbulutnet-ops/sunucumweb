@@ -14,24 +14,28 @@ import LegalPage from '@/components/site/LegalPage';
 import ContactPage from '@/components/site/ContactPage';
 import DomainPage from '@/components/site/DomainPage';
 import AboutPage from '@/components/site/AboutPage';
+import LegalHubPage from '@/components/site/LegalHubPage';
 import { HAKKIMIZDA } from '@/content/site/hakkimizda';
+import { LEGAL } from '@/content/site/legal';
 import { PRODUCTS } from '@/content/site/products';
 import { getLegalHtml } from '@/lib/content';
 
-const LEGAL = {
+const YASAL_METINLER = {
   'kullanim-kosullari': { title: 'Kullanım Koşulları', eyebrow: 'Yasal' },
   'gizlilik-sozlesmesi': { title: 'Gizlilik Sözleşmesi', eyebrow: 'Yasal' },
   'iade-politikasi': { title: 'İade Politikası', eyebrow: 'Yasal' },
   'kullanim-politikasi': { title: 'Kullanım Politikası', eyebrow: 'Yasal' },
-  'ticari-bilgiler': { title: 'Ticari Bilgiler', eyebrow: 'Kurumsal' },
 };
 
 export const dynamicParams = false;
 
+const YONLENDIRILEN = ['ticari-bilgiler', 'sozlesmeler'];
+
 export function generateStaticParams() {
-  return getManifest().pages.map((p) => ({
-    slug: p.slug === 'index' ? [] : [p.slug],
-  }));
+  const manifestten = getManifest()
+    .pages.filter((p) => !YONLENDIRILEN.includes(p.slug))
+    .map((p) => ({ slug: p.slug === 'index' ? [] : [p.slug] }));
+  return [...manifestten, { slug: ['legal'] }];
 }
 
 const slugFrom = (parts) => (parts && parts.length ? parts[0] : 'index');
@@ -39,6 +43,9 @@ const slugFrom = (parts) => (parts && parts.length ? parts[0] : 'index');
 export async function generateMetadata({ params }) {
   const { slug: parts } = await params;
   const slug = slugFrom(parts);
+  if (slug === 'legal') {
+    return { title: LEGAL.seo.title, description: LEGAL.seo.description };
+  }
   const p = pageBySlug(slug);
   if (!p) return {};
   if (slug === 'hakkimizda') {
@@ -60,6 +67,9 @@ function JsonLd({ items }) {
 export default async function Page({ params }) {
   const { slug: parts } = await params;
   const slug = slugFrom(parts);
+
+  if (slug === 'legal') return <LegalHubPage />;
+
   const meta = pageBySlug(slug);
   if (!meta) notFound();
 
@@ -83,8 +93,8 @@ export default async function Page({ params }) {
   if (slug === 'transfer') return <DomainPage mode="transfer" />;
   if (slug === 'whois') return <DomainPage mode="whois" />;
 
-  if (LEGAL[slug]) {
-    return <LegalPage title={LEGAL[slug].title} eyebrow={LEGAL[slug].eyebrow} html={getLegalHtml(slug)} />;
+  if (YASAL_METINLER[slug]) {
+    return <LegalPage title={YASAL_METINLER[slug].title} eyebrow={YASAL_METINLER[slug].eyebrow} html={getLegalHtml(slug)} />;
   }
 
   if (meta.standalone) {
