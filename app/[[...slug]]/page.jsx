@@ -13,6 +13,8 @@ import ProductPage from '@/components/site/ProductPage';
 import LegalPage from '@/components/site/LegalPage';
 import ContactPage from '@/components/site/ContactPage';
 import DomainPage from '@/components/site/DomainPage';
+import AboutPage from '@/components/site/AboutPage';
+import { HAKKIMIZDA } from '@/content/site/hakkimizda';
 import { PRODUCTS } from '@/content/site/products';
 import { getLegalHtml } from '@/lib/content';
 
@@ -22,7 +24,6 @@ const LEGAL = {
   'iade-politikasi': { title: 'İade Politikası', eyebrow: 'Yasal' },
   'kullanim-politikasi': { title: 'Kullanım Politikası', eyebrow: 'Yasal' },
   'ticari-bilgiler': { title: 'Ticari Bilgiler', eyebrow: 'Kurumsal' },
-  'hakkimizda': { title: 'Hakkımızda', eyebrow: 'Kurumsal' },
 };
 
 export const dynamicParams = false;
@@ -37,8 +38,12 @@ const slugFrom = (parts) => (parts && parts.length ? parts[0] : 'index');
 
 export async function generateMetadata({ params }) {
   const { slug: parts } = await params;
-  const p = pageBySlug(slugFrom(parts));
+  const slug = slugFrom(parts);
+  const p = pageBySlug(slug);
   if (!p) return {};
+  if (slug === 'hakkimizda') {
+    return { title: HAKKIMIZDA.seo.title, description: HAKKIMIZDA.seo.description };
+  }
   return {
     title: p.title || undefined,
     description: p.description || undefined,
@@ -68,6 +73,10 @@ export default async function Page({ params }) {
 
   if (slug === 'iletisim') {
     return <ContactPage />;
+  }
+
+  if (slug === 'hakkimizda') {
+    return <AboutPage />;
   }
 
   if (slug === 'alan-adi') return <DomainPage mode="register" />;
