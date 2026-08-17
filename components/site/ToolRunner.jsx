@@ -316,6 +316,181 @@ function EpostaSonuc({ veri }) {
   );
 }
 
+function KaraListeSonuc({ veri }) {
+  const bolgeAdi = Object.fromEntries(veri.bolgeler.map((b) => [b.id, b]));
+
+  return (
+    <div className="grid gap-4 sm:grid-cols-2">
+      <Kutu
+        baslik="Genel durum"
+        genis
+        ek={
+          <Rozet durum={veri.temiz ? 'iyi' : 'yok'}>
+            {veri.temiz ? 'Kara listede değil' : `${veri.listeliToplam} listede kayıtlı`}
+          </Rozet>
+        }
+      >
+        <p className="text-[14px] leading-relaxed text-body">
+          {veri.adresSayisi} IP adresi, {veri.bolgeSayisi} kara liste bölgesinde sorgulandı.{' '}
+          {veri.temiz
+            ? 'Sorgulanan adreslerin hiçbiri listelerde görünmüyor.'
+            : 'Listeye düşen adresler aşağıda işaretli; listeden çıkmak için ilgili listenin kendi başvuru sayfasını kullanmanız gerekir.'}
+        </p>
+      </Kutu>
+
+      {veri.sonuclar.map((s) => (
+        <Kutu
+          key={s.ip}
+          baslik={s.ip}
+          genis
+          ek={<Rozet durum={s.listeliSayi ? 'yok' : 'iyi'}>{s.listeliSayi ? `${s.listeliSayi} listede` : 'Temiz'}</Rozet>}
+        >
+          <div className="flex flex-wrap gap-x-6 gap-y-1 text-[13px] text-muted">
+            <span>{s.kaynak}</span>
+            {s.ptr && <span>PTR: <code className="text-body">{s.ptr}</code></span>}
+          </div>
+
+          <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+            {s.listeler.map((l) => {
+              const b = bolgeAdi[l.id];
+              return (
+                <li key={l.id} className="flex items-baseline justify-between gap-3 rounded-xl bg-surface2 px-3.5 py-2.5">
+                  <span className="min-w-0">
+                    <span className="block text-[13px] font-semibold text-strong">{b.ad}</span>
+                    <span className="block text-[11px] text-muted">{b.bolge}</span>
+                  </span>
+                  <Rozet durum={l.durum === 'listede' ? 'yok' : l.durum === 'temiz' ? 'iyi' : 'notr'}>
+                    {l.durum === 'listede' ? 'Listede' : l.durum === 'temiz' ? 'Temiz' : 'Sorgulanamadı'}
+                  </Rozet>
+                </li>
+              );
+            })}
+          </ul>
+
+          {s.listeler.some((l) => l.sebep) && (
+            <div className="mt-4 space-y-2">
+              {s.listeler
+                .filter((l) => l.sebep)
+                .map((l) => (
+                  <p key={l.id} className="text-[13px] leading-relaxed text-body">
+                    <span className="font-bold text-strong">{bolgeAdi[l.id].ad}:</span> {l.sebep}
+                  </p>
+                ))}
+            </div>
+          )}
+        </Kutu>
+      ))}
+
+      {veri.bolgeler
+        .filter((b) => b.not)
+        .map((b) => (
+          <div key={b.id} className="sm:col-span-2 rounded-2xl border border-line bg-surface2 p-5">
+            <p className="text-[13px] leading-relaxed text-body">
+              <span className="font-bold text-strong">{b.ad}:</span> {b.not}{' '}
+              {b.baglanti && (
+                <a href={b.baglanti} target="_blank" rel="noopener noreferrer" className="font-bold text-brandtext hover:text-brand-500">
+                  Sorgu sayfası
+                </a>
+              )}
+            </p>
+          </div>
+        ))}
+    </div>
+  );
+}
+
+function BasliklarSonuc({ veri }) {
+  const puanTonu = veri.puan >= 80 ? 'iyi' : veri.puan >= 50 ? 'orta' : 'yok';
+
+  return (
+    <div className="grid gap-4 sm:grid-cols-2">
+      <Kutu baslik="Genel değerlendirme" genis ek={<Rozet durum={puanTonu}>{veri.puan} / 100</Rozet>}>
+        <div className="grid gap-3 sm:grid-cols-3">
+          <div className="rounded-xl bg-surface2 px-4 py-3">
+            <div className="text-[12px] text-muted">Son adres</div>
+            <div className="mt-0.5 break-all text-[14px] font-bold text-strong">{veri.sonUrl}</div>
+          </div>
+          <div className="rounded-xl bg-surface2 px-4 py-3">
+            <div className="text-[12px] text-muted">Durum kodu</div>
+            <div className="mt-0.5 text-[18px] font-extrabold text-strong">{veri.durumKodu}</div>
+          </div>
+          <div className="rounded-xl bg-surface2 px-4 py-3">
+            <div className="text-[12px] text-muted">Sunucu</div>
+            <div className="mt-0.5 break-all text-[14px] font-bold text-strong">{veri.sunucu || 'Bildirilmemiş'}</div>
+          </div>
+        </div>
+      </Kutu>
+
+      <Kutu baslik="Güvenlik başlıkları" genis>
+        <ul className="space-y-3">
+          {veri.kontroller.map((k) => (
+            <li key={k.id} className="border-b border-line/70 pb-3 last:border-0 last:pb-0">
+              <div className="flex flex-wrap items-baseline justify-between gap-3">
+                <span className="text-[14px] font-bold text-strong">{k.ad}</span>
+                <Rozet durum={k.durum}>
+                  {k.durum === 'iyi' ? 'Tanımlı' : k.durum === 'orta' ? 'Geliştirilmeli' : 'Eksik'}
+                </Rozet>
+              </div>
+              <p className="mt-1 text-[13px] leading-relaxed text-muted">{k.aciklama}</p>
+              {k.deger && <code className="mt-2 block break-all rounded-lg bg-surface2 px-3 py-2 text-[12px] text-body">{k.deger}</code>}
+            </li>
+          ))}
+        </ul>
+      </Kutu>
+
+      <Kutu baslik="Yönlendirme zinciri">
+        <ol className="space-y-2.5">
+          {veri.zincir.map((z, i) => (
+            <li key={`${z.url}-${i}`} className="flex gap-3">
+              <span className="text-[12px] font-bold tabular-nums text-brandtext">{z.durum}</span>
+              <span className="min-w-0 break-all text-[13px] text-body">{z.url}</span>
+            </li>
+          ))}
+        </ol>
+        {veri.hsts && (
+          <div className="mt-4">
+            <Satir etiket="HSTS süresi" deger={`${Math.round(veri.hsts.maxAge / 86400)} gün`} />
+            <Satir etiket="Alt alan adları" deger={veri.hsts.altAlanlar ? 'Kapsıyor' : 'Kapsamıyor'} />
+            <Satir etiket="Ön yükleme listesi" deger={veri.hsts.onYukleme ? 'İşaretli' : 'İşaretsiz'} />
+          </div>
+        )}
+      </Kutu>
+
+      <Kutu baslik="Çerezler ve sunucu bilgisi">
+        {veri.cerezler.length ? (
+          <ul className="space-y-2.5">
+            {veri.cerezler.map((c) => (
+              <li key={c.ad} className="flex flex-wrap items-baseline justify-between gap-2">
+                <code className="text-[13px] font-semibold text-strong">{c.ad}</code>
+                <span className="flex flex-wrap gap-1.5">
+                  <Rozet durum={c.secure ? 'iyi' : 'orta'}>Secure</Rozet>
+                  <Rozet durum={c.httpOnly ? 'iyi' : 'orta'}>HttpOnly</Rozet>
+                  <Rozet durum={c.sameSite ? 'iyi' : 'orta'}>SameSite{c.sameSite ? `=${c.sameSite}` : ' yok'}</Rozet>
+                </span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <Bos>Yanıtta çerez ayarlanmıyor.</Bos>
+        )}
+
+        <div className="mt-4">
+          <Satir etiket="İçerik türü" deger={veri.icerikTuru} kod />
+          <Satir etiket="Sıkıştırma" deger={veri.sikistirma || 'Yok'} />
+          <Satir etiket="Önbellek" deger={veri.onbellek} kod />
+        </div>
+
+        {veri.ifsalar.length > 0 && (
+          <p className="mt-4 text-[13px] leading-relaxed text-amber-700 dark:text-amber-400">
+            Sürüm bilgisi ifşa ediliyor: {veri.ifsalar.map((i) => `${i.ad}: ${i.deger}`).join(' · ')}. Bu başlıkları
+            gizlemek, bilinen açıkları arayan taramaları zorlaştırır.
+          </p>
+        )}
+      </Kutu>
+    </div>
+  );
+}
+
 function IpSonuc({ veri }) {
   return (
     <div className="grid gap-4 sm:grid-cols-2">
@@ -348,7 +523,14 @@ function IpSonuc({ veri }) {
   );
 }
 
-const SONUC = { whois: WhoisSonuc, ssl: SslSonuc, eposta: EpostaSonuc, ip: IpSonuc };
+const SONUC = {
+  whois: WhoisSonuc,
+  ssl: SslSonuc,
+  eposta: EpostaSonuc,
+  ip: IpSonuc,
+  karaliste: KaraListeSonuc,
+  basliklar: BasliklarSonuc,
+};
 
 const TIP_SECENEKLERI = ['TUM', ...DNS_TIP_KODLARI];
 

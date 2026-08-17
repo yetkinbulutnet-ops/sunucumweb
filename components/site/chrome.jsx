@@ -51,6 +51,7 @@ const PATHS = {
   minus: 'M5 12h14',
   user: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M4.5 21a7.5 7.5 0 0 1 15 0',
   signal: 'M4.5 20v-3.5M9.5 20v-7M14.5 20v-10.5M19.5 20V6',
+  ban: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM5.6 5.6l12.8 12.8',
 };
 export function Icon({ name, className = 'w-6 h-6' }) {
   return (
@@ -96,10 +97,12 @@ export const ARAC_MENU = {
   label: 'Araçlar',
   kolon: 3,
   items: [
-    { t: 'DNS Kayıt Sorgulama', d: 'A, AAAA, MX, NS, TXT ve CAA kayıtlarını anında listeleyin.', href: '/araclar/dns', icon: 'server' },
+    { t: 'DNS Kayıt Sorgulama', d: 'Kayıt tipini seçin, dokuz çözümleyiciden canlı sorgulayın.', href: '/araclar/dns', icon: 'server' },
     { t: 'WHOIS Sorgulama', d: 'Kayıt firması, tescil ve bitiş tarihi ile isim sunucuları.', href: '/araclar/whois', icon: 'search' },
     { t: 'SSL Sertifika Kontrolü', d: 'Sertifika geçerli mi, kaç gün kaldı, kim sağlamış?', href: '/araclar/ssl', icon: 'lock' },
     { t: 'E-posta Kayıt Kontrolü', d: 'MX, SPF ve DMARC ayarlarınızı denetleyin.', href: '/araclar/eposta', icon: 'mail' },
+    { t: 'Kara Liste Kontrolü', d: 'Sunucu adresiniz 12 spam kara listesinde var mı?', href: '/araclar/karaliste', icon: 'ban' },
+    { t: 'HTTP Güvenlik Başlıkları', d: 'HSTS, CSP ve çerçeveleme koruması denetimi.', href: '/araclar/basliklar', icon: 'shield' },
     { t: 'IP Sorgulama', d: 'Kendi IP adresiniz ve ters DNS (PTR) kaydı.', href: '/araclar/ip', icon: 'globe' },
     { t: 'Tüm araçlar', d: 'Ücretsiz ağ ve alan adı araçlarının tamamı.', href: '/araclar', icon: 'layers' },
   ],

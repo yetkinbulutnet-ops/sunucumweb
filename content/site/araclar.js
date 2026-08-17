@@ -48,6 +48,30 @@ export const ARAC_LISTESI = [
     seo: 'E-posta kayıt kontrolü: alan adının MX, SPF ve DMARC kayıtlarını denetleyin.',
   },
   {
+    slug: 'karaliste',
+    baslik: 'Kara Liste (RBL) Kontrolü',
+    kisa: 'Kara liste',
+    ozet: 'Alan adınızın ve posta sunucularınızın IP adreslerini 12 spam kara listesinde sorgular.',
+    icon: 'ban',
+    girdiEtiketi: 'Alan adı veya IP adresi',
+    ornek: 'sunucumweb.com',
+    aciklama:
+      'Spam kara listeleri (RBL / DNSBL), spam gönderdiği tespit edilen IP adreslerini tutar. Posta sunucunuzun adresi bu listelerden birine düştüyse gönderdiğiniz iletiler karşı tarafa hiç ulaşmaz ya da doğrudan spam klasörüne düşer. Bu araç alan adınızın A kaydındaki ve MX sunucularınızdaki IP adreslerini on iki listede birden sorgular; listede görünen adres için listeleme sebebini de gösterir.',
+    seo: 'Kara liste kontrolü: IP adresinizin spam kara listelerinde olup olmadığını ücretsiz sorgulayın.',
+  },
+  {
+    slug: 'basliklar',
+    baslik: 'HTTP Güvenlik Başlıkları',
+    kisa: 'Güvenlik başlıkları',
+    ozet: 'Sitenizin gönderdiği güvenlik başlıklarını denetler, yönlendirme zincirini ve çerez ayarlarını gösterir.',
+    icon: 'shield',
+    girdiEtiketi: 'Alan adı',
+    ornek: 'sunucumweb.com',
+    aciklama:
+      'Web sunucunuzun yanıtla birlikte gönderdiği başlıklar, tarayıcının sitenizi nasıl koruyacağını belirler. HSTS bağlantıyı HTTPS ile sınırlar, Content-Security-Policy betik çalıştırma saldırılarının etkisini azaltır, çerçeveleme koruması sayfanızın başka bir sitenin içine gömülmesini engeller. Araç sitenizin yönlendirme zincirini izler, son yanıttaki başlıkları denetler ve eksikleri puanlayarak listeler.',
+    seo: 'HTTP güvenlik başlığı denetimi: HSTS, CSP, X-Frame-Options ve çerez ayarlarınızı ücretsiz kontrol edin.',
+  },
+  {
     slug: 'ip',
     baslik: 'IP Sorgulama',
     kisa: 'IP sorgulama',
