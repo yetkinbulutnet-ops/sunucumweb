@@ -73,8 +73,8 @@ GOOGLE_PLACES_API_KEY=...      # Google Cloud > Places API (New)
 GOOGLE_PLACE_ID=               # boş bırakılırsa işletme adından otomatik bulunur
 GOOGLE_PLACE_ADI=SunucumWEB
 CRON_TOKEN=...                 # crontab satırındaki değerle aynı
-GOOGLE_PUAN=4.8                # API erişilemezse gösterilecek yedek
-GOOGLE_YORUM_ADEDI=327
+GOOGLE_PUAN=4.9                # anahtar yokken / API erişilemezken gösterilir
+GOOGLE_YORUM_ADEDI=69
 ```
 
 **Crontab (root):**
