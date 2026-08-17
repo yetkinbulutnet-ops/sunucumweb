@@ -38,66 +38,86 @@ export function ToolsHubPage() {
   );
 }
 
-export function ToolDetailPage({ arac }) {
-  const digerleri = ARAC_LISTESI.filter((a) => a.slug !== arac.slug);
+export function DigerAraclar({ slug }) {
+  const digerleri = ARAC_LISTESI.filter((a) => a.slug !== slug);
 
   return (
-    <SiteShell>
-      <section className="relative overflow-hidden border-b border-line">
-        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute -top-32 right-[-8%] h-[420px] w-[420px] rounded-full bg-brand-300/20 blur-[130px]" />
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgb(var(--c-grid))_1px,transparent_1px),linear-gradient(to_bottom,rgb(var(--c-grid))_1px,transparent_1px)] bg-[size:44px_44px] [mask-image:radial-gradient(ellipse_at_top,black,transparent_72%)]" />
+    <section className="border-t border-line bg-surface2">
+      <div className="mx-auto max-w-7xl px-5 lg:px-8 py-14 lg:py-16">
+        <h2 className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Diğer araçlar</h2>
+        <div className="mt-6 grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {digerleri.map((a) => (
+            <Link
+              key={a.slug}
+              href={`/araclar/${a.slug}`}
+              className="group flex items-center gap-3 rounded-2xl border border-line bg-surface p-4 transition-colors hover:border-brandline"
+            >
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brandsoft text-brandtext transition-colors group-hover:bg-brand-500 group-hover:text-white">
+                <Icon name={a.icon} className="h-5 w-5" />
+              </span>
+              <span className="text-[14px] font-bold text-strong">{a.kisa}</span>
+            </Link>
+          ))}
         </div>
+      </div>
+    </section>
+  );
+}
 
-        <div className="mx-auto max-w-4xl px-5 lg:px-8 py-14 lg:py-16">
-          <div className="flex items-center gap-2 text-sm text-muted">
-            <Link href="/" className="hover:text-brandtext">Ana Sayfa</Link>
-            <span>/</span>
-            <Link href="/araclar" className="hover:text-brandtext">Araçlar</Link>
-            <span>/</span>
-            <span className="font-medium text-strong/70">{arac.kisa}</span>
-          </div>
+export function AracKabugu({ arac, kirinti = [], baslik, ozet, children }) {
+  return (
+    <section className="relative overflow-hidden border-b border-line">
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute -top-32 right-[-8%] h-[420px] w-[420px] rounded-full bg-brand-300/20 blur-[130px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgb(var(--c-grid))_1px,transparent_1px),linear-gradient(to_bottom,rgb(var(--c-grid))_1px,transparent_1px)] bg-[size:44px_44px] [mask-image:radial-gradient(ellipse_at_top,black,transparent_72%)]" />
+      </div>
 
-          <div className="mt-6 flex items-start gap-4">
-            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-brand-500 text-white shadow-lg shadow-brand-500/25">
-              <Icon name={arac.icon} />
+      <div className="mx-auto max-w-4xl px-5 lg:px-8 py-14 lg:py-16">
+        <nav aria-label="Site haritası" className="flex flex-wrap items-center gap-2 text-sm text-muted">
+          <Link href="/" className="hover:text-brandtext">Ana Sayfa</Link>
+          <span>/</span>
+          <Link href="/araclar" className="hover:text-brandtext">Araçlar</Link>
+          {kirinti.map((k) => (
+            <span key={k.metin} className="flex items-center gap-2">
+              <span>/</span>
+              {k.yol ? (
+                <Link href={k.yol} className="hover:text-brandtext">{k.metin}</Link>
+              ) : (
+                <span className="font-medium text-strong/70">{k.metin}</span>
+              )}
             </span>
-            <div>
-              <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-strong text-balance">{arac.baslik}</h1>
-              <p className="mt-3 max-w-2xl text-[17px] leading-relaxed text-body">{arac.ozet}</p>
-            </div>
-          </div>
+          ))}
+        </nav>
 
-          <div className="mt-9">
-            <ToolRunner arac={arac} />
+        <div className="mt-6 flex items-start gap-4">
+          <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-brand-500 text-white shadow-lg shadow-brand-500/25">
+            <Icon name={arac.icon} />
+          </span>
+          <div className="min-w-0">
+            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-strong text-balance">{baslik}</h1>
+            <p className="mt-3 max-w-2xl text-[17px] leading-relaxed text-body">{ozet}</p>
           </div>
         </div>
-      </section>
+
+        <div className="mt-9">{children}</div>
+      </div>
+    </section>
+  );
+}
+
+export function ToolDetailPage({ arac }) {
+  return (
+    <SiteShell>
+      <AracKabugu arac={arac} kirinti={[{ metin: arac.kisa }]} baslik={arac.baslik} ozet={arac.ozet}>
+        <ToolRunner arac={arac} />
+      </AracKabugu>
 
       <section className="mx-auto max-w-4xl px-5 lg:px-8 py-14 lg:py-16">
         <h2 className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Bu araç ne işe yarar?</h2>
         <p className="mt-4 text-[16px] leading-relaxed text-body">{arac.aciklama}</p>
       </section>
 
-      <section className="border-t border-line bg-surface2">
-        <div className="mx-auto max-w-7xl px-5 lg:px-8 py-14 lg:py-16">
-          <h2 className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Diğer araçlar</h2>
-          <div className="mt-6 grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {digerleri.map((a) => (
-              <Link
-                key={a.slug}
-                href={`/araclar/${a.slug}`}
-                className="group flex items-center gap-3 rounded-2xl border border-line bg-surface p-4 transition-colors hover:border-brandline"
-              >
-                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brandsoft text-brandtext transition-colors group-hover:bg-brand-500 group-hover:text-white">
-                  <Icon name={a.icon} className="h-5 w-5" />
-                </span>
-                <span className="text-[14px] font-bold text-strong">{a.kisa}</span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+      <DigerAraclar slug={arac.slug} />
 
       <CtaBand />
     </SiteShell>

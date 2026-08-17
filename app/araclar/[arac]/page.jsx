@@ -5,7 +5,7 @@ import { ARAC_LISTESI, aracBul } from '@/content/site/araclar';
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return ARAC_LISTESI.map((a) => ({ arac: a.slug }));
+  return ARAC_LISTESI.filter((a) => a.slug !== 'dns').map((a) => ({ arac: a.slug }));
 }
 
 export async function generateMetadata({ params }) {

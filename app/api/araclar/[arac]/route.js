@@ -28,7 +28,10 @@ export async function POST(request, { params }) {
     govde = {};
   }
 
-  const sonuc = await aracCalistir(arac, govde.girdi, { ziyaretciIp: ziyaretciIpAl(request) });
+  const sonuc = await aracCalistir(arac, govde.girdi, {
+    ziyaretciIp: ziyaretciIpAl(request),
+    tip: govde.tip,
+  });
 
   return NextResponse.json(sonuc, {
     status: sonuc.ok ? 200 : 400,

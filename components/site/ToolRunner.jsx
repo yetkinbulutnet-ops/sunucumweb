@@ -1,146 +1,45 @@
 'use client';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState, useTransition } from 'react';
+import { useRouter } from 'next/navigation';
 import { Icon } from './chrome';
+import { Kutu, Satir, Rozet, Bos, tarihYaz, sureYaz } from './tool-ui';
+import DnsRapor from './DnsRapor';
+import { DNS_TIP_KODLARI } from '@/content/site/dns-tipleri';
 
-const TON = {
-  iyi: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 ring-emerald-500/25',
-  orta: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 ring-amber-500/25',
-  eksik: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 ring-amber-500/25',
-  riskli: 'bg-rose-500/10 text-rose-600 dark:text-rose-400 ring-rose-500/25',
-  yok: 'bg-rose-500/10 text-rose-600 dark:text-rose-400 ring-rose-500/25',
-  notr: 'bg-surface2 text-body ring-line',
-};
+const GECMIS_ANAHTARI = 'sunucumweb-arac-gecmis';
+const GECMIS_SINIRI = 8;
 
-const tarihYaz = (deger) => {
-  if (!deger) return null;
-  const t = new Date(deger);
-  return Number.isNaN(t.getTime()) ? null : t.toLocaleDateString('tr-TR', { day: '2-digit', month: 'long', year: 'numeric' });
-};
+const alanNormalle = (deger) =>
+  String(deger || '')
+    .trim()
+    .toLowerCase()
+    .replace(/^[a-z][a-z0-9+.-]*:\/\//, '')
+    .replace(/^[^/@]*@/, '')
+    .split(/[/?#]/)[0]
+    .replace(/:\d+$/, '')
+    .replace(/^www\./, '')
+    .replace(/^\.+|\.+$/g, '');
 
-const sureYaz = (saniye) => {
-  if (!Number.isFinite(saniye)) return '—';
-  if (saniye >= 86400) return `${Math.round(saniye / 86400)} gün`;
-  if (saniye >= 3600) return `${Math.round(saniye / 3600)} saat`;
-  if (saniye >= 60) return `${Math.round(saniye / 60)} dakika`;
-  return `${saniye} sn`;
-};
-
-function Kutu({ baslik, ek, children, genis }) {
-  return (
-    <div className={`rounded-2xl border border-line bg-surface p-5 sm:p-6 ${genis ? 'sm:col-span-2' : ''}`}>
-      <div className="flex items-baseline justify-between gap-3">
-        <h3 className="text-[13px] font-bold uppercase tracking-[0.12em] text-muted">{baslik}</h3>
-        {ek}
-      </div>
-      <div className="mt-4">{children}</div>
-    </div>
-  );
+function gecmisOku(slug) {
+  try {
+    const ham = JSON.parse(window.localStorage.getItem(GECMIS_ANAHTARI) || '{}');
+    return Array.isArray(ham[slug]) ? ham[slug] : [];
+  } catch {
+    return [];
+  }
 }
 
-function Satir({ etiket, deger, kod }) {
-  if (deger === null || deger === undefined || deger === '') return null;
-  return (
-    <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-line/70 py-2.5 last:border-0">
-      <span className="shrink-0 text-[13px] text-muted">{etiket}</span>
-      <span className={`min-w-0 break-all text-right text-[14px] font-semibold text-strong ${kod ? 'font-mono text-[13px]' : ''}`}>{deger}</span>
-    </div>
-  );
-}
-
-function Rozet({ durum = 'notr', children }) {
-  return (
-    <span className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1 text-[12px] font-bold ring-1 ${TON[durum]}`}>
-      {children}
-    </span>
-  );
-}
-
-function Bos({ children }) {
-  return <p className="text-[14px] text-body">{children}</p>;
-}
-
-function DnsSonuc({ veri }) {
-  const dolu = veri.kayitlar.filter((k) => k.bulundu);
-  const bos = veri.kayitlar.filter((k) => !k.bulundu).map((k) => k.tip);
-
-  return (
-    <div className="grid gap-4 sm:grid-cols-2">
-      <Kutu
-        baslik="Yayılım kontrolü"
-        genis
-        ek={<Rozet durum={veri.yayilim.tutarli ? 'iyi' : 'orta'}>{veri.yayilim.tutarli ? 'Tüm sunucularda aynı' : 'Sunucular arasında fark var'}</Rozet>}
-      >
-        <div className="grid gap-2.5 sm:grid-cols-2">
-          {veri.yayilim.sonuclar.map((s) => (
-            <div key={s.cozumleyici} className="flex items-baseline justify-between gap-3 rounded-xl bg-surface2 px-3.5 py-2.5">
-              <span className="text-[13px] font-semibold text-strong">{s.cozumleyici}</span>
-              <span className="break-all text-right font-mono text-[12px] text-body">
-                {s.ulasildi ? s.degerler.join(', ') || 'kayıt yok' : 'ulaşılamadı'}
-              </span>
-            </div>
-          ))}
-        </div>
-      </Kutu>
-
-      {dolu.map((k) => (
-        <Kutu key={k.tip} baslik={`${k.tip} kaydı`} ek={<span className="text-[12px] text-muted">{k.kayitlar.length} kayıt</span>}>
-          <ul className="space-y-2.5">
-            {k.kayitlar.map((kayit, i) => (
-              <li key={`${kayit.deger}-${i}`} className="flex items-baseline justify-between gap-4">
-                <code className="break-all text-[13px] font-semibold text-strong">{kayit.deger}</code>
-                <span className="shrink-0 text-[12px] tabular-nums text-muted">{sureYaz(kayit.ttl)}</span>
-              </li>
-            ))}
-          </ul>
-        </Kutu>
-      ))}
-
-      {veri.soa && (
-        <Kutu baslik="SOA ayrıntısı">
-          <Satir etiket="Birincil sunucu" deger={veri.soa.birincilSunucu} kod />
-          <Satir etiket="Yetkili e-posta" deger={veri.soa.yetkiliEposta} kod />
-          <Satir etiket="Seri numarası" deger={veri.soa.seri} kod />
-          <Satir etiket="Yenileme" deger={sureYaz(veri.soa.yenileme)} />
-          <Satir etiket="Sona erme" deger={sureYaz(veri.soa.sonaErme)} />
-        </Kutu>
-      )}
-
-      {veri.mx.length > 0 && (
-        <Kutu baslik="Posta sunucuları">
-          <ul className="space-y-3">
-            {veri.mx.map((m) => (
-              <li key={m.sunucu}>
-                <div className="flex items-baseline justify-between gap-3">
-                  <span className="break-all text-[14px] font-semibold text-strong">{m.sunucu}</span>
-                  <span className="shrink-0 text-[12px] text-muted">öncelik {m.oncelik}</span>
-                </div>
-                {m.adresler.length > 0 && <div className="mt-0.5 break-all font-mono text-[12px] text-muted">{m.adresler.join(' · ')}</div>}
-              </li>
-            ))}
-          </ul>
-        </Kutu>
-      )}
-
-      {veri.ns.length > 0 && (
-        <Kutu baslik="İsim sunucuları" ek={<Rozet durum={veri.dnssec.imzali ? 'iyi' : 'notr'}>{veri.dnssec.imzali ? 'DNSSEC imzalı' : 'DNSSEC yok'}</Rozet>}>
-          <ul className="space-y-3">
-            {veri.ns.map((n) => (
-              <li key={n.sunucu}>
-                <div className="break-all text-[14px] font-semibold text-strong">{n.sunucu}</div>
-                {n.adresler.length > 0 && <div className="mt-0.5 break-all font-mono text-[12px] text-muted">{n.adresler.join(' · ')}</div>}
-              </li>
-            ))}
-          </ul>
-        </Kutu>
-      )}
-
-      {bos.length > 0 && (
-        <div className="sm:col-span-2">
-          <p className="text-[13px] text-muted">Kayıt bulunmayan tipler: {bos.join(', ')}</p>
-        </div>
-      )}
-    </div>
-  );
+function gecmisYaz(slug, kayit) {
+  try {
+    const ham = JSON.parse(window.localStorage.getItem(GECMIS_ANAHTARI) || '{}');
+    const liste = Array.isArray(ham[slug]) ? ham[slug] : [];
+    const anahtar = `${kayit.girdi}|${kayit.tip || ''}`;
+    const yeni = [kayit, ...liste.filter((k) => `${k.girdi}|${k.tip || ''}` !== anahtar)].slice(0, GECMIS_SINIRI);
+    window.localStorage.setItem(GECMIS_ANAHTARI, JSON.stringify({ ...ham, [slug]: yeni }));
+    return yeni;
+  } catch {
+    return [];
+  }
 }
 
 function WhoisSonuc({ veri }) {
@@ -449,66 +348,158 @@ function IpSonuc({ veri }) {
   );
 }
 
-const SONUC = { dns: DnsSonuc, whois: WhoisSonuc, ssl: SslSonuc, eposta: EpostaSonuc, ip: IpSonuc };
+const SONUC = { whois: WhoisSonuc, ssl: SslSonuc, eposta: EpostaSonuc, ip: IpSonuc };
 
-export default function ToolRunner({ arac }) {
-  const [girdi, setGirdi] = useState('');
+const TIP_SECENEKLERI = ['TUM', ...DNS_TIP_KODLARI];
+
+export const dnsYolu = (alan, tip) =>
+  `/araclar/dns/${encodeURIComponent(alan)}${!tip || tip === 'TUM' ? '' : `/${tip.toLowerCase()}`}`;
+
+function TipSecici({ secili, onSec }) {
+  return (
+    <div className="-mx-1 flex snap-x gap-1.5 overflow-x-auto px-1 pb-1">
+      {TIP_SECENEKLERI.map((t) => (
+        <button
+          key={t}
+          type="button"
+          onClick={() => onSec(t)}
+          aria-pressed={secili === t}
+          className={`shrink-0 snap-start rounded-lg px-3 py-1.5 text-[13px] font-bold transition-colors ${
+            secili === t ? 'bg-brand-500 text-white' : 'bg-surface2 text-body hover:bg-brandsoft hover:text-brandtext'
+          }`}
+        >
+          {t === 'TUM' ? 'Tümü' : t}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+export default function ToolRunner({ arac, baslangicGirdi = '', baslangicTip = 'TUM', veri: sunucuVeri = null }) {
+  const dnsMi = arac.slug === 'dns';
+  const router = useRouter();
+  const [gecis, gecisBaslat] = useTransition();
+
+  const [girdi, setGirdi] = useState(baslangicGirdi);
+  const [tip, setTip] = useState(baslangicTip);
   const [veri, setVeri] = useState(null);
   const [hata, setHata] = useState('');
   const [yukleniyor, setYukleniyor] = useState(false);
+  const [gecmis, setGecmis] = useState([]);
 
-  const sorgula = useCallback(async (e) => {
-    e?.preventDefault();
-    if (!girdi.trim() && !arac.girdiOpsiyonel) {
-      setHata(`${arac.girdiEtiketi} girin.`);
-      return;
-    }
-    setYukleniyor(true);
-    setHata('');
-    setVeri(null);
-    try {
-      const r = await fetch(`/api/araclar/${arac.slug}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ girdi: girdi.trim() }),
-      });
-      const d = await r.json();
-      if (d.ok) setVeri(d.data);
-      else setHata(d.error?.message || 'Sorgu tamamlanamadı.');
-    } catch {
-      setHata('Sunucuya ulaşılamadı. Bağlantınızı kontrol edip tekrar deneyin.');
-    } finally {
-      setYukleniyor(false);
-    }
-  }, [girdi, arac]);
+  useEffect(() => setGecmis(gecmisOku(arac.slug)), [arac.slug]);
+
+  useEffect(() => {
+    if (!dnsMi || !baslangicGirdi) return;
+    setGecmis(gecmisYaz(arac.slug, { girdi: baslangicGirdi, tip: baslangicTip }));
+  }, [dnsMi, arac.slug, baslangicGirdi, baslangicTip]);
+
+  const dnsGit = useCallback(
+    (deger, istenenTip) => {
+      const alan = alanNormalle(deger);
+      if (!alan) {
+        setHata('Alan adı girin.');
+        return;
+      }
+      setHata('');
+      gecisBaslat(() => router.push(dnsYolu(alan, istenenTip)));
+    },
+    [router],
+  );
+
+  const sorgula = useCallback(
+    async (e) => {
+      e?.preventDefault();
+
+      if (dnsMi) {
+        dnsGit(girdi, tip);
+        return;
+      }
+
+      if (!girdi.trim() && !arac.girdiOpsiyonel) {
+        setHata(`${arac.girdiEtiketi} girin.`);
+        return;
+      }
+      setYukleniyor(true);
+      setHata('');
+      setVeri(null);
+      try {
+        const r = await fetch(`/api/araclar/${arac.slug}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ girdi: girdi.trim() }),
+        });
+        const d = await r.json();
+        if (d.ok) {
+          setVeri(d.data);
+          if (girdi.trim()) setGecmis(gecmisYaz(arac.slug, { girdi: girdi.trim() }));
+        } else {
+          setHata(d.error?.message || 'Sorgu tamamlanamadı.');
+        }
+      } catch {
+        setHata('Sunucuya ulaşılamadı. Bağlantınızı kontrol edip tekrar deneyin.');
+      } finally {
+        setYukleniyor(false);
+      }
+    },
+    [girdi, tip, arac, dnsMi, dnsGit],
+  );
 
   const Sonuc = SONUC[arac.slug];
+  const bekliyor = yukleniyor || gecis;
 
   return (
     <div>
-      <form onSubmit={sorgula} className="flex flex-col gap-3 sm:flex-row">
-        <label className="flex-1">
-          <span className="sr-only">{arac.girdiEtiketi}</span>
-          <input
-            value={girdi}
-            onChange={(e) => { setGirdi(e.target.value); if (hata) setHata(''); }}
-            placeholder={arac.girdiOpsiyonel ? `${arac.ornek} (boş bırakırsanız kendi IP'niz)` : arac.ornek}
-            inputMode="url"
-            autoComplete="off"
-            autoCapitalize="none"
-            spellCheck={false}
-            className="w-full rounded-xl border border-line bg-surface px-4 py-3.5 text-[16px] text-strong outline-none transition-colors placeholder:text-muted focus:border-brand-400"
-          />
-        </label>
-        <button
-          type="submit"
-          disabled={yukleniyor}
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-500 px-6 py-3.5 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-600 disabled:opacity-60"
-        >
-          {yukleniyor ? 'Sorgulanıyor…' : 'Sorgula'}
-          {!yukleniyor && <Icon name="arrow" className="h-4 w-4" />}
-        </button>
+      <form onSubmit={sorgula} className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <label className="flex-1">
+            <span className="sr-only">{arac.girdiEtiketi}</span>
+            <input
+              value={girdi}
+              onChange={(e) => { setGirdi(e.target.value); if (hata) setHata(''); }}
+              placeholder={arac.girdiOpsiyonel ? `${arac.ornek} (boş bırakırsanız kendi IP'niz)` : arac.ornek}
+              inputMode="url"
+              autoComplete="off"
+              autoCapitalize="none"
+              spellCheck={false}
+              className="w-full rounded-xl border border-line bg-surface px-4 py-3.5 text-[16px] text-strong outline-none transition-colors placeholder:text-muted focus:border-brand-400"
+            />
+          </label>
+          <button
+            type="submit"
+            disabled={bekliyor}
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-500 px-6 py-3.5 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-600 disabled:opacity-60"
+          >
+            {bekliyor ? 'Sorgulanıyor…' : 'Sorgula'}
+            {!bekliyor && <Icon name="arrow" className="h-4 w-4" />}
+          </button>
+        </div>
+
+        {dnsMi && <TipSecici secili={tip} onSec={(t) => { setTip(t); if (alanNormalle(girdi)) dnsGit(girdi, t); }} />}
       </form>
+
+      {gecmis.length > 0 && (
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <span className="text-[12px] text-muted">Son sorgular:</span>
+          {gecmis.map((k) => (
+            <button
+              key={`${k.girdi}|${k.tip || ''}`}
+              type="button"
+              onClick={() => {
+                setGirdi(k.girdi);
+                if (dnsMi) {
+                  setTip(k.tip || 'TUM');
+                  dnsGit(k.girdi, k.tip || 'TUM');
+                }
+              }}
+              className="rounded-lg bg-surface2 px-2.5 py-1 text-[12px] font-semibold text-body transition-colors hover:bg-brandsoft hover:text-brandtext"
+            >
+              {k.girdi}
+              {k.tip && k.tip !== 'TUM' && <span className="ml-1 text-muted">{k.tip}</span>}
+            </button>
+          ))}
+        </div>
+      )}
 
       {hata && (
         <p className="mt-4 rounded-xl border border-rose-500/30 bg-rose-500/5 px-4 py-3 text-[14px] font-medium text-rose-600 dark:text-rose-400">
@@ -516,7 +507,13 @@ export default function ToolRunner({ arac }) {
         </p>
       )}
 
-      {veri && Sonuc && (
+      {dnsMi && sunucuVeri && (
+        <div className="mt-8">
+          <DnsRapor veri={sunucuVeri} />
+        </div>
+      )}
+
+      {!dnsMi && veri && Sonuc && (
         <div className="mt-8 animate-[fadeup_0.4s_ease-out]">
           <Sonuc veri={veri} />
         </div>

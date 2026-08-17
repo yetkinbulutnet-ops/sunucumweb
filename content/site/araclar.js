@@ -3,12 +3,12 @@ export const ARAC_LISTESI = [
     slug: 'dns',
     baslik: 'DNS Kayıt Sorgulama',
     kisa: 'DNS sorgulama',
-    ozet: 'Bir alan adının A, AAAA, MX, NS, TXT, SOA ve CAA kayıtlarını canlı olarak listeler.',
+    ozet: 'Kayıt tipini seçin; A, AAAA, CNAME, MX, NS, TXT, SOA, SRV, CAA ve PTR kayıtlarını dokuz çözümleyiciden canlı sorgulayın.',
     icon: 'server',
     girdiEtiketi: 'Alan adı',
     ornek: 'sunucumweb.com',
     aciklama:
-      'DNS kayıtları, alan adınızın hangi sunucuya ve hangi posta servisine yönlendiğini belirler. Kayıt değişikliklerinin yayılması genellikle birkaç dakika ile birkaç saat arasında sürer; bu araç dünya genelinde çözümlenen güncel değerleri gösterir.',
+      'DNS kayıtları, alan adınızın hangi sunucuya ve hangi posta servisine yönlendiğini belirler. Kayıt değişikliklerinin yayılması genellikle birkaç dakika ile birkaç saat arasında sürer; bu araç aynı sorguyu farklı bölgelerdeki dokuz genel çözümleyiciye göndererek değişikliğin nereye ulaştığını gösterir.',
     seo: 'DNS kayıt sorgulama aracı: alan adının A, MX, NS, TXT ve CAA kayıtlarını anında görüntüleyin.',
   },
   {
