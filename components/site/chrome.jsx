@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { currentTheme, toggleTheme } from '@/lib/engines/theme';
 import { formatTRY, CHECKOUT_URL } from '@/lib/engines/cart';
 import { scrollKilitle } from '@/lib/engines/scroll-lock';
+import SmoothScroll from './SmoothScroll';
 import { CartProvider, useCart } from './CartProvider';
 import OdemeLogolari from './OdemeLogolari';
 import DurumRozeti from './DurumRozeti';
@@ -271,7 +272,7 @@ function CartDrawer() {
           </div>
         ) : (
           <>
-            <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-4">
+            <div data-lenis-prevent className="flex-1 overflow-y-auto overscroll-contain px-5 py-4">
               <ul className="space-y-3">
                 {items.map((i) => (
                   <li key={i.id} className="rounded-2xl border border-line bg-surface2/60 p-4">
@@ -449,7 +450,7 @@ export function SiteHeader() {
               </button>
             </div>
 
-            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-6 pt-2">
+            <div data-lenis-prevent className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-6 pt-2">
               {MENU.map((m, i) => (
                 <div key={m.label} className="border-b border-line/60">
                   {!m.items ? (
@@ -795,6 +796,7 @@ export function CtaBand({ title = 'Bugün başlayın, farkı hemen hissedin', te
 export function SiteShell({ children }) {
   return (
     <CartProvider>
+      <SmoothScroll />
       <div className="min-h-ekran bg-page font-sans text-strong antialiased">
         <SiteHeader />
         <main>{children}</main>
