@@ -10,7 +10,16 @@ export const MARKALAR = [
   { ad: 'Paketti', site: 'https://paketti.com.tr', logo: '/img/referans/paketti.png', g: 452, y: 96, not: 'Kurye ve teslimat hizmetleri' },
 ];
 
-export const ALTYAPI = [];
+export const ALTYAPI = [
+  { ad: 'cPanel', logo: '/img/altyapi/cpanel.webp', g: 240, y: 96 },
+  { ad: 'LiteSpeed', logo: '/img/altyapi/litespeed.webp', g: 240, y: 96 },
+  { ad: 'CloudLinux', logo: '/img/altyapi/cloudlinux.webp', g: 240, y: 96 },
+  { ad: 'Imunify360', logo: '/img/altyapi/imunify360.webp', g: 240, y: 96 },
+  { ad: 'JetBackup', logo: '/img/altyapi/jetbackup.webp', g: 240, y: 96 },
+  { ad: 'Softaculous', logo: '/img/altyapi/softaculous.webp', g: 240, y: 96 },
+  { ad: 'VMware', logo: '/img/altyapi/vmware.webp', g: 240, y: 96 },
+  { ad: 'Intel', logo: '/img/altyapi/intel.webp', g: 240, y: 96 },
+];
 
 export const MARKA_SERIDI = {
   baslik: 'Bizimle çalışan markalar',
