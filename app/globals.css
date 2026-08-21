@@ -130,3 +130,30 @@ html.tema-kilit *::after {
   }
   html.tema-kilit, html.tema-kilit * { transition: none !important; }
 }
+
+/* Akilli olcekleme: baslik ve boslukar ekran genisligiyle akiskan buyur.
+   Sabit siçramalar yerine clamp; buyuk ekranda kucuk, kucuk ekranda kocaman durmaz. */
+.tipo-dev {
+  font-size: clamp(2rem, 1.35rem + 2.7vw, 3.4rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+.tipo-bolum {
+  font-size: clamp(1.55rem, 1.2rem + 1.5vw, 2.4rem);
+  line-height: 1.16;
+  letter-spacing: -0.015em;
+}
+.tipo-giris {
+  font-size: clamp(1rem, 0.95rem + 0.42vw, 1.25rem);
+  line-height: 1.7;
+}
+.tipo-metin {
+  font-size: clamp(0.94rem, 0.91rem + 0.16vw, 1.05rem);
+}
+
+/* Cok genis ekranlarda icerik 1280 pikselde takili kalmasin */
+@media (min-width: 1800px) {
+  .max-w-7xl {
+    max-width: 92rem;
+  }
+}

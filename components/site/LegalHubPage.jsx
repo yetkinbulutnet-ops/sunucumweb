@@ -21,10 +21,10 @@ const yol = (slug) => (slug === LEGAL_BELGELER[0].slug ? '/legal' : `/legal/${sl
 
 function Kenar({ aktif }) {
   return (
-    <nav aria-label="Sözleşmeler" className="lg:sticky lg:top-28">
+    <nav aria-label="Sözleşmeler" className="min-w-0 lg:sticky lg:top-28">
       <p className="hidden text-[12px] font-bold uppercase tracking-[0.14em] text-muted lg:block">Belgeler</p>
 
-      <ul className="-mx-5 flex snap-x gap-2 overflow-x-auto px-5 pb-2 lg:mx-0 lg:mt-4 lg:flex-col lg:gap-1.5 lg:overflow-visible lg:px-0 lg:pb-0">
+      <ul className="flex snap-x gap-2 overflow-x-auto pb-2 lg:mt-4 lg:flex-col lg:gap-1.5 lg:overflow-visible lg:pb-0">
         {LEGAL_BELGELER.map((b) => {
           const secili = b.slug === aktif;
           return (
@@ -155,18 +155,18 @@ export default function LegalHubPage({ belge, html }) {
             <span className="font-medium text-strong/70">{belge.baslik}</span>
           </nav>
 
-          <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-strong text-balance sm:text-4xl">{C.title}</h1>
-          <p className="mt-3 max-w-2xl text-[16px] leading-relaxed text-body">{C.lede}</p>
+          <h1 className="tipo-dev mt-4 font-extrabold text-strong text-balance">{C.title}</h1>
+          <p className="tipo-giris mt-3 max-w-2xl text-body">{C.lede}</p>
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-5 lg:px-8 py-10 lg:py-14">
-        <div className="grid gap-8 lg:grid-cols-[280px_1fr] lg:gap-14">
+        <div className="grid min-w-0 gap-8 lg:grid-cols-[280px_minmax(0,1fr)] lg:gap-14">
           <Kenar aktif={belge.slug} />
 
           <article className="min-w-0">
             <header className="border-b border-line pb-5">
-              <h2 className="text-2xl font-extrabold tracking-tight text-strong sm:text-[28px]">{belge.baslik}</h2>
+              <h2 className="tipo-bolum font-extrabold text-strong">{belge.baslik}</h2>
               <p className="mt-2 text-[15px] leading-relaxed text-body">{belge.ozet}</p>
             </header>
 

@@ -50,10 +50,10 @@ export default function AboutPage() {
 
           <div className="mt-8 grid items-start gap-12 lg:grid-cols-[1fr_0.62fr] lg:items-center lg:gap-16">
             <div className="max-w-2xl animate-[fadeup_0.6s_ease-out]">
-              <h1 className="text-4xl sm:text-5xl font-extrabold leading-[1.1] tracking-tight text-strong text-balance">
+              <h1 className="tipo-dev font-extrabold text-strong text-balance">
                 {C.title}
               </h1>
-              <p className="mt-6 text-lg leading-relaxed text-body">{C.lede}</p>
+              <p className="tipo-giris mt-6 text-body">{C.lede}</p>
 
               {C.hikaye.paragraflar.map((p) => (
                 <p key={p.slice(0, 24)} className="mt-5 text-[16px] leading-relaxed text-body">{p}</p>
@@ -84,7 +84,7 @@ export default function AboutPage() {
       <section id="ilkeler" className="mx-auto max-w-7xl scroll-mt-28 px-5 lg:px-8 py-20 lg:py-24">
         <div className="max-w-2xl">
           <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">{C.ilkeler.eyebrow}</span>
-          <h2 className="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight text-strong text-balance">{C.ilkeler.baslik}</h2>
+          <h2 className="tipo-bolum mt-3 font-extrabold text-strong text-balance">{C.ilkeler.baslik}</h2>
         </div>
 
         <ol className="mt-12 grid gap-x-14 gap-y-10 lg:grid-cols-2">
@@ -106,9 +106,7 @@ export default function AboutPage() {
         <section className="border-y border-line bg-surface2/60">
           <div className="mx-auto max-w-7xl px-5 lg:px-8 py-16 lg:py-20">
             <div className="mx-auto max-w-2xl text-center">
-              <h2 className="text-3xl font-extrabold tracking-tight text-strong text-balance sm:text-4xl">
-                {MARKA_SERIDI.baslik}
-              </h2>
+              <h2 className="tipo-bolum font-extrabold text-strong text-balance">{MARKA_SERIDI.baslik}</h2>
               <p className="mt-4 text-[16px] leading-relaxed text-body">{MARKA_SERIDI.metin}</p>
             </div>
 

@@ -77,6 +77,37 @@ değerleriyle tasarlanmaz.
 
 ---
 
+### Yatay taşma: sıfır tolerans
+
+**Hiçbir ekran genişliğinde sayfa yatay kaymaz.** `document.scrollWidth`
+her zaman `window.innerWidth`'e eşit olmalı. Denetim 320 / 375 / 414 / 768 /
+1024 / 1440 / 1920 / 2560 px'te yapılır, hem açık hem koyu modda.
+
+Sık düşülen tuzaklar:
+- **Izgara ve esnek kutu çocuklarında `min-width: auto` varsayılandır.**
+  Uzun metin ya da geniş çocuk hücreyi şişirir. Izgara sütununu
+  `minmax(0,1fr)` yaz, çocuğa `min-w-0` ver.
+- **Negatif kenar boşluğu (`-mx-*`) kapsayıcının dolgusundan büyükse taşırır.**
+  Kenardan kenara kayan şerit isteniyorsa üst kutuda kırpma şart.
+- **Kanvas/WebGL:** `renderer.setSize(g, y)` üçüncü parametresi `false`
+  verilirse CSS boyutu ayarlanmaz, yüksek DPI ekranda kutu 2-3 katına çıkar.
+- Sabit `w-[900px]` gibi genişlikler yerine `max-w-*` kullan.
+- Uzun kelime/URL için `break-words`, tablo ve kod bloklarına
+  `overflow-x-auto` ver; sayfa değil, kutunun kendisi kaysın.
+
+### Akıllı ölçekleme
+
+Tasarım ekran boyutuna göre **orantılı büyüyüp küçülür**: büyük ekranda
+içerik minicik kalmaz, küçük ekranda kocaman durmaz.
+
+- Başlık ve bölüm boşluklarında sabit sıçramalar yerine akışkan ölçek
+  kullan: `clamp(alt, tercih + vw, üst)`. Tailwind'de `text-[clamp(...)]`
+  ya da `tipo-*` yardımcı sınıfları (`app/globals.css`).
+- Kapsayıcı 1280 px'te durmaz; 1600 px üstü ekranlarda üst sınır genişler.
+- Dokunma hedefleri her ekranda en az 44x44 px kalır.
+
+---
+
 ## 4. ALTIN KURAL — CMS'ten yönetilebilir, sürdürülebilir yapı
 
 Site ileride **CMS'ten yönetilecek**: içerik eklenecek, çıkarılacak, silinecek, düzenlenecek.

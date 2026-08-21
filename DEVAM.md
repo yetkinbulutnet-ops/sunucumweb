@@ -142,6 +142,19 @@ görünümleri `components/site/sonuc/<arac>.jsx` altına bölmek gerekecek.
 
 ---
 
+## 4.5 Akıllı ölçekleme geçişi (yarım kaldı)
+
+`app/globals.css` içinde akışkan ölçek sınıfları tanımlı: `tipo-dev` (h1),
+`tipo-bolum` (h2), `tipo-giris` (giriş metni), `tipo-metin`. Hepsi `clamp()`
+ile ekran genişliğine göre büyüyüp küçülüyor. Ayrıca 1800 px üstü ekranlarda
+`.max-w-7xl` 92rem'e açılıyor, içerik 1280 pikselde takılı kalmıyor.
+
+**Geçiş yapılan sayfalar:** legal, hakkımızda, veri merkezi bölümü.
+**Geçmesi gerekenler:** ana sayfa, ürün sayfaları, araçlar, iletişim, alan adı.
+Oralarda hâlâ `text-3xl sm:text-4xl` gibi sıçramalı ölçek var.
+
+---
+
 ## 5. Mimari hatırlatmalar ve tuzaklar
 
 - Motorlar `lib/engines/` altında, **birbirini import etmez**; ortak şeyler
@@ -173,6 +186,12 @@ görünümleri `components/site/sonuc/<arac>.jsx` altına bölmek gerekecek.
   durur, lazy görseller yüklenmez — "çalışmıyor" sanma.
 - Tema değişimini elle `classList.toggle('dark')` ile test etme; `tema-kilit`
   devreye girmediği için renkler donar. Gerçek düğmeyi kullan.
+- **Yatay taşma sıfır tolerans** (kullanıcının koyduğu kural). Izgara sütununu
+  `minmax(0,1fr)`, çocuğu `min-w-0` yap; kapsayıcı dolgusundan büyük negatif
+  kenar boşluğu (`-mx-5` + `px-5` iç içe ızgarada) hücreyi şişirip sayfayı
+  kaydırır. Denetim yöntemi: gizli bir `<iframe>` içinde sayfayı farklı
+  genişliklerde açıp `documentElement.scrollWidth` karşılaştır — tek çağrıda
+  onlarca kombinasyon test edilir.
 - Sabit renk (`bg-white`, `text-slate-600`, hex) yazma — semantik token kullan:
   `bg-page/surface/surface2`, `text-strong/body/muted`, `border-line`.
   `transition-all` da kullanma (Chromium'da tema değişince renk donuyor).

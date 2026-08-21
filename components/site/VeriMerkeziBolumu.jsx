@@ -140,7 +140,7 @@ export default function VeriMerkeziBolumu({ veri }) {
 
           <div className="max-w-2xl">
             <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">{veri.eyebrow}</span>
-            <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-strong text-balance sm:text-4xl">
+            <h2 className="tipo-bolum mt-3 font-extrabold text-strong text-balance">
               {veri.baslik}
             </h2>
             <p className="mt-5 text-[16px] leading-relaxed text-body">{veri.metin}</p>
