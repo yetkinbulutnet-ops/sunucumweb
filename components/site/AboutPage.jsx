@@ -39,55 +39,46 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgb(var(--c-grid))_1px,transparent_1px),linear-gradient(to_bottom,rgb(var(--c-grid))_1px,transparent_1px)] bg-[size:44px_44px] [mask-image:radial-gradient(ellipse_at_top_left,black,transparent_70%)]" />
         </div>
 
-        <div className="mx-auto max-w-7xl px-5 lg:px-8 pt-14 pb-12 lg:pt-16 lg:pb-14">
+        <div className="mx-auto max-w-7xl px-5 lg:px-8 pt-12 pb-16 lg:pt-14 lg:pb-20">
           <div className="flex items-center gap-2 text-sm text-muted">
             <Link href="/" className="hover:text-brandtext">Ana Sayfa</Link>
             <span>/</span>
             <span className="font-medium text-strong/70">Kurumsal</span>
           </div>
 
-          <div className="mt-6 max-w-3xl animate-[fadeup_0.6s_ease-out]">
-            <span className="text-[13px] font-bold uppercase tracking-[0.16em] text-brandtext">{C.eyebrow}</span>
-            <h1 className="mt-3 text-4xl sm:text-5xl lg:text-[3.25rem] font-extrabold leading-[1.08] tracking-tight text-strong text-balance">
-              {C.title}
-            </h1>
-            <p className="mt-6 text-lg leading-relaxed text-body sm:text-xl">{C.lede}</p>
+          <div className="mt-8 grid items-start gap-12 lg:grid-cols-[1fr_0.62fr] lg:items-center lg:gap-16">
+            <div className="max-w-2xl animate-[fadeup_0.6s_ease-out]">
+              <h1 className="text-4xl sm:text-5xl font-extrabold leading-[1.1] tracking-tight text-strong text-balance">
+                {C.title}
+              </h1>
+              <p className="mt-6 text-lg leading-relaxed text-body">{C.lede}</p>
 
-            <a
-              href={C.btk.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-7 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2 text-[13px] font-semibold text-body transition-colors hover:border-brandline hover:text-brandtext"
-            >
-              <Icon name="shield" className="h-4 w-4 text-brandtext" />
-              {C.btk.metin}
-            </a>
+              {C.hikaye.paragraflar.map((p) => (
+                <p key={p.slice(0, 24)} className="mt-5 text-[16px] leading-relaxed text-body">{p}</p>
+              ))}
+
+              <a
+                href={C.btk.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-8 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2 text-[13px] font-semibold text-body transition-colors hover:border-brandline hover:text-brandtext"
+              >
+                <Icon name="shield" className="h-4 w-4 text-brandtext" />
+                {C.btk.metin}
+              </a>
+            </div>
+
+            <KabinSlider fotograflar={C.hikaye.fotograflar} />
           </div>
 
-          <dl className="mt-14 grid grid-cols-2 gap-4 lg:grid-cols-4">
+          <dl className="mt-14 grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-line ring-1 ring-line lg:grid-cols-4">
             {C.rakamlar.map(([sayi, etiket]) => (
-              <div key={etiket} className="flex flex-col-reverse rounded-2xl bg-surface2/70 p-6 ring-1 ring-line">
-                <dt className="mt-1 text-sm text-body">{etiket}</dt>
-                <dd className="text-3xl font-extrabold text-brandtext sm:text-4xl">{sayi}</dd>
+              <div key={etiket} className="flex flex-col-reverse bg-surface px-5 py-5 sm:px-6">
+                <dt className="mt-1 text-[13px] text-muted">{etiket}</dt>
+                <dd className="text-2xl font-extrabold text-strong sm:text-3xl">{sayi}</dd>
               </div>
             ))}
           </dl>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-24">
-        <div className="grid items-center gap-14 lg:grid-cols-[1fr_0.8fr] lg:gap-20">
-          <div className="max-w-2xl">
-            <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">{C.hikaye.eyebrow}</span>
-            <h2 className="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight text-strong text-balance">
-              {C.hikaye.baslik}
-            </h2>
-            {C.hikaye.paragraflar.map((p) => (
-              <p key={p.slice(0, 24)} className="mt-5 text-[17px] leading-relaxed text-body">{p}</p>
-            ))}
-          </div>
-
-          <KabinSlider fotograflar={C.hikaye.fotograflar} />
         </div>
       </section>
 

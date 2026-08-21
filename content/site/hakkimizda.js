@@ -4,7 +4,6 @@ export const HAKKIMIZDA = {
     description:
       'SunucumWEB 2023 yılında kuruldu; Keçiborlu / Isparta merkezli, BTK kayıtlı yer sağlayıcıdır. Web hosting, sanal sunucu ve sunucu barındırma hizmetleri.',
   },
-  eyebrow: 'Kurumsal',
   title: 'Şirket Profili',
   lede:
     'SunucumWEB, 2023 yılından bu yana web hosting, sanal sunucu ve sunucu barındırma hizmeti sunmaktadır. ' +
@@ -23,8 +22,6 @@ export const HAKKIMIZDA = {
   ],
 
   hikaye: {
-    eyebrow: 'Neden buradayız',
-    baslik: 'Şeffaf fiyat ve doğrudan teknik iletişim',
     paragraflar: [
       'Şirket, barındırma sektöründeki iki eksikliği gidermek üzere kuruldu: fiyatlandırmanın şeffaf olmaması ve teknik ekibe doğrudan ulaşılamaması. Kendi projelerimizde karşılaştığımız bu sorunlar, hizmet modelimizin çıkış noktası oldu.',
       'Bugün bireysel kullanıcılardan kurumsal firmalara uzanan bir müşteri portföyüne hizmet veriyoruz. Sunucuları kuran ekip ile destek taleplerini karşılayan ekip aynıdır; talebiniz aracı bir katmandan geçmez.',
