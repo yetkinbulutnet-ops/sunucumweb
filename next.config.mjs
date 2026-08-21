@@ -16,13 +16,13 @@ const nextConfig = {
   async redirects() {
     // Sozlesmeler + ticari bilgiler tek sayfada birlestirildi: /legal
     return [
-      { source: '/sozlesmeler', destination: '/legal', permanent: true },
+      { source: '/sozlesmeler', destination: '/legal/kullanim-kosullari', permanent: true },
       { source: '/ticari-bilgiler', destination: '/legal', permanent: true },
       { source: '/whois', destination: '/araclar/whois', permanent: true },
-      { source: '/kullanim-kosullari', destination: '/legal', permanent: true },
+      { source: '/kullanim-kosullari', destination: '/legal/kullanim-kosullari', permanent: true },
       { source: '/gizlilik-sozlesmesi', destination: '/legal/gizlilik-sozlesmesi', permanent: true },
       { source: '/iade-politikasi', destination: '/legal/iade-politikasi', permanent: true },
-      { source: '/kullanim-politikasi', destination: '/legal', permanent: true },
+      { source: '/kullanim-politikasi', destination: '/legal/kullanim-kosullari', permanent: true },
     ];
   },
 

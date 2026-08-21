@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import LegalHubPage from '@/components/site/LegalHubPage';
-import { LEGAL, LEGAL_BELGELER, belgeBul } from '@/content/site/legal';
+import { LEGAL_BELGELER, belgeBul } from '@/content/site/legal';
 import { getLegalHtml } from '@/lib/content';
 import { kanonik } from '@/lib/seo';
 
@@ -22,8 +22,8 @@ export async function generateMetadata({ params }) {
   const kok = belge.slug === VARSAYILAN.slug;
 
   return {
-    title: kok ? LEGAL.seo.title : belge.baslik,
-    description: kok ? LEGAL.seo.description : belge.seo,
+    title: belge.baslik,
+    description: belge.seo,
     alternates: kanonik(kok ? '/legal' : `/legal/${belge.slug}`),
   };
 }

@@ -1,5 +1,14 @@
 export const LEGAL_BELGELER = [
   {
+    slug: 'sirket-bilgileri',
+    tur: 'ticari',
+    baslik: 'Şirket Bilgileri',
+    kisa: 'Şirket',
+    ozet: 'Faturalandırma, sözleşme ve resmî yazışmalarda geçerli bilgilerimiz.',
+    icon: 'users',
+    seo: 'SunucumWEB resmî şirket bilgileri: ünvan, vergi dairesi ve numarası, adres, yer sağlayıcı kaydı ve iletişim adresleri.',
+  },
+  {
     slug: 'kullanim-kosullari',
     baslik: 'Hizmet Kullanım Koşulları',
     kisa: 'Kullanım Koşulları',

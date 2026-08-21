@@ -62,18 +62,34 @@ function Kenar({ aktif }) {
   );
 }
 
-function TicariBilgiler() {
+function TicariIcerik() {
   const T = C.ticari;
 
   return (
-    <section id="ticari-bilgiler" className="scroll-mt-28 border-t border-line bg-surface2">
-      <div className="mx-auto max-w-7xl px-5 lg:px-8 py-14 lg:py-16">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div className="max-w-2xl">
-            <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">{T.eyebrow}</span>
-            <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-strong sm:text-3xl">{T.baslik}</h2>
-          </div>
-          <div className="flex flex-wrap gap-2.5">
+    <div className="mt-7">
+      <div className="overflow-hidden rounded-2xl border border-line bg-surface">
+        <dl className="divide-y divide-line">
+          {T.bilgiler.map(([etiket, deger, href]) => (
+            <div key={etiket} className="grid gap-0.5 px-5 py-3 sm:grid-cols-[180px_1fr] sm:gap-5 sm:px-6">
+              <dt className="text-[13px] text-muted">{etiket}</dt>
+              <dd className="break-words text-[14px] font-semibold text-strong">
+                {href ? (
+                  <a href={href} className="transition-colors hover:text-brandtext">
+                    {deger}
+                  </a>
+                ) : (
+                  deger
+                )}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+
+      <div className="mt-5 grid gap-5 sm:grid-cols-2">
+        <div className="rounded-2xl border border-line bg-surface p-5">
+          <h3 className="text-[13px] font-bold uppercase tracking-[0.12em] text-muted">Belgeler</h3>
+          <div className="mt-4 flex flex-col gap-2.5">
             {T.belgeler.map((b) => {
               const dis = b.href.startsWith('http');
               return (
@@ -82,9 +98,9 @@ function TicariBilgiler() {
                   href={b.href}
                   target={dis ? '_blank' : undefined}
                   rel={dis ? 'noopener noreferrer' : undefined}
-                  className="inline-flex items-center gap-2 rounded-xl border border-line bg-surface px-4 py-2.5 text-[13px] font-bold text-strong transition-colors hover:border-brandline hover:text-brandtext"
+                  className="inline-flex items-center gap-2 rounded-xl border border-line bg-surface2 px-4 py-2.5 text-[13px] font-bold text-strong transition-colors hover:border-brandline hover:text-brandtext"
                 >
-                  <Icon name={b.icon} className="h-4 w-4 text-brandtext" />
+                  <Icon name={b.icon} className="h-4 w-4 shrink-0 text-brandtext" />
                   {b.etiket}
                 </a>
               );
@@ -92,56 +108,37 @@ function TicariBilgiler() {
           </div>
         </div>
 
-        <div className="mt-8 grid items-start gap-5 lg:grid-cols-[1.5fr_1fr]">
-          <div className="overflow-hidden rounded-2xl border border-line bg-surface">
-            <dl className="divide-y divide-line">
-              {T.bilgiler.map(([etiket, deger, href]) => (
-                <div key={etiket} className="grid gap-0.5 px-5 py-3 sm:grid-cols-[180px_1fr] sm:gap-5 sm:px-6">
-                  <dt className="text-[13px] text-muted">{etiket}</dt>
-                  <dd className="break-words text-[14px] font-semibold text-strong">
-                    {href ? (
-                      <a href={href} className="transition-colors hover:text-brandtext">
-                        {deger}
-                      </a>
-                    ) : (
-                      deger
-                    )}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-
-          <div className="overflow-hidden rounded-2xl border border-line bg-surface">
-            <dl className="divide-y divide-line">
-              {T.epostalar.map(([etiket, adres]) => (
-                <div key={adres} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5 px-5 py-3 sm:px-6">
-                  <dt className="text-[13px] text-muted">{etiket}</dt>
-                  <dd>
-                    <a
-                      href={`mailto:${adres}`}
-                      className="break-all text-[14px] font-semibold text-strong transition-colors hover:text-brandtext"
-                    >
-                      {adres}
-                    </a>
-                  </dd>
-                </div>
-              ))}
-              <div className="px-5 py-3.5 sm:px-6">
-                <dt className="text-[13px] text-muted">Hizmet kapsamı</dt>
-                <dd className="mt-2 flex flex-wrap gap-1.5">
-                  {T.hizmetler.map((h) => (
-                    <span key={h} className="rounded-lg bg-surface2 px-2.5 py-1 text-[12px] font-semibold text-body ring-1 ring-line">
-                      {h}
-                    </span>
-                  ))}
+        <div className="rounded-2xl border border-line bg-surface p-5">
+          <h3 className="text-[13px] font-bold uppercase tracking-[0.12em] text-muted">E-posta adresleri</h3>
+          <dl className="mt-4 divide-y divide-line">
+            {T.epostalar.map(([etiket, adres]) => (
+              <div key={adres} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5 py-2.5 first:pt-0 last:pb-0">
+                <dt className="text-[13px] text-muted">{etiket}</dt>
+                <dd>
+                  <a
+                    href={`mailto:${adres}`}
+                    className="break-all text-[14px] font-semibold text-strong transition-colors hover:text-brandtext"
+                  >
+                    {adres}
+                  </a>
                 </dd>
               </div>
-            </dl>
-          </div>
+            ))}
+          </dl>
         </div>
       </div>
-    </section>
+
+      <div className="mt-5 rounded-2xl border border-line bg-surface p-5">
+        <h3 className="text-[13px] font-bold uppercase tracking-[0.12em] text-muted">Hizmet kapsamı</h3>
+        <div className="mt-3.5 flex flex-wrap gap-2">
+          {T.hizmetler.map((h) => (
+            <span key={h} className="rounded-lg bg-surface2 px-3 py-1.5 text-[13px] font-semibold text-body ring-1 ring-line">
+              {h}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -158,12 +155,7 @@ export default function LegalHubPage({ belge, html }) {
             <span className="font-medium text-strong/70">{belge.baslik}</span>
           </nav>
 
-          <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
-            <h1 className="text-3xl font-extrabold tracking-tight text-strong text-balance sm:text-4xl">{C.title}</h1>
-            <a href="#ticari-bilgiler" className="text-[14px] font-bold text-brandtext transition-colors hover:text-brand-500">
-              Resmî bilgiler ↓
-            </a>
-          </div>
+          <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-strong text-balance sm:text-4xl">{C.title}</h1>
           <p className="mt-3 max-w-2xl text-[16px] leading-relaxed text-body">{C.lede}</p>
         </div>
       </section>
@@ -178,13 +170,17 @@ export default function LegalHubPage({ belge, html }) {
               <p className="mt-2 text-[15px] leading-relaxed text-body">{belge.ozet}</p>
             </header>
 
-            <style dangerouslySetInnerHTML={{ __html: PROSE }} />
-            <div className="legal-prose mt-7">{parse(html || '')}</div>
+            {belge.tur === 'ticari' ? (
+              <TicariIcerik />
+            ) : (
+              <>
+                <style dangerouslySetInnerHTML={{ __html: PROSE }} />
+                <div className="legal-prose mt-7">{parse(html || '')}</div>
+              </>
+            )}
           </article>
         </div>
       </section>
-
-      <TicariBilgiler />
     </SiteShell>
   );
 }
