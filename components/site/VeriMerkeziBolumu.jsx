@@ -22,7 +22,6 @@ export default function VeriMerkeziBolumu({ veri }) {
   const kureRef = useRef(null);
   const [yakinda, setYakinda] = useState(false);
   const [asama, setAsama] = useState('kure');
-  const [acildi, setAcildi] = useState(false);
   const [durgun, setDurgun] = useState(false);
 
   useEffect(() => {
@@ -50,23 +49,21 @@ export default function VeriMerkeziBolumu({ veri }) {
     setDurgun(!!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches);
   }, []);
 
-  const durumDegisti = useCallback((yeni) => {
-    setAsama(yeni);
-    if (yeni === 'ucuyor') setAcildi(true);
-  }, []);
+  const durumDegisti = useCallback((yeni) => setAsama(yeni), []);
   const apiHazir = useCallback((api) => {
     kureRef.current = api;
   }, []);
 
   const { konum, tesis, kart } = veri;
   const kartAcik = asama === 'yakin';
+  const videoAcik = asama === 'ucuyor' || asama === 'yakin';
 
   return (
     <section id="veri-merkezi" className="scroll-mt-28 border-b border-line">
       <div className="mx-auto max-w-7xl px-5 lg:px-8 py-16 lg:py-20">
         <div className="grid items-center gap-12 lg:grid-cols-[0.85fr_1fr] lg:gap-16">
           <div className="relative">
-            <div ref={kapRef} className="h-[320px] overflow-hidden sm:h-[400px] lg:h-[440px]">
+            <div ref={kapRef} className="h-[320px] overflow-hidden sm:h-[400px] lg:h-[520px]">
               {yakinda ? (
                 <VeriMerkeziKure
                   enlem={konum.enlem}
@@ -99,8 +96,8 @@ export default function VeriMerkeziBolumu({ veri }) {
                   </span>
                 </div>
 
-                {acildi && (
-                  <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
+                {videoAcik && (
+                  <div className="mt-4 grid grid-cols-2 gap-2.5 lg:mx-auto lg:max-w-[380px]">
                     {kart.videolar.map((v, i) => (
                       <div
                         key={v.video}
@@ -111,11 +108,10 @@ export default function VeriMerkeziBolumu({ veri }) {
                           transform: kartAcik ? 'none' : 'translateY(18px) scale(0.94)',
                         }}
                       >
-                        <div className="relative w-full" style={{ aspectRatio: '16 / 9' }}>
+                        <div className="relative w-full" style={{ aspectRatio: '9 / 16' }}>
                           <iframe
                             src={videoAdresi(v, durgun)}
                             title={v.baslik}
-                            loading="lazy"
                             allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
                             allowFullScreen
                             className="absolute inset-0 h-full w-full border-0"
