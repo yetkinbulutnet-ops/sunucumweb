@@ -1,3 +1,32 @@
+export const LEGAL_BELGELER = [
+  {
+    slug: 'kullanim-kosullari',
+    baslik: 'Hizmet Kullanım Koşulları',
+    kisa: 'Kullanım Koşulları',
+    ozet: 'Genel şartlar, tarafların hak ve yükümlülükleri.',
+    icon: 'doc',
+    seo: 'SunucumWEB hizmet kullanım koşulları: tanımlar, hizmet şartları, ödeme, askıya alma ve sorumluluk sınırları.',
+  },
+  {
+    slug: 'gizlilik-sozlesmesi',
+    baslik: 'Gizlilik Sözleşmesi',
+    kisa: 'Gizlilik',
+    ozet: 'Kişisel verilerin toplanma, işlenme ve korunma esasları.',
+    icon: 'lock',
+    seo: 'SunucumWEB gizlilik sözleşmesi: toplanan bilgiler, kullanım amacı, çerezler ve veri güvenliği.',
+  },
+  {
+    slug: 'iade-politikasi',
+    baslik: 'İade Politikası',
+    kisa: 'İade',
+    ozet: 'Cayma hakkı, iade süreçleri ve garantinin kapsamı.',
+    icon: 'refresh',
+    seo: 'SunucumWEB iade ve iptal politikası: hosting ve sunucu hizmetlerinde cayma hakkı, iade koşulları ve süreçler.',
+  },
+];
+
+export const belgeBul = (slug) => LEGAL_BELGELER.find((b) => b.slug === slug) || null;
+
 export const LEGAL = {
   seo: {
     title: 'Legal',
@@ -5,40 +34,9 @@ export const LEGAL = {
       'SunucumWEB sözleşmeleri, yasal metinleri ve ticari bilgileri: hizmet kullanım koşulları, gizlilik sözleşmesi, iade politikası, şirket ünvanı, vergi ve yer sağlayıcı bilgileri.',
   },
   eyebrow: 'Kurumsal',
-  title: 'Legal',
+  title: 'Sözleşmeler ve yasal bilgiler',
   lede:
     'Hizmetlerimizi kullanırken geçerli olan sözleşmeler ile şirketimize ait resmî ticari bilgiler bu sayfada toplanmıştır.',
-
-  sozlesmeler: {
-    eyebrow: 'Sözleşmeler',
-    baslik: 'Sözleşmeler ve yasal metinler',
-    items: [
-      {
-        slug: 'kullanim-kosullari',
-        baslik: 'Hizmet Kullanım Koşulları',
-        ozet: 'Genel şartlar, tarafların hak ve yükümlülükleri.',
-        icon: 'doc',
-      },
-      {
-        slug: 'gizlilik-sozlesmesi',
-        baslik: 'Gizlilik Sözleşmesi',
-        ozet: 'Kişisel verilerin toplanma, işlenme ve korunma esasları.',
-        icon: 'lock',
-      },
-      {
-        slug: 'iade-politikasi',
-        baslik: 'İade Politikası',
-        ozet: 'Cayma hakkı, iade süreçleri ve garantinin kapsamı.',
-        icon: 'refresh',
-      },
-      {
-        slug: 'kullanim-politikasi',
-        baslik: 'Kabul Edilebilir Kullanım Politikası',
-        ozet: 'Yasaklı içerik ve kaynak kullanımına ilişkin kurallar.',
-        icon: 'shield',
-      },
-    ],
-  },
 
   ticari: {
     eyebrow: 'Ticari bilgiler',

@@ -19,6 +19,10 @@ const nextConfig = {
       { source: '/sozlesmeler', destination: '/legal', permanent: true },
       { source: '/ticari-bilgiler', destination: '/legal', permanent: true },
       { source: '/whois', destination: '/araclar/whois', permanent: true },
+      { source: '/kullanim-kosullari', destination: '/legal', permanent: true },
+      { source: '/gizlilik-sozlesmesi', destination: '/legal/gizlilik-sozlesmesi', permanent: true },
+      { source: '/iade-politikasi', destination: '/legal/iade-politikasi', permanent: true },
+      { source: '/kullanim-politikasi', destination: '/legal', permanent: true },
     ];
   },
 

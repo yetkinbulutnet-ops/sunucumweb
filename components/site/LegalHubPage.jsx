@@ -1,119 +1,190 @@
 import Link from 'next/link';
-import { Icon, CtaBand, SiteShell, PageHero } from './chrome';
-import { LEGAL as C } from '@/content/site/legal';
+import parse from 'html-react-parser';
+import { Icon, SiteShell } from './chrome';
+import { LEGAL as C, LEGAL_BELGELER } from '@/content/site/legal';
 
-function BelgeDugmesi({ belge }) {
-  const dis = belge.href.startsWith('http');
+const PROSE = `
+.legal-prose h2{font-size:1.3rem;font-weight:800;color:rgb(var(--c-strong));margin:2rem 0 .7rem;letter-spacing:-.01em}
+.legal-prose h2:first-child{margin-top:0}
+.legal-prose h3{font-size:1.05rem;font-weight:700;color:rgb(var(--c-strong));opacity:.92;margin:1.5rem 0 .45rem}
+.legal-prose p{color:rgb(var(--c-body));line-height:1.75;margin:.65rem 0;font-size:15px}
+.legal-prose a{color:rgb(var(--c-brandtext));font-weight:600}
+.legal-prose strong{color:rgb(var(--c-strong))}
+.legal-prose table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:14px;color:rgb(var(--c-body))}
+.legal-prose td,.legal-prose th{border:1px solid rgb(var(--c-line));padding:.55rem .7rem;text-align:left}
+.legal-prose ul{margin:.9rem 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:.5rem}
+.legal-prose li{position:relative;padding-left:1.65rem;color:rgb(var(--c-body));line-height:1.7;font-size:15px}
+.legal-prose li::before{content:'';position:absolute;left:.15rem;top:.6em;width:.45rem;height:.45rem;border-radius:9999px;background:rgb(var(--c-brandtext))}
+`;
+
+const yol = (slug) => (slug === LEGAL_BELGELER[0].slug ? '/legal' : `/legal/${slug}`);
+
+function Kenar({ aktif }) {
   return (
-    <a
-      href={belge.href}
-      target={dis ? '_blank' : undefined}
-      rel={dis ? 'noopener noreferrer' : undefined}
-      className="inline-flex items-center gap-2 rounded-xl border border-line bg-surface px-4 py-2.5 text-[13px] font-bold text-strong transition-colors hover:border-brandline hover:text-brandtext"
-    >
-      <Icon name={belge.icon} className="h-4 w-4 text-brandtext" />
-      {belge.etiket}
-    </a>
+    <nav aria-label="Sözleşmeler" className="lg:sticky lg:top-28">
+      <p className="hidden text-[12px] font-bold uppercase tracking-[0.14em] text-muted lg:block">Belgeler</p>
+
+      <ul className="-mx-5 flex snap-x gap-2 overflow-x-auto px-5 pb-2 lg:mx-0 lg:mt-4 lg:flex-col lg:gap-1.5 lg:overflow-visible lg:px-0 lg:pb-0">
+        {LEGAL_BELGELER.map((b) => {
+          const secili = b.slug === aktif;
+          return (
+            <li key={b.slug} className="shrink-0 snap-start lg:shrink">
+              <Link
+                href={yol(b.slug)}
+                aria-current={secili ? 'page' : undefined}
+                className={`flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-[14px] font-bold transition-colors lg:px-4 lg:py-3 ${
+                  secili
+                    ? 'bg-brandsoft text-brandtext ring-1 ring-brandline'
+                    : 'bg-surface2 text-body hover:bg-brandsoft hover:text-brandtext lg:bg-transparent'
+                }`}
+              >
+                <Icon name={b.icon} className={`h-4 w-4 shrink-0 ${secili ? 'text-brandtext' : 'text-muted'}`} />
+                <span className="whitespace-nowrap lg:whitespace-normal">
+                  <span className="lg:hidden">{b.kisa}</span>
+                  <span className="hidden lg:inline">{b.baslik}</span>
+                </span>
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+
+      <div className="mt-6 hidden rounded-2xl border border-line bg-surface2 p-4 lg:block">
+        <p className="text-[13px] leading-relaxed text-body">
+          Sözleşmelerle ilgili sorularınız için{' '}
+          <Link href="/iletisim" className="font-bold text-brandtext hover:text-brand-500">
+            iletişim
+          </Link>{' '}
+          sayfamızdan bize yazabilirsiniz.
+        </p>
+      </div>
+    </nav>
   );
 }
 
-export default function LegalHubPage() {
+function TicariBilgiler() {
+  const T = C.ticari;
+
   return (
-    <SiteShell>
-      <PageHero eyebrow={C.eyebrow} breadcrumb={C.title} title={C.title} text={C.lede} />
-
-      <section className="mx-auto max-w-7xl px-5 lg:px-8 py-14 lg:py-16">
-        <div className="flex flex-wrap items-baseline justify-between gap-3">
-          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-strong">{C.sozlesmeler.baslik}</h2>
-          <span className="text-[13px] text-muted">{C.sozlesmeler.items.length} belge</span>
-        </div>
-
-        <div className="mt-7 grid gap-3 lg:grid-cols-2">
-          {C.sozlesmeler.items.map((s) => (
-            <Link
-              key={s.slug}
-              href={`/${s.slug}`}
-              className="group flex items-center gap-4 rounded-2xl border border-line bg-surface px-5 py-4 transition-colors hover:border-brandline"
-            >
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brandsoft text-brandtext transition-colors group-hover:bg-brand-500 group-hover:text-white">
-                <Icon name={s.icon} className="h-5 w-5" />
-              </span>
-              <span className="min-w-0 flex-1">
-                <span className="block text-[15px] font-bold text-strong">{s.baslik}</span>
-                <span className="mt-0.5 block text-[13px] leading-snug text-body">{s.ozet}</span>
-              </span>
-              <Icon name="arrow" className="h-4 w-4 shrink-0 text-muted transition-transform group-hover:translate-x-1 group-hover:text-brandtext" />
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section className="border-t border-line bg-surface2">
-        <div className="mx-auto max-w-7xl px-5 lg:px-8 py-14 lg:py-16">
+    <section id="ticari-bilgiler" className="scroll-mt-28 border-t border-line bg-surface2">
+      <div className="mx-auto max-w-7xl px-5 lg:px-8 py-14 lg:py-16">
+        <div className="flex flex-wrap items-end justify-between gap-4">
           <div className="max-w-2xl">
-            <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">{C.ticari.eyebrow}</span>
-            <h2 className="mt-3 text-2xl sm:text-3xl font-extrabold tracking-tight text-strong">{C.ticari.baslik}</h2>
-            <p className="mt-3 text-[15px] leading-relaxed text-body">{C.ticari.ozet}</p>
+            <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">{T.eyebrow}</span>
+            <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-strong sm:text-3xl">{T.baslik}</h2>
+          </div>
+          <div className="flex flex-wrap gap-2.5">
+            {T.belgeler.map((b) => {
+              const dis = b.href.startsWith('http');
+              return (
+                <a
+                  key={b.href}
+                  href={b.href}
+                  target={dis ? '_blank' : undefined}
+                  rel={dis ? 'noopener noreferrer' : undefined}
+                  className="inline-flex items-center gap-2 rounded-xl border border-line bg-surface px-4 py-2.5 text-[13px] font-bold text-strong transition-colors hover:border-brandline hover:text-brandtext"
+                >
+                  <Icon name={b.icon} className="h-4 w-4 text-brandtext" />
+                  {b.etiket}
+                </a>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="mt-8 grid items-start gap-5 lg:grid-cols-[1.5fr_1fr]">
+          <div className="overflow-hidden rounded-2xl border border-line bg-surface">
+            <dl className="divide-y divide-line">
+              {T.bilgiler.map(([etiket, deger, href]) => (
+                <div key={etiket} className="grid gap-0.5 px-5 py-3 sm:grid-cols-[180px_1fr] sm:gap-5 sm:px-6">
+                  <dt className="text-[13px] text-muted">{etiket}</dt>
+                  <dd className="break-words text-[14px] font-semibold text-strong">
+                    {href ? (
+                      <a href={href} className="transition-colors hover:text-brandtext">
+                        {deger}
+                      </a>
+                    ) : (
+                      deger
+                    )}
+                  </dd>
+                </div>
+              ))}
+            </dl>
           </div>
 
-          <div className="mt-8 grid items-start gap-5 lg:grid-cols-[1.45fr_1fr]">
-            <div className="overflow-hidden rounded-2xl border border-line bg-surface">
-              <dl className="divide-y divide-line">
-                {C.ticari.bilgiler.map(([etiket, deger, href]) => (
-                  <div key={etiket} className="grid gap-0.5 px-5 py-3.5 sm:grid-cols-[190px_1fr] sm:gap-5 sm:px-6">
-                    <dt className="text-[13px] text-muted">{etiket}</dt>
-                    <dd className="break-words text-[14px] font-semibold text-strong">
-                      {href ? (
-                        <a href={href} className="transition-colors hover:text-brandtext">{deger}</a>
-                      ) : (
-                        deger
-                      )}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-
-            <div className="grid gap-5">
-              <div className="rounded-2xl border border-line bg-surface p-5 sm:p-6">
-                <h3 className="text-[13px] font-bold uppercase tracking-[0.12em] text-muted">Belgeler</h3>
-                <div className="mt-4 flex flex-col gap-2.5">
-                  {C.ticari.belgeler.map((b) => <BelgeDugmesi key={b.href} belge={b} />)}
+          <div className="overflow-hidden rounded-2xl border border-line bg-surface">
+            <dl className="divide-y divide-line">
+              {T.epostalar.map(([etiket, adres]) => (
+                <div key={adres} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5 px-5 py-3 sm:px-6">
+                  <dt className="text-[13px] text-muted">{etiket}</dt>
+                  <dd>
+                    <a
+                      href={`mailto:${adres}`}
+                      className="break-all text-[14px] font-semibold text-strong transition-colors hover:text-brandtext"
+                    >
+                      {adres}
+                    </a>
+                  </dd>
                 </div>
-              </div>
-
-              <div className="rounded-2xl border border-line bg-surface p-5 sm:p-6">
-                <h3 className="text-[13px] font-bold uppercase tracking-[0.12em] text-muted">E-posta adresleri</h3>
-                <dl className="mt-4 divide-y divide-line">
-                  {C.ticari.epostalar.map(([etiket, adres]) => (
-                    <div key={adres} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5 py-2.5 first:pt-0 last:pb-0">
-                      <dt className="text-[13px] text-muted">{etiket}</dt>
-                      <dd>
-                        <a href={`mailto:${adres}`} className="break-all text-[14px] font-semibold text-strong transition-colors hover:text-brandtext">
-                          {adres}
-                        </a>
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-
-              <div className="rounded-2xl border border-line bg-surface p-5 sm:p-6">
-                <h3 className="text-[13px] font-bold uppercase tracking-[0.12em] text-muted">Hizmet bilgileri</h3>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {C.ticari.hizmetler.map((h) => (
-                    <span key={h} className="rounded-lg bg-surface2 px-3 py-1.5 text-[13px] font-semibold text-body ring-1 ring-line">
+              ))}
+              <div className="px-5 py-3.5 sm:px-6">
+                <dt className="text-[13px] text-muted">Hizmet kapsamı</dt>
+                <dd className="mt-2 flex flex-wrap gap-1.5">
+                  {T.hizmetler.map((h) => (
+                    <span key={h} className="rounded-lg bg-surface2 px-2.5 py-1 text-[12px] font-semibold text-body ring-1 ring-line">
                       {h}
                     </span>
                   ))}
-                </div>
+                </dd>
               </div>
-            </div>
+            </dl>
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default function LegalHubPage({ belge, html }) {
+  return (
+    <SiteShell>
+      <section className="border-b border-line bg-surface2/50">
+        <div className="mx-auto max-w-7xl px-5 lg:px-8 pt-10 pb-8 lg:pt-12">
+          <nav aria-label="Site haritası" className="flex flex-wrap items-center gap-2 text-sm text-muted">
+            <Link href="/" className="hover:text-brandtext">Ana Sayfa</Link>
+            <span>/</span>
+            <Link href="/legal" className="hover:text-brandtext">Legal</Link>
+            <span>/</span>
+            <span className="font-medium text-strong/70">{belge.baslik}</span>
+          </nav>
+
+          <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
+            <h1 className="text-3xl font-extrabold tracking-tight text-strong text-balance sm:text-4xl">{C.title}</h1>
+            <a href="#ticari-bilgiler" className="text-[14px] font-bold text-brandtext transition-colors hover:text-brand-500">
+              Resmî bilgiler ↓
+            </a>
+          </div>
+          <p className="mt-3 max-w-2xl text-[16px] leading-relaxed text-body">{C.lede}</p>
         </div>
       </section>
 
-      <CtaBand />
+      <section className="mx-auto max-w-7xl px-5 lg:px-8 py-10 lg:py-14">
+        <div className="grid gap-8 lg:grid-cols-[280px_1fr] lg:gap-14">
+          <Kenar aktif={belge.slug} />
+
+          <article className="min-w-0">
+            <header className="border-b border-line pb-5">
+              <h2 className="text-2xl font-extrabold tracking-tight text-strong sm:text-[28px]">{belge.baslik}</h2>
+              <p className="mt-2 text-[15px] leading-relaxed text-body">{belge.ozet}</p>
+            </header>
+
+            <style dangerouslySetInnerHTML={{ __html: PROSE }} />
+            <div className="legal-prose mt-7">{parse(html || '')}</div>
+          </article>
+        </div>
+      </section>
+
+      <TicariBilgiler />
     </SiteShell>
   );
 }
