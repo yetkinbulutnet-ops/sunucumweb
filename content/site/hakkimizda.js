@@ -57,11 +57,11 @@ export const HAKKIMIZDA = {
     kart: {
       eyebrow: 'Konumdasınız',
       baslik: 'Netweb · İstanbul',
-      satirlar: [
-        ['Bağlantı', '1:1 simetrik'],
-        ['Taşıyıcı', 'Operatör bağımsız'],
-        ['Koruma', 'Şebeke DDoS'],
-        ['Standart', 'EN 50600'],
+      metin: 'Kabinlerimizden birkaç kare:',
+      fotograflar: [
+        { src: '/img/galeri/kabin-dellemc.webp', alt: 'Dell EMC sunucuların bulunduğu kabinin ön yüzü', g: 382, y: 510 },
+        { src: '/img/galeri/kabin-yogun.webp', alt: 'Etiketlenmiş sunucuların yerleştiği kabin', g: 382, y: 510 },
+        { src: '/img/galeri/kabin-anahtar.webp', alt: 'Ağ anahtarı ve blade sunucuların bulunduğu kabin', g: 287, y: 510 },
       ],
     },
     ozellikler: [

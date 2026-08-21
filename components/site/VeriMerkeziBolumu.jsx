@@ -18,6 +18,7 @@ export default function VeriMerkeziBolumu({ veri }) {
   const kureRef = useRef(null);
   const [yakinda, setYakinda] = useState(false);
   const [asama, setAsama] = useState('kure');
+  const [acildi, setAcildi] = useState(false);
 
   useEffect(() => {
     const kap = kapRef.current;
@@ -40,7 +41,10 @@ export default function VeriMerkeziBolumu({ veri }) {
     return () => izleyici.disconnect();
   }, []);
 
-  const durumDegisti = useCallback((yeni) => setAsama(yeni), []);
+  const durumDegisti = useCallback((yeni) => {
+    setAsama(yeni);
+    if (yeni === 'ucuyor') setAcildi(true);
+  }, []);
   const apiHazir = useCallback((api) => {
     kureRef.current = api;
   }, []);
@@ -53,7 +57,7 @@ export default function VeriMerkeziBolumu({ veri }) {
       <div className="mx-auto max-w-7xl px-5 lg:px-8 py-16 lg:py-20">
         <div className="grid items-center gap-12 lg:grid-cols-[0.85fr_1fr] lg:gap-16">
           <div className="relative">
-            <div ref={kapRef} className="h-[320px] sm:h-[400px] lg:h-[440px]">
+            <div ref={kapRef} className="h-[320px] overflow-hidden sm:h-[400px] lg:h-[440px]">
               {yakinda ? (
                 <VeriMerkeziKure
                   enlem={konum.enlem}
@@ -68,39 +72,62 @@ export default function VeriMerkeziBolumu({ veri }) {
             </div>
 
             <div
-              className={`pointer-events-none absolute inset-x-0 bottom-0 transition-all duration-500 ${
-                kartAcik ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              className={`transition-all duration-500 motion-reduce:transition-none lg:pointer-events-none lg:absolute lg:inset-x-0 lg:bottom-0 ${
+                kartAcik
+                  ? 'mt-4 translate-y-0 opacity-100 lg:mt-0'
+                  : 'pointer-events-none mt-0 h-0 translate-y-4 overflow-hidden opacity-0 lg:h-auto'
               }`}
               aria-hidden={!kartAcik}
             >
-              <div className="pointer-events-auto rounded-2xl border border-line bg-surface/95 p-5 shadow-[0_30px_70px_-30px_rgba(15,41,66,0.55)] backdrop-blur">
-                <div className="flex items-start justify-between gap-4">
+              <div className="pointer-events-auto rounded-2xl border border-line bg-surface/95 p-4 shadow-[0_30px_70px_-30px_rgba(15,41,66,0.55)] backdrop-blur sm:p-5">
+                <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="min-w-0">
                     <p className="text-[12px] font-bold uppercase tracking-[0.12em] text-brandtext">{kart.eyebrow}</p>
-                    <p className="mt-1 text-[18px] font-extrabold text-strong">{kart.baslik}</p>
+                    <p className="mt-1 text-[17px] font-extrabold text-strong sm:text-[18px]">{kart.baslik}</p>
                   </div>
                   <span className="shrink-0 rounded-lg bg-brandsoft px-2.5 py-1 font-mono text-[11px] font-bold text-brandtext">
                     {konum.koordinat}
                   </span>
                 </div>
 
-                <dl className="mt-4 grid grid-cols-2 gap-3">
-                  {kart.satirlar.map(([etiket, deger]) => (
-                    <div key={etiket} className="rounded-xl bg-surface2 px-3.5 py-2.5">
-                      <dt className="text-[11px] uppercase tracking-[0.1em] text-muted">{etiket}</dt>
-                      <dd className="mt-0.5 text-[14px] font-bold text-strong">{deger}</dd>
-                    </div>
-                  ))}
-                </dl>
+                {acildi && (
+                  <div className="mt-4 grid grid-cols-3 gap-2.5">
+                    {kart.fotograflar.map((f, i) => (
+                      <figure
+                        key={f.src}
+                        className="overflow-hidden rounded-xl bg-surface2 transition-all duration-700 ease-out motion-reduce:transition-none"
+                        style={{
+                          transitionDelay: (kartAcik ? 120 + i * 110 : 0) + 'ms',
+                          opacity: kartAcik ? 1 : 0,
+                          transform: kartAcik ? 'none' : 'translateY(18px) scale(0.94)',
+                        }}
+                      >
+                        <img
+                          src={f.src}
+                          alt={f.alt}
+                          width={f.g}
+                          height={f.y}
+                          loading="lazy"
+                          decoding="async"
+                          className="h-full w-full object-cover"
+                          style={{ aspectRatio: '3 / 4' }}
+                        />
+                      </figure>
+                    ))}
+                  </div>
+                )}
 
-                <button
-                  type="button"
-                  onClick={() => kureRef.current?.geriDon()}
-                  className="mt-4 inline-flex items-center gap-1.5 text-[13px] font-bold text-brandtext transition-colors hover:text-brand-500"
-                >
-                  <Icon name="arrow" className="h-4 w-4 rotate-180" />
-                  Dünya görünümüne dön
-                </button>
+                <div className="mt-3.5 flex flex-wrap items-center justify-between gap-3">
+                  <p className="text-[12px] text-muted">{kart.metin}</p>
+                  <button
+                    type="button"
+                    onClick={() => kureRef.current?.geriDon()}
+                    className="inline-flex items-center gap-1.5 text-[13px] font-bold text-brandtext transition-colors hover:text-brand-500"
+                  >
+                    <Icon name="arrow" className="h-4 w-4 rotate-180" />
+                    Dünyaya dön
+                  </button>
+                </div>
               </div>
             </div>
 

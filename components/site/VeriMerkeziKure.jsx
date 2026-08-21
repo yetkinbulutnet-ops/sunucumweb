@@ -206,6 +206,8 @@ export default function VeriMerkeziKure({ enlem, boylam, etiket, onDurum, onHazi
     temaIzleyici.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
     kap.appendChild(renderer.domElement);
+    renderer.domElement.style.display = 'block';
+    renderer.domElement.style.maxWidth = '100%';
     renderer.domElement.style.touchAction = 'pan-y';
     renderer.domElement.style.cursor = 'grab';
     renderer.domElement.setAttribute('role', 'img');
@@ -216,7 +218,7 @@ export default function VeriMerkeziKure({ enlem, boylam, etiket, onDurum, onHazi
       const yukseklik = kap.clientHeight || genislik;
       if (!genislik || !yukseklik) return;
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-      renderer.setSize(genislik, yukseklik, false);
+      renderer.setSize(genislik, yukseklik);
       kamera.aspect = genislik / yukseklik;
       kamera.updateProjectionMatrix();
     };
