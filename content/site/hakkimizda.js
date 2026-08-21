@@ -9,10 +9,10 @@ export const HAKKIMIZDA = {
     'SunucumWEB, 2023 yılından bu yana web hosting, sanal sunucu ve sunucu barındırma hizmeti sunmaktadır. ' +
     'Keçiborlu / Isparta’daki merkezimizden Türkiye genelindeki işletmelere altyapı hizmeti veriyoruz.',
 
-  btk: {
-    metin: 'BTK kayıtlı yer sağlayıcı',
-    href: 'https://internet.btk.gov.tr/yer-saglayici-listesi?page=1&q=SunucumWEB',
-  },
+  kisayollar: [
+    { metin: 'Çalışma ilkelerimiz', href: '#ilkeler', ikon: 'scale' },
+    { metin: 'Veri merkezimiz', href: '#veri-merkezi', ikon: 'database' },
+  ],
 
   rakamlar: [
     ['%99.9', 'Uptime garantisi'],
@@ -53,6 +53,16 @@ export const HAKKIMIZDA = {
       ad: 'Netweb',
       site: 'https://www.netweb.com.tr',
       not: 'Operatör bağımsız veri merkezi',
+    },
+    kart: {
+      eyebrow: 'Konumdasınız',
+      baslik: 'Netweb · İstanbul',
+      satirlar: [
+        ['Bağlantı', '1:1 simetrik'],
+        ['Taşıyıcı', 'Operatör bağımsız'],
+        ['Koruma', 'Şebeke DDoS'],
+        ['Standart', 'EN 50600'],
+      ],
     },
     ozellikler: [
       'EN 50600 standardında tesis altyapısı',

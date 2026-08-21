@@ -232,6 +232,22 @@ Android 9+, Samsung Internet 18+**. Bu listeyi daraltmak = eski iPhone'ları kes
 - Yatay kayan içerikte (slider vb.) dokunmatik **kaydırma jesti** desteklenir,
   dikey kaydırma engellenmez (`touch-action: pan-y`).
 
+### Animasyon ve 3B (WebGL)
+
+- Animasyonlar da bu kuralın kapsamındadır: macOS, iOS, Android, Linux ve
+  Windows'ta birebir aynı çalışmalı.
+- WebGL kullanan her bileşen **geri düşüş** sunar: bağlam alınamazsa metin kartı
+  gösterilir, sayfa çalışmaya devam eder.
+- Çizim döngüsü bileşen ekranda değilken ve `document.hidden` iken durur.
+- `prefers-reduced-motion` açıksa otomatik hareket kapanır, içerik erişilebilir
+  kalır. `matchMedia` çağrısı korumalı yapılır.
+- Dokunmatikte `touch-action: pan-y` verilir; 3B alanda yatay sürükleme çalışır
+  ama sayfanın dikey kaydırması engellenmez.
+- Ağır kütüphaneler (three.js vb.) `next/dynamic` + `ssr:false` ile ayrı parçaya
+  alınır ve yalnızca bileşen ekrana yaklaşınca indirilir; ana paket büyümez.
+- Yazı tipi/kanvas ölçümü tarayıcıya göre değişir; konum hesapları piksel değil
+  oran üzerinden yapılır.
+
 ### JavaScript
 - Tarayıcıya özel API'ler **korumasız çağrılmaz**: `navigator.clipboard` yalnızca
   HTTPS'te ve modern tarayıcıda vardır → `try/catch` + geri düşüş şart.

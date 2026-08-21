@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Icon, CtaBand, SiteShell } from './chrome';
 import LogoSerit from './LogoSerit';
 import VeriMerkeziBolumu from './VeriMerkeziBolumu';
+import SayacKartlari from './SayacKartlari';
 import { MARKALAR, MARKA_SERIDI } from '@/content/site/markalar';
 import KabinSlider from './KabinSlider';
 import { HAKKIMIZDA as C } from '@/content/site/hakkimizda';
@@ -58,32 +59,29 @@ export default function AboutPage() {
                 <p key={p.slice(0, 24)} className="mt-5 text-[16px] leading-relaxed text-body">{p}</p>
               ))}
 
-              <a
-                href={C.btk.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-8 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2 text-[13px] font-semibold text-body transition-colors hover:border-brandline hover:text-brandtext"
-              >
-                <Icon name="shield" className="h-4 w-4 text-brandtext" />
-                {C.btk.metin}
-              </a>
+              <div className="mt-8 flex flex-wrap gap-3">
+                {C.kisayollar.map((k) => (
+                  <a
+                    key={k.href}
+                    href={k.href}
+                    className="inline-flex items-center gap-2 rounded-xl border border-line bg-surface px-4 py-2.5 text-[14px] font-bold text-body transition-[color,border-color,transform] hover:-translate-y-0.5 hover:border-brandline hover:text-brandtext"
+                  >
+                    <Icon name={k.ikon} className="h-4 w-4 text-brandtext" />
+                    {k.metin}
+                    <Icon name="chevron" className="h-4 w-4 text-muted" />
+                  </a>
+                ))}
+              </div>
             </div>
 
             <KabinSlider fotograflar={C.hikaye.fotograflar} />
           </div>
 
-          <dl className="mt-14 grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-line ring-1 ring-line lg:grid-cols-4">
-            {C.rakamlar.map(([sayi, etiket]) => (
-              <div key={etiket} className="flex flex-col-reverse bg-surface px-5 py-5 sm:px-6">
-                <dt className="mt-1 text-[13px] text-muted">{etiket}</dt>
-                <dd className="text-2xl font-extrabold text-strong sm:text-3xl">{sayi}</dd>
-              </div>
-            ))}
-          </dl>
+          <SayacKartlari rakamlar={C.rakamlar} />
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-24">
+      <section id="ilkeler" className="mx-auto max-w-7xl scroll-mt-28 px-5 lg:px-8 py-20 lg:py-24">
         <div className="max-w-2xl">
           <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">{C.ilkeler.eyebrow}</span>
           <h2 className="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight text-strong text-balance">{C.ilkeler.baslik}</h2>
