@@ -5,8 +5,8 @@ import { Icon } from './chrome';
 
 const VeriMerkeziKure = dynamic(() => import('./VeriMerkeziKure'), { ssr: false });
 
-const videoAdresi = (video, koyuTema, durgun) =>
-  `https://player.mediadelivery.net/embed/${video.kutuphane}/${koyuTema ? video.koyu : video.acik}` +
+const videoAdresi = (v, durgun) =>
+  `https://player.mediadelivery.net/embed/${v.kutuphane}/${v.video}` +
   `?autoplay=${durgun ? 'false' : 'true'}&loop=true&muted=true&preload=false&responsive=true`;
 
 function Iskelet() {
@@ -24,7 +24,6 @@ export default function VeriMerkeziBolumu({ veri }) {
   const [asama, setAsama] = useState('kure');
   const [acildi, setAcildi] = useState(false);
   const [durgun, setDurgun] = useState(false);
-  const [koyuTema, setKoyuTema] = useState(false);
 
   useEffect(() => {
     const kap = kapRef.current;
@@ -49,12 +48,6 @@ export default function VeriMerkeziBolumu({ veri }) {
 
   useEffect(() => {
     setDurgun(!!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches);
-
-    const oku = () => setKoyuTema(document.documentElement.classList.contains('dark'));
-    oku();
-    const izleyici = new MutationObserver(oku);
-    izleyici.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-    return () => izleyici.disconnect();
   }, []);
 
   const durumDegisti = useCallback((yeni) => {
@@ -107,25 +100,29 @@ export default function VeriMerkeziBolumu({ veri }) {
                 </div>
 
                 {acildi && (
-                  <div
-                    className="mt-4 overflow-hidden rounded-xl bg-surface2 transition-all duration-700 ease-out motion-reduce:transition-none"
-                    style={{
-                      transitionDelay: (kartAcik ? 140 : 0) + 'ms',
-                      opacity: kartAcik ? 1 : 0,
-                      transform: kartAcik ? 'none' : 'translateY(18px) scale(0.94)',
-                    }}
-                  >
-                    <div className="relative w-full" style={{ aspectRatio: '16 / 9' }}>
-                      <iframe
-                        key={koyuTema ? 'koyu' : 'acik'}
-                        src={videoAdresi(kart.video, koyuTema, durgun)}
-                        title={kart.video.baslik}
-                        loading="lazy"
-                        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
-                        allowFullScreen
-                        className="absolute inset-0 h-full w-full border-0"
-                      />
-                    </div>
+                  <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
+                    {kart.videolar.map((v, i) => (
+                      <div
+                        key={v.video}
+                        className="overflow-hidden rounded-xl bg-surface2 transition-all duration-700 ease-out motion-reduce:transition-none"
+                        style={{
+                          transitionDelay: (kartAcik ? 140 + i * 120 : 0) + 'ms',
+                          opacity: kartAcik ? 1 : 0,
+                          transform: kartAcik ? 'none' : 'translateY(18px) scale(0.94)',
+                        }}
+                      >
+                        <div className="relative w-full" style={{ aspectRatio: '16 / 9' }}>
+                          <iframe
+                            src={videoAdresi(v, durgun)}
+                            title={v.baslik}
+                            loading="lazy"
+                            allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
+                            allowFullScreen
+                            className="absolute inset-0 h-full w-full border-0"
+                          />
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 )}
 

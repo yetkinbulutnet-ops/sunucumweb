@@ -58,12 +58,18 @@ export const HAKKIMIZDA = {
       eyebrow: 'Konumdasınız',
       baslik: 'Netweb · İstanbul',
       metin: 'Kabinlerimizden görüntüler:',
-      video: {
-        kutuphane: '734078',
-        acik: 'e68489b9-9b61-4d3f-8985-11b3489b7227',
-        koyu: 'b42057cf-5755-481c-945b-a9c3bc95207b',
-        baslik: 'SunucumWEB veri merkezi kabinleri',
-      },
+      videolar: [
+        {
+          kutuphane: '734078',
+          video: 'e68489b9-9b61-4d3f-8985-11b3489b7227',
+          baslik: 'Kabin sıralarından aydınlık çekim',
+        },
+        {
+          kutuphane: '734078',
+          video: 'b42057cf-5755-481c-945b-a9c3bc95207b',
+          baslik: 'Kabin ışıklarından karanlık çekim',
+        },
+      ],
     },
     ozellikler: [
       'EN 50600 standardında tesis altyapısı',
