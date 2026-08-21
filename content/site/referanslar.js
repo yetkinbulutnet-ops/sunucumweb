@@ -1,13 +1,25 @@
-export const MUSTERILER = [];
+export const MUSTERILER = [
+  { ad: 'YetkinBulut', site: 'https://yetkinbulut.com', sektor: 'bilisim', logo: '/img/referans/yetkinbulut.webp', g: 226, y: 78, not: 'Hosting, alan adı ve kurumsal mail çözümleri' },
+  { ad: 'Netweb', site: 'https://www.netweb.com.tr', sektor: 'bilisim', logo: '/img/referans/netweb.webp', g: 339, y: 96, not: 'Veri merkezi ve kabin kiralama' },
+  { ad: 'Yazgaç.net', site: 'https://www.yazgac.net', sektor: 'bilisim', logo: '/img/referans/yazgac.png', g: 372, y: 96, not: 'Sanal sunucu, dedicated sunucu ve hosting' },
+  { ad: 'ScriptEvim', site: 'https://scriptevim.com', sektor: 'yazilim', logo: '/img/referans/scriptevim.png', g: 251, y: 96, not: 'Hazır script ve özel yazılım çözümleri' },
+  { ad: 'YetkinWeb', site: 'https://yetkinweb.com', sektor: 'yazilim', logo: '/img/referans/yetkinweb.webp', g: 384, y: 96 },
+  { ad: 'MultiPortal', site: 'https://multiportal.tr', sektor: 'edonusum', logo: '/img/referans/multiportal.png', g: 288, y: 96, not: 'E-dönüşüm, e-fatura ve kontör çözümleri' },
+  { ad: 'ERC Soft', site: 'https://ercsoft.com.tr', sektor: 'edonusum', logo: '/img/referans/ercsoft.png', g: 219, y: 68, not: 'e-Fatura, e-Arşiv ve e-Defter çözümleri' },
+  { ad: 'Bazaarica', site: 'https://bazaarica.com', sektor: 'eticaret', logo: '/img/referans/bazaarica.svg', g: 279, y: 55, not: 'Kozmetik ve takviye ürünleri e-ticareti' },
+  { ad: 'Paketti', site: 'https://paketti.com.tr', sektor: 'lojistik', logo: '/img/referans/paketti.png', g: 452, y: 96, not: 'Kurye ve teslimat hizmetleri' },
+];
 
 export const SEKTORLER = [
+  { id: 'bilisim', ad: 'Bilişim ve altyapı' },
+  { id: 'yazilim', ad: 'Yazılım ve ajans' },
+  { id: 'edonusum', ad: 'E-dönüşüm ve finans' },
   { id: 'eticaret', ad: 'E-ticaret' },
+  { id: 'lojistik', ad: 'Lojistik ve kurye' },
   { id: 'kurumsal', ad: 'Kurumsal web' },
-  { id: 'ajans', ad: 'Ajans ve yazılım' },
   { id: 'egitim', ad: 'Eğitim' },
   { id: 'saglik', ad: 'Sağlık' },
   { id: 'medya', ad: 'Medya ve yayıncılık' },
-  { id: 'oyun', ad: 'Oyun ve topluluk' },
   { id: 'kamu', ad: 'Dernek ve kamu' },
 ];
 
@@ -20,7 +32,7 @@ export const REFERANSLAR = {
   eyebrow: 'Referanslar',
   title: 'Altyapımızda yayında olan işler',
   lede:
-    'Küçük işletmelerin kurumsal sitelerinden yoğun trafikli e-ticaret projelerine kadar farklı ölçekte işi aynı altyapıda barındırıyoruz. Aşağıdaki markalar hizmetlerimizi kullanan müşterilerimizdir.',
+    'Küçük işletmelerin kurumsal sitelerinden yoğun trafikli e-ticaret projelerine kadar farklı ölçekte işi aynı altyapıda barındırıyoruz. Aşağıdaki markalar altyapımızı kullanan müşterilerimiz ve birlikte iş yaptığımız kurumlardır.',
   ledeListesiz:
     'Küçük işletmelerin kurumsal sitelerinden yoğun trafikli e-ticaret projelerine kadar farklı ölçekte işi aynı altyapıda barındırıyoruz. Hangi sektörlerde hizmet verdiğimizi ve sunucularımızda kullandığımız teknolojileri aşağıda bulabilirsiniz.',
 
@@ -31,13 +43,13 @@ export const REFERANSLAR = {
     ['7/24', 'Teknik destek'],
   ],
 
-  seritBaslik: 'Bizi tercih eden markalar',
+  seritBaslik: 'Bizimle çalışan markalar',
 
   izgara: {
-    eyebrow: 'Müşterilerimiz',
-    baslik: 'Referans listemiz',
+    eyebrow: 'Referanslar',
+    baslik: 'Bizimle çalışan markalar',
     metin:
-      'Logoya tıkladığınızda ilgili firmanın sitesi yeni sekmede açılır. Listede yer almak istemeyen müşterilerimizin markası burada gösterilmez.',
+      'Logoya tıkladığınızda ilgili kurumun sitesi yeni sekmede açılır. Sektöre göre süzmek için üstteki başlıkları kullanabilirsiniz. Listede yer almak istemeyen müşterilerimizin markası burada gösterilmez.',
   },
 
   sektorBolumu: {
@@ -49,9 +61,9 @@ export const REFERANSLAR = {
       { t: 'E-ticaret', d: 'Kampanya dönemlerindeki ani yük artışına dayanacak kaynak planlaması, hızlı disk ve önbellek yapılandırması.' },
       { t: 'Kurumsal web', d: 'Kurumsal e-posta, SSL ve düzenli yedekle çalışan, bakım gerektirmeyen paylaşımlı ya da sanal sunucu kurulumları.' },
       { t: 'Ajans ve yazılım', d: 'Birden çok müşteri sitesini tek panelden yöneten ajanslar için bayi paketleri ve ayrı kaynak sınırları.' },
-      { t: 'Eğitim', d: 'Kayıt ve sınav dönemlerinde yoğunlaşan trafiği karşılayan, dönemsel olarak yükseltilebilen paketler.' },
-      { t: 'Sağlık', d: 'Randevu ve hasta iletişimi yürüten sistemler için Türkiye lokasyonunda barındırma ve erişim kaydı.' },
-      { t: 'Medya ve yayıncılık', d: 'Yüksek görsel ve video trafiği için geniş bant, CDN uyumlu yapılandırma ve yük dengeli sunucular.' },
+      { t: 'E-dönüşüm ve finans', d: 'Kesintisiz çalışması gereken e-fatura ve entegratör servisleri için yedekli kaynak, izleme ve erişim kaydı.' },
+      { t: 'Lojistik ve saha', d: 'Mobil uygulamalarla sürekli haberleşen takip sistemleri için düşük gecikmeli, ölçeklenebilir sunucular.' },
+      { t: 'Eğitim ve medya', d: 'Dönemsel trafik artışını ve yüksek görsel yükünü karşılayan geniş bant ve esnek kaynak planlaması.' },
     ],
   },
 
