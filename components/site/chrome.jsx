@@ -88,6 +88,7 @@ export const MENU = [
   ]},
   { label: 'Kurumsal', kolon: 3, items: [
     { t: 'Şirket Profili', d: 'SunucumWEB hakkında detaylı bilgi alın.', href: '/hakkimizda', icon: 'users' },
+    { t: 'Referanslarımız', d: 'Altyapımızda yayında olan markalar ve teknoloji ortaklarımız.', href: '/referanslar', icon: 'star' },
     { t: 'Legal', d: 'Sözleşmeler, yasal metinler ve resmî ticari bilgiler.', href: '/legal', icon: 'doc' },
     { t: 'İletişim', d: 'Telefon, e-posta ve destek kanallarımız.', href: '/iletisim', icon: 'chat' },
   ]},
@@ -582,6 +583,7 @@ const FOOT_KOLON = [
   ]},
   { h: 'Kurumsal', items: [
     ['Şirket Profili', '/hakkimizda'],
+    ['Referanslarımız', '/referanslar'],
     ['Legal', '/legal'],
     ['İletişim', '/iletisim'],
   ]},

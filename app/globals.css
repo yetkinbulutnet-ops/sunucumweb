@@ -111,6 +111,16 @@ html.tema-kilit *::after {
   0%, 100% { transform: translateY(0); }
   50%      { transform: translateY(-10px); }
 }
+/* referans logo seridi: ikinci kopya birebir ayni oldugu icin
+   -50% kaydiginda dikis gorunmez */
+@keyframes seritSol {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes seritSag {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto !important; }
   *, *::before, *::after {
