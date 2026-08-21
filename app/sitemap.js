@@ -29,7 +29,6 @@ export default function sitemap() {
 
   return [
     girdi('/', 1, 'weekly'),
-    girdi('/referanslar', 0.7, 'monthly'),
     girdi('/legal', 0.4, 'yearly'),
     girdi('/araclar', 0.8, 'monthly'),
     ...sayfalar,

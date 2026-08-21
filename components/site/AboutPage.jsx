@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { Icon, CtaBand, SiteShell } from './chrome';
+import LogoSerit from './LogoSerit';
+import { MARKALAR, MARKA_SERIDI } from '@/content/site/markalar';
 import KabinSlider from './KabinSlider';
 import { HAKKIMIZDA as C } from '@/content/site/hakkimizda';
 
@@ -109,6 +111,23 @@ export default function AboutPage() {
           ))}
         </ol>
       </section>
+
+      {MARKALAR.length > 0 && (
+        <section className="border-y border-line bg-surface2/60">
+          <div className="mx-auto max-w-7xl px-5 lg:px-8 py-16 lg:py-20">
+            <div className="mx-auto max-w-2xl text-center">
+              <h2 className="text-3xl font-extrabold tracking-tight text-strong text-balance sm:text-4xl">
+                {MARKA_SERIDI.baslik}
+              </h2>
+              <p className="mt-4 text-[16px] leading-relaxed text-body">{MARKA_SERIDI.metin}</p>
+            </div>
+
+            <div className="mt-10">
+              <LogoSerit liste={MARKALAR} />
+            </div>
+          </div>
+        </section>
+      )}
 
       <CtaBand title={C.cta.baslik} text={C.cta.metin} />
     </SiteShell>

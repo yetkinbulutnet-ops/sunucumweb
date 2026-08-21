@@ -8,6 +8,7 @@ import SmoothScroll from './SmoothScroll';
 import { CartProvider, useCart } from './CartProvider';
 import OdemeLogolari from './OdemeLogolari';
 import DurumRozeti from './DurumRozeti';
+import AltyapiSerit from './AltyapiSerit';
 
 const PATHS = {
   bolt: 'M13 2 3 14h7l-1 8 10-12h-7z',
@@ -88,7 +89,6 @@ export const MENU = [
   ]},
   { label: 'Kurumsal', kolon: 3, items: [
     { t: 'Şirket Profili', d: 'SunucumWEB hakkında detaylı bilgi alın.', href: '/hakkimizda', icon: 'users' },
-    { t: 'Referanslarımız', d: 'Altyapımızda yayında olan markalar ve teknoloji ortaklarımız.', href: '/referanslar', icon: 'star' },
     { t: 'Legal', d: 'Sözleşmeler, yasal metinler ve resmî ticari bilgiler.', href: '/legal', icon: 'doc' },
     { t: 'İletişim', d: 'Telefon, e-posta ve destek kanallarımız.', href: '/iletisim', icon: 'chat' },
   ]},
@@ -583,7 +583,6 @@ const FOOT_KOLON = [
   ]},
   { h: 'Kurumsal', items: [
     ['Şirket Profili', '/hakkimizda'],
-    ['Referanslarımız', '/referanslar'],
     ['Legal', '/legal'],
     ['İletişim', '/iletisim'],
   ]},
@@ -825,6 +824,7 @@ export function SiteShell({ children }) {
       <div className="min-h-ekran bg-page font-sans text-strong antialiased">
         <SiteHeader />
         <main>{children}</main>
+        <AltyapiSerit />
         <SiteFooter />
       </div>
     </CartProvider>
