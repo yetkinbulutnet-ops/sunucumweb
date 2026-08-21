@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Icon, CtaBand, SiteShell } from './chrome';
 import LogoSerit from './LogoSerit';
+import VeriMerkeziBolumu from './VeriMerkeziBolumu';
 import { MARKALAR, MARKA_SERIDI } from '@/content/site/markalar';
 import KabinSlider from './KabinSlider';
 import { HAKKIMIZDA as C } from '@/content/site/hakkimizda';
@@ -119,6 +120,8 @@ export default function AboutPage() {
           </div>
         </section>
       )}
+
+      <VeriMerkeziBolumu veri={C.veriMerkezi} />
 
       <CtaBand title={C.cta.baslik} text={C.cta.metin} />
     </SiteShell>

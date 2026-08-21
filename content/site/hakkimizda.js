@@ -36,6 +36,34 @@ export const HAKKIMIZDA = {
     ],
   },
 
+  veriMerkezi: {
+    eyebrow: 'Altyapı',
+    baslik: 'Veri merkezimiz',
+    metin:
+      'Sunucularımız İstanbul’daki Netweb veri merkezinde barınıyor. Operatör bağımsız bir tesis olduğu için trafiğimiz tek bir servis sağlayıcıya bağlı değil; bir hatta sorun çıktığında bağlantı diğer taşıyıcılar üzerinden devam eder. Türkiye’deki ziyaretçileriniz için gecikme süresi yurt dışı barındırmaya göre belirgin biçimde düşüktür.',
+    konum: {
+      sehir: 'İstanbul',
+      ulke: 'Türkiye',
+      etiket: 'İstanbul',
+      enlem: 41.0082,
+      boylam: 28.9784,
+      koordinat: '41.0082° K · 28.9784° D',
+    },
+    tesis: {
+      ad: 'Netweb',
+      site: 'https://www.netweb.com.tr',
+      not: 'Operatör bağımsız veri merkezi',
+    },
+    ozellikler: [
+      'EN 50600 standardında tesis altyapısı',
+      'Yedekli güç ve iklimlendirme',
+      '1:1 simetrik internet bağlantısı',
+      'Şebeke seviyesinde DDoS koruması',
+      'Kabin ve colocation imkânı',
+      '7/24 fiziksel güvenlik ve izleme',
+    ],
+  },
+
   ilkeler: {
     eyebrow: 'Çalışma biçimimiz',
     baslik: 'Hizmet ilkelerimiz',
