@@ -349,8 +349,60 @@ function CartDrawer() {
   );
 }
 
+function BaslaModal({ open, onClose }) {
+  useEffect(() => {
+    if (!open) return;
+    const esc = (e) => e.key === 'Escape' && onClose();
+    window.addEventListener('keydown', esc);
+    const coz = scrollKilitle();
+    return () => { window.removeEventListener('keydown', esc); coz(); };
+  }, [open, onClose]);
+
+  if (!open) return null;
+
+  const gruplar = [
+    ...MENU.filter((m) => m.items && m.label !== 'Kurumsal'),
+    { label: 'Yazılım & Araçlar', items: [
+      { t: 'Hazır Yazılımlar', d: 'Kuruluma hazır e-ticaret, kurumsal site, blog ve daha fazlası.', href: '/hazir-yazilim', icon: 'sparkles' },
+      { t: 'Ücretsiz Araçlar', d: 'DNS, WHOIS, SSL, e-posta ve IP sorgulama; kayıt gerekmez.', href: '/araclar', icon: 'layers' },
+    ]},
+  ];
+
+  return (
+    <div className="fixed inset-0 z-[95] flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="Hangi hizmetle başlayalım?">
+      <div onClick={onClose} className="absolute inset-0 bg-ink/60 backdrop-blur-sm animate-[fadeup_0.2s_ease-out]" />
+      <div className="relative flex max-h-[88vh] w-full max-w-3xl flex-col overflow-hidden rounded-3xl bg-surface shadow-2xl animate-[fadeup_0.3s_ease-out]">
+        <div className="flex items-start justify-between gap-4 border-b border-line px-6 py-5">
+          <div>
+            <h2 className="text-[19px] font-extrabold tracking-tight text-strong">Nereden başlamak istersiniz?</h2>
+            <p className="mt-1 text-[14px] leading-relaxed text-body">İlgilendiğiniz hizmeti seçin, sizi doğru sayfaya götürelim.</p>
+          </div>
+          <button onClick={onClose} aria-label="Kapat" className="grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted transition-colors hover:bg-surface2 hover:text-strong">
+            <Icon name="xmark" className="w-5 h-5" />
+          </button>
+        </div>
+
+        <div data-lenis-prevent className="min-h-0 flex-1 space-y-6 overflow-y-auto overscroll-contain px-6 py-5">
+          {gruplar.map((g) => (
+            <div key={g.label}>
+              <div className="mb-2.5 flex items-center gap-3 px-1">
+                <span className="text-[12px] font-bold uppercase tracking-wider text-brandtext">{g.label}</span>
+                <span className="h-px flex-1 bg-line" />
+              </div>
+              <div className="grid gap-3 sm:grid-cols-2">
+                {g.items.map((it) => <MegaItem key={it.href + it.t} it={it} onClick={onClose} />)}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [basla, setBasla] = useState(false);
   const [acc, setAcc] = useState(-1);
   const [scrolled, setScrolled] = useState(false);
 
@@ -445,9 +497,9 @@ export function SiteHeader() {
 
             <div className="flex shrink-0 items-center gap-1 sm:gap-2">
               <CartButton />
-              <Link href="/iletisim" className="group hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap rounded-xl bg-brand-500 px-4 py-2.5 text-[14px] font-semibold text-white shadow-lg shadow-brand-500/25 transition-[transform,box-shadow,border-color,opacity] hover:bg-brand-600 2xl:px-5 2xl:text-[15px]">
+              <button type="button" onClick={() => setBasla(true)} className="group hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap rounded-xl bg-brand-500 px-4 py-2.5 text-[14px] font-semibold text-white shadow-lg shadow-brand-500/25 transition-[transform,box-shadow,border-color,opacity] hover:bg-brand-600 2xl:px-5 2xl:text-[15px]">
                 Hemen Başla <Icon name="arrow" className="hidden h-4 w-4 transition-transform group-hover:translate-x-0.5 sm:block" />
-              </Link>
+              </button>
               <button onClick={() => setOpen((v) => !v)} className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-strong transition-colors hover:bg-surface2 xl:hidden" aria-label="Menü" aria-expanded={open}>
                 <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                   {open ? <path d="M6 6l12 12M18 6 6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
@@ -504,9 +556,9 @@ export function SiteHeader() {
                 </div>
               ))}
 
-              <Link href="/iletisim" onClick={() => setOpen(false)} className="mt-4 block rounded-xl bg-brand-500 px-5 py-3.5 text-center font-bold text-white shadow-lg shadow-brand-500/25">
-                Hemen Başla
-              </Link>
+              <button type="button" onClick={() => { setOpen(false); setBasla(true); }} className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-500 px-5 py-3.5 text-center font-bold text-white shadow-lg shadow-brand-500/25">
+                Hemen Başla <Icon name="arrow" className="h-4 w-4" />
+              </button>
 
               <div className="mt-4 rounded-2xl border border-line bg-surface2/60 p-3">
                 <div className="px-1 pb-2 text-[11px] font-bold uppercase tracking-wider text-muted">Hızlı erişim</div>
@@ -536,6 +588,7 @@ export function SiteHeader() {
       )}
 
       <CartDrawer />
+      <BaslaModal open={basla} onClose={() => setBasla(false)} />
     </>
   );
 }
