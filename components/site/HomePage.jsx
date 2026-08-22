@@ -6,6 +6,9 @@ import { Icon, CtaBand, SiteShell } from './chrome';
 import { QUESTIONS, recommend } from '@/lib/engines/product-finder';
 import { scrollKilitle } from '@/lib/engines/scroll-lock';
 import DomainAI from './DomainAI';
+import LogoSerit from './LogoSerit';
+import { MARKALAR, MARKA_SERIDI } from '@/content/site/markalar';
+import { YAZILIMLAR, YAZILIM_KATEGORILERI } from '@/content/site/yazilimlar';
 
 const SLIDES = [
   {
@@ -14,8 +17,8 @@ const SLIDES = [
     eyebrow: 'Türkiye\'nin güvenilir sunucu sağlayıcısı',
     pre: 'İşinizi', hl: 'güçlü sunuculara', post: 'taşıyın',
     text: 'Hızlı NVMe hosting, ölçeklenebilir sanal sunucular ve kurumsal dedicated çözümler. Ücretsiz SSL, günlük yedek ve gerçek 7/24 destekle.',
-    cta: { t: 'Paketleri İncele', href: '/web-hosting' },
-    cta2: { t: 'Sunucu Çözümleri', href: '/sanal-sunucu' },
+    cta: { t: 'Teklif Alın', href: '/iletisim' },
+    cta2: { t: 'Hazır Yazılımlar', href: '/hazir-yazilim' },
     rozet: ['%99.9 Uptime', 'shield'],
   },
   {
@@ -34,7 +37,7 @@ const SLIDES = [
     eyebrow: 'Kesintisiz, güvenli altyapı',
     pre: 'Siteniz', hl: 'her zaman ayakta', post: 'kalsın',
     text: 'Yedekli ağ, kesintisiz güç kaynağı ve 7/24 izleme ile hizmetiniz asla durmaz. DDoS koruması tüm paketlerde dahildir.',
-    cta: { t: 'Veri Merkezimiz', href: '/sunucu-barindirma' },
+    cta: { t: 'Hakkımızda', href: '/hakkimizda' },
     cta2: { t: 'Bize Ulaşın', href: '/iletisim' },
     rozet: ['DDoS Korumalı', 'shield'],
   },
@@ -83,6 +86,20 @@ const KATEGORILER = [
   },
 ];
 const STATS = [['%99.9', 'Uptime Garantisi'], ['10.000+', 'Mutlu Müşteri'], ['7/24', 'Uzman Destek'], ['<5dk', 'Ortalama Yanıt']];
+
+const OZET_PAKETLER = [
+  { urun: 'Web Hosting', paket: 'Profesyonel', fiyat: '99', vurgu: false, ozet: 'Kişisel ve KOBİ siteleri için hızlı NVMe hosting.', ozellikler: ['50 GB NVMe SSD', '10 Web Sitesi', 'Ücretsiz SSL', 'Günlük Yedek'], icon: 'globe' },
+  { urun: 'Sanal Sunucu', paket: 'VDS 4', fiyat: '299', vurgu: true, ozet: 'Root erişimli, saniyeler içinde ölçeklenen sanal sunucu.', ozellikler: ['4 vCPU · 8 GB RAM', '160 GB NVMe SSD', 'Tam Root Erişimi', 'DDoS Koruması'], icon: 'vds' },
+  { urun: 'Kurumsal Hosting', paket: 'Kurumsal M', fiyat: '699', vurgu: false, ozet: 'Yüksek trafikli kurumsal siteler için izole kaynak.', ozellikler: ['8 GB Garantili RAM', 'İzole Kaynak', 'DDoS Koruması', 'Kurumsal SLA'], icon: 'kurumsal' },
+];
+
+const SSS_ANA = [
+  { q: 'Sunucularınız nerede barındırılıyor?', a: 'Isparta merkezliyiz; hizmetlerimiz yedekli güç ve soğutmaya sahip Türkiye lokasyonlu veri merkezi altyapısında çalışır. Düşük gecikme ve KVKK uyumu için verileriniz yurt içinde kalır.' },
+  { q: 'Hizmetim ne kadar sürede aktif olur?', a: 'Ödeme onaylandıktan sonra hosting ve sanal sunucular çoğunlukla birkaç dakika içinde otomatik olarak kurulur. Dedicated sunucularda teslim süresi yapılandırmaya göre değişir.' },
+  { q: 'Memnun kalmazsam iade alabilir miyim?', a: 'Evet. Uygun hizmetlerde 30 gün içinde koşulsuz iade garantisi sunuyoruz; detaylar iade politikamızda yer alır.' },
+  { q: 'Teknik desteğe nasıl ulaşırım?', a: '7/24 canlı destek, ticket ve telefonla ulaşabilirsiniz. Ortalama ilk yanıt süremiz 5 dakikanın altındadır.' },
+  { q: 'Ödeme nasıl yapılıyor?', a: 'Kredi kartı ve banka havalesi ile müşteri panelinden güvenle ödeyebilirsiniz. Tüm işlemler SSL ile şifrelenir.' },
+];
 
 function Hero() {
   const [i, setI] = useState(0);
@@ -347,6 +364,128 @@ function FinderTab({ onOpen }) {
   );
 }
 
+function PaketlerVitrin() {
+  return (
+    <section className="mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-24">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div className="max-w-2xl">
+          <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Öne Çıkan Paketler</span>
+          <h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">İhtiyacınıza göre ölçeklenen çözümler</h2>
+          <p className="mt-4 tipo-metin text-body">Hosting'ten sanal sunucuya en çok tercih edilen paketler. Size en uygun yapılandırmayı birlikte belirleyelim.</p>
+        </div>
+        <Link href="/iletisim" className="inline-flex shrink-0 items-center gap-2 rounded-xl border border-line bg-surface px-5 py-3 text-[14px] font-semibold text-strong transition-colors hover:border-brandline hover:text-brandtext">
+          Tüm paketler için görüşün <Icon name="arrow" className="h-4 w-4" />
+        </Link>
+      </div>
+      <div className="mt-12 grid gap-6 lg:grid-cols-3 items-stretch">
+        {OZET_PAKETLER.map((p) => (
+          <div key={p.urun} className={`relative flex flex-col rounded-3xl p-7 transition-[transform,box-shadow,border-color] duration-300 ${p.vurgu ? 'bg-ink text-white shadow-[0_40px_80px_-30px_rgba(15,41,66,0.6)] lg:-translate-y-3 ring-1 ring-brand-400/40' : 'bg-surface border border-line shadow-[0_20px_50px_-30px_rgba(15,41,66,0.3)] hover:-translate-y-1'}`}>
+            {p.vurgu && <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-brand-600 px-4 py-1 text-xs font-bold text-white shadow-lg shadow-brand-500/40">EN POPÜLER</span>}
+            <div className="flex items-center gap-3">
+              <span className={`grid h-11 w-11 place-items-center rounded-2xl ${p.vurgu ? 'bg-white/10 text-brand-300' : 'bg-brandsoft text-brandtext'}`}><Icon name={p.icon} /></span>
+              <div>
+                <div className={`text-[12px] font-bold uppercase tracking-wide ${p.vurgu ? 'text-slate-300' : 'text-muted'}`}>{p.urun}</div>
+                <div className={`text-[18px] font-extrabold ${p.vurgu ? 'text-white' : 'text-strong'}`}>{p.paket}</div>
+              </div>
+            </div>
+            <p className={`mt-4 text-[14px] leading-relaxed ${p.vurgu ? 'text-slate-300' : 'text-body'}`}>{p.ozet}</p>
+            <div className="mt-5 flex items-baseline gap-1">
+              <span className={`text-sm font-semibold ${p.vurgu ? 'text-slate-300' : 'text-muted'}`}>₺</span>
+              <span className={`text-4xl font-extrabold tracking-tight ${p.vurgu ? 'text-white' : 'text-strong'}`}>{p.fiyat}</span>
+              <span className={`text-sm ${p.vurgu ? 'text-slate-300' : 'text-muted'}`}>/ay</span>
+            </div>
+            <ul className="mt-6 space-y-3 flex-1">
+              {p.ozellikler.map((f) => (
+                <li key={f} className="flex items-center gap-3 text-[15px]">
+                  <span className={`grid h-5 w-5 shrink-0 place-items-center rounded-full ${p.vurgu ? 'bg-brand-500/20 text-brand-300' : 'bg-brandsoft text-brandtext'}`}><Icon name="check" className="w-3 h-3" /></span>
+                  <span className={p.vurgu ? 'text-slate-200' : 'text-body'}>{f}</span>
+                </li>
+              ))}
+            </ul>
+            <Link href="/iletisim" className={`mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3.5 text-[15px] font-bold transition-colors ${p.vurgu ? 'bg-brand-500 text-white hover:bg-brand-400' : 'bg-ink text-white hover:bg-brand-600'}`}>Teklif Al <Icon name="arrow" className="h-4 w-4" /></Link>
+          </div>
+        ))}
+      </div>
+      <p className="mt-8 text-center text-[13px] text-muted">Paketler ihtiyacınıza göre özelleştirilebilir. Net fiyat ve yapılandırma için bizimle görüşün.</p>
+    </section>
+  );
+}
+
+function YazilimVitrin() {
+  const one = YAZILIMLAR.filter((y) => y.oneCikan).slice(0, 4);
+  const kat = (s) => YAZILIM_KATEGORILERI.find((k) => k.slug === s);
+  return (
+    <section className="bg-surface2 border-y border-line">
+      <div className="mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-24">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div className="max-w-2xl">
+            <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Hazır Yazılımlar</span>
+            <h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">Kurmadan hazır, dakikalar içinde yayında</h2>
+            <p className="mt-4 tipo-metin text-body">E-ticaretten kurumsal siteye, rezervasyondan eğitim platformuna; işinizi hızla internete taşıyacak hazır web yazılımları.</p>
+          </div>
+          <Link href="/hazir-yazilim" className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-brand-500 px-5 py-3 text-[14px] font-bold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-600">
+            Tüm yazılımlar <Icon name="arrow" className="h-4 w-4" />
+          </Link>
+        </div>
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4 items-stretch">
+          {one.map((y) => {
+            const k = kat(y.kategori);
+            return (
+              <Link key={y.id} href="/hazir-yazilim" className="group flex h-full flex-col rounded-2xl border border-line bg-surface p-6 shadow-[0_10px_40px_-24px_rgba(15,41,66,0.2)] transition-[transform,box-shadow,border-color] hover:-translate-y-1 hover:border-brandline">
+                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-brandsoft text-brandtext transition-colors group-hover:bg-brand-500 group-hover:text-white"><Icon name={k ? k.icon : 'layers'} /></span>
+                <div className="mt-4 text-[11px] font-bold uppercase tracking-wide text-muted">{k ? k.ad : 'Yazılım'}</div>
+                <h3 className="mt-1 text-[16px] font-extrabold text-strong">{y.ad}</h3>
+                <p className="mt-2 flex-1 text-[13.5px] leading-relaxed text-body">{y.aciklama}</p>
+                <span className="mt-4 inline-flex items-center gap-1.5 text-[13px] font-bold text-brandtext">İncele <Icon name="arrow" className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" /></span>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function MarkaSeridi() {
+  return (
+    <section className="mx-auto max-w-7xl px-5 lg:px-8 py-16 lg:py-20">
+      <div className="mx-auto max-w-2xl text-center">
+        <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Referanslar</span>
+        <h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">{MARKA_SERIDI.baslik}</h2>
+        <p className="mt-4 tipo-metin text-body">Altyapımızı kullanan müşterilerimiz ve birlikte iş yaptığımız kurumlar.</p>
+      </div>
+      <div className="mt-10"><LogoSerit liste={MARKALAR} boyut="serit" /></div>
+    </section>
+  );
+}
+
+function AnaSSS() {
+  const [acik, setAcik] = useState(0);
+  return (
+    <section className="bg-surface2 border-y border-line">
+      <div className="mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-24">
+        <div className="mx-auto mb-12 max-w-2xl text-center">
+          <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">SSS</span>
+          <h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">Aklınıza takılanlar</h2>
+        </div>
+        <div className="mx-auto max-w-3xl divide-y divide-line rounded-2xl border border-line bg-surface">
+          {SSS_ANA.map((f, i) => (
+            <div key={f.q} className="px-6">
+              <button onClick={() => setAcik(acik === i ? -1 : i)} className="flex w-full items-center justify-between gap-4 py-5 text-left">
+                <span className="text-[15px] font-semibold text-strong">{f.q}</span>
+                <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brandsoft text-brandtext transition-transform ${acik === i ? 'rotate-45' : ''}`}>
+                  <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M12 5v14M5 12h14" /></svg>
+                </span>
+              </button>
+              {acik === i && <p className="pb-5 -mt-1 text-[15px] leading-relaxed text-body">{f.a}</p>}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function HomePage() {
   const [finder, setFinder] = useState(false);
   const openF = useCallback(() => setFinder(true), []);
@@ -372,6 +511,8 @@ export default function HomePage() {
         </div>
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">{FEATURES.map((f) => (<div key={f.t} className="group rounded-2xl border border-line bg-surface p-6 shadow-[0_10px_40px_-20px_rgba(15,41,66,0.18)] hover:shadow-[0_24px_60px_-24px_rgba(20,184,166,0.35)] hover:-translate-y-1 transition-[transform,box-shadow,border-color,opacity] duration-300"><span className="grid h-12 w-12 place-items-center rounded-2xl bg-brandsoft text-brandtext group-hover:bg-brand-500 group-hover:text-white transition-colors"><Icon name={f.icon} /></span><h3 className="mt-5 text-lg font-bold text-strong">{f.t}</h3><p className="mt-2 text-[15px] leading-relaxed text-body">{f.d}</p></div>))}</div>
       </section>
+
+      <PaketlerVitrin />
 
       <section id="cozumler" className="relative scroll-mt-28 bg-surface2 border-y border-line">
         <div className="mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-28">
@@ -423,6 +564,12 @@ export default function HomePage() {
           </p>
         </div>
       </section>
+
+      <YazilimVitrin />
+
+      <MarkaSeridi />
+
+      <AnaSSS />
 
       <section className="relative overflow-hidden bg-ink"><div aria-hidden className="pointer-events-none absolute inset-0"><div className="absolute -right-20 top-0 h-80 w-80 rounded-full bg-brand-500/20 blur-[100px]" /><div className="absolute left-0 bottom-0 h-72 w-72 rounded-full bg-brand-400/10 blur-[100px]" /></div><div className="relative mx-auto max-w-7xl px-5 lg:px-8 py-20"><div className="grid lg:grid-cols-[1fr_1.1fr] gap-12 items-center"><div><h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white text-balance">Binlerce işletme altyapısını bize emanet ediyor</h2><p className="mt-4 text-lg text-slate-300">Startup'lardan kurumsal firmalara; hız, güvenlik ve kesintisiz destek arayan herkes SunucumWEB'i tercih ediyor.</p><Link href="/hakkimizda" className="mt-7 inline-flex items-center gap-2 rounded-xl bg-white/10 px-5 py-3 text-[15px] font-semibold text-white ring-1 ring-white/15 hover:bg-white/15 transition">Hikâyemizi keşfedin <Icon name="arrow" className="w-4 h-4" /></Link></div><div className="grid grid-cols-2 gap-4">{STATS.map(([n, l]) => (<div key={l} className="rounded-2xl bg-white/5 ring-1 ring-white/10 p-6 backdrop-blur"><div className="text-3xl sm:text-4xl font-extrabold text-brand-300">{n}</div><div className="mt-1 text-sm text-slate-300">{l}</div></div>))}</div></div></div></section>
       <CtaBand />

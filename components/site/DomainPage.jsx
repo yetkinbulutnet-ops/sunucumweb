@@ -6,28 +6,83 @@ import DomainAI from './DomainAI';
 
 const TLDS = [
   ['.com', '299'], ['.com.tr', '149'], ['.net', '329'], ['.org', '319'],
-  ['.xyz', '89'], ['.io', '899'], ['.dev', '449'], ['.co', '649'],
-];
-const STEPS = [
-  { t: 'Alan adınızı girin', d: 'Taşımak istediğiniz alan adını sorgulayın ve uygunluğunu görün.' },
-  { t: 'Transfer kodunu alın', d: 'Mevcut sağlayıcınızdan EPP/transfer kodunuzu temin edin.' },
-  { t: 'Taşıma tamamlansın', d: 'Onay sonrası alan adınız güvenle SunucumWEB\'e taşınır.' },
-];
-const DFEATURES = [
-  { icon: 'lock', t: 'Ücretsiz WHOIS Gizliliği', d: 'Kişisel bilgileriniz WHOIS sorgularında gizli kalır.' },
-  { icon: 'gauge', t: 'Kolay DNS Yönetimi', d: 'Tüm DNS kayıtlarınızı sezgisel panelden yönetin.' },
-  { icon: 'refresh', t: 'Otomatik Yenileme', d: 'Alan adınızı asla kaybetmeyin; otomatik yenileme ile güvende.' },
-  { icon: 'headset', t: '7/24 Destek', d: 'Alan adı işlemlerinizde uzman ekibimiz her an yanınızda.' },
+  ['.tr', '289'], ['.xyz', '89'], ['.io', '899'], ['.dev', '449'],
+  ['.co', '649'], ['.info', '259'], ['.biz', '269'], ['.online', '349'],
 ];
 
-const COPY = {
-  register: { eyebrow: 'Alan Adı', title: 'Mükemmel alan adını bulun', text: 'Markanıza en uygun alan adını saniyeler içinde sorgulayın ve hemen sahiplenin.', ph: 'firmaadi.com', btn: 'Sorgula' },
-  transfer: { eyebrow: 'Alan Adı Transferi', title: 'Alan adınızı bize taşıyın', text: 'Mevcut alan adınızı kolayca SunucumWEB\'e taşıyın; üstelik 1 yıl uzatma hediye.', ph: 'taşınacakalanadi.com', btn: 'Taşımayı Başlat' },
-  whois: { eyebrow: 'WHOIS Sorgu', title: 'Alan adı WHOIS sorgulama', text: 'Bir alan adının kayıtlı olup olmadığını ve tescil bilgilerini anında öğrenin.', ph: 'sorgulanacakalanadi.com', btn: 'WHOIS Sorgula' },
+const STEPS = {
+  register: [
+    { t: 'Alan adını sorgulayın', d: 'İstediğiniz ismi yazın, uygun uzantıları anında görün.' },
+    { t: 'Uzantıyı seçin', d: 'Size en uygun uzantıyı ve süreyi belirleyip sepete ekleyin.' },
+    { t: 'Dakikalar içinde yayında', d: 'Ödeme sonrası alan adınız anında aktifleşir, panelden yönetirsiniz.' },
+  ],
+  transfer: [
+    { t: 'Alan adınızı girin', d: 'Taşımak istediğiniz alan adını sorgulayın ve uygunluğunu görün.' },
+    { t: 'Transfer kodunu alın', d: 'Mevcut sağlayıcınızdan EPP/transfer kodunuzu temin edin.' },
+    { t: 'Taşıma tamamlansın', d: 'Onay sonrası alan adınız güvenle SunucumWEB\'e taşınır, 1 yıl uzatma hediye.' },
+  ],
 };
 
+const DFEATURES = [
+  { icon: 'lock', t: 'Ücretsiz WHOIS Gizliliği', d: 'Kişisel bilgileriniz WHOIS sorgularında gizli kalır, spam ve dolandırıcılıktan korunursunuz.' },
+  { icon: 'gauge', t: 'Kolay DNS Yönetimi', d: 'A, CNAME, MX, TXT ve tüm kayıtlarınızı sezgisel panelden saniyeler içinde düzenleyin.' },
+  { icon: 'refresh', t: 'Otomatik Yenileme', d: 'Alan adınızı asla kaybetmeyin; otomatik yenileme ve bitiş uyarılarıyla güvende kalın.' },
+  { icon: 'headset', t: '7/24 Uzman Destek', d: 'Alan adı ve DNS işlemlerinizde uzman ekibimiz her an yanınızda.' },
+];
+
+const SSS = {
+  register: [
+    { q: 'Alan adı ne kadar sürede aktif olur?', a: 'Ödeme onaylandıktan sonra çoğu uzantı birkaç dakika içinde aktifleşir. .tr uzantılarında kurum onayı gerektiğinde süreç biraz uzayabilir.' },
+    { q: 'WHOIS gizliliği ücretsiz mi?', a: 'Evet, destekleyen tüm uzantılarda WHOIS gizliliğini ücretsiz sunuyoruz; kişisel bilgileriniz sorgularda görünmez.' },
+    { q: 'Sadece alan adı, hosting almadan alabilir miyim?', a: 'Elbette. Alan adını tek başına alabilir, DNS yönetimini ücretsiz panelimizden yapabilirsiniz.' },
+    { q: 'Alan adımı sonradan taşıyabilir miyim?', a: 'Alan adı size aittir. Dilediğiniz zaman EPP/transfer kodunuzu alıp başka bir sağlayıcıya taşıyabilirsiniz.' },
+  ],
+  transfer: [
+    { q: 'Transfer sırasında sitem kapanır mı?', a: 'Hayır. DNS kayıtlarınız korunduğu sürece siteniz ve e-postalarınız kesintisiz çalışmaya devam eder.' },
+    { q: 'Transfer ne kadar sürer?', a: 'Onay sonrası çoğu uzantıda 1-5 gün içinde tamamlanır; süreç boyunca sizi bilgilendiririz.' },
+    { q: 'Transfer ücretli mi?', a: 'Çoğu uzantıda transfer işlemi alan adınıza 1 yıl uzatma ekler; bir yıllık yenileme bedeliyle hem taşır hem süre kazanırsınız.' },
+    { q: 'EPP/transfer kodunu nereden alırım?', a: 'Mevcut sağlayıcınızın panelinden talep edebilirsiniz. Takıldığınız yerde destek ekibimiz adım adım yardımcı olur.' },
+  ],
+};
+
+const COPY = {
+  register: {
+    eyebrow: 'Alan Adı Tescil', title: 'Mükemmel alan adını bulun',
+    text: 'Markanıza en uygun alan adını saniyeler içinde sorgulayın ve hemen sahiplenin.',
+    ph: 'firmaadi.com', btn: 'Sorgula',
+    trust: ['Ücretsiz WHOIS gizliliği', 'Anında aktivasyon', 'Kolay DNS yönetimi'],
+    stepBaslik: '3 adımda alan adınız',
+  },
+  transfer: {
+    eyebrow: 'Alan Adı Transferi', title: 'Alan adınızı bize taşıyın',
+    text: 'Mevcut alan adınızı kolayca SunucumWEB\'e taşıyın; üstelik çoğu uzantıda 1 yıl uzatma hediye.',
+    ph: 'taşınacakalanadi.com', btn: 'Taşımayı Başlat',
+    trust: ['1 yıl uzatma hediye', 'Kesintisiz taşıma', 'Ücretsiz taşıma desteği'],
+    stepBaslik: '3 adımda transfer',
+  },
+};
+
+function Faq({ items }) {
+  const [open, setOpen] = useState(0);
+  return (
+    <div className="mx-auto max-w-3xl divide-y divide-line rounded-2xl border border-line bg-surface">
+      {items.map((f, i) => (
+        <div key={f.q} className="px-6">
+          <button onClick={() => setOpen(open === i ? -1 : i)} className="flex w-full items-center justify-between gap-4 py-5 text-left">
+            <span className="text-[15px] font-semibold text-strong">{f.q}</span>
+            <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brandsoft text-brandtext transition-transform ${open === i ? 'rotate-45' : ''}`}>
+              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M12 5v14M5 12h14" /></svg>
+            </span>
+          </button>
+          {open === i && <p className="pb-5 -mt-1 text-[15px] leading-relaxed text-body">{f.a}</p>}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function DomainPage({ mode = 'register' }) {
-  const c = COPY[mode];
+  const c = COPY[mode] || COPY.register;
   const [q, setQ] = useState('');
   return (
     <SiteShell>
@@ -40,59 +95,69 @@ export default function DomainPage({ mode = 'register' }) {
         <div className="mx-auto max-w-3xl px-5 lg:px-8 py-20 lg:py-24 text-center">
           <div className="mb-5 flex items-center justify-center gap-2 text-sm text-muted"><Link href="/" className="hover:text-brandtext">Ana Sayfa</Link><span>/</span><span className="font-medium text-strong/70">{c.eyebrow}</span></div>
           <span className="inline-flex items-center gap-2 rounded-full border border-brandline bg-brandsoft/80 px-3.5 py-1.5 text-[13px] font-semibold text-brandtext"><Icon name="globe" className="w-4 h-4" /> {c.eyebrow}</span>
-          <h1 className="mt-5 text-4xl sm:text-5xl font-extrabold tracking-tight text-strong text-balance">{c.title}</h1>
-          <p className="mt-4 text-lg text-body">{c.text}</p>
+          <h1 className="mt-5 tipo-dev font-extrabold tracking-tight text-strong text-balance">{c.title}</h1>
+          <p className="mt-4 tipo-giris text-body">{c.text}</p>
           <form onSubmit={(e) => { e.preventDefault(); window.location.href = 'https://my.sunucumweb.com'; }} className="mt-8">
             <div className="flex items-center gap-2 rounded-2xl border border-line bg-surface p-2 shadow-[0_20px_50px_-25px_rgba(15,41,66,0.35)] focus-within:border-brand-400 focus-within:ring-4 focus-within:ring-brand-100 transition">
               <span className="pl-3 text-muted"><Icon name="search" className="w-5 h-5" /></span>
-              <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={c.ph} className="flex-1 bg-transparent py-2.5 text-[15px] text-strong placeholder:text-muted outline-none" />
-              <button type="submit" className="inline-flex items-center gap-1.5 rounded-xl bg-ink px-5 py-3 text-[15px] font-semibold text-white hover:bg-brand-600 transition-colors">{c.btn} <Icon name="arrow" className="w-4 h-4" /></button>
+              <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={c.ph} aria-label="Alan adı" className="min-w-0 flex-1 bg-transparent py-2.5 text-[15px] text-strong placeholder:text-muted outline-none" />
+              <button type="submit" className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-ink px-4 py-3 text-[14px] font-semibold text-white transition-colors hover:bg-brand-600 sm:px-5 sm:text-[15px]">{c.btn} <Icon name="arrow" className="w-4 h-4" /></button>
             </div>
           </form>
           <div className="mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-1 text-[13px] text-body">
             <span className="font-medium text-muted">Popüler:</span>
             {TLDS.slice(0, 5).map(([t, p]) => <span key={t}><span className="font-semibold text-strong/70">{t}</span> <span className="text-brandtext font-semibold">₺{p}</span></span>)}
           </div>
+          <div className="mt-7 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[13px] font-medium text-body">
+            {c.trust.map((t) => (
+              <span key={t} className="inline-flex items-center gap-1.5"><Icon name="check" className="h-4 w-4 text-brandtext" /> {t}</span>
+            ))}
+          </div>
         </div>
       </section>
 
       {mode === 'register' && <DomainAI />}
 
-      {mode !== 'whois' && (
-        <section className="mx-auto max-w-7xl px-5 lg:px-8 py-16 lg:py-20">
-          <div className="text-center max-w-2xl mx-auto mb-10"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Fiyatlar</span><h2 className="mt-3 text-3xl font-extrabold tracking-tight text-strong">Popüler uzantı fiyatları</h2></div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {TLDS.map(([t, p]) => (
-              <div key={t} className="rounded-2xl border border-line bg-surface p-6 text-center shadow-[0_10px_40px_-24px_rgba(15,41,66,0.25)] hover:-translate-y-1 hover:border-brandline transition-[transform,box-shadow,border-color,opacity]">
-                <div className="text-2xl font-extrabold text-strong">{t}</div>
-                <div className="mt-2 text-brandtext font-bold">₺{p}<span className="text-sm font-medium text-muted">/yıl</span></div>
-              </div>
-            ))}
-          </div>
-          <p className="mt-6 text-center text-sm text-muted">* Fiyatlar temsilîdir; güncel uzantı fiyatlarını buraya girebilirsiniz.</p>
-        </section>
-      )}
-
-      {mode === 'transfer' && (
-        <section className="bg-surface2 border-y border-line"><div className="mx-auto max-w-7xl px-5 lg:px-8 py-16 lg:py-20">
-          <div className="text-center max-w-2xl mx-auto mb-12"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Nasıl Çalışır</span><h2 className="mt-3 text-3xl font-extrabold tracking-tight text-strong">3 adımda transfer</h2></div>
-          <div className="grid md:grid-cols-3 gap-5">
-            {STEPS.map((s, i) => (
-              <div key={i} className="relative rounded-2xl border border-line bg-surface p-7 shadow-[0_10px_40px_-24px_rgba(15,41,66,0.25)]">
-                <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand-500 text-white font-extrabold">{i + 1}</span>
-                <h3 className="mt-4 text-lg font-bold text-strong">{s.t}</h3>
-                <p className="mt-2 text-[15px] text-body">{s.d}</p>
-              </div>
-            ))}
-          </div>
-        </div></section>
-      )}
-
       <section className="mx-auto max-w-7xl px-5 lg:px-8 py-16 lg:py-20">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {DFEATURES.map((f) => (<div key={f.t} className="group rounded-2xl border border-line bg-surface p-6 shadow-[0_10px_40px_-24px_rgba(15,41,66,0.2)] hover:-translate-y-1 transition-[transform,box-shadow,border-color,opacity]"><span className="grid h-12 w-12 place-items-center rounded-2xl bg-brandsoft text-brandtext group-hover:bg-brand-500 group-hover:text-white transition-colors"><Icon name={f.icon} /></span><h3 className="mt-4 text-[17px] font-bold text-strong">{f.t}</h3><p className="mt-2 text-sm leading-relaxed text-body">{f.d}</p></div>))}
+        <div className="mx-auto mb-10 max-w-2xl text-center">
+          <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Fiyatlar</span>
+          <h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">Popüler uzantı fiyatları</h2>
+          <p className="mt-3 text-body">Aradığınız uzantı listede yoksa yüzlerce uzantı için panelden anında sorgulayabilirsiniz.</p>
+        </div>
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          {TLDS.map(([t, p]) => (
+            <div key={t} className="flex flex-col items-center rounded-2xl border border-line bg-surface p-6 text-center shadow-[0_10px_40px_-24px_rgba(15,41,66,0.25)] transition-[transform,box-shadow,border-color] hover:-translate-y-1 hover:border-brandline">
+              <div className="text-2xl font-extrabold text-strong">{t}</div>
+              <div className="mt-2 font-bold text-brandtext">₺{p}<span className="text-sm font-medium text-muted">/yıl</span></div>
+            </div>
+          ))}
         </div>
       </section>
+
+      <section className="bg-surface2 border-y border-line"><div className="mx-auto max-w-7xl px-5 lg:px-8 py-16 lg:py-20">
+        <div className="mx-auto mb-12 max-w-2xl text-center"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Nasıl Çalışır</span><h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">{c.stepBaslik}</h2></div>
+        <div className="grid gap-5 md:grid-cols-3">
+          {STEPS[mode].map((s, i) => (
+            <div key={s.t} className="relative rounded-2xl border border-line bg-surface p-7 shadow-[0_10px_40px_-24px_rgba(15,41,66,0.25)]">
+              <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand-500 text-white font-extrabold">{i + 1}</span>
+              <h3 className="mt-4 text-lg font-bold text-strong">{s.t}</h3>
+              <p className="mt-2 text-[15px] leading-relaxed text-body">{s.d}</p>
+            </div>
+          ))}
+        </div>
+      </div></section>
+
+      <section className="mx-auto max-w-7xl px-5 lg:px-8 py-16 lg:py-20">
+        <div className="mx-auto mb-12 max-w-2xl text-center"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Avantajlar</span><h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">Alan adınız güvende ve yönetimi kolay</h2></div>
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {DFEATURES.map((f) => (<div key={f.t} className="group rounded-2xl border border-line bg-surface p-6 shadow-[0_10px_40px_-24px_rgba(15,41,66,0.2)] transition-[transform,box-shadow,border-color,opacity] hover:-translate-y-1"><span className="grid h-12 w-12 place-items-center rounded-2xl bg-brandsoft text-brandtext transition-colors group-hover:bg-brand-500 group-hover:text-white"><Icon name={f.icon} /></span><h3 className="mt-4 text-[17px] font-bold text-strong">{f.t}</h3><p className="mt-2 text-sm leading-relaxed text-body">{f.d}</p></div>))}
+        </div>
+      </section>
+
+      <section className="bg-surface2 border-y border-line"><div className="mx-auto max-w-7xl px-5 lg:px-8 py-16 lg:py-20">
+        <div className="mx-auto mb-12 max-w-2xl text-center"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">SSS</span><h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">Sık sorulan sorular</h2></div>
+        <Faq items={SSS[mode]} />
+      </div></section>
 
       <CtaBand title="Dijital kimliğinizi bugün oluşturun" text="Alan adınızı alın, hosting ile birleştirin; markanız internette parlasın." />
     </SiteShell>

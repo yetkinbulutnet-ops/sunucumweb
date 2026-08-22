@@ -3,7 +3,7 @@ import { YAZILIMLAR } from '@/content/site/yazilimlar';
 import { mutlakUrl } from '@/lib/seo';
 
 export const metadata = {
-  title: 'Hazır Yazılımlar — Kuruluma Hazır Web Yazılımları',
+  title: 'Hazır Yazılımlar — Kuruluma Hazır Web Yazılımları | SunucumWEB',
   description:
     'E-ticaret, kurumsal tanıtım, blog, rezervasyon, eğitim ve daha fazlası. Mobil uyumlu, SEO dostu, kurulumu bize ait hazır web yazılımları SunucumWEB altyapısında yayında.',
   alternates: { canonical: mutlakUrl('/hazir-yazilim') },

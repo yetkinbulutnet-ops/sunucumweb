@@ -7,7 +7,7 @@ import { dnsYolu } from '@/lib/dns-yol';
 
 export const dynamic = 'force-static';
 
-const YONLENDIRILEN = ['ticari-bilgiler', 'sozlesmeler', 'whois'];
+const YONLENDIRILEN = ['ticari-bilgiler', 'sozlesmeler', 'whois', 'isp-sunucu', 'abd-sunucu'];
 const ORNEK_ALANLAR = ['sunucumweb.com'];
 
 const girdi = (yol, oncelik, siklik) => ({
@@ -32,6 +32,7 @@ export default function sitemap() {
 
   return [
     girdi('/', 1, 'weekly'),
+    girdi('/hazir-yazilim', 0.8, 'monthly'),
     girdi('/legal', 0.4, 'yearly'),
     girdi('/araclar', 0.8, 'monthly'),
     ...sayfalar,
