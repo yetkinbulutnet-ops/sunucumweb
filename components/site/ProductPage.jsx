@@ -3,9 +3,17 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Icon, CtaBand, SiteShell } from './chrome';
 import AddToCartButton from './AddToCartButton';
+import { ALTYAPI } from '@/content/site/markalar';
 
-const num = (s) => Number(String(s).replace(/\./g, '').replace(',', '.')) || 0;
-const fmt = (n) => new Intl.NumberFormat('tr-TR').format(Math.round(n));
+const SUNUCU_GORSEL = '/img/urun/sunucu.webp';
+const HOSTING_ALTYAPI = ALTYAPI.filter((a) => ['cPanel', 'LiteSpeed', 'CloudLinux', 'Imunify360', 'JetBackup', 'Softaculous'].includes(a.ad));
+
+const num = (s) => {
+  if (typeof s === 'number') return s;
+  if (s == null) return 0;
+  return Number(String(s).replace(/\./g, '').replace(',', '.')) || 0;
+};
+const fmt = (n) => new Intl.NumberFormat('tr-TR', { minimumFractionDigits: Number.isInteger(n) ? 0 : 2, maximumFractionDigits: 2 }).format(n);
 
 const TIP = {
   'sanal-sunucu': 'sunucu', 'premium-sunucu': 'sunucu', 'dedicated-sunucu': 'sunucu', 'gpu-sunucu': 'sunucu',
@@ -138,23 +146,48 @@ function PlanKart({ p, urun, yillik, tip }) {
   );
 }
 
-function PlanSatir({ p, urun, yillik, tip }) {
+function PlanSatir({ p, urun, yillik, tip, gorsel }) {
   const one = p.popular;
+  const ozet = p.ozet || p.feats.map((f) => ({ e: null, d: f, hw: false }));
+  const hw = ozet.filter((o) => o.hw);
+  const ekstra = ozet.filter((o) => !o.hw);
+  const specler = hw.length ? hw : ozet;
   return (
-    <div className={`relative flex flex-col gap-6 rounded-3xl border p-6 lg:flex-row lg:items-center lg:gap-8 lg:p-7 ${one ? 'border-brand-400/50 bg-surface ring-1 ring-brand-400/30 shadow-[0_24px_60px_-30px_rgba(20,184,166,0.4)]' : 'border-line bg-surface shadow-[0_16px_50px_-32px_rgba(15,41,66,0.3)]'}`}>
-      <div className="lg:w-52 lg:shrink-0">
+    <div className={`relative flex flex-col gap-5 rounded-3xl border p-6 lg:flex-row lg:items-center lg:gap-6 ${one ? 'border-brand-400/50 bg-surface ring-1 ring-brand-400/30 shadow-[0_24px_60px_-30px_rgba(20,184,166,0.4)]' : 'border-line bg-surface shadow-[0_16px_50px_-32px_rgba(15,41,66,0.3)]'}`}>
+      {gorsel && (
+        <div className="hidden shrink-0 sm:block lg:w-28">
+          <img src={gorsel} alt={`${p.name} sunucu`} width={480} height={360} loading="lazy" className="mx-auto h-14 w-auto object-contain lg:h-[72px]" />
+        </div>
+      )}
+      <div className="lg:w-44 lg:shrink-0">
         {one && <span className="mb-2 inline-block rounded-full bg-brand-600 px-3 py-0.5 text-[11px] font-bold text-white">EN POPÜLER</span>}
         <div className="text-lg font-extrabold text-strong">{p.name}</div>
-        {p.sub && <div className="mt-0.5 text-[13px] text-muted">{p.sub}</div>}
+        {p.sub && <div className="mt-0.5 text-[12.5px] leading-snug text-muted">{p.sub}</div>}
       </div>
-      <div className="grid flex-1 grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-2 xl:grid-cols-3">
-        {p.feats.slice(0, 9).map((ft) => (
-          <div key={ft} className="flex items-start gap-2 text-[13.5px] text-body">
-            <Icon name="check" className="mt-0.5 h-4 w-4 shrink-0 text-brandtext" /> <span>{ft}</span>
+      <div className="min-w-0 flex-1">
+        <div className="grid grid-cols-2 gap-x-5 gap-y-3 sm:grid-cols-3 lg:grid-cols-4">
+          {specler.map((o) => (
+            <div key={o.d} className="min-w-0">
+              {o.e ? (
+                <>
+                  <div className="text-[11px] font-bold uppercase tracking-wide text-muted">{o.e}</div>
+                  <div className="mt-0.5 text-[14px] font-bold text-strong">{o.d}</div>
+                </>
+              ) : (
+                <div className="flex items-start gap-1.5 text-[13.5px] text-body"><Icon name="check" className="mt-0.5 h-3.5 w-3.5 shrink-0 text-brandtext" /> <span>{o.d}</span></div>
+              )}
+            </div>
+          ))}
+        </div>
+        {hw.length > 0 && ekstra.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 border-t border-line pt-3">
+            {ekstra.map((o) => (
+              <span key={o.d} className="inline-flex items-center gap-1.5 text-[12.5px] text-body"><Icon name="check" className="h-3.5 w-3.5 shrink-0 text-brandtext" /> {o.d}</span>
+            ))}
           </div>
-        ))}
+        )}
       </div>
-      <div className="lg:w-56 lg:shrink-0 lg:text-right">
+      <div className="lg:w-52 lg:shrink-0 lg:text-right">
         <div className="lg:flex lg:flex-col lg:items-end"><Fiyat p={p} yillik={yillik} koyu={false} /></div>
         <div className="mt-4">
           {tip === 'merkez' ? (
@@ -284,7 +317,7 @@ export default function ProductPage({ data, slug }) {
         {hosting ? (
           <div className={`mt-12 grid gap-6 md:grid-cols-2 lg:gap-5 items-stretch ${d.plans.length >= 4 ? 'lg:grid-cols-4' : d.plans.length === 2 ? 'lg:grid-cols-2 max-w-3xl mx-auto' : 'lg:grid-cols-3'}`}>{d.plans.map((p) => <PlanKart key={p.name} p={p} urun={d} yillik={yillik} tip={tip} />)}</div>
         ) : (
-          <div className="mt-12 space-y-4">{d.plans.map((p) => <PlanSatir key={p.name} p={p} urun={d} yillik={yillik} tip={tip} />)}</div>
+          <div className="mt-12 space-y-4">{d.plans.map((p) => <PlanSatir key={p.name} p={p} urun={d} yillik={yillik} tip={tip} gorsel={tip === 'sunucu' ? SUNUCU_GORSEL : null} />)}</div>
         )}
         <p className="mt-6 text-center text-sm text-muted">Fiyatlara KDV dahil değildir. İhtiyacınıza özel yapılandırma için <Link href="/iletisim" className="font-semibold text-brandtext hover:underline">bize ulaşın</Link>.</p>
       </div></section>
@@ -293,6 +326,19 @@ export default function ProductPage({ data, slug }) {
         <section className="mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-24">
           <div className="mx-auto mb-12 max-w-2xl text-center"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Karşılaştırma</span><h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">Tüm paketlerde neler var?</h2></div>
           <KarsilastirmaTablosu plans={d.plans} />
+
+          <div className="mx-auto mt-20 mb-10 max-w-2xl text-center">
+            <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Altyapımız</span>
+            <h3 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">Endüstri standardı teknolojiler</h3>
+            <p className="mt-3 tipo-metin text-body">Sunucularımız cPanel, LiteSpeed, CloudLinux ve Imunify360 gibi güvenilir yazılımlarla güçlendirilir.</p>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+            {HOSTING_ALTYAPI.map((a) => (
+              <div key={a.ad} className="grid h-16 w-32 place-items-center rounded-2xl bg-white px-5 ring-1 ring-line sm:w-36">
+                <img src={a.logo} alt={`${a.ad} logosu`} width={a.g} height={a.y} loading="lazy" className="max-h-8 w-auto max-w-[120px] object-contain" />
+              </div>
+            ))}
+          </div>
         </section>
       )}
 
