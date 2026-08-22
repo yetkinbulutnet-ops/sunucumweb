@@ -55,8 +55,14 @@ const HOSTING_ADIM = [
   { t: 'Dakikalar içinde yayında', d: 'Siteniz canlıda; her şeyi kolay panelden yönetin.' },
 ];
 
-const OS_LISTE = ['Ubuntu', 'Debian', 'AlmaLinux', 'CentOS', 'Windows Server'];
-const PANEL_LISTE = ['cPanel', 'Plesk', 'Webmin'];
+const OS_LOGO = [
+  { ad: 'Ubuntu', logo: '/img/os/ubuntu.webp' },
+  { ad: 'Debian', logo: '/img/os/debian.webp' },
+  { ad: 'AlmaLinux', logo: '/img/os/almalinux.webp' },
+  { ad: 'CentOS', logo: '/img/os/centos.webp' },
+  { ad: 'Windows Server', logo: '/img/os/windows-server.webp' },
+];
+const PANEL_LOGO = [{ ad: 'cPanel', logo: '/img/altyapi/cpanel.webp' }];
 
 const KARSILASTIRMA = [
   { grup: 'Genel Özellikler', satirlar: ['cPanel Kontrol Paneli', '24/7 FTP Erişimi', 'Haftalık Otomatik Yedekleme', 'Sınırsız Alan Adı Yönlendirme', 'Ziyaretçi & Trafik İstatistikleri', 'Şifre Korumalı Dizin', 'Özel Hata Sayfaları', 'Web Üzerinden Dosya Yönetimi'] },
@@ -142,7 +148,7 @@ function PlanKart({ p, urun, yillik, tip, slug }) {
       {tip === 'merkez' ? (
         <Link href="/iletisim" className={`mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3.5 text-[15px] font-bold transition-colors ${koyu ? 'bg-brand-500 text-white hover:bg-brand-400' : 'bg-ink text-white hover:bg-brand-600'}`}>Teklif Al <Icon name="arrow" className="h-4 w-4" /></Link>
       ) : (
-        <AddToCartButton item={{ name: p.name, product: urun.title, price: yillik ? Math.round(num(p.price) * 10 / 12) : num(p.price), period: '/ay', wisecpUrl: wisecpSiparisUrl(slug, p.name) }} tema={koyu ? 'dolu' : 'acik'} className="mt-8 w-full py-3.5 text-[15px]" />
+        <AddToCartButton item={{ name: p.name, product: urun.title, price: yillik ? Math.round(num(p.price) * 10 / 12) : num(p.price), period: '/ay' }} href={wisecpSiparisUrl(slug, p.name)} tema={koyu ? 'dolu' : 'acik'} className="mt-8 w-full py-3.5 text-[15px]" />
       )}
     </div>
   );
@@ -195,7 +201,7 @@ function PlanSatir({ p, urun, yillik, tip, gorsel, slug }) {
           {tip === 'merkez' ? (
             <Link href="/iletisim" className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-ink px-5 py-3 text-[14.5px] font-bold text-white transition-colors hover:bg-brand-600">Teklif Al <Icon name="arrow" className="h-4 w-4" /></Link>
           ) : (
-            <AddToCartButton item={{ name: p.name, product: urun.title, price: yillik ? Math.round(num(p.price) * 10 / 12) : num(p.price), period: '/ay', wisecpUrl: wisecpSiparisUrl(slug, p.name) }} tema={one ? 'dolu' : 'acik'} className="w-full py-3 text-[14.5px]" />
+            <AddToCartButton item={{ name: p.name, product: urun.title, price: yillik ? Math.round(num(p.price) * 10 / 12) : num(p.price), period: '/ay' }} href={wisecpSiparisUrl(slug, p.name)} tema={one ? 'dolu' : 'acik'} className="w-full py-3 text-[14.5px]" />
           )}
         </div>
       </div>
@@ -383,8 +389,8 @@ export default function ProductPage({ data, slug }) {
         <section className="mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-24">
           <div className="mx-auto mb-10 max-w-2xl text-center"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Tam Kontrol</span><h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">İşletim sistemi ve panel özgürlüğü</h2><p className="mt-4 tipo-metin text-body">Kurulumda dilediğiniz işletim sistemini ve yönetim panelini seçin; tam root erişimiyle her şey sizin kontrolünüzde.</p></div>
           <div className="mx-auto grid max-w-3xl gap-6 sm:grid-cols-2">
-            <div className="rounded-2xl border border-line bg-surface p-6"><div className="text-[13px] font-bold uppercase tracking-wide text-muted">İşletim Sistemleri</div><div className="mt-3 flex flex-wrap gap-2">{OS_LISTE.map((o) => <span key={o} className="rounded-lg bg-surface2 px-3 py-1.5 text-[13px] font-semibold text-strong ring-1 ring-line">{o}</span>)}</div></div>
-            <div className="rounded-2xl border border-line bg-surface p-6"><div className="text-[13px] font-bold uppercase tracking-wide text-muted">Yönetim Panelleri</div><div className="mt-3 flex flex-wrap gap-2">{PANEL_LISTE.map((o) => <span key={o} className="rounded-lg bg-surface2 px-3 py-1.5 text-[13px] font-semibold text-strong ring-1 ring-line">{o}</span>)}</div></div>
+            <div className="rounded-2xl border border-line bg-surface p-6"><div className="text-[13px] font-bold uppercase tracking-wide text-muted">İşletim Sistemleri</div><div className="mt-4 flex flex-wrap items-center gap-3">{OS_LOGO.map((o) => <div key={o.ad} title={o.ad} className="grid h-14 w-24 place-items-center rounded-xl bg-white px-3 ring-1 ring-line"><img src={o.logo} alt={`${o.ad} logosu`} width={200} height={120} loading="lazy" className="max-h-9 w-auto max-w-full object-contain" /></div>)}</div></div>
+            <div className="rounded-2xl border border-line bg-surface p-6"><div className="text-[13px] font-bold uppercase tracking-wide text-muted">Yönetim Paneli</div><div className="mt-4 flex flex-wrap items-center gap-3">{PANEL_LOGO.map((o) => <div key={o.ad} title={o.ad} className="grid h-14 w-24 place-items-center rounded-xl bg-white px-3 ring-1 ring-line"><img src={o.logo} alt={`${o.ad} logosu`} width={200} height={80} loading="lazy" className="max-h-8 w-auto max-w-full object-contain" /></div>)}</div></div>
           </div>
           <p className="mt-6 text-center text-[14px] text-body"><Icon name="pin" className="mr-1 inline h-4 w-4 text-brandtext" /> İstanbul lokasyonu ile Türkiye içinden düşük gecikme.</p>
         </section>
