@@ -27,7 +27,7 @@ SEO teknik (metadataBase, OG, JSON-LD) tamamlandı. Ürünler yapım aşamasınd
 | İletişim (`/iletisim`) | Çalışıyor | Form SMTP yokken günlüğe yazıyor |
 | Araçlar (`/araclar` + 7 araç) | Bitti | DNS SEO şeması, kara liste, güvenlik başlıkları |
 | Alan adı (`/alan-adi`, `/transfer`) | **Bitti** | Demo metin temizlendi; uzantılar + nasıl çalışır + avantajlar + SSS ile dolu/profesyonel yapı |
-| **Hazır Yazılım** (`/hazir-yazilim` + `/hazir-yazilim/[slug]`) | **BİTTİ** | scriptevim.com'dan taşınan **42 gerçek ürün** (banner görselli). Liste: kategori sidebar + arama + fiyat sıralama + 12/sayfa pagination. Kart "İncele" → inceleme sayfası (Satın Al yok). Detay: banner + açıklama + özellik + benzer ürünler. Görseller `public/img/yazilim/*.webp`. Veri `content/site/yazilimlar.js` |
+| **Hazır Yazılım** (`/hazir-yazilim` + `/hazir-yazilim/[slug]`) | **BİTTİ** | scriptevim.com'dan taşınan **42 gerçek ürün** (banner görselli + **gerçek demo URL'leri**). Liste kartı: banner + eski/yeni fiyat + **İncele + Demo** butonları. Detay: banner + açıklama + özellik + **Sepete Ekle + Demoyu Gör** + benzer ürünler (Satın Al / Hemen Ara yok). Görseller `public/img/yazilim/*.webp`. Veri `content/site/yazilimlar.js` (fiyat + eskiFiyat + demoUrl). Demolar ohesap.com / tahminbaz.com.tr / *.scriptevim.com |
 | 12 ürün sayfası (Hosting/Sunucu/Veri Merkezi) | **Yapım aşamasında** | `YapimAsamasi.jsx` + `[[...slug]]` `YAPIM_ASAMASI` seti; noindex. ISP/ABD tamamen kaldırıldı. `ProductPage.jsx` ileride kullanılmak üzere korundu |
 | SEO uygulaması | **İyileştirildi** | `metadataBase`, OG/Twitter (tr_TR), site geneli Organization + WebSite JSON-LD (layout); hazir-yazilim ItemList/SoftwareApplication JSON-LD; sitemap güncel |
 
