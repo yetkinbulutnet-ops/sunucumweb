@@ -27,7 +27,7 @@ SEO teknik (metadataBase, OG, JSON-LD) tamamlandı. Ürünler yapım aşamasınd
 | İletişim (`/iletisim`) | Çalışıyor | Form SMTP yokken günlüğe yazıyor |
 | Araçlar (`/araclar` + 7 araç) | Bitti | DNS SEO şeması, kara liste, güvenlik başlıkları |
 | Alan adı (`/alan-adi`, `/transfer`) | **Bitti** | Demo metin temizlendi; uzantılar + nasıl çalışır + avantajlar + SSS ile dolu/profesyonel yapı |
-| **Hazır Yazılım** (`/hazir-yazilim`) | **BİTTİ** | Yeni hizmet. Kategori sidebar + arama + fiyat sıralama + 3 sütun grid + 12/sayfa pagination. Veri `content/site/yazilimlar.js` (temsilî ürünler) |
+| **Hazır Yazılım** (`/hazir-yazilim` + `/hazir-yazilim/[slug]`) | **BİTTİ** | scriptevim.com'dan taşınan **42 gerçek ürün** (banner görselli). Liste: kategori sidebar + arama + fiyat sıralama + 12/sayfa pagination. Kart "İncele" → inceleme sayfası (Satın Al yok). Detay: banner + açıklama + özellik + benzer ürünler. Görseller `public/img/yazilim/*.webp`. Veri `content/site/yazilimlar.js` |
 | 12 ürün sayfası (Hosting/Sunucu/Veri Merkezi) | **Yapım aşamasında** | `YapimAsamasi.jsx` + `[[...slug]]` `YAPIM_ASAMASI` seti; noindex. ISP/ABD tamamen kaldırıldı. `ProductPage.jsx` ileride kullanılmak üzere korundu |
 | SEO uygulaması | **İyileştirildi** | `metadataBase`, OG/Twitter (tr_TR), site geneli Organization + WebSite JSON-LD (layout); hazir-yazilim ItemList/SoftwareApplication JSON-LD; sitemap güncel |
 
@@ -40,6 +40,7 @@ app/
   [[...slug]]/page.jsx        slug yönlendirici (ana sayfa, alan-adi, transfer);
                               YAPIM_ASAMASI seti -> YapimAsamasi (ürün sayfaları)
   hazir-yazilim/page.jsx      YENİ statik rota (server): metadata + JSON-LD + HazirYazilimPage
+  hazir-yazilim/[slug]/page.jsx  YENİ inceleme rotası: 42 slug static params + Product JSON-LD
   hakkimizda  → [[...slug]] içinden AboutPage
   legal/[[...belge]]/page.jsx kenar çubuklu yasal sayfa
   araclar/…                   araç sayfaları + DNS SEO rotaları
