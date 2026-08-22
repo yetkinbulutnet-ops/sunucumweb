@@ -5,20 +5,31 @@ Sırayla oku: `DEVAM.md` (bu dosya) → `TASARIM-KURALLARI.md` → `lib/engines/
 Son güncelleme: 2026-08-22. Çalışma ağacı temiz, her şey `main` dalında ve canlıda.
 Demo: https://sunucumweb.demo.yetkin.web.tr (arama motorlarına kapalı)
 
+**Son iş (gece çalışması):** Mega menü ikonları profesyonel SVG'lerle yenilendi
+(bina/ofis, kurumsal, mağaza, VDS, dedicated, GPU ekran kartı, colocation); Premium'a
+Intel logosu; VDS penguen / GPU-Kurumsal eski logolar kaldırıldı. Stoktaki olmayan **ISP
+ve ABD sunucu** menü/footer/ana sayfa/sitemap'ten silindi. Yeni **Hazır Yazılım** menüsü ve
+sayfası eklendi. Hosting/Sunucu/Veri Merkezi ürün sayfaları **yapım aşaması** ekranına
+alındı (Domain ve Hazır Yazılım aktif). Domain sayfaları demo metinden arındırılıp
+zenginleştirildi. Ana sayfaya temsilî paket/yazılım vitrini + referans şeridi + SSS eklendi.
+SEO teknik (metadataBase, OG, JSON-LD) tamamlandı. Ürünler yapım aşamasında olduğu için
+"Hemen Başla" / CtaBand / hero CTA'ları `/iletisim` ve `/hazir-yazilim`'e yönlendirildi.
+
 ---
 
 ## 1. Sayfa sayfa durum
 
 | Sayfa / bölüm | Durum | Not |
 |---|---|---|
-| Ana sayfa | Bitti ama **içerik zayıf** | Hero slider, ürün bulucu, 16 kategori kartı var; alt kısımlar boş kalıyor |
+| Ana sayfa | **Bitti — zenginleştirildi** | Hero + ürün bulucu + kategoriler; alt kısma temsilî paket vitrini, hazır yazılım vitrini, referans logo şeridi ve SSS eklendi |
 | **Şirket Profili** (`/hakkimizda`) | **BİTTİ — DOKUNMA** | Kullanıcı beğendi. 3B küre, marka slider'ı, sayaçlar |
 | **Legal** (`/legal`, `/legal/{belge}`) | **BİTTİ — DOKUNMA** | Kenar çubuklu, şirket bilgileri varsayılan |
-| İletişim (`/iletisim`) | Çalışıyor | Form SMTP yokken günlüğe yazıyor; yeniden tasarlanacaktı, yapılmadı |
+| İletişim (`/iletisim`) | Çalışıyor | Form SMTP yokken günlüğe yazıyor |
 | Araçlar (`/araclar` + 7 araç) | Bitti | DNS SEO şeması, kara liste, güvenlik başlıkları |
-| Alan adı (`/alan-adi`, `/transfer`) | **Ölü alan + demo metin var** | Temizlenecek |
-| 12 ürün sayfası | **Eski `ProductPage.jsx` şablonunda** | Fiyatlar temsilî |
-| SEO uygulaması | Kısmen | `sitemap.js`, `lib/seo.js`, DNS canonical'ları var; JSON-LD ve `metadataBase` yok |
+| Alan adı (`/alan-adi`, `/transfer`) | **Bitti** | Demo metin temizlendi; uzantılar + nasıl çalışır + avantajlar + SSS ile dolu/profesyonel yapı |
+| **Hazır Yazılım** (`/hazir-yazilim`) | **BİTTİ** | Yeni hizmet. Kategori sidebar + arama + fiyat sıralama + 3 sütun grid + 12/sayfa pagination. Veri `content/site/yazilimlar.js` (temsilî ürünler) |
+| 12 ürün sayfası (Hosting/Sunucu/Veri Merkezi) | **Yapım aşamasında** | `YapimAsamasi.jsx` + `[[...slug]]` `YAPIM_ASAMASI` seti; noindex. ISP/ABD tamamen kaldırıldı. `ProductPage.jsx` ileride kullanılmak üzere korundu |
+| SEO uygulaması | **İyileştirildi** | `metadataBase`, OG/Twitter (tr_TR), site geneli Organization + WebSite JSON-LD (layout); hazir-yazilim ItemList/SoftwareApplication JSON-LD; sitemap güncel |
 
 ---
 
@@ -26,7 +37,9 @@ Demo: https://sunucumweb.demo.yetkin.web.tr (arama motorlarına kapalı)
 
 ```
 app/
-  [[...slug]]/page.jsx        eski slug yönlendirici (ana sayfa, ürünler, alan-adi, transfer)
+  [[...slug]]/page.jsx        slug yönlendirici (ana sayfa, alan-adi, transfer);
+                              YAPIM_ASAMASI seti -> YapimAsamasi (ürün sayfaları)
+  hazir-yazilim/page.jsx      YENİ statik rota (server): metadata + JSON-LD + HazirYazilimPage
   hakkimizda  → [[...slug]] içinden AboutPage
   legal/[[...belge]]/page.jsx kenar çubuklu yasal sayfa
   araclar/…                   araç sayfaları + DNS SEO rotaları
@@ -43,13 +56,17 @@ components/site/
   LogoSerit.jsx / LogoKutusu.jsx   kayan logo şeritleri (marka + altyapı)
   AltyapiSerit.jsx  footer üstü altyapı şeridi, her sayfada
   LegalHubPage.jsx  yasal sayfa (DOKUNMA)
-  ProductPage.jsx   12 ürün sayfası şablonu — YENİLENECEK
-  DomainPage.jsx    alan-adi / transfer — YENİLENECEK
+  ProductPage.jsx   ürün sayfası şablonu (şu an render edilmiyor; ürünler yayına
+                    çıkınca [[...slug]] içinde tekrar bağlanacak)
+  YapimAsamasi.jsx  "yapım aşamasında" ekranı (ürün sayfaları buraya yönleniyor)
+  HazirYazilimPage.jsx  hazır yazılım kataloğu (sidebar + arama + sıralama + pagination)
+  DomainPage.jsx    alan-adi / transfer (yenilendi, demo metinsiz, dolu yapı)
   ContactPage.jsx, DomainAI.jsx, KabinSlider.jsx, ToolsPage.jsx, ToolRunner.jsx,
   DnsToolPage.jsx, DnsRapor.jsx, tool-ui.jsx, CartProvider.jsx, AddToCartButton.jsx
 
 content/site/
-  products.js       12 ürün içeriği (fiyatlar temsilî)
+  products.js       ürün içeriği (fiyatlar temsilî; şablon yeniden bağlanınca kullanılacak)
+  yazilimlar.js     hazır yazılım kataloğu: kategoriler + temsilî ürünler
   araclar.js        7 araç
   dns-tipleri.js    10 DNS kayıt tipi açıklaması
   dunya-maskesi.js  0.5° kara maskesi (base64)
