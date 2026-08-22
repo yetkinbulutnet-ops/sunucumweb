@@ -265,22 +265,9 @@ function CartButton() {
 
 function CartDrawer() {
   const { items, adet, toplam, panelAcik, setPanelAcik, cikar, adetAyarla, temizle } = useCart();
-  const [odemeYukleniyor, setOdemeYukleniyor] = useState(false);
-
-  const odemeyeGec = async () => {
-    if (odemeYukleniyor || !items.length) return;
-    setOdemeYukleniyor(true);
-    try {
-      const yanit = await fetch('/api/sepet', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items }),
-      });
-      const veri = await yanit.json().catch(() => ({}));
-      if (veri?.ok && veri.url) { window.location.href = veri.url; return; }
-    } catch {  }
-    window.open(CHECKOUT_URL, '_blank', 'noopener,noreferrer');
-    setOdemeYukleniyor(false);
+  const odemeyeGec = () => {
+    if (!items.length) return;
+    window.open(items[0]?.wisecpUrl || CHECKOUT_URL, '_blank', 'noopener,noreferrer');
   };
 
   useEffect(() => {
@@ -327,6 +314,7 @@ function CartDrawer() {
                         {i.product && <div className="text-[11px] font-bold uppercase tracking-wide text-brandtext">{i.product}</div>}
                         <div className="truncate text-[15px] font-bold text-strong">{i.name}</div>
                         <div className="mt-0.5 text-[13px] text-body">{formatTRY(i.price)}<span className="text-muted">{i.period}</span></div>
+                        {i.wisecpUrl && <a href={i.wisecpUrl} target="_blank" rel="noopener noreferrer" className="mt-1 inline-flex items-center gap-1 text-[12px] font-semibold text-brandtext hover:underline">Satın Al <Icon name="arrow" className="h-3 w-3" /></a>}
                       </div>
                       <button onClick={() => cikar(i.id)} aria-label={`${i.name} paketini sepetten çıkar`} className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-muted transition-colors hover:bg-rose-50 hover:text-rose-600">
                         <Icon name="trash" className="w-4 h-4" />
@@ -355,10 +343,9 @@ function CartDrawer() {
               <button
                 type="button"
                 onClick={odemeyeGec}
-                disabled={odemeYukleniyor}
-                className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-500 px-5 py-3.5 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition hover:bg-brand-600 disabled:opacity-70"
+                className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-500 px-5 py-3.5 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition hover:bg-brand-600"
               >
-                {odemeYukleniyor ? 'Hazırlanıyor…' : <>Ödemeye Geç <Icon name="arrow" className="w-4 h-4" /></>}
+                Ödemeye Geç <Icon name="arrow" className="w-4 h-4" />
               </button>
               <button onClick={() => setPanelAcik(false)} className="mt-2 w-full rounded-xl px-5 py-2.5 text-[14px] font-semibold text-body transition-colors hover:text-strong">
                 Alışverişe devam et

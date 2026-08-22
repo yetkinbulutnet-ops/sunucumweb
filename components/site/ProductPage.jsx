@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Icon, CtaBand, SiteShell } from './chrome';
 import AddToCartButton from './AddToCartButton';
 import { ALTYAPI } from '@/content/site/markalar';
+import { wisecpSiparisUrl } from '@/content/site/wisecp-siparis';
 
 const SUNUCU_GORSEL = '/img/urun/sunucu.webp';
 const SLUG_GORSEL = { 'sanal-sunucu': '/img/urun/xeon.webp', 'premium-sunucu': '/img/urun/xeon-platinum.webp', 'gpu-sunucu': '/img/urun/ekran-karti.webp' };
@@ -122,7 +123,7 @@ function Fiyat({ p, yillik, koyu }) {
   );
 }
 
-function PlanKart({ p, urun, yillik, tip }) {
+function PlanKart({ p, urun, yillik, tip, slug }) {
   const koyu = p.popular;
   return (
     <div className={`relative flex flex-col rounded-3xl p-7 transition-[transform,box-shadow,border-color] duration-300 ${koyu ? 'bg-ink text-white shadow-[0_40px_80px_-30px_rgba(15,41,66,0.6)] lg:-translate-y-4 ring-1 ring-brand-400/40' : 'bg-surface border border-line shadow-[0_20px_50px_-30px_rgba(15,41,66,0.3)] hover:-translate-y-1'}`}>
@@ -141,13 +142,13 @@ function PlanKart({ p, urun, yillik, tip }) {
       {tip === 'merkez' ? (
         <Link href="/iletisim" className={`mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3.5 text-[15px] font-bold transition-colors ${koyu ? 'bg-brand-500 text-white hover:bg-brand-400' : 'bg-ink text-white hover:bg-brand-600'}`}>Teklif Al <Icon name="arrow" className="h-4 w-4" /></Link>
       ) : (
-        <AddToCartButton item={{ name: p.name, product: urun.title, price: yillik ? Math.round(num(p.price) * 10 / 12) : num(p.price), period: '/ay' }} tema={koyu ? 'dolu' : 'acik'} className="mt-8 w-full py-3.5 text-[15px]" />
+        <AddToCartButton item={{ name: p.name, product: urun.title, price: yillik ? Math.round(num(p.price) * 10 / 12) : num(p.price), period: '/ay', wisecpUrl: wisecpSiparisUrl(slug, p.name) }} tema={koyu ? 'dolu' : 'acik'} className="mt-8 w-full py-3.5 text-[15px]" />
       )}
     </div>
   );
 }
 
-function PlanSatir({ p, urun, yillik, tip, gorsel }) {
+function PlanSatir({ p, urun, yillik, tip, gorsel, slug }) {
   const one = p.popular;
   const ozet = p.ozet || p.feats.map((f) => ({ e: null, d: f, hw: false }));
   const hw = ozet.filter((o) => o.hw);
@@ -194,7 +195,7 @@ function PlanSatir({ p, urun, yillik, tip, gorsel }) {
           {tip === 'merkez' ? (
             <Link href="/iletisim" className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-ink px-5 py-3 text-[14.5px] font-bold text-white transition-colors hover:bg-brand-600">Teklif Al <Icon name="arrow" className="h-4 w-4" /></Link>
           ) : (
-            <AddToCartButton item={{ name: p.name, product: urun.title, price: yillik ? Math.round(num(p.price) * 10 / 12) : num(p.price), period: '/ay' }} tema={one ? 'dolu' : 'acik'} className="w-full py-3 text-[14.5px]" />
+            <AddToCartButton item={{ name: p.name, product: urun.title, price: yillik ? Math.round(num(p.price) * 10 / 12) : num(p.price), period: '/ay', wisecpUrl: wisecpSiparisUrl(slug, p.name) }} tema={one ? 'dolu' : 'acik'} className="w-full py-3 text-[14.5px]" />
           )}
         </div>
       </div>
@@ -316,9 +317,9 @@ export default function ProductPage({ data, slug }) {
         )}
 
         {hosting ? (
-          <div className={`mt-12 grid gap-6 md:grid-cols-2 lg:gap-5 items-stretch ${d.plans.length >= 4 ? 'lg:grid-cols-4' : d.plans.length === 2 ? 'lg:grid-cols-2 max-w-3xl mx-auto' : 'lg:grid-cols-3'}`}>{d.plans.map((p) => <PlanKart key={p.name} p={p} urun={d} yillik={yillik} tip={tip} />)}</div>
+          <div className={`mt-12 grid gap-6 md:grid-cols-2 lg:gap-5 items-stretch ${d.plans.length >= 4 ? 'lg:grid-cols-4' : d.plans.length === 2 ? 'lg:grid-cols-2 max-w-3xl mx-auto' : 'lg:grid-cols-3'}`}>{d.plans.map((p) => <PlanKart key={p.name} p={p} urun={d} yillik={yillik} tip={tip} slug={slug} />)}</div>
         ) : (
-          <div className="mt-12 space-y-4">{d.plans.map((p) => <PlanSatir key={p.name} p={p} urun={d} yillik={yillik} tip={tip} gorsel={tip === 'sunucu' ? (SLUG_GORSEL[slug] || SUNUCU_GORSEL) : null} />)}</div>
+          <div className="mt-12 space-y-4">{d.plans.map((p) => <PlanSatir key={p.name} p={p} urun={d} yillik={yillik} tip={tip} gorsel={tip === 'sunucu' ? (SLUG_GORSEL[slug] || SUNUCU_GORSEL) : null} slug={slug} />)}</div>
         )}
         <p className="mt-6 text-center text-sm text-muted">Fiyatlara KDV dahil değildir. İhtiyacınıza özel yapılandırma için <Link href="/iletisim" className="font-semibold text-brandtext hover:underline">bize ulaşın</Link>.</p>
       </div></section>
