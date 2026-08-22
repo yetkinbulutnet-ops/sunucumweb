@@ -9,7 +9,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import PageScripts from '@/components/PageScripts';
 import HomePage from '@/components/site/HomePage';
-import ProductPage from '@/components/site/ProductPage';
+import YapimAsamasi from '@/components/site/YapimAsamasi';
 import ContactPage from '@/components/site/ContactPage';
 import DomainPage from '@/components/site/DomainPage';
 import AboutPage from '@/components/site/AboutPage';
@@ -17,6 +17,12 @@ import { HAKKIMIZDA } from '@/content/site/hakkimizda';
 import { PRODUCTS } from '@/content/site/products';
 
 export const dynamicParams = false;
+
+const YAPIM_ASAMASI = new Set([
+  'web-hosting', 'wordpress-hosting', 'reseller-hosting', 'kurumsal-hosting',
+  'sanal-sunucu', 'premium-sunucu', 'dedicated-sunucu', 'gpu-sunucu',
+  'sunucu-barindirma', 'ip-kiralama', 'isp-sunucu', 'abd-sunucu',
+]);
 
 const YONLENDIRILEN = [
   'ticari-bilgiler',
@@ -45,6 +51,14 @@ export async function generateMetadata({ params }) {
   if (slug === 'hakkimizda') {
     return { title: HAKKIMIZDA.seo.title, description: HAKKIMIZDA.seo.description };
   }
+  if (YAPIM_ASAMASI.has(slug)) {
+    const t = PRODUCTS[slug]?.title || p.title;
+    return {
+      title: t ? `${t} — Çok Yakında` : undefined,
+      description: p.description || undefined,
+      robots: { index: false, follow: true },
+    };
+  }
   return {
     title: p.title || undefined,
     description: p.description || undefined,
@@ -69,8 +83,8 @@ export default async function Page({ params }) {
     return <HomePage />;
   }
 
-  if (PRODUCTS[slug]) {
-    return <ProductPage data={PRODUCTS[slug]} />;
+  if (YAPIM_ASAMASI.has(slug)) {
+    return <YapimAsamasi baslik={PRODUCTS[slug]?.title || meta.title} />;
   }
 
   if (slug === 'iletisim') {

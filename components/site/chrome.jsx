@@ -53,6 +53,14 @@ const PATHS = {
   user: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M4.5 21a7.5 7.5 0 0 1 15 0',
   signal: 'M4.5 20v-3.5M9.5 20v-7M14.5 20v-10.5M19.5 20V6',
   ban: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM5.6 5.6l12.8 12.8',
+  binaOfis: 'M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z M9 22v-4h6v4 M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01',
+  kurumsal: 'M4 6h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z M16 6V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2 M2 12h20',
+  magaza: 'M4 4h16l2 5H2z M4 9v9a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V9 M9 19v-5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v5',
+  vds: 'M4 5h16a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z M4 14h16a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1z M7 7.5h.01M7 16.5h.01 M11 7.5h6M11 16.5h6',
+  dedicated: 'M7 3h10a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z M9 6h6M9 9h6M9 12h6 M12 17h.01',
+  gpu: 'M5 6h14a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z M8 17v3M15 17v3 M5.7 11.5a2.8 2.8 0 1 0 5.6 0a2.8 2.8 0 1 0-5.6 0 M12.7 11.5a2.8 2.8 0 1 0 5.6 0a2.8 2.8 0 1 0-5.6 0 M8.5 11.5h.01M15.5 11.5h.01',
+  colocation: 'M5 3h14a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z M5 8h14M5 13h14 M8 5.5h.01M8 10.5h.01M8 15.5h.01 M11 5.5h5M11 10.5h5M11 15.5h5',
+  wrench: 'M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z',
 };
 export function Icon({ name, className = 'w-6 h-6' }) {
   return (
@@ -72,23 +80,22 @@ export const MENU = [
   { label: 'Hosting', kolon: 4, items: [
     { t: 'Web Hosting', d: 'Sınırsız hosting paketlerini deneyin, dakikalar içinde yayında olun.', href: '/web-hosting', icon: 'globe', r: '%20 İndirim', rTon: 'yesil', logo: '/img/marka/cpanel.svg' },
     { t: 'WordPress Hosting', d: 'WordPress için optimize edilmiş, hızlı ve güvenli altyapı.', href: '/wordpress-hosting', icon: 'bolt', logo: '/img/marka/wordpress.png' },
-    { t: 'Reseller Hosting', d: 'Linux hosting paketleri ile kendi hosting işinizi başlatın.', href: '/reseller-hosting', icon: 'users', r: 'Fırsatı Yakala', rTon: 'sari' },
-    { t: 'Kurumsal Hosting', d: 'Yüksek trafik ve izole kaynak gerektiren projeler için.', href: '/kurumsal-hosting', icon: 'layers', logo: '/img/marka/litespeed.svg' },
+    { t: 'Reseller Hosting', d: 'Linux hosting paketleri ile kendi hosting işinizi başlatın.', href: '/reseller-hosting', icon: 'magaza', r: 'Fırsatı Yakala', rTon: 'sari' },
+    { t: 'Kurumsal Hosting', d: 'Yüksek trafik ve izole kaynak gerektiren projeler için.', href: '/kurumsal-hosting', icon: 'kurumsal' },
   ]},
-  { label: 'Sunucu', kolon: 3, items: [
-    { t: 'Sanal Sunucu (VDS)', d: 'E5-2699 v4 sanal sunucularla projelerinizi başlatın.', href: '/sanal-sunucu', icon: 'server', r: 'Kampanya', rTon: 'mavi', logo: '/img/marka/linux.svg' },
-    { t: 'Premium Sunucu', d: 'Jet hızında diskler ve Xeon Platinum ile tam güç!', href: '/premium-sunucu', icon: 'rocket', r: 'PREMIUM', rTon: 'sari', vurgu: true },
-    { t: 'Dedicated Sunucu', d: 'Fiziksel sunucular ile maksimum performans elde edin.', href: '/dedicated-sunucu', icon: 'cpu' },
-    { t: 'GPU Sunucu', d: 'Yüksek performanslı GPU ile AI ve grafik iş yükleriniz için ideal.', href: '/gpu-sunucu', icon: 'cpu', r: 'Popüler', rTon: 'kirmizi', logo: '/img/marka/nvidia.svg' },
-    { t: 'ISP Sunucu', d: 'Servis sağlayıcılar için özelleştirilmiş sunucu çözümleri.', href: '/isp-sunucu', icon: 'wifi' },
-    { t: 'ABD Sunucu', d: 'Amerika lokasyonunda düşük gecikmeli sunucu seçenekleri.', href: '/abd-sunucu', icon: 'globe' },
+  { label: 'Sunucu', kolon: 2, items: [
+    { t: 'Sanal Sunucu (VDS)', d: 'E5-2699 v4 sanal sunucularla projelerinizi başlatın.', href: '/sanal-sunucu', icon: 'vds', r: 'Kampanya', rTon: 'mavi' },
+    { t: 'Premium Sunucu', d: 'Jet hızında diskler ve Xeon Platinum ile tam güç!', href: '/premium-sunucu', icon: 'rocket', r: 'PREMIUM', rTon: 'sari', vurgu: true, logo: '/img/marka/intel.webp' },
+    { t: 'Dedicated Sunucu', d: 'Fiziksel sunucular ile maksimum performans elde edin.', href: '/dedicated-sunucu', icon: 'dedicated' },
+    { t: 'GPU Sunucu', d: 'Yüksek performanslı GPU ile AI ve grafik iş yükleriniz için ideal.', href: '/gpu-sunucu', icon: 'gpu', r: 'Popüler', rTon: 'kirmizi' },
   ]},
   { label: 'Veri Merkezi', kolon: 2, items: [
-    { t: 'Sunucu Barındırma', d: 'Kendi donanımınız bizim Tier-3 veri merkezimizde güvende.', href: '/sunucu-barindirma', icon: 'database', r: 'TIER III', rTon: 'yesil' },
+    { t: 'Sunucu Barındırma', d: 'Kendi donanımınız bizim Tier-3 veri merkezimizde güvende.', href: '/sunucu-barindirma', icon: 'colocation', r: 'TIER III', rTon: 'yesil' },
     { t: 'IP Kiralama', d: 'Kolay ve hızlı IP kiralama seçenekleri ile ihtiyacınız olan adresleri hemen edinin.', href: '/ip-kiralama', icon: 'globe', r: 'Özel', rTon: 'yesil' },
   ]},
+  { label: 'Hazır Yazılım', href: '/hazir-yazilim' },
   { label: 'Kurumsal', kolon: 3, items: [
-    { t: 'Şirket Profili', d: 'SunucumWEB hakkında detaylı bilgi alın.', href: '/hakkimizda', icon: 'users' },
+    { t: 'Şirket Profili', d: 'SunucumWEB hakkında detaylı bilgi alın.', href: '/hakkimizda', icon: 'binaOfis' },
     { t: 'Legal', d: 'Sözleşmeler, yasal metinler ve resmî ticari bilgiler.', href: '/legal', icon: 'doc' },
     { t: 'İletişim', d: 'Telefon, e-posta ve destek kanallarımız.', href: '/iletisim', icon: 'chat' },
   ]},
@@ -283,8 +290,8 @@ function CartDrawer() {
             <span className="grid h-16 w-16 place-items-center rounded-2xl bg-surface2 text-muted"><Icon name="cart" className="w-8 h-8" /></span>
             <p className="mt-5 text-[15px] font-semibold text-strong">Sepetiniz boş</p>
             <p className="mt-1.5 text-[14px] leading-relaxed text-body">Paketleri inceleyip beğendiğinizi sepete ekleyin.</p>
-            <Link href="/web-hosting" onClick={() => setPanelAcik(false)} className="mt-6 inline-flex items-center gap-2 rounded-xl bg-brand-500 px-5 py-3 text-[14px] font-bold text-white transition hover:bg-brand-600">
-              Paketleri İncele <Icon name="arrow" className="w-4 h-4" />
+            <Link href="/hazir-yazilim" onClick={() => setPanelAcik(false)} className="mt-6 inline-flex items-center gap-2 rounded-xl bg-brand-500 px-5 py-3 text-[14px] font-bold text-white transition hover:bg-brand-600">
+              Yazılımları İncele <Icon name="arrow" className="w-4 h-4" />
             </Link>
           </div>
         ) : (
@@ -438,7 +445,7 @@ export function SiteHeader() {
 
             <div className="flex shrink-0 items-center gap-1 sm:gap-2">
               <CartButton />
-              <Link href="/web-hosting" className="group hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap rounded-xl bg-brand-500 px-4 py-2.5 text-[14px] font-semibold text-white shadow-lg shadow-brand-500/25 transition-[transform,box-shadow,border-color,opacity] hover:bg-brand-600 lg:px-3.5 lg:text-[13px] xl:px-5 xl:text-[15px]">
+              <Link href="/iletisim" className="group hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap rounded-xl bg-brand-500 px-4 py-2.5 text-[14px] font-semibold text-white shadow-lg shadow-brand-500/25 transition-[transform,box-shadow,border-color,opacity] hover:bg-brand-600 lg:px-3.5 lg:text-[13px] xl:px-5 xl:text-[15px]">
                 Hemen Başla <Icon name="arrow" className="hidden h-4 w-4 transition-transform group-hover:translate-x-0.5 sm:block lg:hidden xl:block" />
               </Link>
               <button onClick={() => setOpen((v) => !v)} className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-strong transition-colors hover:bg-surface2 lg:hidden" aria-label="Menü" aria-expanded={open}>
@@ -497,7 +504,7 @@ export function SiteHeader() {
                 </div>
               ))}
 
-              <Link href="/web-hosting" onClick={() => setOpen(false)} className="mt-4 block rounded-xl bg-brand-500 px-5 py-3.5 text-center font-bold text-white shadow-lg shadow-brand-500/25">
+              <Link href="/iletisim" onClick={() => setOpen(false)} className="mt-4 block rounded-xl bg-brand-500 px-5 py-3.5 text-center font-bold text-white shadow-lg shadow-brand-500/25">
                 Hemen Başla
               </Link>
 
@@ -562,8 +569,6 @@ const FOOT_KOLON = [
     ['Premium Sunucu', '/premium-sunucu'],
     ['Dedicated Sunucu', '/dedicated-sunucu'],
     ['GPU Sunucu', '/gpu-sunucu'],
-    ['ISP Sunucu', '/isp-sunucu'],
-    ['ABD Sunucu', '/abd-sunucu'],
   ]},
   { h: 'Alan Adı', items: [
     ['Alan Adı Tescil', '/alan-adi'],
@@ -583,6 +588,7 @@ const FOOT_KOLON = [
   ]},
   { h: 'Kurumsal', items: [
     ['Şirket Profili', '/hakkimizda'],
+    ['Hazır Yazılımlar', '/hazir-yazilim'],
     ['Legal', '/legal'],
     ['İletişim', '/iletisim'],
   ]},
@@ -808,7 +814,7 @@ export function CtaBand({ title = 'Bugün başlayın, farkı hemen hissedin', te
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white text-balance">{title}</h2>
           <p className="mt-4 max-w-xl mx-auto text-lg text-white/85">{text}</p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Link href="/web-hosting" className="inline-flex items-center gap-2 rounded-xl bg-surface px-6 py-3.5 text-[15px] font-bold text-strong hover:bg-brandsoft transition">Paketleri İncele <Icon name="arrow" className="w-4 h-4" /></Link>
+            <Link href="/iletisim" className="inline-flex items-center gap-2 rounded-xl bg-surface px-6 py-3.5 text-[15px] font-bold text-strong hover:bg-brandsoft transition">Bize Ulaşın <Icon name="arrow" className="w-4 h-4" /></Link>
             <a href="tel:08503025809" className="inline-flex items-center gap-2 rounded-xl bg-ink/20 px-6 py-3.5 text-[15px] font-semibold text-white ring-1 ring-white/25 hover:bg-ink/30 transition">0(850) 302 5809</a>
           </div>
         </div>

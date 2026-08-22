@@ -64,8 +64,6 @@ const KATEGORILER = [
       { t: 'Dedicated Sunucu', d: 'Fiziksel, tüm kaynak sizin', href: '/dedicated-sunucu' },
       { t: 'Premium Sunucu', d: 'Premium işlemci gücü', href: '/premium-sunucu' },
       { t: 'GPU Sunucu', d: 'Yapay zekâ, render, hesaplama', href: '/gpu-sunucu' },
-      { t: 'ISP Sunucu', d: 'Servis sağlayıcılar için', href: '/isp-sunucu' },
-      { t: 'ABD Sunucu', d: 'Amerika lokasyonu', href: '/abd-sunucu' },
     ],
   },
   {
