@@ -16,6 +16,7 @@ import DomainPage from '@/components/site/DomainPage';
 import AboutPage from '@/components/site/AboutPage';
 import { HAKKIMIZDA } from '@/content/site/hakkimizda';
 import { PRODUCTS } from '@/content/site/products';
+import { URUN_PLANLARI } from '@/content/site/urun-planlari';
 
 export const dynamicParams = false;
 
@@ -85,7 +86,9 @@ export default async function Page({ params }) {
   }
 
   if (PRODUCTS[slug]) {
-    return <ProductPage data={PRODUCTS[slug]} slug={slug} />;
+    const gercekPlanlar = URUN_PLANLARI[slug];
+    const urun = gercekPlanlar ? { ...PRODUCTS[slug], plans: gercekPlanlar } : PRODUCTS[slug];
+    return <ProductPage data={urun} slug={slug} />;
   }
 
   if (slug === 'iletisim') {

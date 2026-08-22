@@ -89,6 +89,9 @@ function OzellikGrid({ items }) {
 
 function Fiyat({ p, yillik, koyu }) {
   const aylik = num(p.price);
+  if (aylik <= 0) {
+    return <div className={`text-[19px] font-extrabold ${koyu ? 'text-white' : 'text-strong'}`}>Fiyat için görüşün</div>;
+  }
   const yillikAy = Math.round(aylik * 10 / 12);
   const gosterilen = yillik ? yillikAy : aylik;
   const eski = yillik ? aylik : (p.oldPrice ? num(p.oldPrice) : 0);
