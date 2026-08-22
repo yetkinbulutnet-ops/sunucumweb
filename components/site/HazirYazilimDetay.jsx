@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Icon, SiteShell, CtaBand } from './chrome';
+import AddToCartButton from './AddToCartButton';
 import { YAZILIMLAR, YAZILIM_KATEGORILERI } from '@/content/site/yazilimlar';
 
 const fiyatYaz = (n) => new Intl.NumberFormat('tr-TR').format(n);
@@ -92,15 +93,25 @@ export default function HazirYazilimDetay({ urun }) {
               </div>
 
               <div className="mt-7 flex flex-wrap gap-3">
-                <Link href="/iletisim" className="inline-flex items-center gap-2 rounded-xl bg-brand-500 px-6 py-3.5 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-600">
-                  Bilgi &amp; Teklif Al <Icon name="arrow" className="h-4 w-4" />
-                </Link>
-                <a href="tel:08503025809" className="inline-flex items-center gap-2 rounded-xl bg-surface px-6 py-3.5 text-[15px] font-semibold text-strong ring-1 ring-line transition hover:ring-brandtext/50">
-                  <Icon name="phone" className="h-4 w-4 text-brandtext" /> Hemen Ara
-                </a>
+                <AddToCartButton
+                  item={{ name: urun.ad, product: 'Hazır Yazılım', price: urun.fiyat, period: '' }}
+                  tema="dolu"
+                  className="px-6 py-3.5"
+                />
+                {urun.demoUrl && (
+                  <a
+                    href={urun.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-xl bg-surface px-6 py-3.5 text-[15px] font-semibold text-strong ring-1 ring-line transition hover:ring-brandtext/50"
+                  >
+                    <Icon name="external" className="h-4 w-4 text-brandtext" /> Demoyu Gör
+                  </a>
+                )}
               </div>
               <p className="mt-3 text-[13px] leading-relaxed text-muted">
-                Kurulum ve teknik destek dahildir. Alan adı ve hosting ile birlikte kampanyalı fiyat için bize ulaşın.
+                Kurulum ve teknik destek dahildir. Bilgi ve teklif için{' '}
+                <Link href="/iletisim" className="font-semibold text-brandtext hover:underline">bize ulaşın</Link>.
               </p>
             </div>
           </div>

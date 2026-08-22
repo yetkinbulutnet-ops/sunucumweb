@@ -35,11 +35,8 @@ function IndirimRozet({ eski, yeni }) {
 function Kart({ y }) {
   const kat = YAZILIM_KATEGORILERI.find((x) => x.slug === y.kategori);
   return (
-    <Link
-      href={`/hazir-yazilim/${y.id}`}
-      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-[0_10px_40px_-24px_rgba(15,41,66,0.22)] transition-[transform,box-shadow,border-color] hover:-translate-y-1 hover:border-brandline hover:shadow-[0_24px_60px_-28px_rgba(20,184,166,0.35)]"
-    >
-      <div className="relative aspect-[4/3] overflow-hidden bg-surface2">
+    <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-[0_10px_40px_-24px_rgba(15,41,66,0.22)] transition-[transform,box-shadow,border-color] hover:-translate-y-1 hover:border-brandline hover:shadow-[0_24px_60px_-28px_rgba(20,184,166,0.35)]">
+      <Link href={`/hazir-yazilim/${y.id}`} className="relative block aspect-[4/3] overflow-hidden bg-surface2">
         <img
           src={y.img}
           alt={y.ad}
@@ -54,30 +51,47 @@ function Kart({ y }) {
             Popüler
           </span>
         )}
-      </div>
+      </Link>
 
       <div className="flex flex-1 flex-col p-5">
         <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-brandsoft px-2.5 py-1 text-[11.5px] font-bold text-brandtext">
           <KategoriIkon slug={y.kategori} /> {kat ? kat.ad : 'Yazılım'}
         </span>
-        <h3 className="mt-3 text-[16px] font-extrabold text-strong">{y.ad}</h3>
+        <Link href={`/hazir-yazilim/${y.id}`} className="mt-3">
+          <h3 className="text-[16px] font-extrabold text-strong transition-colors hover:text-brandtext">{y.ad}</h3>
+        </Link>
         <p className="mt-2 flex-1 text-[13.5px] leading-relaxed text-body line-clamp-3">{y.aciklama}</p>
 
-        <div className="mt-5 flex items-end justify-between gap-3 border-t border-line pt-4">
-          <div className="min-w-0">
+        <div className="mt-4 border-t border-line pt-4">
+          <div className="flex items-baseline gap-2">
             {y.eskiFiyat > y.fiyat && (
-              <div className="text-[12.5px] font-medium text-muted line-through">{fiyatYaz(y.eskiFiyat)} ₺</div>
+              <span className="text-[12.5px] font-medium text-muted line-through">{fiyatYaz(y.eskiFiyat)} ₺</span>
             )}
-            <div className="text-[19px] font-extrabold tracking-tight text-strong">
+            <span className="text-[19px] font-extrabold tracking-tight text-strong">
               {fiyatYaz(y.fiyat)} <span className="text-[13px] font-bold text-muted">₺</span>
-            </div>
+            </span>
           </div>
-          <span className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-ink px-4 py-2.5 text-[13.5px] font-bold text-white transition-colors group-hover:bg-brand-600">
-            İncele <Icon name="arrow" className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-          </span>
+          <div className="mt-3 grid grid-cols-2 gap-2">
+            <Link
+              href={`/hazir-yazilim/${y.id}`}
+              className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-ink px-3 py-2.5 text-[13.5px] font-bold text-white transition-colors hover:bg-brand-600"
+            >
+              İncele <Icon name="arrow" className="h-3.5 w-3.5" />
+            </Link>
+            {y.demoUrl && (
+              <a
+                href={y.demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-line bg-surface px-3 py-2.5 text-[13.5px] font-bold text-strong transition-colors hover:border-brandline hover:text-brandtext"
+              >
+                Demo <Icon name="external" className="h-3.5 w-3.5" />
+              </a>
+            )}
+          </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
 
