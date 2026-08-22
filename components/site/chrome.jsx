@@ -71,9 +71,13 @@ export function Icon({ name, className = 'w-6 h-6' }) {
   );
 }
 
+const AiRozet = () => (
+  <span className="inline-flex items-center rounded-md bg-gradient-to-br from-violet-500 via-fuchsia-500 to-emerald-400 px-1.5 py-[3px] text-[10px] font-extrabold uppercase leading-none tracking-wide text-white shadow-sm">AI</span>
+);
+
 export const MENU = [
   { label: 'Ana Sayfa', href: '/' },
-  { label: 'Domain', kolon: 3, items: [
+  { label: 'Domain', ai: true, kolon: 3, items: [
     { t: 'Domain Tescil', d: 'Yeni domain tescil işlemleri için hemen tıklayın.', href: '/alan-adi', icon: 'globe', r: '%20 İndirim', rTon: 'yesil' },
     { t: 'Domain Transfer', d: 'Mevcut domaininizi güvenle bize transfer edin.', href: '/transfer', icon: 'refresh' },
     { t: 'Domain Sorgulama', d: 'Kayıt firması, tescil ve bitiş tarihi ile isim sunucularını görün.', href: '/araclar/whois', icon: 'search' },
@@ -474,6 +478,7 @@ export function SiteHeader() {
                       className={`inline-flex items-center gap-1 whitespace-nowrap rounded-lg px-2 py-2 text-[14px] font-medium transition-colors 2xl:px-3.5 2xl:text-[15px] ${acikMi ? 'bg-brandsoft/60 text-brandtext' : 'text-strong/80 hover:text-brandtext'}`}
                     >
                       {m.label}
+                      {m.ai && <AiRozet />}
                       <Icon name="chevron" className={`mt-0.5 w-3.5 h-3.5 shrink-0 transition-transform ${acikMi ? 'rotate-180' : ''}`} />
                     </button>
 
@@ -545,7 +550,7 @@ export function SiteHeader() {
                     aria-expanded={acc === i}
                     className="flex w-full items-center justify-between py-3.5 text-[15px] font-semibold text-strong"
                   >
-                    {m.label}
+                    <span className="inline-flex items-center gap-1.5">{m.label}{m.ai && <AiRozet />}</span>
                     <Icon name="chevron" className={`w-4 h-4 text-muted transition-transform ${acc === i ? 'rotate-180' : ''}`} />
                   </button>
                   )}
