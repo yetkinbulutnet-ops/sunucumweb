@@ -398,7 +398,7 @@ export function SiteHeader() {
               <img src="/icon/logo.png" alt="SunucumWEB" className="h-7 w-auto sm:h-8 dark:brightness-0 dark:invert" />
             </Link>
 
-            <nav className="hidden lg:flex items-center gap-0.5" onMouseLeave={menuKapatGecikmeli}>
+            <nav className="hidden xl:flex items-center gap-0.5" onMouseLeave={menuKapatGecikmeli}>
               {MENU.map((m, n) => {
                 const acikMi = acikMenu === n;
                 if (!m.items) {
@@ -407,7 +407,7 @@ export function SiteHeader() {
                       key={m.label}
                       href={m.href}
                       onMouseEnter={menuKapatHemen}
-                      className="whitespace-nowrap rounded-lg px-2 py-2 text-[14px] font-medium text-strong/80 transition-colors hover:text-brandtext xl:px-3.5 xl:text-[15px]"
+                      className="whitespace-nowrap rounded-lg px-2 py-2 text-[14px] font-medium text-strong/80 transition-colors hover:text-brandtext 2xl:px-3.5 2xl:text-[15px]"
                     >
                       {m.label}
                     </Link>
@@ -418,7 +418,7 @@ export function SiteHeader() {
                     <button
                       aria-expanded={acikMi}
                       onClick={() => (acikMi ? menuKapatHemen() : menuAc(n))}
-                      className={`inline-flex items-center gap-1 whitespace-nowrap rounded-lg px-2 py-2 text-[14px] font-medium transition-colors xl:px-3.5 xl:text-[15px] ${acikMi ? 'bg-brandsoft/60 text-brandtext' : 'text-strong/80 hover:text-brandtext'}`}
+                      className={`inline-flex items-center gap-1 whitespace-nowrap rounded-lg px-2 py-2 text-[14px] font-medium transition-colors 2xl:px-3.5 2xl:text-[15px] ${acikMi ? 'bg-brandsoft/60 text-brandtext' : 'text-strong/80 hover:text-brandtext'}`}
                     >
                       {m.label}
                       <Icon name="chevron" className={`mt-0.5 w-3.5 h-3.5 shrink-0 transition-transform ${acikMi ? 'rotate-180' : ''}`} />
@@ -445,10 +445,10 @@ export function SiteHeader() {
 
             <div className="flex shrink-0 items-center gap-1 sm:gap-2">
               <CartButton />
-              <Link href="/iletisim" className="group hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap rounded-xl bg-brand-500 px-4 py-2.5 text-[14px] font-semibold text-white shadow-lg shadow-brand-500/25 transition-[transform,box-shadow,border-color,opacity] hover:bg-brand-600 lg:px-3.5 lg:text-[13px] xl:px-5 xl:text-[15px]">
-                Hemen Başla <Icon name="arrow" className="hidden h-4 w-4 transition-transform group-hover:translate-x-0.5 sm:block lg:hidden xl:block" />
+              <Link href="/iletisim" className="group hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap rounded-xl bg-brand-500 px-4 py-2.5 text-[14px] font-semibold text-white shadow-lg shadow-brand-500/25 transition-[transform,box-shadow,border-color,opacity] hover:bg-brand-600 2xl:px-5 2xl:text-[15px]">
+                Hemen Başla <Icon name="arrow" className="hidden h-4 w-4 transition-transform group-hover:translate-x-0.5 sm:block" />
               </Link>
-              <button onClick={() => setOpen((v) => !v)} className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-strong transition-colors hover:bg-surface2 lg:hidden" aria-label="Menü" aria-expanded={open}>
+              <button onClick={() => setOpen((v) => !v)} className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-strong transition-colors hover:bg-surface2 xl:hidden" aria-label="Menü" aria-expanded={open}>
                 <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                   {open ? <path d="M6 6l12 12M18 6 6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
                 </svg>
@@ -461,7 +461,7 @@ export function SiteHeader() {
       </div>
 
       {open && (
-        <div className="fixed inset-0 z-[80] lg:hidden" role="dialog" aria-modal="true" aria-label="Menü">
+        <div className="fixed inset-0 z-[80] xl:hidden" role="dialog" aria-modal="true" aria-label="Menü">
           <div onClick={() => setOpen(false)} className="absolute inset-0 bg-ink/70 animate-[fadeup_0.2s_ease-out]" />
 
           <div className="absolute inset-x-0 top-0 flex max-h-full flex-col bg-surface shadow-2xl animate-[fadeup_0.3s_ease-out]">
