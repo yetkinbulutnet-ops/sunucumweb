@@ -265,6 +265,23 @@ function CartButton() {
 
 function CartDrawer() {
   const { items, adet, toplam, panelAcik, setPanelAcik, cikar, adetAyarla, temizle } = useCart();
+  const [odemeYukleniyor, setOdemeYukleniyor] = useState(false);
+
+  const odemeyeGec = async () => {
+    if (odemeYukleniyor || !items.length) return;
+    setOdemeYukleniyor(true);
+    try {
+      const yanit = await fetch('/api/sepet', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items }),
+      });
+      const veri = await yanit.json().catch(() => ({}));
+      if (veri?.ok && veri.url) { window.location.href = veri.url; return; }
+    } catch {  }
+    window.open(CHECKOUT_URL, '_blank', 'noopener,noreferrer');
+    setOdemeYukleniyor(false);
+  };
 
   useEffect(() => {
     if (!panelAcik) return;
@@ -335,14 +352,14 @@ function CartDrawer() {
                 <span className="text-[22px] font-extrabold text-strong">{formatTRY(toplam)}</span>
               </div>
               <p className="mt-1 text-[12px] leading-relaxed text-muted">KDV ve varsa kurulum ücretleri ödeme adımında hesaplanır.</p>
-              <a
-                href={CHECKOUT_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-4 flex items-center justify-center gap-2 rounded-xl bg-brand-500 px-5 py-3.5 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition hover:bg-brand-600"
+              <button
+                type="button"
+                onClick={odemeyeGec}
+                disabled={odemeYukleniyor}
+                className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-500 px-5 py-3.5 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition hover:bg-brand-600 disabled:opacity-70"
               >
-                Ödemeye Geç <Icon name="arrow" className="w-4 h-4" />
-              </a>
+                {odemeYukleniyor ? 'Hazırlanıyor…' : <>Ödemeye Geç <Icon name="arrow" className="w-4 h-4" /></>}
+              </button>
               <button onClick={() => setPanelAcik(false)} className="mt-2 w-full rounded-xl px-5 py-2.5 text-[14px] font-semibold text-body transition-colors hover:text-strong">
                 Alışverişe devam et
               </button>
