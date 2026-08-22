@@ -6,7 +6,7 @@ import AddToCartButton from './AddToCartButton';
 import { ALTYAPI } from '@/content/site/markalar';
 
 const SUNUCU_GORSEL = '/img/urun/sunucu.webp';
-const SLUG_GORSEL = { 'premium-sunucu': '/img/urun/xeon-platinum.webp' };
+const SLUG_GORSEL = { 'sanal-sunucu': '/img/urun/xeon.webp', 'premium-sunucu': '/img/urun/xeon-platinum.webp', 'gpu-sunucu': '/img/urun/ekran-karti.webp' };
 const HOSTING_ALTYAPI = ALTYAPI.filter((a) => ['cPanel', 'LiteSpeed', 'CloudLinux', 'Imunify360', 'JetBackup', 'Softaculous'].includes(a.ad));
 
 const num = (s) => {
