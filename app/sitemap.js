@@ -2,6 +2,7 @@ import { getManifest } from '@/lib/content';
 import { ARAC_LISTESI } from '@/content/site/araclar';
 import { LEGAL_BELGELER } from '@/content/site/legal';
 import { DNS_TIP_KODLARI } from '@/content/site/dns-tipleri';
+import { YAZILIMLAR } from '@/content/site/yazilimlar';
 import { mutlakUrl } from '@/lib/seo';
 import { dnsYolu } from '@/lib/dns-yol';
 
@@ -30,6 +31,8 @@ export default function sitemap() {
     ...DNS_TIP_KODLARI.map((t) => girdi(dnsYolu(alan, t), 0.4, 'weekly')),
   ]);
 
+  const yazilimlar = YAZILIMLAR.map((y) => girdi(`/hazir-yazilim/${y.id}`, 0.7, 'monthly'));
+
   return [
     girdi('/', 1, 'weekly'),
     girdi('/hazir-yazilim', 0.8, 'monthly'),
@@ -39,5 +42,6 @@ export default function sitemap() {
     ...araclar,
     ...yasal,
     ...dnsSayfalari,
+    ...yazilimlar,
   ];
 }

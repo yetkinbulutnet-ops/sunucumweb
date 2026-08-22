@@ -2,7 +2,6 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { Icon, SiteShell, CtaBand } from './chrome';
-import { CHECKOUT_URL } from '@/lib/engines/cart';
 import { YAZILIMLAR, YAZILIM_KATEGORILERI, YAZILIM_SERIDI } from '@/content/site/yazilimlar';
 
 const PER = 12;
@@ -22,51 +21,63 @@ function KategoriIkon({ slug }) {
   return <Icon name={k ? k.icon : 'layers'} className="h-4 w-4" />;
 }
 
+function IndirimRozet({ eski, yeni }) {
+  if (!eski || !yeni || eski <= yeni) return null;
+  const oran = Math.round((1 - yeni / eski) * 100);
+  if (oran < 1) return null;
+  return (
+    <span className="absolute left-3 top-3 rounded-lg bg-rose-500 px-2 py-1 text-[11px] font-extrabold text-white shadow-lg">
+      %{oran} indirim
+    </span>
+  );
+}
+
 function Kart({ y }) {
   const kat = YAZILIM_KATEGORILERI.find((x) => x.slug === y.kategori);
   return (
-    <div className="group flex h-full flex-col rounded-2xl border border-line bg-surface p-5 shadow-[0_10px_40px_-24px_rgba(15,41,66,0.22)] transition-[transform,box-shadow,border-color] hover:-translate-y-1 hover:border-brandline hover:shadow-[0_24px_60px_-28px_rgba(20,184,166,0.35)]">
-      <div className="flex items-center justify-between gap-2">
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-brandsoft px-2.5 py-1 text-[11.5px] font-bold text-brandtext">
-          <KategoriIkon slug={y.kategori} /> {kat ? kat.ad : 'Yazılım'}
-        </span>
+    <Link
+      href={`/hazir-yazilim/${y.id}`}
+      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-[0_10px_40px_-24px_rgba(15,41,66,0.22)] transition-[transform,box-shadow,border-color] hover:-translate-y-1 hover:border-brandline hover:shadow-[0_24px_60px_-28px_rgba(20,184,166,0.35)]"
+    >
+      <div className="relative aspect-[4/3] overflow-hidden bg-surface2">
+        <img
+          src={y.img}
+          alt={y.ad}
+          width={800}
+          height={600}
+          loading="lazy"
+          className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+        />
+        <IndirimRozet eski={y.eskiFiyat} yeni={y.fiyat} />
         {y.oneCikan && (
-          <span className="rounded-md bg-amber-500/15 px-1.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-amber-600 ring-1 ring-amber-500/30 dark:text-amber-400">
+          <span className="absolute right-3 top-3 rounded-md bg-amber-500 px-1.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-white shadow">
             Popüler
           </span>
         )}
       </div>
 
-      <h3 className="mt-4 text-[17px] font-extrabold text-strong">{y.ad}</h3>
-      <p className="mt-2 flex-1 text-[14px] leading-relaxed text-body">{y.aciklama}</p>
+      <div className="flex flex-1 flex-col p-5">
+        <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-brandsoft px-2.5 py-1 text-[11.5px] font-bold text-brandtext">
+          <KategoriIkon slug={y.kategori} /> {kat ? kat.ad : 'Yazılım'}
+        </span>
+        <h3 className="mt-3 text-[16px] font-extrabold text-strong">{y.ad}</h3>
+        <p className="mt-2 flex-1 text-[13.5px] leading-relaxed text-body line-clamp-3">{y.aciklama}</p>
 
-      {y.etiketler?.length > 0 && (
-        <div className="mt-4 flex flex-wrap gap-1.5">
-          {y.etiketler.map((e) => (
-            <span key={e} className="rounded-lg bg-surface2 px-2 py-1 text-[11.5px] font-semibold text-muted ring-1 ring-line">
-              {e}
-            </span>
-          ))}
-        </div>
-      )}
-
-      <div className="mt-5 flex items-end justify-between gap-3 border-t border-line pt-4">
-        <div className="min-w-0">
-          <div className="text-[11px] font-medium uppercase tracking-wide text-muted">Başlangıç</div>
-          <div className="text-[20px] font-extrabold tracking-tight text-strong">
-            {fiyatYaz(y.fiyat)} <span className="text-[13px] font-bold text-muted">₺</span>
+        <div className="mt-5 flex items-end justify-between gap-3 border-t border-line pt-4">
+          <div className="min-w-0">
+            {y.eskiFiyat > y.fiyat && (
+              <div className="text-[12.5px] font-medium text-muted line-through">{fiyatYaz(y.eskiFiyat)} ₺</div>
+            )}
+            <div className="text-[19px] font-extrabold tracking-tight text-strong">
+              {fiyatYaz(y.fiyat)} <span className="text-[13px] font-bold text-muted">₺</span>
+            </div>
           </div>
+          <span className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-ink px-4 py-2.5 text-[13.5px] font-bold text-white transition-colors group-hover:bg-brand-600">
+            İncele <Icon name="arrow" className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+          </span>
         </div>
-        <a
-          href={CHECKOUT_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-brand-500 px-4 py-2.5 text-[13.5px] font-bold text-white shadow-lg shadow-brand-500/20 transition-colors hover:bg-brand-600"
-        >
-          Satın Al <Icon name="arrow" className="h-3.5 w-3.5" />
-        </a>
       </div>
-    </div>
+    </Link>
   );
 }
 
