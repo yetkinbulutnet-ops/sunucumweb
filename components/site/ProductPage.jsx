@@ -6,6 +6,7 @@ import AddToCartButton from './AddToCartButton';
 import { ALTYAPI } from '@/content/site/markalar';
 
 const SUNUCU_GORSEL = '/img/urun/sunucu.webp';
+const SLUG_GORSEL = { 'premium-sunucu': '/img/urun/xeon-platinum.webp' };
 const HOSTING_ALTYAPI = ALTYAPI.filter((a) => ['cPanel', 'LiteSpeed', 'CloudLinux', 'Imunify360', 'JetBackup', 'Softaculous'].includes(a.ad));
 
 const num = (s) => {
@@ -317,7 +318,7 @@ export default function ProductPage({ data, slug }) {
         {hosting ? (
           <div className={`mt-12 grid gap-6 md:grid-cols-2 lg:gap-5 items-stretch ${d.plans.length >= 4 ? 'lg:grid-cols-4' : d.plans.length === 2 ? 'lg:grid-cols-2 max-w-3xl mx-auto' : 'lg:grid-cols-3'}`}>{d.plans.map((p) => <PlanKart key={p.name} p={p} urun={d} yillik={yillik} tip={tip} />)}</div>
         ) : (
-          <div className="mt-12 space-y-4">{d.plans.map((p) => <PlanSatir key={p.name} p={p} urun={d} yillik={yillik} tip={tip} gorsel={tip === 'sunucu' ? SUNUCU_GORSEL : null} />)}</div>
+          <div className="mt-12 space-y-4">{d.plans.map((p) => <PlanSatir key={p.name} p={p} urun={d} yillik={yillik} tip={tip} gorsel={tip === 'sunucu' ? (SLUG_GORSEL[slug] || SUNUCU_GORSEL) : null} />)}</div>
         )}
         <p className="mt-6 text-center text-sm text-muted">Fiyatlara KDV dahil değildir. İhtiyacınıza özel yapılandırma için <Link href="/iletisim" className="font-semibold text-brandtext hover:underline">bize ulaşın</Link>.</p>
       </div></section>
