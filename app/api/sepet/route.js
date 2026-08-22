@@ -14,7 +14,7 @@ export async function POST(req) {
   const items = Array.isArray(govde?.items) ? govde.items : [];
   const userId = govde?.userId || TEST_USER_ID;
   if (!items.length) return NextResponse.json({ ok: false, hata: 'sepet-bos' }, { status: 400 });
-  if (!userId) return NextResponse.json({ ok: false, hata: 'musteri-kimligi-yok' }, { status: 400 });
+  if (!userId) return NextResponse.json({ ok: false, mod: 'misafir' });
 
   const kalemler = items
     .slice(0, 30)
