@@ -78,7 +78,7 @@ export const MENU = [
     { t: 'Domain Sorgulama', d: 'Kayıt firması, tescil ve bitiş tarihi ile isim sunucularını görün.', href: '/araclar/whois', icon: 'search' },
   ]},
   { label: 'Hosting', kolon: 4, items: [
-    { t: 'Web Hosting', d: 'Sınırsız hosting paketlerini deneyin, dakikalar içinde yayında olun.', href: '/web-hosting', icon: 'globe', r: '%20 İndirim', rTon: 'yesil', logo: '/img/marka/cpanel.svg' },
+    { t: 'Web Hosting', d: 'Sınırsız hosting paketlerini deneyin, dakikalar içinde yayında olun.', href: '/web-hosting', icon: 'globe', r: '%20 İndirim', rTon: 'yesil', logo: '/img/altyapi/cpanel.webp' },
     { t: 'WordPress Hosting', d: 'WordPress için optimize edilmiş, hızlı ve güvenli altyapı.', href: '/wordpress-hosting', icon: 'bolt', logo: '/img/marka/wordpress.png' },
     { t: 'Reseller Hosting', d: 'Linux hosting paketleri ile kendi hosting işinizi başlatın.', href: '/reseller-hosting', icon: 'magaza', r: 'Fırsatı Yakala', rTon: 'sari' },
     { t: 'Kurumsal Hosting', d: 'Yüksek trafik ve izole kaynak gerektiren projeler için.', href: '/kurumsal-hosting', icon: 'kurumsal' },
