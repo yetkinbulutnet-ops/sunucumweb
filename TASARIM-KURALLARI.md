@@ -304,6 +304,23 @@ başlık, modal kilidi ve form odaklanma davranışı ayrıca kontrol edilir.
 
 ---
 
+## 8. ALTIN KURAL — Hız öncelikli: mükemmeliyetçilikte boğulma
+
+Ön yüzü **bir an önce bitirmek** esastır. Enerjiyi kullanıcının gördüğü şeye
+(düzen, tipografi, boşluk, akış, mobil, hız) harca; düşük değerli, tekrarlayan,
+"tedious" ayrıntılarda vakit kaybetme.
+
+- **Yer tutucu koy, geç.** Tek tek link toplama, birebir veri kazıma, elle
+  onlarca kayıt girme gibi işlerde mükemmeli kovalama: `#`, `TODO` veya temsilî
+  bir değer koyup ilerle; gerçekten gerekiyorsa sonra toplu hallet.
+- Bir iş "bizi yavaşlatıyor ama görünürde küçük fark yaratıyor" ise ertele.
+- Çalışan ve **dolu** bir sayfa, yarım kalmış kusursuz sayfadan iyidir. Yayına
+  almak > sonsuz cilalamak.
+- İstisna: taşma, kırık düzen, koyu mod ve mobil — bunlar "cila" değil, temeldir;
+  onlar her zaman düzgün olur.
+
+---
+
 ## Bölüm bitince kontrol listesi
 
 - [ ] Açık modda düzgün

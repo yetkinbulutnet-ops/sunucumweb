@@ -9,6 +9,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import PageScripts from '@/components/PageScripts';
 import HomePage from '@/components/site/HomePage';
+import ProductPage from '@/components/site/ProductPage';
 import YapimAsamasi from '@/components/site/YapimAsamasi';
 import ContactPage from '@/components/site/ContactPage';
 import DomainPage from '@/components/site/DomainPage';
@@ -18,11 +19,7 @@ import { PRODUCTS } from '@/content/site/products';
 
 export const dynamicParams = false;
 
-const YAPIM_ASAMASI = new Set([
-  'web-hosting', 'wordpress-hosting', 'reseller-hosting', 'kurumsal-hosting',
-  'sanal-sunucu', 'premium-sunucu', 'dedicated-sunucu', 'gpu-sunucu',
-  'sunucu-barindirma', 'ip-kiralama', 'isp-sunucu', 'abd-sunucu',
-]);
+const YAPIM_ASAMASI = new Set(['isp-sunucu', 'abd-sunucu']);
 
 const YONLENDIRILEN = [
   'ticari-bilgiler',
@@ -85,6 +82,10 @@ export default async function Page({ params }) {
 
   if (YAPIM_ASAMASI.has(slug)) {
     return <YapimAsamasi baslik={PRODUCTS[slug]?.title || meta.title} />;
+  }
+
+  if (PRODUCTS[slug]) {
+    return <ProductPage data={PRODUCTS[slug]} slug={slug} />;
   }
 
   if (slug === 'iletisim') {
