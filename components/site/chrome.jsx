@@ -63,6 +63,9 @@ const PATHS = {
   colocation: 'M5 3h14a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z M5 8h14M5 13h14 M8 5.5h.01M8 10.5h.01M8 15.5h.01 M11 5.5h5M11 10.5h5M11 15.5h5',
   wrench: 'M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z',
   external: 'M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6 M15 3h6v6 M10 14 21 3',
+  tag: 'M3 11.5V5a2 2 0 0 1 2-2h6.5a2 2 0 0 1 1.4.6l7 7a2 2 0 0 1 0 2.8l-6.5 6.5a2 2 0 0 1-2.8 0l-7-7A2 2 0 0 1 3 11.5z M7.5 7.5h.01',
+  gift: 'M20 12v8a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-8 M3 8h18v4H3z M12 21V8 M12 8H8a2 2 0 0 1 0-4c2.5 0 4 4 4 4z M12 8h4a2 2 0 0 0 0-4c-2.5 0-4 4-4 4z',
+  percent: 'M19 5 5 19 M6.5 6.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z M17.5 14.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z',
 };
 export function Icon({ name, className = 'w-6 h-6' }) {
   return (
@@ -100,8 +103,9 @@ export const MENU = [
     { t: 'IP Kiralama', d: 'Kolay ve hızlı IP kiralama seçenekleri ile ihtiyacınız olan adresleri hemen edinin.', href: '/ip-kiralama', icon: 'globe', logo: '/img/urun/ip-kiralama.webp', r: 'Özel', rTon: 'yesil' },
   ]},
   { label: 'Hazır Yazılım', href: '/hazir-yazilim' },
-  { label: 'Kurumsal', kolon: 3, items: [
+  { label: 'Kurumsal', kolon: 2, items: [
     { t: 'Şirket Profili', d: 'SunucumWEB hakkında detaylı bilgi alın.', href: '/hakkimizda', icon: 'binaOfis' },
+    { t: 'Kampanyalar', d: 'Güncel indirimler ve sınırlı süreli fırsatlar.', href: '/kampanyalar', icon: 'tag', r: 'Fırsat', rTon: 'sari' },
     { t: 'Legal', d: 'Sözleşmeler, yasal metinler ve resmî ticari bilgiler.', href: '/legal', icon: 'doc' },
     { t: 'İletişim', d: 'Telefon, e-posta ve destek kanallarımız.', href: '/iletisim', icon: 'chat' },
   ]},
@@ -651,6 +655,7 @@ const FOOT_KOLON = [
   ]},
   { h: 'Kurumsal', items: [
     ['Şirket Profili', '/hakkimizda'],
+    ['Kampanyalar', '/kampanyalar'],
     ['Hazır Yazılımlar', '/hazir-yazilim'],
     ['Legal', '/legal'],
     ['İletişim', '/iletisim'],

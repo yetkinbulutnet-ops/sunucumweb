@@ -35,6 +35,7 @@ export default function sitemap() {
 
   return [
     girdi('/', 1, 'weekly'),
+    girdi('/kampanyalar', 0.8, 'monthly'),
     girdi('/hazir-yazilim', 0.8, 'monthly'),
     girdi('/legal', 0.4, 'yearly'),
     girdi('/araclar', 0.8, 'monthly'),
