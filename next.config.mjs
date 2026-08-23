@@ -33,7 +33,8 @@ const nextConfig = {
       { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), browsing-topics=()' },
     ];
     if (INDEXLENEBILIR) {
-      return [{ source: '/:path*', headers: guvenlik }];
+      // HSTS yalnizca canli (indexlenebilir) domainde; demo alt alanlarini etkilemesin.
+      return [{ source: '/:path*', headers: [...guvenlik, { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains' }] }];
     }
     return [
       {

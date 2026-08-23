@@ -17,8 +17,8 @@ export default function manifest() {
     theme_color: '#0f2942',
     categories: ['business', 'utilities'],
     icons: [
-      { src: '/icon/favicon.png', sizes: '256x256', type: 'image/png', purpose: 'any' },
-      { src: '/icon/favicon.png', sizes: '256x256', type: 'image/png', purpose: 'maskable' },
+      { src: '/icon/android-chrome-192.png', sizes: '192x192', type: 'image/png' },
+      { src: '/icon/android-chrome-512.png', sizes: '512x512', type: 'image/png' },
     ],
   };
 }

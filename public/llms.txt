@@ -1,0 +1,35 @@
+# SunucumWEB
+
+> Isparta (Keçiborlu) merkezli veri merkezinden NVMe hosting, sanal sunucu (VDS), dedicated sunucu, GPU sunucu, sunucu barındırma (colocation), IP kiralama ve alan adı hizmetleri sunan Türkiye merkezli barındırma firması.
+
+SunucumWEB (SunucumWEB Bilişim Teknolojileri), Türkiye lokasyonlu veri merkezi altyapısında hosting ve sunucu hizmetleri sağlar. Ücretsiz SSL, günlük yedekleme, DDoS koruması ve 7/24 gerçek destek sunar. Sipariş ve ödeme https://my.sunucumweb.com üzerinden yürür. İletişim: 0(850) 302 5809 · destek@sunucumweb.com.
+
+## Hosting
+- [Web Hosting](https://sunucumweb.com/web-hosting): NVMe SSD, cPanel, ücretsiz SSL
+- [WordPress Hosting](https://sunucumweb.com/wordpress-hosting): LiteSpeed önbellekli, tek tık kurulum
+- [Reseller Hosting](https://sunucumweb.com/reseller-hosting): WHM ile bayilik, white label
+- [Kurumsal Hosting](https://sunucumweb.com/kurumsal-hosting): İzole kaynak, öncelikli SLA
+
+## Sunucu
+- [Sanal Sunucu (VDS)](https://sunucumweb.com/sanal-sunucu): Tam root erişimi, NVMe, anlık kurulum
+- [Premium Sunucu](https://sunucumweb.com/premium-sunucu): Yüksek performanslı VDS
+- [Dedicated Sunucu](https://sunucumweb.com/dedicated-sunucu): Fiziksel Intel Xeon sunucular
+- [GPU Sunucu](https://sunucumweb.com/gpu-sunucu): NVIDIA GPU ile AI ve render
+
+## Veri Merkezi
+- [Sunucu Barındırma](https://sunucumweb.com/sunucu-barindirma): Tier-3 colocation
+- [IP Kiralama](https://sunucumweb.com/ip-kiralama): Temiz IPv4 ve IPv6 blokları
+
+## Alan Adı ve Yazılım
+- [Alan Adı Tescil](https://sunucumweb.com/alan-adi): Alan adı sorgulama ve tescil
+- [Alan Adı Transfer](https://sunucumweb.com/transfer): Mevcut alan adını transfer
+- [Hazır Yazılımlar](https://sunucumweb.com/hazir-yazilim): Kuruluma hazır web yazılımları
+
+## Araçlar
+- [Ücretsiz Ağ Araçları](https://sunucumweb.com/araclar): DNS, WHOIS, SSL, e-posta, IP sorgulama; kayıt gerekmez
+
+## Kurumsal
+- [Şirket Profili](https://sunucumweb.com/hakkimizda)
+- [Kampanyalar](https://sunucumweb.com/kampanyalar)
+- [İletişim](https://sunucumweb.com/iletisim)
+- [Legal / Sözleşmeler](https://sunucumweb.com/legal)

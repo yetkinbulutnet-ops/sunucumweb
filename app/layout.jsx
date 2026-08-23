@@ -27,7 +27,14 @@ export const metadata = {
   },
   description: ACIKLAMA,
   applicationName: SITE_ADI,
-  icons: { icon: '/assets/img/favicon.png' },
+  icons: {
+    icon: [
+      { url: '/icon/favicon.png', sizes: '256x256', type: 'image/png' },
+      { url: '/icon/android-chrome-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icon/android-chrome-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: '/icon/apple-touch-icon.png',
+  },
   openGraph: {
     type: 'website',
     locale: 'tr_TR',
