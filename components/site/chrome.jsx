@@ -584,9 +584,14 @@ export function SiteHeader() {
                   <a href="https://my.sunucumweb.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-xl bg-surface px-3 py-2.5 text-[13px] font-semibold text-strong ring-1 ring-line">
                     <Icon name="user" className="w-4 h-4 text-brandtext" /> Müşteri Girişi
                   </a>
-                  <a href="https://my.sunucumweb.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-xl bg-surface px-3 py-2.5 text-[13px] font-semibold text-strong ring-1 ring-line">
+                  <button
+                    type="button"
+                    onClick={() => { setOpen(false); try { window.Tawk_API?.toggle?.(); } catch {  } }}
+                    data-umami-event="Canlı Destek"
+                    className="flex items-center gap-2 rounded-xl bg-surface px-3 py-2.5 text-[13px] font-semibold text-strong ring-1 ring-line"
+                  >
                     <Icon name="chat" className="w-4 h-4 text-brandtext" /> Canlı Destek
-                  </a>
+                  </button>
                   <a href="https://status.sunucumweb.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-xl bg-surface px-3 py-2.5 text-[13px] font-semibold text-strong ring-1 ring-line">
                     <span className="relative flex h-2 w-2">
                       <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />

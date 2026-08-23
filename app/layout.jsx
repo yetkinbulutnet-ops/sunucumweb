@@ -5,6 +5,8 @@ import { SITE_URL, SITE_ADI, mutlakUrl } from '@/lib/seo';
 const UMAMI_SRC = 'https://istatistik.yetkinweb.com/script.js';
 const UMAMI_ID = 'a20811f9-e3f2-4b49-a7a4-a7280eb57e1b';
 
+const TAWK_SRC = 'https://embed.tawk.to/66b732520cca4f8a7a742f23/1i4tpp5dm';
+
 const CSS = [
   '/assets/_external/fonts.googleapis.com/css2_a685150f.css',
   '/tailwind.css',
@@ -105,6 +107,9 @@ export default function RootLayout({ children }) {
       <body>
         {children}
         <Script src={UMAMI_SRC} data-website-id={UMAMI_ID} strategy="afterInteractive" />
+        <Script id="tawkto" strategy="afterInteractive">
+          {`var Tawk_API=Tawk_API||{},Tawk_LoadStart=new Date();(function(){var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];s1.async=true;s1.src="${TAWK_SRC}";s1.charset="UTF-8";s1.setAttribute("crossorigin","*");s0.parentNode.insertBefore(s1,s0);})();`}
+        </Script>
       </body>
     </html>
   );

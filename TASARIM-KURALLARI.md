@@ -342,6 +342,26 @@ bozmadan çalışmak ve dönüşüm değeri olan aksiyonları raporlanabilir kı
 
 ---
 
+## 10. ALTIN KURAL — Her sayfa ve yapı canlı destek (Tawk.to) ile uyumlu
+
+Site genelinde **Tawk.to** canlı destek widget'ı çalışır (`app/layout.jsx`, `next/script`
+ile `afterInteractive`). Eklenen **her yeni sayfa, bileşen ve etkileşimli yapı** bu widget'ı
+bozmadan çalışmak zorundadır.
+
+- **Betik tek yerden yüklenir.** Tawk.to betiği yalnızca kök layout'ta durur; sayfa ya da
+  bileşen içine ikinci kez eklenmez. SPA gezinmelerinde widget kalıcıdır.
+- **Sağ alt köşe boş bırakılır.** Tawk launcher varsayılan olarak **sağ altta yüzer**. Yeni
+  sabit (`fixed`) öğeler (yukarı çık butonu, çerez şeridi, yapışkan CTA, bildirim) sağ alt
+  köşeyi kapatmaz; gerekiyorsa konum ve `z-index` ile launcher'ın üstüne binmeyecek şekilde
+  ayarlanır. Modal/panel açıkken widget'ın erişilebilirliği düşünülür.
+- **Sohbet tetikleyicileri API'den açar.** "Canlı Destek" gibi butonlar widget'ı
+  `window.Tawk_API?.toggle?.()` (ya da `maximize()`) ile açar; başka sayfaya yönlendirmez.
+  Çağrı `try/catch` + opsiyonel zincirle korunur (widget geç yüklenebilir).
+- **Analitik + performans.** Tetikleyicilere `data-umami-event` verilir (9. kural). Betik
+  `afterInteractive`'dir; ilk boyamayı ve SEO'yu etkilemez.
+
+---
+
 ## Bölüm bitince kontrol listesi
 
 - [ ] Açık modda düzgün
@@ -360,3 +380,4 @@ bozmadan çalışmak ve dönüşüm değeri olan aksiyonları raporlanabilir kı
 - [ ] Form alanları 16px+ (iOS zum yok), `100vh` yerine `min-h-ekran`
 - [ ] Tarayıcıya özel API'ler `try/catch` + geri düşüşlü
 - [ ] Önemli aksiyonlarda `data-umami-event` var (analitik uyumlu, tek betik)
+- [ ] Sağ alt köşe canlı destek (Tawk.to) launcher'ı için boş; sohbet `Tawk_API` ile açılıyor
