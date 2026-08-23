@@ -72,8 +72,14 @@ Doğrulandı: her sayfada benzersiz optimize başlık + tek marka eki + og:image
 XSS/Referrer ekliyor → sadece proxy'nin eklemediği eklendi, canlıda tam 1 kez, ÇİFT YOK); `sitemap.js`
 statik `lastModified 2026-08-24` (new Date() değil); layout dış origin **dns-prefetch** (Tawk/Umami/status).
 Denetim: tüm görsellerde alt + width/height mevcut, ana sayfa hero LCP zaten `eager + fetchPriority=high`.
-**SEO 3 FAZ TAMAMLANDI.** aggregateRating eklenmedi (Google policy riski). HSTS proxy'ye bırakıldı.
-Sonraki: gelecek tasarım listesi ([[bkz. memory]] ürün hero'su ürüne özel, sliderlar, kurumsal görseller).
+**SEO 3 FAZ TAMAMLANDI.** aggregateRating eklenmedi (Google policy riski).
+
+**YW-SEOSTD standart uyumu** (commit `2bac6b1`) — `Desktop/Altyapı Dokuman/NEXTJS/` 3 resmi PDF ile karşılaştırıldı;
+kalan kod-tarafı boşluklar kapatıldı: `public/llms.txt` (AI/GEO), `app/error.jsx`+`global-error.jsx`, favicon seti
+(apple-touch + android-chrome 192/512, layout icons + manifest), **HSTS** (yalnız production/indexlenebilir branch;
+demo yetkin.web.tr kardeş alt alanlarını etkilemesin). **KULLANICIDAN GEREKEN:** GTM/GA4 container ID, GSC/Bing/Yandex
+doğrulama kodları, IndexNow anahtarı, SPF/DKIM/DMARC (DNS). **Bilinçli sapma:** next/image yok (ham `<img>`+WebP,
+CWV karşılanıyor ama otomatik AVIF/srcset yok) — gelecek refaktör. Detay: memory `sunucumweb-yetkinweb-standartlari`.
 
 **Önceki iş (2026-08-22):** Mega menü ikonları SVG'lerle yenilendi; ISP/ABD sunucu silindi;
 Hazır Yazılım menüsü+sayfası eklendi; ürün sayfaları gerçek veriyle yayında; SEO teknik tamam.
