@@ -89,10 +89,10 @@ export const MENU = [
     { t: 'Kurumsal Hosting', d: 'Yüksek trafik ve izole kaynak gerektiren projeler için.', href: '/kurumsal-hosting', icon: 'kurumsal' },
   ]},
   { label: 'Sunucu', kolon: 2, items: [
-    { t: 'Sanal Sunucu (VDS)', d: 'E5-2699 v4 sanal sunucularla projelerinizi başlatın.', href: '/sanal-sunucu', icon: 'vds', r: 'Kampanya', rTon: 'mavi' },
-    { t: 'Premium Sunucu', d: 'Jet hızında diskler ve Xeon Platinum ile tam güç!', href: '/premium-sunucu', icon: 'rocket', r: 'PREMIUM', rTon: 'sari', vurgu: true, logo: '/img/marka/intel.webp' },
-    { t: 'Dedicated Sunucu', d: 'Fiziksel sunucular ile maksimum performans elde edin.', href: '/dedicated-sunucu', icon: 'dedicated' },
-    { t: 'GPU Sunucu', d: 'Yüksek performanslı GPU ile AI ve grafik iş yükleriniz için ideal.', href: '/gpu-sunucu', icon: 'gpu', r: 'Popüler', rTon: 'kirmizi' },
+    { t: 'Sanal Sunucu (VDS)', d: 'E5-2699 v4 sanal sunucularla projelerinizi başlatın.', href: '/sanal-sunucu', icon: 'vds', logo: '/img/urun/xeon.webp', r: 'Kampanya', rTon: 'mavi' },
+    { t: 'Premium Sunucu', d: 'Jet hızında diskler ve Xeon Platinum ile tam güç!', href: '/premium-sunucu', icon: 'rocket', r: 'PREMIUM', rTon: 'sari', vurgu: true, logo: '/img/urun/xeon-platinum.webp' },
+    { t: 'Dedicated Sunucu', d: 'Fiziksel sunucular ile maksimum performans elde edin.', href: '/dedicated-sunucu', icon: 'dedicated', logo: '/img/urun/sunucu.webp' },
+    { t: 'GPU Sunucu', d: 'Yüksek performanslı GPU ile AI ve grafik iş yükleriniz için ideal.', href: '/gpu-sunucu', icon: 'gpu', logo: '/img/urun/ekran-karti.webp', r: 'Popüler', rTon: 'kirmizi' },
   ]},
   { label: 'Veri Merkezi', kolon: 2, items: [
     { t: 'Sunucu Barındırma', d: 'Kendi donanımınız bizim Tier-3 veri merkezimizde güvende.', href: '/sunucu-barindirma', icon: 'colocation', r: 'TIER III', rTon: 'yesil' },
@@ -506,7 +506,6 @@ export function SiteHeader() {
             </nav>
 
             <div className="flex shrink-0 items-center gap-1 sm:gap-2">
-              <CartButton />
               <button type="button" onClick={() => setBasla(true)} className="group hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap rounded-xl bg-brand-500 px-4 py-2.5 text-[14px] font-semibold text-white shadow-lg shadow-brand-500/25 transition-[transform,box-shadow,border-color,opacity] hover:bg-brand-600 2xl:px-5 2xl:text-[15px]">
                 Hemen Başla <Icon name="arrow" className="hidden h-4 w-4 transition-transform group-hover:translate-x-0.5 sm:block" />
               </button>
@@ -597,7 +596,6 @@ export function SiteHeader() {
         </div>
       )}
 
-      <CartDrawer />
       <BaslaModal open={basla} onClose={() => setBasla(false)} />
     </>
   );
@@ -888,7 +886,7 @@ export function CtaBand({ title = 'Bugün başlayın, farkı hemen hissedin', te
 
 export function SiteShell({ children }) {
   return (
-    <CartProvider>
+    <>
       <SmoothScroll />
       <div className="min-h-ekran bg-page font-sans text-strong antialiased">
         <SiteHeader />
@@ -896,7 +894,7 @@ export function SiteShell({ children }) {
         <AltyapiSerit />
         <SiteFooter />
       </div>
-    </CartProvider>
+    </>
   );
 }
 

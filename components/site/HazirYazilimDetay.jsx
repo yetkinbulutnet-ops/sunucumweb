@@ -95,6 +95,7 @@ export default function HazirYazilimDetay({ urun }) {
               <div className="mt-7 flex flex-wrap gap-3">
                 <AddToCartButton
                   item={{ name: urun.ad, product: 'Hazır Yazılım', price: urun.fiyat, period: '' }}
+                  href={urun.satinAlUrl || '/iletisim'}
                   tema="dolu"
                   className="px-6 py-3.5"
                 />
