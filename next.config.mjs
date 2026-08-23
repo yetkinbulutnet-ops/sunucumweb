@@ -27,13 +27,18 @@ const nextConfig = {
   },
 
   async headers() {
-    // Meta etiketi + robots.txt'e EK olarak HTTP basligi.
-    // Uc katman birden: bot hangisini okursa okusun demo indexlenmez.
-    if (INDEXLENEBILIR) return [];
+    // Reverse proxy X-Frame-Options / nosniff / XSS / Referrer-Policy ekliyor;
+    // burada yalnizca proxy'nin eklemedigi Permissions-Policy'yi veriyoruz (cift-header olmasin).
+    const guvenlik = [
+      { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), browsing-topics=()' },
+    ];
+    if (INDEXLENEBILIR) {
+      return [{ source: '/:path*', headers: guvenlik }];
+    }
     return [
       {
         source: '/:path*',
-        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive, nosnippet' }],
+        headers: [...guvenlik, { key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive, nosnippet' }],
       },
     ];
   },

@@ -66,6 +66,9 @@ export default function RootLayout({ children }) {
         {CSS.map((href) => (
           <link key={href} rel="stylesheet" href={href} />
         ))}
+        <link rel="dns-prefetch" href="https://embed.tawk.to" />
+        <link rel="dns-prefetch" href="https://istatistik.yetkinweb.com" />
+        <link rel="dns-prefetch" href="https://status.sunucumweb.com" />
         <Sema veri={firmaSemasi()} />
       </head>
       <body>
