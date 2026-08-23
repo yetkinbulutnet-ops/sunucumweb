@@ -2,18 +2,28 @@
 
 Sırayla oku: `DEVAM.md` (bu dosya) → `TASARIM-KURALLARI.md` → `lib/engines/README.md` → `TASIMA.md`.
 
-Son güncelleme: 2026-08-22. Çalışma ağacı temiz, her şey `main` dalında ve canlıda.
+Son güncelleme: 2026-08-23. Çalışma ağacı temiz, her şey `main` dalında ve canlıda.
 Demo: https://sunucumweb.demo.yetkin.web.tr (arama motorlarına kapalı)
 
-**Son iş (gece çalışması):** Mega menü ikonları profesyonel SVG'lerle yenilendi
-(bina/ofis, kurumsal, mağaza, VDS, dedicated, GPU ekran kartı, colocation); Premium'a
-Intel logosu; VDS penguen / GPU-Kurumsal eski logolar kaldırıldı. Stoktaki olmayan **ISP
-ve ABD sunucu** menü/footer/ana sayfa/sitemap'ten silindi. Yeni **Hazır Yazılım** menüsü ve
-sayfası eklendi. Hosting/Sunucu/Veri Merkezi ürün sayfaları **yapım aşaması** ekranına
-alındı (Domain ve Hazır Yazılım aktif). Domain sayfaları demo metinden arındırılıp
-zenginleştirildi. Ana sayfaya temsilî paket/yazılım vitrini + referans şeridi + SSS eklendi.
-SEO teknik (metadataBase, OG, JSON-LD) tamamlandı. Ürünler yapım aşamasında olduğu için
-"Hemen Başla" / CtaBand / hero CTA'ları `/iletisim` ve `/hazir-yazilim`'e yönlendirildi.
+**Son iş (2026-08-23, commit `875553e`):** 8 iş bitti, canlıdan doğrulandı.
+1. **Footer üstü Atatürk sözü + imza** — `chrome.jsx` `AtaturkSoz` (SiteShell'de AltyapiSerit
+   ile SiteFooter arası). "Hayatta en hakiki mürşit ilimdir, fendir." + `public/img/ataturk-imza.webp`.
+   İmza BEYAZ webp; `invert dark:invert-0` → light'ta siyah, dark'ta beyaz (iki modda da görünür).
+2. **Trustpilot Review Collector** — footer'da Google/BTK satırı altında `TrustpilotKutu` +
+   `next/script` ile `tp.widget.bootstrap.min.js` (afterInteractive); iframe canlıda render oluyor.
+3. **Dedicated görseli** `public/img/urun/dedicated.webp` — ProductPage `SLUG_GORSEL` + mega menü.
+4. **Hazır Yazılım Satın Al** `/iletisim`'de kaldı (kod zaten `satinAlUrl || '/iletisim'`).
+5. **Umami analitiği tüm sitede** — `app/layout.jsx` `next/script afterInteractive`. Önemli
+   aksiyonlara `data-umami-event` (Satın Al/Sepete Ekle, Demo, Hemen Başla, Para Birimi,
+   Telefon, Müşteri Paneli). **TASARIM-KURALLARI.md'ye 9. altın kural eklendi.**
+6. **IP Kiralama** (`ip-kiralama.webp`) + **Sunucu Barındırma** (`sunucu-barindirma.webp`)
+   mega menü ikonları — Veri Merkezi grubu.
+7. **Varsayılan para birimi USD** — `CurrencyProvider.jsx` başlangıç USD (localStorage öncelikli).
+8. **Para birimi seçici DROPDOWN** — yan yana toggle yerine tek butonlu açılır liste
+   (`ParaBirimiSecici`, dış tık/Esc kapatır, `z-[70]`, mega menü/BaslaModal ile çakışmıyor).
+
+**Önceki iş (2026-08-22):** Mega menü ikonları SVG'lerle yenilendi; ISP/ABD sunucu silindi;
+Hazır Yazılım menüsü+sayfası eklendi; ürün sayfaları gerçek veriyle yayında; SEO teknik tamam.
 
 ---
 
