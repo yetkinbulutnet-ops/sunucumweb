@@ -48,6 +48,10 @@ Demo: https://sunucumweb.demo.yetkin.web.tr (arama motorlarına kapalı)
   - **Tuzak (useParabirimi):** fiyat hook'u SiteShell'in İÇİNDEki alt bileşende çağrılmalı,
     sayfanın üst gövdesinde değil (provider'ı SiteShell verir; üstte TRY fallback döner).
 
+- **Tawk.to canlı destek** (global): `app/layout.jsx` `next/script afterInteractive` (Umami yanında).
+  Mobil "Canlı Destek" butonu `window.Tawk_API?.toggle?.()` ile açar. **10. altın kural** eklendi
+  (her yapı Tawk uyumlu: tek betik, sağ alt köşe boş, sohbet Tawk_API'den).
+
 **Önceki iş (2026-08-22):** Mega menü ikonları SVG'lerle yenilendi; ISP/ABD sunucu silindi;
 Hazır Yazılım menüsü+sayfası eklendi; ürün sayfaları gerçek veriyle yayında; SEO teknik tamam.
 
