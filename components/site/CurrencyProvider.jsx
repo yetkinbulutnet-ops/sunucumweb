@@ -49,8 +49,8 @@ export function useParabirimi() {
 }
 
 const SECENEKLER = [
-  { kod: 'USD', sembol: '$', ad: 'Dolar' },
-  { kod: 'TRY', sembol: '₺', ad: 'Türk Lirası' },
+  { kod: 'USD', sembol: '$', kisa: 'USD', ad: 'Amerikan Doları' },
+  { kod: 'TRY', sembol: '₺', kisa: 'TL', ad: 'Türk Lirası' },
 ];
 
 export function ParaBirimiSecici({ className = '' }) {
@@ -85,12 +85,12 @@ export function ParaBirimiSecici({ className = '' }) {
         className="inline-flex items-center gap-1 rounded-xl bg-surface2 px-2.5 py-2 text-[13px] font-bold text-strong ring-1 ring-line transition-colors hover:bg-surface"
       >
         <span className="tabular-nums">{goster.sembol}</span>
-        <span>{goster.kod}</span>
+        <span>{goster.kisa}</span>
         <svg viewBox="0 0 24 24" className={`h-3.5 w-3.5 text-muted transition-transform ${acik ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6" /></svg>
       </button>
 
       {acik && (
-        <div role="listbox" aria-label="Para birimi seçin" className="absolute right-0 top-full z-[70] mt-1.5 w-40 overflow-hidden rounded-xl border border-line bg-surface p-1 shadow-[0_20px_50px_-20px_rgba(15,41,66,0.5)] animate-[fadeup_0.16s_ease-out]">
+        <div role="listbox" aria-label="Para birimi seçin" className="absolute right-0 top-full z-[70] mt-1.5 w-32 overflow-hidden rounded-xl border border-line bg-surface p-1 shadow-[0_20px_50px_-20px_rgba(15,41,66,0.5)] animate-[fadeup_0.16s_ease-out]">
           {SECENEKLER.map((s) => {
             const sec = s.kod === parabirimi;
             return (
@@ -99,14 +99,14 @@ export function ParaBirimiSecici({ className = '' }) {
                 type="button"
                 role="option"
                 aria-selected={sec}
+                aria-label={s.ad}
                 onClick={() => { setParabirimi(s.kod); setAcik(false); }}
                 data-umami-event="Para Birimi Seç"
                 data-umami-event-birim={s.kod}
-                className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[13px] font-semibold transition-colors ${sec ? 'bg-brandsoft text-brandtext' : 'text-body hover:bg-surface2 hover:text-strong'}`}
+                className={`flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-[13.5px] font-bold transition-colors ${sec ? 'bg-brandsoft text-brandtext' : 'text-body hover:bg-surface2 hover:text-strong'}`}
               >
                 <span className="grid h-6 w-6 shrink-0 place-items-center rounded-md bg-surface2 text-[13px] font-bold tabular-nums ring-1 ring-line">{s.sembol}</span>
-                <span className="flex-1">{s.ad}</span>
-                <span className="text-[11px] font-bold tracking-wide text-muted">{s.kod}</span>
+                <span className="flex-1 whitespace-nowrap">{s.kisa}</span>
                 {sec && <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 text-brandtext" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>}
               </button>
             );

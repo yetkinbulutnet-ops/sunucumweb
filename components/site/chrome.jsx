@@ -1,7 +1,6 @@
 'use client';
 import { useState, useEffect, useRef, useCallback, useId } from 'react';
 import Link from 'next/link';
-import Script from 'next/script';
 import { currentTheme, toggleTheme } from '@/lib/engines/theme';
 import { formatTRY, CHECKOUT_URL } from '@/lib/engines/cart';
 import { scrollKilitle } from '@/lib/engines/scroll-lock';
@@ -781,34 +780,48 @@ export function AtaturkSoz() {
   );
 }
 
+const TRUSTPILOT = {
+  puan: 3.8,
+  adet: 2,
+  url: 'https://www.trustpilot.com/review/sunucumweb.com',
+};
+const TP_YESIL = '#00b67a';
+const TP_STAR = 'M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7-6.2-3.8-6.2 3.8 1.6-7L2 9.5l7.1-.6z';
+
 function TrustpilotKutu() {
-  const ref = useRef(null);
-  useEffect(() => {
-    if (window.Trustpilot && ref.current) window.Trustpilot.loadFromElement(ref.current, true);
-  }, []);
+  const { puan, adet, url } = TRUSTPILOT;
+  const dolu = Math.round(puan);
   return (
-    <div
-      ref={ref}
-      className="trustpilot-widget"
-      data-locale="tr-TR"
-      data-template-id="5419b6a8b0d04a076446a9af"
-      data-businessunit-id="69a9e79d1a30a0453db1e580"
-      data-style-height="24px"
-      data-style-width="100%"
-      data-theme="dark"
-      data-style-alignment="left"
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Trustpilot değerlendirmemiz 5 üzerinden ${puan}, ${adet} yorum`}
+      data-umami-event="Trustpilot"
+      className="group inline-flex min-h-[46px] items-center gap-2.5 rounded-xl bg-white/5 px-4 py-2.5 ring-1 ring-white/10 transition-colors hover:bg-white/10"
     >
-      <a href="https://www.trustpilot.com/review/sunucumweb.com" target="_blank" rel="noopener noreferrer" className="text-slate-400 transition-colors hover:text-brand-300">
-        Trustpilot
-      </a>
-    </div>
+      <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0" aria-hidden>
+        <path fill={TP_YESIL} d={TP_STAR} />
+      </svg>
+      <span className="text-[15px] font-extrabold tabular-nums text-white">
+        {puan.toLocaleString('tr-TR', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}
+      </span>
+      <span className="flex items-center gap-0.5" aria-hidden>
+        {[1, 2, 3, 4, 5].map((n) => (
+          <span key={n} className="grid h-[15px] w-[15px] place-items-center rounded-[2px]" style={{ background: n <= dolu ? TP_YESIL : 'rgba(255,255,255,0.18)' }}>
+            <svg viewBox="0 0 24 24" className="h-[10px] w-[10px]" fill="#fff"><path d={TP_STAR} /></svg>
+          </span>
+        ))}
+      </span>
+      <span className="hidden text-[13px] tabular-nums text-slate-400 group-hover:text-slate-300 sm:inline">{adet} yorum</span>
+      <span className="text-[13px] font-extrabold text-white">Trustpilot</span>
+    </a>
   );
 }
 
 export function SiteFooter() {
   return (
     <footer className="bg-ink text-slate-300">
-      <Script src="https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" strategy="afterInteractive" />
       <div className="mx-auto max-w-7xl px-5 lg:px-8 pt-14 lg:pt-16">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,3fr)]">
           <div className="max-w-sm">
@@ -901,11 +914,8 @@ export function SiteFooter() {
           </a>
         </div>
 
-        <div className="mt-8 flex flex-col items-start gap-3 border-t border-white/10 pt-8 sm:flex-row sm:items-center">
-          <span className="text-[12px] font-bold uppercase tracking-wider text-slate-500">Trustpilot</span>
-          <div className="w-full min-w-0 rounded-xl bg-white/5 px-4 py-2.5 ring-1 ring-white/10 sm:w-auto sm:min-w-[280px]">
-            <TrustpilotKutu />
-          </div>
+        <div className="mt-8 border-t border-white/10 pt-8">
+          <TrustpilotKutu />
         </div>
       </div>
 
