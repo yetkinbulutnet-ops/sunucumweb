@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect, useRef, useCallback, useId } from 'react';
 import Link from 'next/link';
+import Script from 'next/script';
 import { currentTheme, toggleTheme } from '@/lib/engines/theme';
 import { formatTRY, CHECKOUT_URL } from '@/lib/engines/cart';
 import { scrollKilitle } from '@/lib/engines/scroll-lock';
@@ -92,12 +93,12 @@ export const MENU = [
   { label: 'Sunucu', kolon: 2, items: [
     { t: 'Sanal Sunucu (VDS)', d: 'E5-2699 v4 sanal sunucularla projelerinizi başlatın.', href: '/sanal-sunucu', icon: 'vds', logo: '/img/urun/xeon.webp', r: 'Kampanya', rTon: 'mavi' },
     { t: 'Premium Sunucu', d: 'Jet hızında diskler ve Xeon Platinum ile tam güç!', href: '/premium-sunucu', icon: 'rocket', r: 'PREMIUM', rTon: 'sari', vurgu: true, logo: '/img/urun/xeon-platinum.webp' },
-    { t: 'Dedicated Sunucu', d: 'Fiziksel sunucular ile maksimum performans elde edin.', href: '/dedicated-sunucu', icon: 'dedicated', logo: '/img/urun/sunucu.webp' },
+    { t: 'Dedicated Sunucu', d: 'Fiziksel sunucular ile maksimum performans elde edin.', href: '/dedicated-sunucu', icon: 'dedicated', logo: '/img/urun/dedicated.webp' },
     { t: 'GPU Sunucu', d: 'Yüksek performanslı GPU ile AI ve grafik iş yükleriniz için ideal.', href: '/gpu-sunucu', icon: 'gpu', logo: '/img/urun/ekran-karti.webp', r: 'Popüler', rTon: 'kirmizi' },
   ]},
   { label: 'Veri Merkezi', kolon: 2, items: [
-    { t: 'Sunucu Barındırma', d: 'Kendi donanımınız bizim Tier-3 veri merkezimizde güvende.', href: '/sunucu-barindirma', icon: 'colocation', r: 'TIER III', rTon: 'yesil' },
-    { t: 'IP Kiralama', d: 'Kolay ve hızlı IP kiralama seçenekleri ile ihtiyacınız olan adresleri hemen edinin.', href: '/ip-kiralama', icon: 'globe', r: 'Özel', rTon: 'yesil' },
+    { t: 'Sunucu Barındırma', d: 'Kendi donanımınız bizim Tier-3 veri merkezimizde güvende.', href: '/sunucu-barindirma', icon: 'colocation', logo: '/img/urun/sunucu-barindirma.webp', r: 'TIER III', rTon: 'yesil' },
+    { t: 'IP Kiralama', d: 'Kolay ve hızlı IP kiralama seçenekleri ile ihtiyacınız olan adresleri hemen edinin.', href: '/ip-kiralama', icon: 'globe', logo: '/img/urun/ip-kiralama.webp', r: 'Özel', rTon: 'yesil' },
   ]},
   { label: 'Hazır Yazılım', href: '/hazir-yazilim' },
   { label: 'Kurumsal', kolon: 3, items: [
@@ -205,7 +206,7 @@ export function TopBar() {
       <div className="mx-auto max-w-7xl px-4 sm:px-5 lg:px-8">
         <div className="flex h-10 items-center justify-between gap-2 text-[12.5px]">
           <div className="flex min-w-0 items-center gap-2 sm:gap-3.5">
-            <a href="tel:08503025809" className="inline-flex shrink-0 items-center gap-1.5 font-semibold text-white transition-colors hover:text-brand-300">
+            <a href="tel:08503025809" data-umami-event="Telefon" className="inline-flex shrink-0 items-center gap-1.5 font-semibold text-white transition-colors hover:text-brand-300">
               <Icon name="phone" className="w-[14px] h-[14px] text-brand-400" />
               <span className="whitespace-nowrap">0(850) 302 5809</span>
             </a>
@@ -228,7 +229,7 @@ export function TopBar() {
               </span>
               Ağ Durumu
             </a>
-            <a href="https://my.sunucumweb.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 whitespace-nowrap font-semibold text-white transition-colors hover:text-brand-300">
+            <a href="https://my.sunucumweb.com" target="_blank" rel="noopener noreferrer" data-umami-event="Müşteri Paneli" className="inline-flex items-center gap-1.5 whitespace-nowrap font-semibold text-white transition-colors hover:text-brand-300">
               <Icon name="user" className="w-[14px] h-[14px]" />
               <span className="hidden sm:inline">Müşteri Paneli</span>
             </a>
@@ -508,7 +509,7 @@ export function SiteHeader() {
 
             <div className="flex shrink-0 items-center gap-1 sm:gap-2">
               <ParaBirimiSecici />
-              <button type="button" onClick={() => setBasla(true)} className="group hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap rounded-xl bg-brand-500 px-4 py-2.5 text-[14px] font-semibold text-white shadow-lg shadow-brand-500/25 transition-[transform,box-shadow,border-color,opacity] hover:bg-brand-600 2xl:px-5 2xl:text-[15px]">
+              <button type="button" onClick={() => setBasla(true)} data-umami-event="Hemen Başla" className="group hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap rounded-xl bg-brand-500 px-4 py-2.5 text-[14px] font-semibold text-white shadow-lg shadow-brand-500/25 transition-[transform,box-shadow,border-color,opacity] hover:bg-brand-600 2xl:px-5 2xl:text-[15px]">
                 Hemen Başla <Icon name="arrow" className="hidden h-4 w-4 transition-transform group-hover:translate-x-0.5 sm:block" />
               </button>
               <button onClick={() => setOpen((v) => !v)} className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-strong transition-colors hover:bg-surface2 xl:hidden" aria-label="Menü" aria-expanded={open}>
@@ -567,7 +568,7 @@ export function SiteHeader() {
                 </div>
               ))}
 
-              <button type="button" onClick={() => { setOpen(false); setBasla(true); }} className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-500 px-5 py-3.5 text-center font-bold text-white shadow-lg shadow-brand-500/25">
+              <button type="button" onClick={() => { setOpen(false); setBasla(true); }} data-umami-event="Hemen Başla" className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-500 px-5 py-3.5 text-center font-bold text-white shadow-lg shadow-brand-500/25">
                 Hemen Başla <Icon name="arrow" className="h-4 w-4" />
               </button>
 
@@ -757,9 +758,56 @@ function GoogleYorum() {
   );
 }
 
+export function AtaturkSoz() {
+  return (
+    <section aria-label="Atatürk sözü" className="border-t border-line bg-surface2/40">
+      <div className="mx-auto flex max-w-3xl flex-col items-center px-5 lg:px-8 py-12 lg:py-14 text-center">
+        <svg viewBox="0 0 24 24" aria-hidden className="h-8 w-8 text-brandtext/40" fill="currentColor">
+          <path d="M9.7 5.2C6.6 6.6 5 9.1 5 12.3V18h6v-6H8.1c0-1.9.9-3.3 2.6-4.2L9.7 5.2zm9 0C15.6 6.6 14 9.1 14 12.3V18h6v-6h-2.9c0-1.9.9-3.3 2.6-4.2L18.7 5.2z" />
+        </svg>
+        <p className="mt-4 text-balance text-2xl font-semibold leading-snug tracking-tight text-strong sm:text-3xl">
+          Hayatta en hakiki mürşit ilimdir, fendir.
+        </p>
+        <img
+          src="/img/ataturk-imza.webp"
+          alt="Mustafa Kemal Atatürk imzası"
+          width={480}
+          height={172}
+          loading="lazy"
+          className="mt-6 h-11 w-auto invert dark:invert-0 sm:h-12"
+        />
+      </div>
+    </section>
+  );
+}
+
+function TrustpilotKutu() {
+  const ref = useRef(null);
+  useEffect(() => {
+    if (window.Trustpilot && ref.current) window.Trustpilot.loadFromElement(ref.current, true);
+  }, []);
+  return (
+    <div
+      ref={ref}
+      className="trustpilot-widget"
+      data-locale="en-US"
+      data-template-id="56278e9abfbbba0bdcd568bc"
+      data-businessunit-id="69a9e79d1a30a0453db1e580"
+      data-style-height="52px"
+      data-style-width="100%"
+      data-token="4fc87659-9d23-4d20-bf54-b4bde5ece9b1"
+    >
+      <a href="https://www.trustpilot.com/review/sunucumweb.com" target="_blank" rel="noopener noreferrer" className="text-slate-400 transition-colors hover:text-brand-300">
+        Trustpilot
+      </a>
+    </div>
+  );
+}
+
 export function SiteFooter() {
   return (
     <footer className="bg-ink text-slate-300">
+      <Script src="https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" strategy="afterInteractive" />
       <div className="mx-auto max-w-7xl px-5 lg:px-8 pt-14 lg:pt-16">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,3fr)]">
           <div className="max-w-sm">
@@ -851,6 +899,15 @@ export function SiteFooter() {
             </span>
           </a>
         </div>
+
+        <div className="mt-8 flex flex-col gap-3 border-t border-white/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-[13px] font-semibold text-slate-400">
+            Hizmetimizden memnun kaldınız mı? <span className="text-white">Trustpilot’ta değerlendirin.</span>
+          </p>
+          <div className="w-full min-w-0 sm:max-w-sm">
+            <TrustpilotKutu />
+          </div>
+        </div>
       </div>
 
       <div className="mt-10 border-t border-white/10">
@@ -894,6 +951,7 @@ export function SiteShell({ children }) {
         <SiteHeader />
         <main>{children}</main>
         <AltyapiSerit />
+        <AtaturkSoz />
         <SiteFooter />
       </div>
     </CurrencyProvider>

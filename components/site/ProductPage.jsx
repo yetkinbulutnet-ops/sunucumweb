@@ -8,7 +8,7 @@ import { wisecpSiparisUrl } from '@/content/site/wisecp-siparis';
 import { useParabirimi } from './CurrencyProvider';
 
 const SUNUCU_GORSEL = '/img/urun/sunucu.webp';
-const SLUG_GORSEL = { 'sanal-sunucu': '/img/urun/xeon.webp', 'premium-sunucu': '/img/urun/xeon-platinum.webp', 'gpu-sunucu': '/img/urun/ekran-karti.webp' };
+const SLUG_GORSEL = { 'sanal-sunucu': '/img/urun/xeon.webp', 'premium-sunucu': '/img/urun/xeon-platinum.webp', 'gpu-sunucu': '/img/urun/ekran-karti.webp', 'dedicated-sunucu': '/img/urun/dedicated.webp' };
 const HOSTING_ALTYAPI = ALTYAPI.filter((a) => ['cPanel', 'LiteSpeed', 'CloudLinux', 'Imunify360', 'JetBackup', 'Softaculous'].includes(a.ad));
 
 const num = (s) => {

@@ -32,14 +32,14 @@ export default function AddToCartButton({ item, tema = 'acik', className = '', h
 
   if (href) {
     return (
-      <a href={href} target="_blank" rel="noopener noreferrer" aria-label={`${item.name} satın al`} className={cls}>
+      <a href={href} target="_blank" rel="noopener noreferrer" aria-label={`${item.name} satın al`} data-umami-event="Satın Al" data-umami-event-urun={item.name} className={cls}>
         <Icon name="cart" className="w-4 h-4" /> Satın Al
       </a>
     );
   }
 
   return (
-    <button type="button" onClick={tikla} aria-label={`${item.name} paketini sepete ekle`} className={cls}>
+    <button type="button" onClick={tikla} aria-label={`${item.name} paketini sepete ekle`} data-umami-event="Sepete Ekle" data-umami-event-urun={item.name} className={cls}>
       <Icon name={eklendi ? 'check' : 'cart'} className="w-4 h-4" />
       {eklendi ? 'Sepete eklendi' : 'Sepete Ekle'}
     </button>

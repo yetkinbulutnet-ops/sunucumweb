@@ -1,5 +1,9 @@
+import Script from 'next/script';
 import { NO_FLASH_SCRIPT } from '@/lib/engines/theme';
 import { SITE_URL, SITE_ADI, mutlakUrl } from '@/lib/seo';
+
+const UMAMI_SRC = 'https://istatistik.yetkinweb.com/script.js';
+const UMAMI_ID = 'a20811f9-e3f2-4b49-a7a4-a7280eb57e1b';
 
 const CSS = [
   '/assets/_external/fonts.googleapis.com/css2_a685150f.css',
@@ -98,7 +102,10 @@ export default function RootLayout({ children }) {
         ))}
         <OrganizasyonSemasi />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Script src={UMAMI_SRC} data-website-id={UMAMI_ID} strategy="afterInteractive" />
+      </body>
     </html>
   );
 }

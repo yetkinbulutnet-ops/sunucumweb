@@ -85,6 +85,8 @@ function Kart({ y }) {
                 href={y.demoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-umami-event="Demo"
+                data-umami-event-urun={y.ad}
                 className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-line bg-surface px-3 py-2.5 text-[13.5px] font-bold text-strong transition-colors hover:border-brandline hover:text-brandtext"
               >
                 Demo <Icon name="external" className="h-3.5 w-3.5" />

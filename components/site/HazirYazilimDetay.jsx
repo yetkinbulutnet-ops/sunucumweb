@@ -108,6 +108,8 @@ export default function HazirYazilimDetay({ urun }) {
                     href={urun.demoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    data-umami-event="Demo"
+                    data-umami-event-urun={urun.ad}
                     className="inline-flex items-center gap-2 rounded-xl bg-surface px-6 py-3.5 text-[15px] font-semibold text-strong ring-1 ring-line transition hover:ring-brandtext/50"
                   >
                     <Icon name="external" className="h-4 w-4 text-brandtext" /> Demoyu Gör

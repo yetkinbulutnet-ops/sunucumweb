@@ -321,6 +321,27 @@ başlık, modal kilidi ve form odaklanma davranışı ayrıca kontrol edilir.
 
 ---
 
+## 9. ALTIN KURAL — Her sayfa ve yapı web analitiğiyle (Umami) uyumlu
+
+Site genelinde gizlilik dostu **Umami** analitiği çalışır (`app/layout.jsx`, `next/script`
+ile `afterInteractive`). Eklenen **her yeni sayfa, bileşen ve etkileşimli yapı** bu ölçümü
+bozmadan çalışmak ve dönüşüm değeri olan aksiyonları raporlanabilir kılmak zorundadır.
+
+- **Betik tek yerden yüklenir.** Umami betiği yalnızca kök layout'ta durur; sayfa ya da
+  bileşen içine ikinci kez eklenmez. SPA gezinmelerinde sayfa görüntülemeleri History API
+  ile otomatik sayılır — ekstra kod yazılmaz.
+- **Önemli aksiyonlar etiketlenir.** Tıklanabilir dönüşüm öğelerine `data-umami-event="<Ad>"`
+  verilir: Satın Al, Sepete Ekle, Hemen Başla, Demo, Para Birimi, Müşteri Paneli, Telefon…
+  Ek bağlam gerekiyorsa `data-umami-event-<alan>="<deger>"` eklenir (ör. `data-umami-event-urun`).
+- **Etiketler veriyle üretilir.** Döngüden çıkan butonlarda olay adı sabit, bağlam alanı
+  öğeden gelir; elle tek tek yazılmaz (CMS'e hazır).
+- **Server Component kuralı korunur.** Analitik için `next/script` dışında `useEffect` +
+  manuel enjeksiyon yapılmaz; SEO ve ilk boyama etkilenmez.
+- **Gürültü yok.** Dekoratif ya da yinelenen öğelere olay konmaz; yalnızca kullanıcının
+  bilinçli aksiyonları ölçülür. Olay adları Türkçe ve tutarlı olur.
+
+---
+
 ## Bölüm bitince kontrol listesi
 
 - [ ] Açık modda düzgün
@@ -338,3 +359,4 @@ başlık, modal kilidi ve form odaklanma davranışı ayrıca kontrol edilir.
 - [ ] Dokunmatikte hover yapışması yok, her işlev tıklamayla da erişilebilir
 - [ ] Form alanları 16px+ (iOS zum yok), `100vh` yerine `min-h-ekran`
 - [ ] Tarayıcıya özel API'ler `try/catch` + geri düşüşlü
+- [ ] Önemli aksiyonlarda `data-umami-event` var (analitik uyumlu, tek betik)

@@ -1,5 +1,5 @@
 'use client';
-import { createContext, useContext, useEffect, useState, useCallback, useMemo } from 'react';
+import { createContext, useContext, useEffect, useState, useCallback, useMemo, useRef } from 'react';
 
 const Ctx = createContext(null);
 const KEY = 'swb-parabirimi';
@@ -8,7 +8,7 @@ const trFmt = new Intl.NumberFormat('tr-TR', { minimumFractionDigits: 0, maximum
 const usdFmt = new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 export function CurrencyProvider({ children }) {
-  const [parabirimi, setPB] = useState('TRY');
+  const [parabirimi, setPB] = useState('USD');
   const [kur, setKur] = useState(null);
 
   useEffect(() => {
@@ -48,21 +48,71 @@ export function useParabirimi() {
   };
 }
 
+const SECENEKLER = [
+  { kod: 'USD', sembol: '$', ad: 'Dolar' },
+  { kod: 'TRY', sembol: '₺', ad: 'Türk Lirası' },
+];
+
 export function ParaBirimiSecici({ className = '' }) {
   const { parabirimi, setParabirimi } = useParabirimi();
+  const [acik, setAcik] = useState(false);
+  const [monte, setMonte] = useState(false);
+  const kutu = useRef(null);
+
+  useEffect(() => { setMonte(true); }, []);
+
+  useEffect(() => {
+    if (!acik) return;
+    const disari = (e) => { if (kutu.current && !kutu.current.contains(e.target)) setAcik(false); };
+    const esc = (e) => e.key === 'Escape' && setAcik(false);
+    document.addEventListener('pointerdown', disari);
+    window.addEventListener('keydown', esc);
+    return () => { document.removeEventListener('pointerdown', disari); window.removeEventListener('keydown', esc); };
+  }, [acik]);
+
+  const aktif = SECENEKLER.find((s) => s.kod === parabirimi) || SECENEKLER[0];
+  const goster = monte ? aktif : SECENEKLER[0];
+
   return (
-    <div className={`inline-flex items-center rounded-xl bg-surface2 p-0.5 ring-1 ring-line ${className}`}>
-      {[['TRY', '₺'], ['USD', '$']].map(([p, s]) => (
-        <button
-          key={p}
-          type="button"
-          onClick={() => setParabirimi(p)}
-          aria-pressed={parabirimi === p}
-          className={`rounded-lg px-2.5 py-1.5 text-[13px] font-bold transition-colors ${parabirimi === p ? 'bg-brand-500 text-white shadow' : 'text-body hover:text-strong'}`}
-        >
-          {s} {p}
-        </button>
-      ))}
+    <div ref={kutu} className={`relative ${className}`}>
+      <button
+        type="button"
+        onClick={() => setAcik((v) => !v)}
+        aria-haspopup="listbox"
+        aria-expanded={acik}
+        aria-label={`Para birimi: ${goster.ad}`}
+        data-umami-event="Para Birimi Aç"
+        className="inline-flex items-center gap-1 rounded-xl bg-surface2 px-2.5 py-2 text-[13px] font-bold text-strong ring-1 ring-line transition-colors hover:bg-surface"
+      >
+        <span className="tabular-nums">{goster.sembol}</span>
+        <span>{goster.kod}</span>
+        <svg viewBox="0 0 24 24" className={`h-3.5 w-3.5 text-muted transition-transform ${acik ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6" /></svg>
+      </button>
+
+      {acik && (
+        <div role="listbox" aria-label="Para birimi seçin" className="absolute right-0 top-full z-[70] mt-1.5 w-40 overflow-hidden rounded-xl border border-line bg-surface p-1 shadow-[0_20px_50px_-20px_rgba(15,41,66,0.5)] animate-[fadeup_0.16s_ease-out]">
+          {SECENEKLER.map((s) => {
+            const sec = s.kod === parabirimi;
+            return (
+              <button
+                key={s.kod}
+                type="button"
+                role="option"
+                aria-selected={sec}
+                onClick={() => { setParabirimi(s.kod); setAcik(false); }}
+                data-umami-event="Para Birimi Seç"
+                data-umami-event-birim={s.kod}
+                className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[13px] font-semibold transition-colors ${sec ? 'bg-brandsoft text-brandtext' : 'text-body hover:bg-surface2 hover:text-strong'}`}
+              >
+                <span className="grid h-6 w-6 shrink-0 place-items-center rounded-md bg-surface2 text-[13px] font-bold tabular-nums ring-1 ring-line">{s.sembol}</span>
+                <span className="flex-1">{s.ad}</span>
+                <span className="text-[11px] font-bold tracking-wide text-muted">{s.kod}</span>
+                {sec && <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 text-brandtext" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>}
+              </button>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
