@@ -1,13 +1,13 @@
 import HazirYazilimPage from '@/components/site/HazirYazilimPage';
 import { YAZILIMLAR } from '@/content/site/yazilimlar';
-import { mutlakUrl } from '@/lib/seo';
+import { sayfaMeta } from '@/lib/seo';
 
-export const metadata = {
-  title: 'Hazır Yazılımlar — Kuruluma Hazır Web Yazılımları | SunucumWEB',
-  description:
+export const metadata = sayfaMeta({
+  baslik: 'Hazır Yazılımlar — Kuruluma Hazır Web Yazılımları',
+  aciklama:
     'E-ticaret, kurumsal tanıtım, blog, rezervasyon, eğitim ve daha fazlası. Mobil uyumlu, SEO dostu, kurulumu bize ait hazır web yazılımları SunucumWEB altyapısında yayında.',
-  alternates: { canonical: mutlakUrl('/hazir-yazilim') },
-};
+  yol: '/hazir-yazilim',
+});
 
 function JsonLd() {
   const veri = {

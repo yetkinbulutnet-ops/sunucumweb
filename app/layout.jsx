@@ -21,7 +21,10 @@ const ACIKLAMA =
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
-  title: 'SunucumWEB — Güvenilir Hosting ve Sunucu Çözümleri',
+  title: {
+    default: 'SunucumWEB — Güvenilir Hosting ve Sunucu Çözümleri',
+    template: '%s | SunucumWEB',
+  },
   description: ACIKLAMA,
   applicationName: SITE_ADI,
   icons: { icon: '/assets/img/favicon.png' },

@@ -1,13 +1,13 @@
 import KampanyalarPage from '@/components/site/KampanyalarPage';
 import { KAMPANYALAR } from '@/content/site/kampanyalar';
-import { mutlakUrl } from '@/lib/seo';
+import { mutlakUrl, sayfaMeta } from '@/lib/seo';
 
-export const metadata = {
-  title: 'Kampanyalar — Hosting, Sunucu ve Alan Adı Fırsatları | SunucumWEB',
-  description:
+export const metadata = sayfaMeta({
+  baslik: 'Kampanyalar — Hosting, Sunucu ve Alan Adı Fırsatları',
+  aciklama:
     'SunucumWEB güncel kampanyaları: hosting, sanal sunucu (VDS) ve alan adı hizmetlerinde sınırlı süreli indirimler. Kampanya kodunu sipariş sırasında girin.',
-  alternates: { canonical: mutlakUrl('/kampanyalar') },
-};
+  yol: '/kampanyalar',
+});
 
 function JsonLd() {
   const veri = {

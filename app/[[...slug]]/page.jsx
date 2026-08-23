@@ -15,7 +15,7 @@ import ContactPage from '@/components/site/ContactPage';
 import DomainPage from '@/components/site/DomainPage';
 import AboutPage from '@/components/site/AboutPage';
 import { HAKKIMIZDA } from '@/content/site/hakkimizda';
-import { PRODUCTS } from '@/content/site/products';
+import { PRODUCTS, SEO_BASLIK } from '@/content/site/products';
 import { URUN_PLANLARI } from '@/content/site/urun-planlari';
 import { sayfaMeta } from '@/lib/seo';
 
@@ -61,7 +61,7 @@ export async function generateMetadata({ params }) {
   }
   const pr = PRODUCTS[slug];
   return sayfaMeta({
-    baslik: pr ? pr.title : (p.title || undefined),
+    baslik: (pr && (SEO_BASLIK[slug] || pr.title)) || p.title || undefined,
     aciklama: pr ? pr.subtitle : (p.description || undefined),
     yol: `/${slug}`,
   });

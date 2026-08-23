@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { ToolDetailPage } from '@/components/site/ToolsPage';
 import { ARAC_LISTESI, aracBul } from '@/content/site/araclar';
+import { sayfaMeta } from '@/lib/seo';
 
 export const dynamicParams = false;
 
@@ -12,7 +13,7 @@ export async function generateMetadata({ params }) {
   const { arac: slug } = await params;
   const arac = aracBul(slug);
   if (!arac) return {};
-  return { title: arac.baslik, description: arac.seo };
+  return sayfaMeta({ baslik: arac.baslik, aciklama: arac.seo, yol: `/araclar/${slug}` });
 }
 
 export default async function Page({ params }) {

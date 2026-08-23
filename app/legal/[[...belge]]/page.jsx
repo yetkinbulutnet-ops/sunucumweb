@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import LegalHubPage from '@/components/site/LegalHubPage';
 import { LEGAL_BELGELER, belgeBul } from '@/content/site/legal';
 import { getLegalHtml } from '@/lib/content';
-import { kanonik } from '@/lib/seo';
+import { sayfaMeta } from '@/lib/seo';
 
 export const dynamicParams = false;
 
@@ -21,11 +21,11 @@ export async function generateMetadata({ params }) {
 
   const kok = belge.slug === VARSAYILAN.slug;
 
-  return {
-    title: belge.baslik,
-    description: belge.seo,
-    alternates: kanonik(kok ? '/legal' : `/legal/${belge.slug}`),
-  };
+  return sayfaMeta({
+    baslik: belge.baslik,
+    aciklama: belge.seo,
+    yol: kok ? '/legal' : `/legal/${belge.slug}`,
+  });
 }
 
 export default async function Page({ params }) {

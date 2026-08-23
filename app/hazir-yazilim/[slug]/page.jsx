@@ -15,12 +15,14 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const u = bul(slug);
   if (!u) return {};
-  const baslik = `${u.ad} — Hazır Yazılım | SunucumWEB`;
+  const baslik = `${u.ad} — Hazır Yazılım`;
+  const url = mutlakUrl(`/hazir-yazilim/${u.id}`);
   return {
     title: baslik,
     description: u.aciklama,
-    alternates: { canonical: mutlakUrl(`/hazir-yazilim/${u.id}`) },
-    openGraph: { title: baslik, description: u.aciklama, images: [u.img], type: 'website' },
+    alternates: { canonical: url },
+    openGraph: { title: baslik, description: u.aciklama, images: [u.img], type: 'website', url },
+    twitter: { card: 'summary_large_image', title: baslik, description: u.aciklama, images: [u.img] },
   };
 }
 

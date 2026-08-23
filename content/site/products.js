@@ -16,6 +16,19 @@ const FAQ = [
   { q: 'Teknik destek nasıl alırım?', a: '7/24 canlı destek, ticket sistemi ve telefon ile uzman ekibimize ulaşabilirsiniz.' },
 ];
 
+export const SEO_BASLIK = {
+  'web-hosting': 'Web Hosting Fiyatları — NVMe SSD & cPanel',
+  'wordpress-hosting': 'WordPress Hosting — LiteSpeed Optimizeli',
+  'reseller-hosting': 'Reseller Hosting — WHM ile Bayilik',
+  'kurumsal-hosting': 'Kurumsal Hosting — İzole Kaynak & SLA',
+  'sanal-sunucu': 'Sanal Sunucu (VDS) Kiralama — Tam Root',
+  'premium-sunucu': 'Premium Sunucu — Yüksek Performanslı VDS',
+  'dedicated-sunucu': 'Dedicated Sunucu Kiralama — Fiziksel Xeon',
+  'gpu-sunucu': 'GPU Sunucu Kiralama — AI & Render',
+  'sunucu-barindirma': 'Sunucu Barındırma — Tier-3 Colocation',
+  'ip-kiralama': 'IP Kiralama — Temiz IPv4 & IPv6 Blokları',
+};
+
 export const PRODUCTS = {
   'web-hosting': {
     icon: 'globe', eyebrow: 'Web Hosting', title: 'Web Hosting',
