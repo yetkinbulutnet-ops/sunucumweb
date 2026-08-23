@@ -8,6 +8,8 @@ import { scrollKilitle } from '@/lib/engines/scroll-lock';
 import DomainAI from './DomainAI';
 import DurumWidget from './DurumWidget';
 import LogoSerit from './LogoSerit';
+import Sema from './Sema';
+import { sssSemasi } from '@/lib/semalar';
 import { MARKALAR, MARKA_SERIDI } from '@/content/site/markalar';
 import { YAZILIMLAR, YAZILIM_KATEGORILERI } from '@/content/site/yazilimlar';
 
@@ -493,6 +495,7 @@ export default function HomePage() {
   const closeF = useCallback(() => setFinder(false), []);
   return (
     <SiteShell>
+      <Sema veri={sssSemasi(SSS_ANA)} />
       <Hero />
       <FinderBanner onOpen={openF} />
       <FinderTab onOpen={openF} />

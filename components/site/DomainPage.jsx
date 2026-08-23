@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Icon, CtaBand, SiteShell } from './chrome';
+import Sema from './Sema';
+import { sssSemasi, ekmekKirintisi } from '@/lib/semalar';
 import DomainAI from './DomainAI';
 
 const TLDS = [
@@ -86,6 +88,10 @@ export default function DomainPage({ mode = 'register' }) {
   const [q, setQ] = useState('');
   return (
     <SiteShell>
+      <Sema veri={[
+        sssSemasi(SSS[mode]),
+        ekmekKirintisi([{ ad: 'Ana Sayfa', yol: '/' }, { ad: c.eyebrow, yol: mode === 'transfer' ? '/transfer' : '/alan-adi' }]),
+      ]} />
       <section className="relative overflow-hidden border-b border-line">
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute -top-32 right-[-8%] h-[460px] w-[460px] rounded-full bg-brand-300/25 blur-[120px]" />

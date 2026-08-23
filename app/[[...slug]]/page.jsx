@@ -17,6 +17,7 @@ import AboutPage from '@/components/site/AboutPage';
 import { HAKKIMIZDA } from '@/content/site/hakkimizda';
 import { PRODUCTS } from '@/content/site/products';
 import { URUN_PLANLARI } from '@/content/site/urun-planlari';
+import { sayfaMeta } from '@/lib/seo';
 
 export const dynamicParams = false;
 
@@ -46,8 +47,9 @@ export async function generateMetadata({ params }) {
   const slug = slugFrom(parts);
   const p = pageBySlug(slug);
   if (!p) return {};
+  if (slug === 'index') return {};
   if (slug === 'hakkimizda') {
-    return { title: HAKKIMIZDA.seo.title, description: HAKKIMIZDA.seo.description };
+    return sayfaMeta({ baslik: HAKKIMIZDA.seo.title, aciklama: HAKKIMIZDA.seo.description, yol: '/hakkimizda' });
   }
   if (YAPIM_ASAMASI.has(slug)) {
     const t = PRODUCTS[slug]?.title || p.title;
@@ -57,11 +59,12 @@ export async function generateMetadata({ params }) {
       robots: { index: false, follow: true },
     };
   }
-  return {
-    title: p.title || undefined,
-    description: p.description || undefined,
-    alternates: p.canonical ? { canonical: p.canonical } : undefined,
-  };
+  const pr = PRODUCTS[slug];
+  return sayfaMeta({
+    baslik: pr ? pr.title : (p.title || undefined),
+    aciklama: pr ? pr.subtitle : (p.description || undefined),
+    yol: `/${slug}`,
+  });
 }
 
 function JsonLd({ items }) {

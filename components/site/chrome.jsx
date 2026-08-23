@@ -1,6 +1,9 @@
 'use client';
 import { useState, useEffect, useRef, useCallback, useId } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { ekmekKirintisi } from '@/lib/semalar';
+import Sema from './Sema';
 import { currentTheme, toggleTheme } from '@/lib/engines/theme';
 import { formatTRY, CHECKOUT_URL } from '@/lib/engines/cart';
 import { scrollKilitle } from '@/lib/engines/scroll-lock';
@@ -974,8 +977,10 @@ export function SiteShell({ children }) {
 }
 
 export function PageHero({ eyebrow, title, text, breadcrumb }) {
+  const yol = usePathname();
   return (
     <section className="relative overflow-hidden border-b border-line">
+      {breadcrumb && <Sema veri={ekmekKirintisi([{ ad: 'Ana Sayfa', yol: '/' }, { ad: breadcrumb, yol }])} />}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute -top-32 right-[-8%] h-[420px] w-[420px] rounded-full bg-brand-200/40 blur-[120px]" />
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgb(var(--c-grid))_1px,transparent_1px),linear-gradient(to_bottom,rgb(var(--c-grid))_1px,transparent_1px)] bg-[size:44px_44px] [mask-image:radial-gradient(ellipse_at_top,black,transparent_75%)]" />

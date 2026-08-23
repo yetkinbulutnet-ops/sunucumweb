@@ -6,6 +6,8 @@ import AddToCartButton from './AddToCartButton';
 import { ALTYAPI } from '@/content/site/markalar';
 import { wisecpSiparisUrl } from '@/content/site/wisecp-siparis';
 import { useParabirimi } from './CurrencyProvider';
+import Sema from './Sema';
+import { urunSemasi, sssSemasi, ekmekKirintisi } from '@/lib/semalar';
 
 const SUNUCU_GORSEL = '/img/urun/sunucu.webp';
 const SLUG_GORSEL = { 'sanal-sunucu': '/img/urun/xeon.webp', 'premium-sunucu': '/img/urun/xeon-platinum.webp', 'gpu-sunucu': '/img/urun/ekran-karti.webp', 'dedicated-sunucu': '/img/urun/dedicated.webp' };
@@ -253,8 +255,15 @@ export default function ProductPage({ data, slug }) {
   const minFiyat = Math.min(...d.plans.map((p) => num(p.price)).filter((n) => n > 0));
   const hosting = tip === 'hosting';
 
+  const gorsel = SLUG_GORSEL[slug] || (tip === 'sunucu' ? SUNUCU_GORSEL : undefined);
+
   return (
     <SiteShell>
+      <Sema veri={[
+        urunSemasi({ ad: d.title, aciklama: d.subtitle, yol: `/${slug}`, gorsel, planlar: (d.plans || []).map((p) => ({ name: p.name, fiyat: num(p.price) })) }),
+        ...(d.faq ? [sssSemasi(d.faq)] : []),
+        ekmekKirintisi([{ ad: 'Ana Sayfa', yol: '/' }, { ad: d.eyebrow || d.title, yol: `/${slug}` }]),
+      ]} />
       <section className="relative overflow-hidden border-b border-line">
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute -top-32 right-[-8%] h-[460px] w-[460px] rounded-full bg-brand-300/25 blur-[120px]" />

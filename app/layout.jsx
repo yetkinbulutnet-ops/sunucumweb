@@ -1,6 +1,8 @@
 import Script from 'next/script';
 import { NO_FLASH_SCRIPT } from '@/lib/engines/theme';
-import { SITE_URL, SITE_ADI, mutlakUrl } from '@/lib/seo';
+import { SITE_URL, SITE_ADI } from '@/lib/seo';
+import { firmaSemasi } from '@/lib/semalar';
+import Sema from '@/components/site/Sema';
 
 const UMAMI_SRC = 'https://istatistik.yetkinweb.com/script.js';
 const UMAMI_ID = 'a20811f9-e3f2-4b49-a7a4-a7280eb57e1b';
@@ -17,14 +19,6 @@ const INDEXLENEBILIR = process.env.SITE_INDEXABLE === '1';
 const ACIKLAMA =
   'Isparta merkezli veri merkezimizden NVMe hosting, sanal sunucu (VDS), dedicated sunucu ve alan adı hizmetleri. Ücretsiz SSL, günlük yedek, DDoS koruması ve gerçek 7/24 destek.';
 
-const SOSYAL_ADRESLER = [
-  'https://facebook.com/sunucumweb',
-  'https://x.com/sunucumweb',
-  'https://instagram.com/sunucumweb',
-  'https://linkedin.com/company/sunucumweb',
-  'https://youtube.com/@sunucumweb',
-];
-
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: 'SunucumWEB — Güvenilir Hosting ve Sunucu Çözümleri',
@@ -38,11 +32,13 @@ export const metadata = {
     url: SITE_URL,
     title: 'SunucumWEB — Güvenilir Hosting ve Sunucu Çözümleri',
     description: ACIKLAMA,
+    images: [{ url: '/og.png', width: 1200, height: 630, alt: 'SunucumWEB — Hosting ve Sunucu Çözümleri' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'SunucumWEB — Güvenilir Hosting ve Sunucu Çözümleri',
     description: ACIKLAMA,
+    images: ['/og.png'],
   },
   robots: INDEXLENEBILIR
     ? { index: true, follow: true }
@@ -53,41 +49,6 @@ export const metadata = {
         googleBot: { index: false, follow: false, noimageindex: true },
       },
 };
-
-function OrganizasyonSemasi() {
-  const veri = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'Organization',
-        '@id': `${SITE_URL}/#organization`,
-        name: SITE_ADI,
-        legalName: 'SunucumWEB Bilişim Teknolojileri',
-        url: SITE_URL,
-        logo: mutlakUrl('/icon/logo.png'),
-        email: 'destek@sunucumweb.com',
-        telephone: '+90-850-302-5809',
-        address: {
-          '@type': 'PostalAddress',
-          streetAddress: 'Hasanbey Mahallesi, Sokullu Sokak No: 16',
-          addressLocality: 'Keçiborlu',
-          addressRegion: 'Isparta',
-          addressCountry: 'TR',
-        },
-        sameAs: SOSYAL_ADRESLER,
-      },
-      {
-        '@type': 'WebSite',
-        '@id': `${SITE_URL}/#website`,
-        name: SITE_ADI,
-        url: SITE_URL,
-        inLanguage: 'tr-TR',
-        publisher: { '@id': `${SITE_URL}/#organization` },
-      },
-    ],
-  };
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(veri) }} />;
-}
 
 export default function RootLayout({ children }) {
   return (
@@ -102,7 +63,7 @@ export default function RootLayout({ children }) {
         {CSS.map((href) => (
           <link key={href} rel="stylesheet" href={href} />
         ))}
-        <OrganizasyonSemasi />
+        <Sema veri={firmaSemasi()} />
       </head>
       <body>
         {children}
