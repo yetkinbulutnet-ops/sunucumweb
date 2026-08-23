@@ -52,6 +52,22 @@ Demo: https://sunucumweb.demo.yetkin.web.tr (arama motorlarına kapalı)
   Mobil "Canlı Destek" butonu `window.Tawk_API?.toggle?.()` ile açar. **10. altın kural** eklendi
   (her yapı Tawk uyumlu: tek betik, sağ alt köşe boş, sohbet Tawk_API'den).
 
+**SEO — DETAYLI OPTİMİZASYON (2026-08-24, sürüyor):** CMS uzun vadeye bırakıldı; içerik statik,
+odak detaylı SEO. **Faz 1 bitti+canlı** (commit `8351bdd`):
+- `lib/seo.js` → `sayfaMeta({baslik,aciklama,yol,ogGorsel,tip})` merkezi meta üretici (canonical +
+  OG/Twitter + varsayılan görsel). Yeni sayfalarda **bunu kullan**.
+- `lib/semalar.js` → şema kütüphanesi: `firmaSemasi()` (Organization+LocalBusiness), `ekmekKirintisi()`
+  (BreadcrumbList), `sssSemasi()` (FAQPage), `urunSemasi()` (Product+AggregateOffer). `components/site/Sema.jsx`
+  = `<Sema veri={...}>` JSON-LD renderer (tek obje ya da dizi).
+- `public/og.png` (1200×630 marka görseli, sharp ile üretildi). layout: LocalBusiness (adres/tel/
+  contactPoint/priceRange/areaServed) + varsayılan OG. `app/manifest.js` (webmanifest).
+- PageHero → BreadcrumbList (tüm iç sayfalar). ProductPage → Product+Offer+FAQ+Breadcrumb.
+  HomePage/DomainPage → FAQPage. Slug router generateMetadata → `sayfaMeta` (canonical+OG her sayfada).
+  Doğrulandı: tüm sayfalarda JSON-LD geçerli, canonical `sunucumweb.com`, og:image çıkıyor.
+- **Kalan:** Faz 2 (title template `%s | SunucumWEB` + sayfa başına benzersiz optimize title/description,
+  hazir-yazilim/araclar/legal metadata'sını `sayfaMeta`'ya taşı), Faz 3 (sitemap lastmod gerçek tarih,
+  iç bağlantı, LCP/CWV, güvenlik başlıkları denetimi). NOT: aggregateRating şuan yok (Google policy riski).
+
 **Önceki iş (2026-08-22):** Mega menü ikonları SVG'lerle yenilendi; ISP/ABD sunucu silindi;
 Hazır Yazılım menüsü+sayfası eklendi; ürün sayfaları gerçek veriyle yayında; SEO teknik tamam.
 
