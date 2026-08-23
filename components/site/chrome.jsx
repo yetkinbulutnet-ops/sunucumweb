@@ -790,12 +790,13 @@ function TrustpilotKutu() {
     <div
       ref={ref}
       className="trustpilot-widget"
-      data-locale="en-US"
-      data-template-id="56278e9abfbbba0bdcd568bc"
+      data-locale="tr-TR"
+      data-template-id="5419b6a8b0d04a076446a9af"
       data-businessunit-id="69a9e79d1a30a0453db1e580"
-      data-style-height="52px"
+      data-style-height="24px"
       data-style-width="100%"
-      data-token="4fc87659-9d23-4d20-bf54-b4bde5ece9b1"
+      data-theme="dark"
+      data-style-alignment="left"
     >
       <a href="https://www.trustpilot.com/review/sunucumweb.com" target="_blank" rel="noopener noreferrer" className="text-slate-400 transition-colors hover:text-brand-300">
         Trustpilot
@@ -900,11 +901,9 @@ export function SiteFooter() {
           </a>
         </div>
 
-        <div className="mt-8 flex flex-col gap-3 border-t border-white/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-[13px] font-semibold text-slate-400">
-            Hizmetimizden memnun kaldınız mı? <span className="text-white">Trustpilot’ta değerlendirin.</span>
-          </p>
-          <div className="w-full min-w-0 sm:max-w-sm">
+        <div className="mt-8 flex flex-col items-start gap-3 border-t border-white/10 pt-8 sm:flex-row sm:items-center">
+          <span className="text-[12px] font-bold uppercase tracking-wider text-slate-500">Trustpilot</span>
+          <div className="w-full min-w-0 rounded-xl bg-white/5 px-4 py-2.5 ring-1 ring-white/10 sm:w-auto sm:min-w-[280px]">
             <TrustpilotKutu />
           </div>
         </div>
