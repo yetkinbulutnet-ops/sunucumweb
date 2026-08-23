@@ -1,8 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
 
-const API = 'https://durum.yetkinbulut.net/api?summary';
-const SAYFA = 'https://durum.yetkinbulut.net';
+const API = '/api/durum';
+const SAYFA = 'https://status.sunucumweb.com';
 const YENILEME = 60_000;
 
 const DURUMLAR = {
@@ -24,8 +24,8 @@ export default function DurumRozeti() {
         const r = await fetch(API, { cache: 'no-store' });
         const d = await r.json();
         if (iptal) return;
-        if (typeof d?.operational === 'boolean') {
-          setOzet(d);
+        if (d?.ok && d.summary && typeof d.summary.operational === 'boolean') {
+          setOzet({ ...d.summary, updated_ago: d.updated_ago });
           setHata(false);
         } else {
           setHata(true);

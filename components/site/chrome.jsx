@@ -221,7 +221,7 @@ export function TopBar() {
 
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             <ThemeToggle />
-            <a href="https://durum.yetkinbulut.net" target="_blank" rel="noopener noreferrer" className="hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-emerald-500/10 px-2.5 py-1 font-semibold text-emerald-300 ring-1 ring-emerald-400/20 transition-colors hover:bg-emerald-500/20">
+            <a href="https://status.sunucumweb.com" target="_blank" rel="noopener noreferrer" className="hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-emerald-500/10 px-2.5 py-1 font-semibold text-emerald-300 ring-1 ring-emerald-400/20 transition-colors hover:bg-emerald-500/20">
               <span className="relative flex h-1.5 w-1.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
@@ -583,13 +583,13 @@ export function SiteHeader() {
                   <a href="https://my.sunucumweb.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-xl bg-surface px-3 py-2.5 text-[13px] font-semibold text-strong ring-1 ring-line">
                     <Icon name="chat" className="w-4 h-4 text-brandtext" /> Canlı Destek
                   </a>
-                  <span className="flex items-center gap-2 rounded-xl bg-surface px-3 py-2.5 text-[13px] font-semibold text-strong ring-1 ring-line">
+                  <a href="https://status.sunucumweb.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-xl bg-surface px-3 py-2.5 text-[13px] font-semibold text-strong ring-1 ring-line">
                     <span className="relative flex h-2 w-2">
                       <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                       <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
                     </span>
                     Ağ Durumu
-                  </span>
+                  </a>
                 </div>
                 <div className="mt-2"><ThemeToggle variant="satir" /></div>
               </div>
@@ -749,9 +749,6 @@ function GoogleYorum() {
       </svg>
       <span className="text-[15px] font-extrabold tabular-nums text-white">{puanYazi}</span>
       <Yildizlar puan={ozet.puan} />
-      <span className="text-[13px] tabular-nums text-slate-400 group-hover:text-slate-300">
-        {ozet.adet.toLocaleString('tr-TR')} yorum
-      </span>
       <Icon name="arrow" className="h-3.5 w-3.5 shrink-0 text-slate-500 transition-transform group-hover:translate-x-0.5 group-hover:text-brand-300" />
     </a>
   );
@@ -813,7 +810,6 @@ function TrustpilotKutu() {
           </span>
         ))}
       </span>
-      <span className="hidden text-[13px] tabular-nums text-slate-400 group-hover:text-slate-300 sm:inline">{adet} yorum</span>
       <span className="text-[13px] font-extrabold text-white">Trustpilot</span>
     </a>
   );

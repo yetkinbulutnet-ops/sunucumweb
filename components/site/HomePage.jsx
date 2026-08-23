@@ -6,6 +6,7 @@ import { Icon, CtaBand, SiteShell } from './chrome';
 import { QUESTIONS, recommend } from '@/lib/engines/product-finder';
 import { scrollKilitle } from '@/lib/engines/scroll-lock';
 import DomainAI from './DomainAI';
+import DurumWidget from './DurumWidget';
 import LogoSerit from './LogoSerit';
 import { MARKALAR, MARKA_SERIDI } from '@/content/site/markalar';
 import { YAZILIMLAR, YAZILIM_KATEGORILERI } from '@/content/site/yazilimlar';
@@ -570,6 +571,17 @@ export default function HomePage() {
       <MarkaSeridi />
 
       <AnaSSS />
+
+      <section className="mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-24">
+        <div className="mx-auto max-w-2xl text-center">
+          <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Sistem Durumu</span>
+          <h2 className="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight text-strong text-balance">Altyapımız şeffaf ve izlenebilir</h2>
+          <p className="mt-4 text-lg text-body">Servislerimizin anlık durumunu ve yanıt sürelerini canlı olarak buradan takip edebilirsiniz.</p>
+        </div>
+        <div className="mt-10 flex justify-center">
+          <DurumWidget />
+        </div>
+      </section>
 
       <section className="relative overflow-hidden bg-ink"><div aria-hidden className="pointer-events-none absolute inset-0"><div className="absolute -right-20 top-0 h-80 w-80 rounded-full bg-brand-500/20 blur-[100px]" /><div className="absolute left-0 bottom-0 h-72 w-72 rounded-full bg-brand-400/10 blur-[100px]" /></div><div className="relative mx-auto max-w-7xl px-5 lg:px-8 py-20"><div className="grid lg:grid-cols-[1fr_1.1fr] gap-12 items-center"><div><h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white text-balance">Binlerce işletme altyapısını bize emanet ediyor</h2><p className="mt-4 text-lg text-slate-300">Startup'lardan kurumsal firmalara; hız, güvenlik ve kesintisiz destek arayan herkes SunucumWEB'i tercih ediyor.</p><Link href="/hakkimizda" className="mt-7 inline-flex items-center gap-2 rounded-xl bg-white/10 px-5 py-3 text-[15px] font-semibold text-white ring-1 ring-white/15 hover:bg-white/15 transition">Hikâyemizi keşfedin <Icon name="arrow" className="w-4 h-4" /></Link></div><div className="grid grid-cols-2 gap-4">{STATS.map(([n, l]) => (<div key={l} className="rounded-2xl bg-white/5 ring-1 ring-white/10 p-6 backdrop-blur"><div className="text-3xl sm:text-4xl font-extrabold text-brand-300">{n}</div><div className="mt-1 text-sm text-slate-300">{l}</div></div>))}</div></div></div></section>
       <CtaBand />
