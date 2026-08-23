@@ -891,7 +891,10 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-12 flex flex-col gap-6 border-t border-white/10 pt-8 lg:flex-row lg:items-center lg:justify-between">
-          <GoogleYorum />
+          <div className="flex flex-col items-start gap-3">
+            <GoogleYorum />
+            <TrustpilotKutu />
+          </div>
 
           <a
             href={BTK.liste}
@@ -914,9 +917,6 @@ export function SiteFooter() {
           </a>
         </div>
 
-        <div className="mt-8 border-t border-white/10 pt-8">
-          <TrustpilotKutu />
-        </div>
       </div>
 
       <div className="mt-10 border-t border-white/10">
