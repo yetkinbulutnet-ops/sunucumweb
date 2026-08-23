@@ -1,7 +1,9 @@
+'use client';
 import Link from 'next/link';
 import { Icon, SiteShell, CtaBand } from './chrome';
 import AddToCartButton from './AddToCartButton';
 import { YAZILIMLAR, YAZILIM_KATEGORILERI } from '@/content/site/yazilimlar';
+import { useParabirimi } from './CurrencyProvider';
 
 const fiyatYaz = (n) => new Intl.NumberFormat('tr-TR').format(n);
 
@@ -15,6 +17,7 @@ const OZELLIKLER = [
 ];
 
 function BenzerKart({ y }) {
+  const { fiyat } = useParabirimi();
   const kat = YAZILIM_KATEGORILERI.find((x) => x.slug === y.kategori);
   return (
     <Link href={`/hazir-yazilim/${y.id}`} className="group flex flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-[0_10px_40px_-24px_rgba(15,41,66,0.22)] transition-[transform,box-shadow,border-color] hover:-translate-y-1 hover:border-brandline">
@@ -25,7 +28,7 @@ function BenzerKart({ y }) {
         <span className="text-[11px] font-bold uppercase tracking-wide text-muted">{kat ? kat.ad : 'Yazılım'}</span>
         <h3 className="mt-1 text-[15px] font-extrabold text-strong">{y.ad}</h3>
         <div className="mt-3 flex items-center justify-between">
-          <span className="text-[16px] font-extrabold text-strong">{fiyatYaz(y.fiyat)} <span className="text-[12px] font-bold text-muted">₺</span></span>
+          <span className="text-[16px] font-extrabold text-strong">{fiyat(y.fiyat, { sembolSonda: true })}</span>
           <span className="inline-flex items-center gap-1 text-[13px] font-bold text-brandtext">İncele <Icon name="arrow" className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" /></span>
         </div>
       </div>
@@ -34,6 +37,7 @@ function BenzerKart({ y }) {
 }
 
 export default function HazirYazilimDetay({ urun }) {
+  const { fiyat } = useParabirimi();
   const kat = YAZILIM_KATEGORILERI.find((k) => k.slug === urun.kategori);
   const benzer = YAZILIMLAR.filter((y) => y.kategori === urun.kategori && y.id !== urun.id).slice(0, 3);
   const indirim = urun.eskiFiyat > urun.fiyat ? Math.round((1 - urun.fiyat / urun.eskiFiyat) * 100) : 0;
@@ -87,8 +91,8 @@ export default function HazirYazilimDetay({ urun }) {
 
               <div className="mt-7 flex flex-wrap items-end gap-4">
                 <div>
-                  {urun.eskiFiyat > urun.fiyat && <div className="text-[15px] font-medium text-muted line-through">{fiyatYaz(urun.eskiFiyat)} ₺</div>}
-                  <div className="text-4xl font-extrabold tracking-tight text-strong">{fiyatYaz(urun.fiyat)} <span className="text-xl font-bold text-muted">₺</span></div>
+                  {urun.eskiFiyat > urun.fiyat && <div className="text-[15px] font-medium text-muted line-through">{fiyat(urun.eskiFiyat, { sembolSonda: true })}</div>}
+                  <div className="text-4xl font-extrabold tracking-tight text-strong">{fiyat(urun.fiyat, { sembolSonda: true })}</div>
                 </div>
               </div>
 

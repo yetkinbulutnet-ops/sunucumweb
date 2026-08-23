@@ -5,6 +5,7 @@ import { Icon, CtaBand, SiteShell } from './chrome';
 import AddToCartButton from './AddToCartButton';
 import { ALTYAPI } from '@/content/site/markalar';
 import { wisecpSiparisUrl } from '@/content/site/wisecp-siparis';
+import { useParabirimi } from './CurrencyProvider';
 
 const SUNUCU_GORSEL = '/img/urun/sunucu.webp';
 const SLUG_GORSEL = { 'sanal-sunucu': '/img/urun/xeon.webp', 'premium-sunucu': '/img/urun/xeon-platinum.webp', 'gpu-sunucu': '/img/urun/ekran-karti.webp' };
@@ -104,6 +105,7 @@ function OzellikGrid({ items }) {
 }
 
 function Fiyat({ p, yillik, koyu }) {
+  const { fiyat } = useParabirimi();
   const aylik = num(p.price);
   if (aylik <= 0) {
     return <div className={`text-[19px] font-extrabold ${koyu ? 'text-white' : 'text-strong'}`}>Fiyat için görüşün</div>;
@@ -116,13 +118,12 @@ function Fiyat({ p, yillik, koyu }) {
     <div>
       {(eski > gosterilen || rozet) && (
         <div className="flex items-center gap-2">
-          {eski > gosterilen && <span className={`text-sm line-through ${koyu ? 'text-slate-400' : 'text-muted'}`}>₺{fmt(eski)}</span>}
+          {eski > gosterilen && <span className={`text-sm line-through ${koyu ? 'text-slate-400' : 'text-muted'}`}>{fiyat(eski)}</span>}
           {rozet && <span className="rounded-md bg-emerald-500/15 px-1.5 py-0.5 text-[11px] font-extrabold text-emerald-500 ring-1 ring-emerald-500/30">{rozet}</span>}
         </div>
       )}
       <div className="flex items-baseline gap-1">
-        <span className={`text-sm font-semibold ${koyu ? 'text-slate-300' : 'text-muted'}`}>₺</span>
-        <span className={`text-4xl font-extrabold tracking-tight ${koyu ? 'text-white' : 'text-strong'}`}>{fmt(gosterilen)}</span>
+        <span className={`text-4xl font-extrabold tracking-tight ${koyu ? 'text-white' : 'text-strong'}`}>{fiyat(gosterilen)}</span>
         <span className={`text-sm ${koyu ? 'text-slate-300' : 'text-muted'}`}>/ay</span>
       </div>
     </div>
@@ -247,6 +248,7 @@ function KarsilastirmaTablosu({ plans }) {
 export default function ProductPage({ data, slug }) {
   const d = data;
   const tip = TIP[slug] || 'hosting';
+  const { fiyat } = useParabirimi();
   const [yillik, setYillik] = useState(false);
   const minFiyat = Math.min(...d.plans.map((p) => num(p.price)).filter((n) => n > 0));
   const hosting = tip === 'hosting';
@@ -269,7 +271,7 @@ export default function ProductPage({ data, slug }) {
               {Number.isFinite(minFiyat) && (
                 <div className="mt-6 flex items-baseline gap-2">
                   <span className="text-[15px] text-muted">Başlangıç</span>
-                  <span className="text-2xl font-extrabold text-strong">₺{fmt(minFiyat)}</span>
+                  <span className="text-2xl font-extrabold text-strong">{fiyat(minFiyat)}</span>
                   <span className="text-[15px] text-muted">/ay'dan</span>
                 </div>
               )}

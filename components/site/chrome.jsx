@@ -6,6 +6,7 @@ import { formatTRY, CHECKOUT_URL } from '@/lib/engines/cart';
 import { scrollKilitle } from '@/lib/engines/scroll-lock';
 import SmoothScroll from './SmoothScroll';
 import { CartProvider, useCart } from './CartProvider';
+import { CurrencyProvider, ParaBirimiSecici } from './CurrencyProvider';
 import OdemeLogolari from './OdemeLogolari';
 import DurumRozeti from './DurumRozeti';
 import AltyapiSerit from './AltyapiSerit';
@@ -506,6 +507,7 @@ export function SiteHeader() {
             </nav>
 
             <div className="flex shrink-0 items-center gap-1 sm:gap-2">
+              <ParaBirimiSecici />
               <button type="button" onClick={() => setBasla(true)} className="group hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap rounded-xl bg-brand-500 px-4 py-2.5 text-[14px] font-semibold text-white shadow-lg shadow-brand-500/25 transition-[transform,box-shadow,border-color,opacity] hover:bg-brand-600 2xl:px-5 2xl:text-[15px]">
                 Hemen Başla <Icon name="arrow" className="hidden h-4 w-4 transition-transform group-hover:translate-x-0.5 sm:block" />
               </button>
@@ -886,7 +888,7 @@ export function CtaBand({ title = 'Bugün başlayın, farkı hemen hissedin', te
 
 export function SiteShell({ children }) {
   return (
-    <>
+    <CurrencyProvider>
       <SmoothScroll />
       <div className="min-h-ekran bg-page font-sans text-strong antialiased">
         <SiteHeader />
@@ -894,7 +896,7 @@ export function SiteShell({ children }) {
         <AltyapiSerit />
         <SiteFooter />
       </div>
-    </>
+    </CurrencyProvider>
   );
 }
 

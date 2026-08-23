@@ -3,6 +3,7 @@ import { useState, useMemo, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { Icon, SiteShell, CtaBand } from './chrome';
 import { YAZILIMLAR, YAZILIM_KATEGORILERI, YAZILIM_SERIDI } from '@/content/site/yazilimlar';
+import { useParabirimi } from './CurrencyProvider';
 
 const PER = 12;
 
@@ -33,6 +34,7 @@ function IndirimRozet({ eski, yeni }) {
 }
 
 function Kart({ y }) {
+  const { fiyat } = useParabirimi();
   const kat = YAZILIM_KATEGORILERI.find((x) => x.slug === y.kategori);
   return (
     <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-[0_10px_40px_-24px_rgba(15,41,66,0.22)] transition-[transform,box-shadow,border-color] hover:-translate-y-1 hover:border-brandline hover:shadow-[0_24px_60px_-28px_rgba(20,184,166,0.35)]">
@@ -65,10 +67,10 @@ function Kart({ y }) {
         <div className="mt-4 border-t border-line pt-4">
           <div className="flex items-baseline gap-2">
             {y.eskiFiyat > y.fiyat && (
-              <span className="text-[12.5px] font-medium text-muted line-through">{fiyatYaz(y.eskiFiyat)} ₺</span>
+              <span className="text-[12.5px] font-medium text-muted line-through">{fiyat(y.eskiFiyat, { sembolSonda: true })}</span>
             )}
             <span className="text-[19px] font-extrabold tracking-tight text-strong">
-              {fiyatYaz(y.fiyat)} <span className="text-[13px] font-bold text-muted">₺</span>
+              {fiyat(y.fiyat, { sembolSonda: true })}
             </span>
           </div>
           <div className="mt-3 grid grid-cols-2 gap-2">
