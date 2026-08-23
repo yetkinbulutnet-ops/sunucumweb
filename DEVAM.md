@@ -40,6 +40,14 @@ Demo: https://sunucumweb.demo.yetkin.web.tr (arama motorlarına kapalı)
   - **Tuzak:** API `Access-Control-Allow-Origin: *` başlığını ÇİFT gönderiyor → tarayıcı reddediyor;
     doğrudan client fetch çalışmaz, **sunucu-sunucu proxy şart** (`/api/durum`).
 
+- **Kampanyalar sayfası** (`/kampanyalar`, Kurumsal altında): `app/kampanyalar/page.jsx`
+  (metadata + ItemList/Offer JSON-LD) → `KampanyalarPage.jsx` (client, SiteShell). Veri
+  `content/site/kampanyalar.js` (3 demo kampanya). Kart: indirim rozeti, para birimine uyumlu
+  fiyat, kupon kopyalama (clipboard + execCommand fallback), son tarih, CTA, boş-durum. Menü
+  (Kurumsal mega + footer) + sitemap güncellendi; `tag/gift/percent` ikonları eklendi.
+  - **Tuzak (useParabirimi):** fiyat hook'u SiteShell'in İÇİNDEki alt bileşende çağrılmalı,
+    sayfanın üst gövdesinde değil (provider'ı SiteShell verir; üstte TRY fallback döner).
+
 **Önceki iş (2026-08-22):** Mega menü ikonları SVG'lerle yenilendi; ISP/ABD sunucu silindi;
 Hazır Yazılım menüsü+sayfası eklendi; ürün sayfaları gerçek veriyle yayında; SEO teknik tamam.
 
