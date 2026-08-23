@@ -28,6 +28,18 @@ Demo: https://sunucumweb.demo.yetkin.web.tr (arama motorlarına kapalı)
 8. **Para birimi seçici DROPDOWN** — yan yana toggle yerine tek butonlu açılır liste
    (`ParaBirimiSecici`, dış tık/Esc kapatır, `z-[70]`, mega menü/BaslaModal ile çakışmıyor).
 
+**Ek istekler (2026-08-23):**
+- Footer altı derli toplu: Google + Trustpilot rozetleri tek satırda solda alt alta, BTK sağda
+  (Trustpilot'un ayrı satırı + fazladan divider kaldırıldı). Google & Trustpilot'ta görünen
+  **yorum sayısı gizlendi** (puan + yıldız kaldı, aria-label'da sayı erişilebilirlik için duruyor).
+- **Durum/Status → `status.sunucumweb.com`**: yeni `app/api/durum/route.js` proxy (`?status`).
+  `DurumRozeti` (footer) + yeni `DurumWidget.jsx` (ana sayfa "Sistem Durumu" bölümü) bundan besleniyor;
+  TopBar + mobil "Ağ Durumu" linkleri status sayfasına. Widget native (servis/uptime/ping/sparkline,
+  temaya uyumlu, servis sayısından bağımsız).
+  - **Tuzak:** `widget.php` `X-Frame-Options: SAMEORIGIN` → dış domainden iframe gömülemez (native yapıldı).
+  - **Tuzak:** API `Access-Control-Allow-Origin: *` başlığını ÇİFT gönderiyor → tarayıcı reddediyor;
+    doğrudan client fetch çalışmaz, **sunucu-sunucu proxy şart** (`/api/durum`).
+
 **Önceki iş (2026-08-22):** Mega menü ikonları SVG'lerle yenilendi; ISP/ABD sunucu silindi;
 Hazır Yazılım menüsü+sayfası eklendi; ürün sayfaları gerçek veriyle yayında; SEO teknik tamam.
 
