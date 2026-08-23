@@ -68,10 +68,12 @@ odak detaylı SEO. **Faz 1 bitti+canlı** (commit `8351bdd`):
 `content/site/products.js` → `SEO_BASLIK` haritası (10 ürüne anahtar-kelime odaklı başlık, slug router kullanıyor);
 kampanyalar/hazir-yazilim(hub+detay)/araclar(hub+detay)/legal → `sayfaMeta` (canonical+OG+twitter, çift ek temizlendi).
 Doğrulandı: her sayfada benzersiz optimize başlık + tek marka eki + og:image.
-- **Kalan Faz 3:** sitemap lastmod (gerçek/statik tarih), iç bağlantı, LCP/CWV (hero görsel priority),
-  güvenlik başlıkları (DİKKAT: reverse proxy zaten X-Frame-Options/Referrer-Policy ekliyor → next.config'te
-  tekrar eklersen ÇİFT başlık olur, status API'deki çift-CORS dersi gibi; önce canlı başlıkları kontrol et).
-  NOT: aggregateRating eklenmedi (Google policy riski).
+**Faz 3 bitti+canlı** (commit `783b0d7`): `next.config` **Permissions-Policy** (proxy X-Frame/nosniff/
+XSS/Referrer ekliyor → sadece proxy'nin eklemediği eklendi, canlıda tam 1 kez, ÇİFT YOK); `sitemap.js`
+statik `lastModified 2026-08-24` (new Date() değil); layout dış origin **dns-prefetch** (Tawk/Umami/status).
+Denetim: tüm görsellerde alt + width/height mevcut, ana sayfa hero LCP zaten `eager + fetchPriority=high`.
+**SEO 3 FAZ TAMAMLANDI.** aggregateRating eklenmedi (Google policy riski). HSTS proxy'ye bırakıldı.
+Sonraki: gelecek tasarım listesi ([[bkz. memory]] ürün hero'su ürüne özel, sliderlar, kurumsal görseller).
 
 **Önceki iş (2026-08-22):** Mega menü ikonları SVG'lerle yenilendi; ISP/ABD sunucu silindi;
 Hazır Yazılım menüsü+sayfası eklendi; ürün sayfaları gerçek veriyle yayında; SEO teknik tamam.
