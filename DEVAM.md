@@ -64,9 +64,14 @@ odak detaylı SEO. **Faz 1 bitti+canlı** (commit `8351bdd`):
 - PageHero → BreadcrumbList (tüm iç sayfalar). ProductPage → Product+Offer+FAQ+Breadcrumb.
   HomePage/DomainPage → FAQPage. Slug router generateMetadata → `sayfaMeta` (canonical+OG her sayfada).
   Doğrulandı: tüm sayfalarda JSON-LD geçerli, canonical `sunucumweb.com`, og:image çıkıyor.
-- **Kalan:** Faz 2 (title template `%s | SunucumWEB` + sayfa başına benzersiz optimize title/description,
-  hazir-yazilim/araclar/legal metadata'sını `sayfaMeta`'ya taşı), Faz 3 (sitemap lastmod gerçek tarih,
-  iç bağlantı, LCP/CWV, güvenlik başlıkları denetimi). NOT: aggregateRating şuan yok (Google policy riski).
+**Faz 2 bitti+canlı** (commit `a3def01`): layout `title.template '%s | SunucumWEB'` (ana sayfa default eksiz);
+`content/site/products.js` → `SEO_BASLIK` haritası (10 ürüne anahtar-kelime odaklı başlık, slug router kullanıyor);
+kampanyalar/hazir-yazilim(hub+detay)/araclar(hub+detay)/legal → `sayfaMeta` (canonical+OG+twitter, çift ek temizlendi).
+Doğrulandı: her sayfada benzersiz optimize başlık + tek marka eki + og:image.
+- **Kalan Faz 3:** sitemap lastmod (gerçek/statik tarih), iç bağlantı, LCP/CWV (hero görsel priority),
+  güvenlik başlıkları (DİKKAT: reverse proxy zaten X-Frame-Options/Referrer-Policy ekliyor → next.config'te
+  tekrar eklersen ÇİFT başlık olur, status API'deki çift-CORS dersi gibi; önce canlı başlıkları kontrol et).
+  NOT: aggregateRating eklenmedi (Google policy riski).
 
 **Önceki iş (2026-08-22):** Mega menü ikonları SVG'lerle yenilendi; ISP/ABD sunucu silindi;
 Hazır Yazılım menüsü+sayfası eklendi; ürün sayfaları gerçek veriyle yayında; SEO teknik tamam.
