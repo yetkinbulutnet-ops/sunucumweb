@@ -9,11 +9,13 @@ Demo: https://sunucumweb.demo.yetkin.web.tr (arama motorlarına kapalı)
 1. **Footer üstü Atatürk sözü + imza** — `chrome.jsx` `AtaturkSoz` (SiteShell'de AltyapiSerit
    ile SiteFooter arası). "Hayatta en hakiki mürşit ilimdir, fendir." + `public/img/ataturk-imza.webp`.
    İmza BEYAZ webp; `invert dark:invert-0` → light'ta siyah, dark'ta beyaz (iki modda da görünür).
-2. **Trustpilot puan rozeti** — footer'da Google/BTK satırı altında `TrustpilotKutu` +
-   `next/script` ile `tp.widget.bootstrap.min.js` (afterInteractive). **Micro Combo** widget
-   (`data-template-id 5419b6a8b0d04a076446a9af`, `data-theme=dark`, `tr-TR`) → Google rozeti
-   gibi puan+yıldız+yorum sayısı gösterir ("değerlendirin" daveti kaldırıldı). sunucumweb.com
-   Trustpilot: 3.8 / 2 yorum.
+2. **Trustpilot puan rozeti** — footer'da Google/BTK satırı altında `TrustpilotKutu`, Google
+   rozeti stilinde **ÖZEL rozet** (Trustpilot yeşil yıldız + puan + 5 yeşil kutu + yorum sayısı
+   + wordmark), canlı yorum sayfasına link. Puan `TRUSTPILOT` sabitinden (`puan:3.8, adet:2`),
+   **MANUEL güncellenir**. NEDEN özel rozet: Trustpilot'un puan gösteren TrustBox'ları (Mini/Micro)
+   **ücretli plan** gerektiriyor; ücretsiz planda sadece logo çıkıyor (denendi, doğrulandı).
+   Paid plana geçilirse resmi Mini widget (`53aa8807dec7e10d38f59f32`) kullanılabilir. businessunit
+   id `69a9e79d1a30a0453db1e580`.
 3. **Dedicated görseli** `public/img/urun/dedicated.webp` — ProductPage `SLUG_GORSEL` + mega menü.
 4. **Hazır Yazılım Satın Al** `/iletisim`'de kaldı (kod zaten `satinAlUrl || '/iletisim'`).
 5. **Umami analitiği tüm sitede** — `app/layout.jsx` `next/script afterInteractive`. Önemli
