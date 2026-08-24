@@ -11,6 +11,23 @@ import { urunSemasi, sssSemasi, ekmekKirintisi } from '@/lib/semalar';
 
 const SUNUCU_GORSEL = '/img/urun/sunucu.webp';
 const SLUG_GORSEL = { 'sanal-sunucu': '/img/urun/xeon.webp', 'premium-sunucu': '/img/urun/xeon-platinum.webp', 'gpu-sunucu': '/img/urun/ekran-karti.webp', 'dedicated-sunucu': '/img/urun/dedicated.webp' };
+
+const HERO_GORSEL = {
+  'sanal-sunucu': { src: '/img/urun/xeon.webp' },
+  'premium-sunucu': { src: '/img/urun/xeon-platinum.webp' },
+  'gpu-sunucu': { src: '/img/urun/ekran-karti.webp' },
+  'dedicated-sunucu': { src: '/img/urun/dedicated.webp' },
+  'sunucu-barindirma': { src: '/img/galeri/kabin-dellemc.webp', foto: true },
+  'ip-kiralama': { src: '/img/urun/ip-kiralama.webp' },
+};
+
+const HERO_TON = {
+  'sanal-sunucu': 'bg-brand-400/25', 'premium-sunucu': 'bg-amber-400/25',
+  'dedicated-sunucu': 'bg-sky-400/25', 'gpu-sunucu': 'bg-violet-400/25',
+  'sunucu-barindirma': 'bg-emerald-400/25', 'ip-kiralama': 'bg-cyan-400/25',
+  'web-hosting': 'bg-brand-400/25', 'wordpress-hosting': 'bg-sky-400/25',
+  'reseller-hosting': 'bg-violet-400/25', 'kurumsal-hosting': 'bg-indigo-400/25',
+};
 const HOSTING_ALTYAPI = ALTYAPI.filter((a) => ['cPanel', 'LiteSpeed', 'CloudLinux', 'Imunify360', 'JetBackup', 'Softaculous'].includes(a.ad));
 
 const num = (s) => {
@@ -24,12 +41,6 @@ const TIP = {
   'sanal-sunucu': 'sunucu', 'premium-sunucu': 'sunucu', 'dedicated-sunucu': 'sunucu', 'gpu-sunucu': 'sunucu',
   'sunucu-barindirma': 'merkez', 'ip-kiralama': 'merkez',
 };
-
-const GUVEN = [
-  { icon: 'shield', t: '%99.9 Uptime' },
-  { icon: 'refresh', t: '30 Gün İade' },
-  { icon: 'headset', t: '7/24 Gerçek Destek' },
-];
 
 const SERIT = [
   { icon: 'shield', t: '%99.9 Uptime', d: 'SLA garantili erişilebilirlik' },
@@ -247,6 +258,81 @@ function KarsilastirmaTablosu({ plans }) {
   );
 }
 
+function DonanimGorsel({ d, gorsel, tonGlow }) {
+  const [s0, s1] = d.specs || [];
+  const ilk = d.heroStats?.[0];
+  return (
+    <div className="relative animate-[fadeup_0.8s_ease-out]">
+      <div aria-hidden className={`absolute -inset-6 -z-10 rounded-[2.5rem] ${tonGlow} opacity-70 blur-[70px]`} />
+      <div className="relative overflow-hidden rounded-3xl border border-line/80 bg-gradient-to-b from-surface to-surface2 p-3 shadow-[0_40px_90px_-40px_rgba(15,41,66,0.5)]">
+        <div className="relative overflow-hidden rounded-2xl">
+          {gorsel.foto ? (
+            <div className="relative aspect-[4/3]">
+              <img src={gorsel.src} alt={`${d.title} altyapısı`} width={1200} height={900} loading="eager" fetchPriority="high" className="h-full w-full object-cover" />
+              <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-transparent" />
+            </div>
+          ) : (
+            <div className="grid aspect-[4/3] place-items-center bg-[radial-gradient(circle_at_50%_38%,rgb(var(--c-surface2)),rgb(var(--c-surface)))] p-6">
+              <img src={gorsel.src} alt={`${d.title} görseli`} width={900} height={700} loading="eager" fetchPriority="high" className="max-h-full w-auto object-contain drop-shadow-[0_30px_45px_rgba(15,41,66,0.4)]" />
+            </div>
+          )}
+        </div>
+      </div>
+
+      {ilk && (
+        <div className="absolute -right-2 -top-3 flex items-center gap-2 rounded-2xl border border-line bg-surface px-3.5 py-2.5 shadow-xl shadow-ink/10 sm:-right-4">
+          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-brandsoft text-brandtext"><Icon name={d.icon} className="h-4 w-4" /></span>
+          <div><div className="text-[13px] font-extrabold leading-none text-strong">{ilk[0]}</div><div className="mt-1 text-[10px] uppercase tracking-wide text-muted">{ilk[1]}</div></div>
+        </div>
+      )}
+      {s0 && (
+        <div className="absolute -bottom-4 -left-2 flex items-center gap-4 rounded-2xl border border-line bg-surface px-4 py-3 shadow-xl shadow-ink/10 animate-[float_6s_ease-in-out_infinite] sm:-left-4">
+          <div><div className="text-[10px] uppercase tracking-wide text-muted">{s0[0]}</div><div className="text-[13px] font-bold text-strong">{s0[1]}</div></div>
+          {s1 && <div className="border-l border-line pl-4"><div className="text-[10px] uppercase tracking-wide text-muted">{s1[0]}</div><div className="text-[13px] font-bold text-strong">{s1[1]}</div></div>}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function HostingGorsel({ d, tonGlow }) {
+  const metr = d.heroStats || [];
+  return (
+    <div className="relative animate-[fadeup_0.8s_ease-out]">
+      <div aria-hidden className={`absolute -inset-6 -z-10 rounded-[2.5rem] ${tonGlow} opacity-70 blur-[70px]`} />
+      <div className="relative overflow-hidden rounded-3xl border border-line/80 bg-surface shadow-[0_40px_90px_-40px_rgba(15,41,66,0.5)]">
+        <div className="flex items-center gap-2 border-b border-line bg-surface2 px-4 py-3">
+          <span className="h-3 w-3 rounded-full bg-rose-400/70" /><span className="h-3 w-3 rounded-full bg-amber-400/70" /><span className="h-3 w-3 rounded-full bg-emerald-400/70" />
+          <span className="ml-2 flex min-w-0 flex-1 items-center gap-1.5 rounded-lg bg-page px-3 py-1.5 text-[12px] text-muted"><Icon name="lock" className="h-3.5 w-3.5 shrink-0 text-brandtext" /><span className="truncate">https://siteniz.com.tr</span></span>
+        </div>
+        <div className="p-5">
+          <div className="flex items-center gap-3">
+            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brandsoft text-brandtext"><Icon name={d.icon} className="h-5 w-5" /></span>
+            <div className="min-w-0 flex-1"><div className="h-2.5 w-28 max-w-full rounded bg-strong/15" /><div className="mt-1.5 h-2 w-20 max-w-full rounded bg-line" /></div>
+          </div>
+          <div className="mt-4 h-24 rounded-xl bg-gradient-to-br from-brand-500/15 to-brand-400/5 ring-1 ring-line" />
+          <div className="mt-3 grid grid-cols-3 gap-2">{[0, 1, 2].map((i) => <div key={i} className="h-14 rounded-lg bg-surface2 ring-1 ring-line" />)}</div>
+        </div>
+        {metr.length > 0 && (
+          <div className="grid grid-cols-3 divide-x divide-line border-t border-line bg-surface2/60">
+            {metr.map(([v, k]) => (
+              <div key={k} className="min-w-0 px-3 py-3 text-center"><div className="truncate text-[15px] font-extrabold text-strong">{v}</div><div className="mt-0.5 truncate text-[10.5px] uppercase tracking-wide text-muted">{k}</div></div>
+            ))}
+          </div>
+        )}
+      </div>
+      <div className="absolute -bottom-4 -left-2 flex items-center gap-2.5 rounded-2xl border border-line bg-surface px-4 py-3 shadow-xl shadow-ink/10 animate-[float_6s_ease-in-out_infinite] sm:-left-4">
+        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-brandsoft text-brandtext"><Icon name="bolt" className="h-5 w-5" /></span>
+        <div><div className="text-[13px] font-extrabold leading-none text-strong">LiteSpeed</div><div className="mt-1 text-[11px] text-muted">Önbellekli hız</div></div>
+      </div>
+    </div>
+  );
+}
+
+function HeroVisual({ d, gorsel, tonGlow }) {
+  return gorsel ? <DonanimGorsel d={d} gorsel={gorsel} tonGlow={tonGlow} /> : <HostingGorsel d={d} tonGlow={tonGlow} />;
+}
+
 export default function ProductPage({ data, slug }) {
   const d = data;
   const tip = TIP[slug] || 'hosting';
@@ -256,6 +342,8 @@ export default function ProductPage({ data, slug }) {
   const hosting = tip === 'hosting';
 
   const gorsel = SLUG_GORSEL[slug] || (tip === 'sunucu' ? SUNUCU_GORSEL : undefined);
+  const heroGorsel = HERO_GORSEL[slug];
+  const tonGlow = HERO_TON[slug] || 'bg-brand-300/25';
 
   return (
     <SiteShell>
@@ -266,14 +354,14 @@ export default function ProductPage({ data, slug }) {
       ]} />
       <section className="relative overflow-hidden border-b border-line">
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute -top-32 right-[-8%] h-[460px] w-[460px] rounded-full bg-brand-300/25 blur-[120px]" />
+          <div className={`absolute -top-32 right-[-8%] h-[460px] w-[460px] rounded-full ${tonGlow} blur-[120px]`} />
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgb(var(--c-grid))_1px,transparent_1px),linear-gradient(to_bottom,rgb(var(--c-grid))_1px,transparent_1px)] bg-[size:44px_44px] [mask-image:radial-gradient(ellipse_at_top,black,transparent_72%)]" />
         </div>
         <div className="mx-auto max-w-7xl px-5 lg:px-8 py-16 lg:py-20">
-          <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-12 items-center">
-            <div className="animate-[fadeup_0.6s_ease-out]">
+          <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
+            <div className="min-w-0 animate-[fadeup_0.6s_ease-out]">
               <div className="mb-5 flex items-center gap-2 text-sm text-muted"><Link href="/" className="hover:text-brandtext">Ana Sayfa</Link><span>/</span><span className="font-medium text-strong/70">{d.title}</span></div>
-              <span className="inline-flex items-center gap-2 rounded-full border border-brandline bg-brandsoft/80 px-3.5 py-1.5 text-[13px] font-semibold text-brandtext"><Icon name={d.icon} className="w-4 h-4" /> {d.eyebrow}</span>
+              <span className="inline-flex items-center gap-2 rounded-full border border-brandline bg-brandsoft/80 px-3.5 py-1.5 text-[13px] font-semibold text-brandtext"><Icon name={d.icon} className="h-4 w-4" /> {d.eyebrow}</span>
               <h1 className="mt-5 tipo-dev font-extrabold tracking-tight text-strong text-balance">{d.title}</h1>
               <p className="mt-5 max-w-xl tipo-giris text-body">{d.subtitle}</p>
 
@@ -286,23 +374,24 @@ export default function ProductPage({ data, slug }) {
               )}
 
               <div className="mt-6 flex flex-wrap gap-3">
-                <a href="#paketler" className="inline-flex items-center gap-2 rounded-xl bg-brand-500 px-6 py-3.5 text-[15px] font-semibold text-white shadow-lg shadow-brand-500/25 hover:bg-brand-600 transition">Paketleri Gör <Icon name="arrow" className="w-4 h-4" /></a>
-                <Link href="/iletisim" className="inline-flex items-center gap-2 rounded-xl bg-surface px-6 py-3.5 text-[15px] font-semibold text-strong ring-1 ring-line hover:ring-brandtext/50 transition">Bize Ulaşın</Link>
+                <a href="#paketler" className="inline-flex items-center gap-2 rounded-xl bg-brand-500 px-6 py-3.5 text-[15px] font-semibold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-600">Paketleri Gör <Icon name="arrow" className="h-4 w-4" /></a>
+                <Link href="/iletisim" className="inline-flex items-center gap-2 rounded-xl bg-surface px-6 py-3.5 text-[15px] font-semibold text-strong ring-1 ring-line transition hover:ring-brandtext/50">Bize Ulaşın</Link>
               </div>
 
-              <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-2">
-                {GUVEN.map((g) => (
-                  <span key={g.t} className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-body"><Icon name={g.icon} className="h-4 w-4 text-brandtext" /> {g.t}</span>
-                ))}
-              </div>
+              {d.heroStats?.length > 0 && (
+                <dl className="mt-8 grid max-w-md grid-cols-3 gap-3">
+                  {d.heroStats.map(([v, k]) => (
+                    <div key={k} className="min-w-0 rounded-2xl border border-line bg-surface/70 px-3 py-3 text-center backdrop-blur">
+                      <dt className="truncate text-[15px] font-extrabold text-strong sm:text-[17px]">{v}</dt>
+                      <dd className="mt-0.5 truncate text-[11px] font-medium uppercase tracking-wide text-muted">{k}</dd>
+                    </div>
+                  ))}
+                </dl>
+              )}
             </div>
 
-            <div className="relative animate-[fadeup_0.8s_ease-out]">
-              <div className="rounded-3xl border border-line/80 bg-surface/90 backdrop-blur p-7 shadow-[0_40px_80px_-30px_rgba(15,41,66,0.35)]">
-                <div className="flex items-center gap-3"><span className="grid h-12 w-12 place-items-center rounded-2xl bg-brand-500 text-white"><Icon name={d.icon} /></span><div><div className="text-base font-extrabold text-strong">{d.title}</div><div className="text-[13px] text-muted">Teknik özet</div></div></div>
-                <div className="mt-6 space-y-3">{d.specs.map(([k, v]) => (<div key={k} className="flex items-center justify-between rounded-xl bg-surface2 px-4 py-3"><span className="text-sm text-body">{k}</span><span className="text-sm font-bold text-strong">{v}</span></div>))}</div>
-              </div>
-              <div className="absolute -bottom-5 -left-4 rounded-2xl border border-line bg-surface px-4 py-3 shadow-xl shadow-ink/10 animate-[float_6s_ease-in-out_infinite]"><div className="flex items-center gap-2.5"><span className="grid h-9 w-9 place-items-center rounded-xl bg-brandsoft text-brandtext"><Icon name="shield" className="w-5 h-5" /></span><div><div className="text-sm font-extrabold text-strong">%99.9 Uptime</div><div className="text-[11px] text-muted">SLA garantili</div></div></div></div>
+            <div className="min-w-0">
+              <HeroVisual d={d} gorsel={heroGorsel} tonGlow={tonGlow} />
             </div>
           </div>
         </div>

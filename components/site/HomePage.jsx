@@ -15,34 +15,40 @@ import { YAZILIMLAR, YAZILIM_KATEGORILERI } from '@/content/site/yazilimlar';
 
 const SLIDES = [
   {
-    img: '/img/slider/sunucu-rack.jpg',
-    karartma: 68,
-    eyebrow: 'Türkiye\'nin güvenilir sunucu sağlayıcısı',
-    pre: 'İşinizi', hl: 'güçlü sunuculara', post: 'taşıyın',
-    text: 'Hızlı NVMe hosting, ölçeklenebilir sanal sunucular ve kurumsal dedicated çözümler. Ücretsiz SSL, günlük yedek ve gerçek 7/24 destekle.',
-    cta: { t: 'Teklif Alın', href: '/iletisim' },
-    cta2: { t: 'Hazır Yazılımlar', href: '/hazir-yazilim' },
-    rozet: ['%99.9 Uptime', 'shield'],
+    img: '/img/galeri/kabin-yogun.webp', imgAlt: 'SunucumWEB veri merkezinde sunucu kabinleri',
+    eyebrow: 'NVMe hosting · cPanel · İstanbul lokasyonu',
+    pre: 'Siteniz için', hl: 'hızlı NVMe hosting', post: '',
+    text: 'LiteSpeed önbelleği, cPanel, ücretsiz SSL ve günlük yedekle sitenizi dakikalar içinde yayına alın. Ücretsiz taşıma ve gerçek 7/24 destek dahil.',
+    cta: { t: 'Hosting paketleri', href: '/web-hosting' },
+    cta2: { t: 'Ücretsiz taşıma', href: '/iletisim' },
+    rozet: ['Ücretsiz site taşıma', 'refresh'], stat: ['%99.9', 'Uptime'],
   },
   {
-    img: '/img/slider/devre-karti.jpg',
-    karartma: 72,
-    eyebrow: 'Saniyeler içinde online olun',
-    pre: 'Alan adınızı', hl: 'hemen alın', post: '',
-    text: 'Yüzlerce uzantı, uygun fiyatlar ve ücretsiz WHOIS gizliliği ile markanızı bugün güvence altına alın. Yapay zekâ destekli alan adı bulucumuzu deneyin.',
-    cta: { t: 'Alan Adı Bul', href: '/alan-adi' },
-    cta2: { t: 'Transfer Et', href: '/transfer' },
-    rozet: ['Ücretsiz WHOIS gizliliği', 'lock'],
+    img: '/img/galeri/kabin-dellemc.webp', imgAlt: 'Kurumsal fiziksel dedicated sunucular',
+    eyebrow: 'Fiziksel sunucu · Intel Xeon · Tam donanım',
+    pre: 'Gücün tamamı sizin:', hl: 'fiziksel sunucular', post: '',
+    text: 'Intel Xeon işlemciler, NVMe diskler ve IPMI yönetimiyle tüm donanım yalnızca size ait. Komşusuz performans, tam root ve DDoS korumalı premium ağ.',
+    cta: { t: 'Dedicated sunucular', href: '/dedicated-sunucu' },
+    cta2: { t: 'Teklif al', href: '/iletisim' },
+    rozet: ['Tek kiracı, komşusuz', 'server'], stat: ['1 Gbps', 'Premium ağ'],
   },
   {
-    img: '/img/slider/veri-merkezi.jpg',
-    karartma: 66,
-    eyebrow: 'Kesintisiz, güvenli altyapı',
-    pre: 'Siteniz', hl: 'her zaman ayakta', post: 'kalsın',
-    text: 'Yedekli ağ, kesintisiz güç kaynağı ve 7/24 izleme ile hizmetiniz asla durmaz. DDoS koruması tüm paketlerde dahildir.',
-    cta: { t: 'Hakkımızda', href: '/hakkimizda' },
-    cta2: { t: 'Bize Ulaşın', href: '/iletisim' },
-    rozet: ['DDoS Korumalı', 'shield'],
+    img: '/img/galeri/kabin-gpu.webp', imgAlt: 'GPU hızlandırmalı sunucu kabinleri',
+    eyebrow: 'GPU sunucu · NVIDIA · AI & render',
+    pre: 'Yapay zeka ve render için', hl: 'GPU hızlandırma', post: '',
+    text: 'NVIDIA GPU sunucularla model eğitimi, çıkarım ve 3B render iş yüklerinizi katlayın. CUDA hazır ortam, NVMe disk ve tam root erişimi dahil.',
+    cta: { t: 'GPU sunucular', href: '/gpu-sunucu' },
+    cta2: { t: 'Bize ulaşın', href: '/iletisim' },
+    rozet: ['CUDA hazır ortam', 'cpu'], stat: ['NVIDIA', 'GPU'],
+  },
+  {
+    img: '/img/galeri/kabin-anahtar.webp', imgAlt: 'Alan adınızı güvenceye alın',
+    eyebrow: 'Belgesiz .com.tr · AI destekli bulucu',
+    pre: 'Belgesiz', hl: '.com.tr alan adı', post: '',
+    text: 'Artık evrak yok: .com.tr alan adınızı belgesiz, dakikalar içinde tescil edin. Kararsızsanız yapay zeka destekli bulucumuz size en uygun ismi önersin.',
+    cta: { t: 'Alan adı sorgula', href: '/alan-adi' },
+    cta2: { t: 'AI ile bul', href: '/alan-adi' },
+    rozet: ['Ücretsiz WHOIS gizliliği', 'lock'], stat: ['Belgesiz', '.com.tr'],
   },
 ];
 
@@ -131,132 +137,100 @@ function Hero() {
     if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) go(i + (dx < 0 ? 1 : -1));
   };
 
+  const s = SLIDES[i];
+
   return (
-    <section>
-      <div
-        className="relative h-[440px] sm:h-[500px] lg:h-[580px] xl:h-[640px] touch-pan-y overflow-hidden bg-ink"
-        onPointerEnter={(e) => e.pointerType === 'mouse' && setDuraklat(true)}
-        onPointerLeave={(e) => e.pointerType === 'mouse' && setDuraklat(false)}
-        onTouchStart={dokunBasla}
-        onTouchEnd={dokunBitir}
-        onTouchCancel={() => { dokunus.current = null; }}
-      >
-        {SLIDES.map((s, n) => (
-          <div
-            key={s.img}
-            aria-hidden={n !== i}
-            className={`absolute inset-0 transition-opacity duration-700 ease-out ${n === i ? 'opacity-100' : 'opacity-0'}`}
-          >
-            <img
-              src={s.img}
-              alt=""
-              width={1920}
-              height={1080}
-              loading={n === 0 ? 'eager' : 'lazy'}
-              fetchPriority={n === 0 ? 'high' : 'auto'}
-              className="h-full w-full object-cover"
-            />
-            <div
-              aria-hidden
-              className="absolute inset-0"
-              style={{
-                background:
-                  `linear-gradient(90deg, rgba(8,20,33,${s.karartma / 100}) 0%, rgba(8,20,33,${(s.karartma - 18) / 100}) 45%, rgba(8,20,33,${(s.karartma - 40) / 100}) 100%)`,
-              }}
-            />
-            <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-ink/25" />
-          </div>
-        ))}
+    <section
+      className="relative touch-pan-y overflow-hidden bg-ink"
+      onPointerEnter={(e) => e.pointerType === 'mouse' && setDuraklat(true)}
+      onPointerLeave={(e) => e.pointerType === 'mouse' && setDuraklat(false)}
+      onTouchStart={dokunBasla}
+      onTouchEnd={dokunBitir}
+      onTouchCancel={() => { dokunus.current = null; }}
+    >
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-24 right-[-6%] h-[520px] w-[520px] rounded-full bg-brand-500/20 blur-[120px]" />
+        <div className="absolute -bottom-32 left-[-8%] h-[440px] w-[440px] rounded-full bg-brand-400/10 blur-[120px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.045)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.045)_1px,transparent_1px)] bg-[size:46px_46px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
+      </div>
 
-        <div className="absolute inset-0 flex items-center">
-          <div className="mx-auto w-full max-w-7xl px-5 lg:px-8">
-            <div key={i} className="max-w-2xl animate-[fadeup_0.7s_ease-out]">
-              <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-[12px] sm:text-[13px] font-semibold text-white backdrop-blur-sm">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-300 opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-400" />
-                </span>
-                {SLIDES[i].eyebrow}
+      <div className="relative mx-auto max-w-7xl px-5 lg:px-8 py-16 sm:py-20 lg:py-24">
+        <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14">
+          <div key={i} className="min-w-0 animate-[fadeup_0.6s_ease-out]">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3.5 py-1.5 text-[12px] sm:text-[13px] font-semibold text-white backdrop-blur-sm">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-300 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-400" />
               </span>
+              {s.eyebrow}
+            </span>
 
-              <h1 className="mt-5 text-[2rem] leading-[1.1] sm:text-[2.75rem] lg:text-5xl xl:text-[3.5rem] font-extrabold tracking-tight text-white text-balance [text-shadow:0_2px_24px_rgba(0,0,0,0.45)]">
-                {SLIDES[i].pre}{' '}
-                <span className="relative whitespace-nowrap">
-                  <span className="relative z-10 text-brand-300">{SLIDES[i].hl}</span>
-                  <span className="absolute bottom-1 left-0 z-0 h-2.5 w-full rounded bg-brand-400/25" />
-                </span>{' '}
-                {SLIDES[i].post}
-              </h1>
+            <h1 className="mt-5 text-[2rem] leading-[1.1] sm:text-[2.6rem] lg:text-5xl xl:text-[3.4rem] font-extrabold tracking-tight text-white text-balance">
+              {s.pre}{' '}
+              <span className="relative">
+                <span className="relative z-10 text-brand-300">{s.hl}</span>
+                <span aria-hidden className="absolute bottom-1 left-0 z-0 h-2.5 w-full rounded bg-brand-400/25" />
+              </span>{s.post ? ' ' + s.post : ''}
+            </h1>
 
-              <p className="mt-4 max-w-xl text-[15px] sm:text-[17px] leading-relaxed text-slate-200 [text-shadow:0_1px_12px_rgba(0,0,0,0.4)]">
-                {SLIDES[i].text}
-              </p>
+            <p className="mt-5 max-w-xl text-[15px] sm:text-[17px] leading-relaxed text-slate-300">{s.text}</p>
 
-              <div className="mt-7 flex flex-wrap items-center gap-3">
-                <Link
-                  href={SLIDES[i].cta.href}
-                  className="inline-flex items-center gap-2 rounded-xl bg-brand-500 px-5 py-3 text-[14px] sm:px-6 sm:py-3.5 sm:text-[15px] font-bold text-white shadow-lg shadow-brand-900/40 transition-colors hover:bg-brand-400"
+            <div className="mt-7 flex flex-wrap items-center gap-3">
+              <Link href={s.cta.href} className="inline-flex items-center gap-2 rounded-xl bg-brand-500 px-5 py-3 text-[14px] font-bold text-white shadow-lg shadow-brand-900/40 transition-colors hover:bg-brand-400 sm:px-6 sm:py-3.5 sm:text-[15px]">
+                {s.cta.t} <Icon name="arrow" className="h-4 w-4" />
+              </Link>
+              <Link href={s.cta2.href} className="inline-flex items-center gap-2 rounded-xl bg-white/10 px-5 py-3 text-[14px] font-semibold text-white ring-1 ring-white/25 backdrop-blur-sm transition-colors hover:bg-white/20 sm:px-6 sm:py-3.5 sm:text-[15px]">
+                {s.cta2.t}
+              </Link>
+            </div>
+
+            <div className="mt-6 flex items-center gap-2 text-[13px] font-semibold text-slate-200">
+              <Icon name={s.rozet[1]} className="h-4 w-4 text-brand-300" />
+              {s.rozet[0]}
+            </div>
+          </div>
+
+          <div className="relative">
+            <div aria-hidden className="absolute -inset-5 -z-10 rounded-[2.75rem] bg-brand-500/15 blur-[70px]" />
+            <div className="relative mx-auto aspect-[4/5] w-full max-w-sm">
+              {SLIDES.map((sl, n) => (
+                <div
+                  key={sl.img}
+                  aria-hidden={n !== i}
+                  className={`absolute inset-0 overflow-hidden rounded-3xl border border-white/10 shadow-[0_50px_100px_-40px_rgba(0,0,0,0.75)] transition-opacity duration-700 ease-out ${n === i ? 'opacity-100' : 'opacity-0'}`}
                 >
-                  {SLIDES[i].cta.t} <Icon name="arrow" className="w-4 h-4" />
-                </Link>
-                <Link
-                  href={SLIDES[i].cta2.href}
-                  className="inline-flex items-center gap-2 rounded-xl bg-white/10 px-5 py-3 text-[14px] sm:px-6 sm:py-3.5 sm:text-[15px] font-semibold text-white ring-1 ring-white/25 backdrop-blur-sm transition-colors hover:bg-white/20"
-                >
-                  {SLIDES[i].cta2.t}
-                </Link>
-              </div>
-
-              <div className="mt-6 hidden sm:flex items-center gap-2 text-[13px] font-semibold text-slate-200">
-                <Icon name={SLIDES[i].rozet[1]} className="w-4 h-4 text-brand-300" />
-                {SLIDES[i].rozet[0]}
+                  <img src={sl.img} alt={sl.imgAlt} width={480} height={600} loading={n === 0 ? 'eager' : 'lazy'} fetchPriority={n === 0 ? 'high' : 'auto'} className="h-full w-full object-cover" />
+                  <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-transparent" />
+                </div>
+              ))}
+              <div className="absolute -left-5 bottom-6 rounded-2xl border border-white/10 bg-ink/80 px-4 py-3 shadow-xl backdrop-blur">
+                <div className="text-xl font-extrabold leading-none text-brand-300">{s.stat[0]}</div>
+                <div className="mt-1 text-[11px] text-slate-300">{s.stat[1]}</div>
               </div>
             </div>
           </div>
         </div>
 
-        <button
-          onClick={() => go(i - 1)}
-          aria-label="Önceki slayt"
-          className="group absolute left-3 top-1/2 z-20 hidden -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-ink/35 p-3 text-white backdrop-blur-sm transition-[background-color,border-color,transform] hover:scale-110 hover:border-white/50 hover:bg-ink/60 sm:grid lg:left-6"
-        >
-          <Icon name="arrow" className="w-5 h-5 rotate-180 transition-transform group-hover:-translate-x-0.5" />
-        </button>
-        <button
-          onClick={() => go(i + 1)}
-          aria-label="Sonraki slayt"
-          className="group absolute right-3 top-1/2 z-20 hidden -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-ink/35 p-3 text-white backdrop-blur-sm transition-[background-color,border-color,transform] hover:scale-110 hover:border-white/50 hover:bg-ink/60 sm:grid lg:right-6"
-        >
-          <Icon name="arrow" className="w-5 h-5 transition-transform group-hover:translate-x-0.5" />
-        </button>
-
-        <div className="absolute bottom-5 left-0 right-0 z-20">
-          <div className="mx-auto flex max-w-7xl items-center gap-2 px-5 lg:px-8">
-            {SLIDES.map((_, n) => (
-              <button key={n} onClick={() => go(n)} aria-label={`Slayt ${n + 1}`} aria-current={n === i} className="group/n py-2">
-                <span className={`block h-1 overflow-hidden rounded-full bg-white/30 transition-[width] duration-300 ${n === i ? 'w-12' : 'w-6 group-hover/n:bg-white/60'}`}>
-                  {n === i && (
-                    <span
-                      key={`ilerleme-${i}-${duraklat}`}
-                      className="block h-full rounded-full bg-brand-400"
-                      style={duraklat ? { width: '100%' } : { animation: 'slaytIlerle 7s linear forwards' }}
-                    />
-                  )}
-                </span>
-              </button>
-            ))}
-            <div className="ml-auto flex gap-2 sm:hidden">
-              <button onClick={() => go(i - 1)} aria-label="Önceki" className="grid h-9 w-9 place-items-center rounded-full border border-white/25 bg-ink/35 text-white backdrop-blur-sm">
-                <Icon name="arrow" className="w-4 h-4 rotate-180" />
-              </button>
-              <button onClick={() => go(i + 1)} aria-label="Sonraki" className="grid h-9 w-9 place-items-center rounded-full border border-white/25 bg-ink/35 text-white backdrop-blur-sm">
-                <Icon name="arrow" className="w-4 h-4" />
-              </button>
-            </div>
+        <div className="mt-10 flex items-center gap-2 sm:mt-12">
+          {SLIDES.map((_, n) => (
+            <button key={n} onClick={() => go(n)} aria-label={`Slayt ${n + 1}`} aria-current={n === i} className="group/n py-2">
+              <span className={`block h-1 overflow-hidden rounded-full bg-white/25 transition-[width] duration-300 ${n === i ? 'w-12' : 'w-6 group-hover/n:bg-white/50'}`}>
+                {n === i && (
+                  <span key={`ilerleme-${i}-${duraklat}`} className="block h-full rounded-full bg-brand-400" style={duraklat ? { width: '100%' } : { animation: 'slaytIlerle 7s linear forwards' }} />
+                )}
+              </span>
+            </button>
+          ))}
+          <div className="ml-auto flex gap-2">
+            <button onClick={() => go(i - 1)} aria-label="Önceki slayt" className="grid h-10 w-10 place-items-center rounded-full border border-white/20 bg-white/5 text-white backdrop-blur-sm transition-colors hover:bg-white/15">
+              <Icon name="arrow" className="h-4 w-4 rotate-180" />
+            </button>
+            <button onClick={() => go(i + 1)} aria-label="Sonraki slayt" className="grid h-10 w-10 place-items-center rounded-full border border-white/20 bg-white/5 text-white backdrop-blur-sm transition-colors hover:bg-white/15">
+              <Icon name="arrow" className="h-4 w-4" />
+            </button>
           </div>
         </div>
       </div>
-
     </section>
   );
 }
@@ -364,6 +338,59 @@ function FinderTab({ onOpen }) {
     <button onClick={onOpen} className="fixed right-0 top-1/2 -translate-y-1/2 z-40 hidden md:flex items-center gap-2 rounded-l-2xl bg-brand-600 px-3 py-4 text-white shadow-lg shadow-brand-600/30 hover:bg-brand-700 hover:pr-5 transition-[transform,box-shadow,border-color,opacity] [writing-mode:vertical-rl] rotate-180" aria-label="Ürün bulucu">
       <Icon name="chat" className="w-5 h-5 rotate-90" /> <span className="text-[13px] font-bold tracking-wide">Sana Uygun Ürün?</span>
     </button>
+  );
+}
+
+const ALTYAPI_OZ = [
+  { icon: 'database', t: 'Tier-3 veri merkezi', d: 'Yedekli güç, hassas iklimlendirme ve N+1 mimari ile kesintisiz çalışma.' },
+  { icon: 'shield', t: '7/24 fiziksel güvenlik', d: 'Kartlı geçiş, kamera ve sürekli personel. Verileriniz yurt içinde kalır.' },
+  { icon: 'wifi', t: 'Yedekli omurga', d: 'Çoklu uplink ve BGP yönlendirme ile düşük gecikmeli, kesintisiz bağlantı.' },
+  { icon: 'signal', t: 'Canlı izleme (NOC)', d: 'Ağ ve donanım sürekli izlenir; sorun büyümeden çözülür.' },
+];
+
+function AltyapiVitrin() {
+  return (
+    <section className="border-y border-line bg-surface2">
+      <div className="mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-24">
+        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="order-2 lg:order-1">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              <div className="relative col-span-2 aspect-[16/10] overflow-hidden rounded-2xl border border-line">
+                <img src="/img/galeri/kabin-dellemc.webp" alt="SunucumWEB veri merkezi sunucu kabinleri" width={1280} height={800} loading="lazy" className="h-full w-full object-cover" />
+                <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-ink/45 to-transparent" />
+                <div className="absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-xl bg-ink/70 px-3 py-2 text-white backdrop-blur">
+                  <Icon name="pin" className="h-4 w-4 text-brand-300" />
+                  <span className="text-[12.5px] font-semibold">İstanbul · Türkiye lokasyonu</span>
+                </div>
+              </div>
+              <div className="aspect-square overflow-hidden rounded-2xl border border-line">
+                <img src="/img/galeri/kabin-gpu.webp" alt="GPU hızlandırmalı sunucu kabini" width={800} height={800} loading="lazy" className="h-full w-full object-cover" />
+              </div>
+              <div className="aspect-square overflow-hidden rounded-2xl border border-line">
+                <img src="/img/galeri/kabin-acik.webp" alt="Sunucu kabini ve yapılandırılmış kablolama" width={800} height={800} loading="lazy" className="h-full w-full object-cover" />
+              </div>
+            </div>
+          </div>
+          <div className="order-1 lg:order-2">
+            <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Altyapımız</span>
+            <h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">Kendi veri merkezi altyapımız, Türkiye lokasyonunda</h2>
+            <p className="mt-4 tipo-metin text-body">Sunucularınız yedekli güç, hassas iklimlendirme ve sürekli izlenen bir ağ omurgasında çalışır. Donanımdan kablolamaya kadar altyapının tamamı bizim kontrolümüzde; bu da daha hızlı müdahale ve daha yüksek erişilebilirlik demek.</p>
+            <div className="mt-8 grid gap-x-6 gap-y-6 sm:grid-cols-2">
+              {ALTYAPI_OZ.map((f) => (
+                <div key={f.t} className="flex gap-3.5">
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-brandsoft text-brandtext"><Icon name={f.icon} className="h-5 w-5" /></span>
+                  <div className="min-w-0"><h3 className="text-[15.5px] font-bold text-strong">{f.t}</h3><p className="mt-1 text-[13.5px] leading-relaxed text-body">{f.d}</p></div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link href="/hakkimizda" className="inline-flex items-center gap-2 rounded-xl bg-ink px-5 py-3 text-[14.5px] font-semibold text-white transition-colors hover:bg-brand-600">Şirket profilimiz <Icon name="arrow" className="h-4 w-4" /></Link>
+              <Link href="/sunucu-barindirma" className="inline-flex items-center gap-2 rounded-xl border border-line bg-surface px-5 py-3 text-[14.5px] font-semibold text-strong transition-colors hover:border-brandline hover:text-brandtext">Veri merkezi çözümleri</Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -515,6 +542,8 @@ export default function HomePage() {
         </div>
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">{FEATURES.map((f) => (<div key={f.t} className="group rounded-2xl border border-line bg-surface p-6 shadow-[0_10px_40px_-20px_rgba(15,41,66,0.18)] hover:shadow-[0_24px_60px_-24px_rgba(20,184,166,0.35)] hover:-translate-y-1 transition-[transform,box-shadow,border-color,opacity] duration-300"><span className="grid h-12 w-12 place-items-center rounded-2xl bg-brandsoft text-brandtext group-hover:bg-brand-500 group-hover:text-white transition-colors"><Icon name={f.icon} /></span><h3 className="mt-5 text-lg font-bold text-strong">{f.t}</h3><p className="mt-2 text-[15px] leading-relaxed text-body">{f.d}</p></div>))}</div>
       </section>
+
+      <AltyapiVitrin />
 
       <PaketlerVitrin />
 
