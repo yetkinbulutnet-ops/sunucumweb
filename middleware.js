@@ -26,6 +26,13 @@ function rlYaz(res, deger) {
   return res;
 }
 
+// Ziyaretçi ülkesini istemciye aç (Umami yalnız TR'de yüklensin). httpOnly DEĞİL.
+function ulkeCerez(req, res) {
+  const ulke = req.headers.get('x-swb-ulke') || req.headers.get('cf-ipcountry') || '';
+  if (ulke) res.cookies.set('swb_ulke', ulke, { sameSite: 'lax', path: '/', maxAge: 1800 });
+  return res;
+}
+
 function yonlendir(req, yol, ip, devam) {
   const host = req.headers.get('host') || 'sunucumweb.com';
   const refid = refUret();
@@ -55,7 +62,7 @@ export async function middleware(req) {
     }
 
     const kart = req.cookies.get(COOKIE_ADI)?.value;
-    if (kart && (await kartGecerliMi(kart, ip, secret))) return NextResponse.next();
+    if (kart && (await kartGecerliMi(kart, ip, secret))) return ulkeCerez(req, NextResponse.next());
 
     const ua = req.headers.get('user-agent') || '';
     if (iyiBotMu(ua, asn) || muafBotUA(ua)) return NextResponse.next();
@@ -66,7 +73,7 @@ export async function middleware(req) {
       return rlYaz(yonlendir(req, GUVENLIK_YOLU, ip, devam), rl.deger);
     }
 
-    return rlYaz(NextResponse.next(), rl.deger);
+    return ulkeCerez(req, rlYaz(NextResponse.next(), rl.deger));
   } catch {
     return NextResponse.next();
   }
