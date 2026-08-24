@@ -15,7 +15,7 @@ import { YAZILIMLAR, YAZILIM_KATEGORILERI } from '@/content/site/yazilimlar';
 
 const SLIDES = [
   {
-    img: '/img/galeri/kabin-yogun.webp', imgAlt: 'SunucumWEB veri merkezinde sunucu kabinleri',
+    img: '/img/slider/hosting-veri-merkezi.webp', imgAlt: 'Modern veri merkezinde sunucu kabinleri sıraları',
     eyebrow: 'NVMe hosting · cPanel · İstanbul lokasyonu',
     pre: 'Siteniz için', hl: 'hızlı NVMe hosting', post: '',
     text: 'LiteSpeed önbelleği, cPanel, ücretsiz SSL ve günlük yedekle sitenizi dakikalar içinde yayına alın. Ücretsiz taşıma ve gerçek 7/24 destek dahil.',
@@ -24,7 +24,7 @@ const SLIDES = [
     rozet: ['Ücretsiz site taşıma', 'refresh'], stat: ['%99.9', 'Uptime'],
   },
   {
-    img: '/img/galeri/kabin-dellemc.webp', imgAlt: 'Kurumsal fiziksel dedicated sunucular',
+    img: '/img/slider/fiziksel-sunucu.webp', imgAlt: 'Kurumsal fiziksel dedicated sunucu rafı',
     eyebrow: 'Fiziksel sunucu · Intel Xeon · Tam donanım',
     pre: 'Gücün tamamı sizin:', hl: 'fiziksel sunucular', post: '',
     text: 'Intel Xeon işlemciler, NVMe diskler ve IPMI yönetimiyle tüm donanım yalnızca size ait. Komşusuz performans, tam root ve DDoS korumalı premium ağ.',
@@ -33,7 +33,7 @@ const SLIDES = [
     rozet: ['Tek kiracı, komşusuz', 'server'], stat: ['1 Gbps', 'Premium ağ'],
   },
   {
-    img: '/img/galeri/kabin-gpu.webp', imgAlt: 'GPU hızlandırmalı sunucu kabinleri',
+    img: '/img/slider/gpu-kart.webp', imgAlt: 'Yüksek performanslı GPU ekran kartı',
     eyebrow: 'GPU sunucu · NVIDIA · AI & render',
     pre: 'Yapay zeka ve render için', hl: 'GPU hızlandırma', post: '',
     text: 'NVIDIA GPU sunucularla model eğitimi, çıkarım ve 3B render iş yüklerinizi katlayın. CUDA hazır ortam, NVMe disk ve tam root erişimi dahil.',
@@ -42,7 +42,7 @@ const SLIDES = [
     rozet: ['CUDA hazır ortam', 'cpu'], stat: ['NVIDIA', 'GPU'],
   },
   {
-    img: '/img/galeri/kabin-anahtar.webp', imgAlt: 'Alan adınızı güvenceye alın',
+    img: '/img/slider/alan-adi-network.webp', imgAlt: 'Küresel ağ ve alan adı bağlantısı',
     eyebrow: 'Belgesiz .com.tr · AI destekli bulucu',
     pre: 'Belgesiz', hl: '.com.tr alan adı', post: '',
     text: 'Artık evrak yok: .com.tr alan adınızı belgesiz, dakikalar içinde tescil edin. Kararsızsanız yapay zeka destekli bulucumuz size en uygun ismi önersin.',
@@ -192,14 +192,14 @@ function Hero() {
 
           <div className="relative">
             <div aria-hidden className="absolute -inset-5 -z-10 rounded-[2.75rem] bg-brand-500/15 blur-[70px]" />
-            <div className="relative mx-auto aspect-[4/5] w-full max-w-sm">
+            <div className="relative mx-auto aspect-[4/3] w-full max-w-md">
               {SLIDES.map((sl, n) => (
                 <div
                   key={sl.img}
                   aria-hidden={n !== i}
                   className={`absolute inset-0 overflow-hidden rounded-3xl border border-white/10 shadow-[0_50px_100px_-40px_rgba(0,0,0,0.75)] transition-opacity duration-700 ease-out ${n === i ? 'opacity-100' : 'opacity-0'}`}
                 >
-                  <img src={sl.img} alt={sl.imgAlt} width={480} height={600} loading={n === 0 ? 'eager' : 'lazy'} fetchPriority={n === 0 ? 'high' : 'auto'} className="h-full w-full object-cover" />
+                  <img src={sl.img} alt={sl.imgAlt} width={800} height={600} loading={n === 0 ? 'eager' : 'lazy'} fetchPriority={n === 0 ? 'high' : 'auto'} className="h-full w-full object-cover" />
                   <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-transparent" />
                 </div>
               ))}
