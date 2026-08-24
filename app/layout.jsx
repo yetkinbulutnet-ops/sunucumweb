@@ -5,7 +5,7 @@ import { firmaSemasi } from '@/lib/semalar';
 import Sema from '@/components/site/Sema';
 
 const UMAMI_SRC = 'https://istatistik.yetkinweb.com/script.js';
-const UMAMI_ID = 'a20811f9-e3f2-4b49-a7a4-a7280eb57e1b';
+const UMAMI_ID = 'e2253ba7-0a0f-4696-8d27-e77254cc845d';
 
 const TAWK_SRC = 'https://embed.tawk.to/66b732520cca4f8a7a742f23/1i4tpp5dm';
 
