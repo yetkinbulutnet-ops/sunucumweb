@@ -156,8 +156,8 @@ function Hero() {
 
       <div className="relative mx-auto max-w-7xl px-5 lg:px-8 py-16 sm:py-20 lg:py-24">
         <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14">
-          <div key={i} className="min-w-0 animate-[fadeup_0.6s_ease-out]">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3.5 py-1.5 text-[12px] sm:text-[13px] font-semibold text-white backdrop-blur-sm">
+          <div key={i} className="min-w-0 animate-[fadeup_0.6s_ease-out] lg:flex lg:min-h-[460px] lg:flex-col lg:justify-center">
+            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3.5 py-1.5 text-[12px] sm:text-[13px] font-semibold text-white backdrop-blur-sm">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-300 opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-400" />
