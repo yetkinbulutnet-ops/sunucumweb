@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import {
   COOKIE_ADI, DATACENTER_ASN, BLOKLU_IP, BLOKLU_ASN,
-  GUVENLIK_YOLU, BLOK_YOLU, iyiBotMu, muafBotUA, kartGecerliMi, refUret,
+  GUVENLIK_YOLU, BLOK_YOLU, iyiBotMu, muafBotUA, kartGecerliMi, refUret, istemciIp,
 } from '@/lib/guvenlik';
 
 export const config = {
@@ -48,7 +48,7 @@ export async function middleware(req) {
     const secret = process.env.GUVENLIK_SECRET;
     if (!secret) return NextResponse.next();
 
-    const ip = req.headers.get('cf-connecting-ip') || '';
+    const ip = istemciIp((n) => req.headers.get(n));
 
     if ((ip && BLOKLU_IP.has(ip)) || BLOKLU_ASN.has(asn)) {
       return yonlendir(req, BLOK_YOLU, ip, null);

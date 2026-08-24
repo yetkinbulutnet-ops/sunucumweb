@@ -1,7 +1,7 @@
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import TurnstileGecis from './TurnstileGecis';
-import { refUret } from '@/lib/guvenlik';
+import { refUret, istemciIp } from '@/lib/guvenlik';
 
 export const dynamic = 'force-dynamic';
 
@@ -12,19 +12,17 @@ export const metadata = {
 
 export default async function GuvenlikSayfasi({ searchParams }) {
   const h = await headers();
-  const baslikIp =
-    h.get('cf-connecting-ip') ||
-    h.get('x-forwarded-for')?.split(',')[0]?.trim() ||
-    'bilinmiyor';
+  const baslikIp = istemciIp((n) => h.get(n));
 
   const sp = (await searchParams) || {};
   if (typeof sp.refid !== 'string' || typeof sp.ip !== 'string') {
     const refid = typeof sp.refid === 'string' ? sp.refid : refUret();
-    redirect(`/guvenlik?refid=${refid}&ip=${encodeURIComponent(baslikIp)}`);
+    redirect(`/guvenlik?refid=${refid}&ip=${encodeURIComponent(baslikIp || 'bilinmiyor')}`);
   }
 
   const refid = sp.refid;
-  const ip = sp.ip;
+  const urlIp = sp.ip;
+  const ip = baslikIp || (urlIp && urlIp !== 'bilinmiyor' ? urlIp : 'Tespit edilemedi');
   const hata = sp.hata === '1';
 
   return (

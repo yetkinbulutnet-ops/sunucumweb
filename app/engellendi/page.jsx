@@ -1,6 +1,6 @@
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { refUret } from '@/lib/guvenlik';
+import { refUret, istemciIp } from '@/lib/guvenlik';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,19 +11,17 @@ export const metadata = {
 
 export default async function EngellendiSayfasi({ searchParams }) {
   const h = await headers();
-  const baslikIp =
-    h.get('cf-connecting-ip') ||
-    h.get('x-forwarded-for')?.split(',')[0]?.trim() ||
-    'bilinmiyor';
+  const baslikIp = istemciIp((n) => h.get(n));
 
   const sp = (await searchParams) || {};
   if (typeof sp.refid !== 'string' || typeof sp.ip !== 'string') {
     const refid = typeof sp.refid === 'string' ? sp.refid : refUret();
-    redirect(`/engellendi?refid=${refid}&ip=${encodeURIComponent(baslikIp)}`);
+    redirect(`/engellendi?refid=${refid}&ip=${encodeURIComponent(baslikIp || 'bilinmiyor')}`);
   }
 
   const refid = sp.refid;
-  const ip = sp.ip;
+  const urlIp = sp.ip;
+  const ip = baslikIp || (urlIp && urlIp !== 'bilinmiyor' ? urlIp : 'Tespit edilemedi');
 
   return (
     <main className="relative flex min-h-[100dvh] w-full items-center justify-center overflow-hidden bg-page px-4 py-10">
