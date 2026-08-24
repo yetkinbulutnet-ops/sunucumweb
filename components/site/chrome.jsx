@@ -463,7 +463,7 @@ export function SiteHeader() {
       <header className={`relative transition-shadow duration-300 ${scrolled ? 'bg-surface/90 backdrop-blur-xl border-b border-line shadow-[0_4px_30px_-12px_rgba(15,41,66,0.15)]' : 'bg-surface border-b border-line'}`}>
         <div className="mx-auto max-w-7xl px-3 sm:px-5 lg:px-5 xl:px-8">
           <div className="flex h-[68px] lg:h-[74px] items-center justify-between gap-2 sm:gap-3">
-            <Link href="/" className="flex min-w-0 shrink items-center">
+            <Link href="/" className="flex shrink-0 items-center">
               <img src="/icon/logo.png" alt="SunucumWEB" className="h-7 w-auto max-w-[44vw] object-contain sm:h-8 sm:max-w-none dark:brightness-0 dark:invert" />
             </Link>
 
