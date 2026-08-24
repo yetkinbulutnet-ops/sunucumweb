@@ -1,5 +1,6 @@
 import { headers } from 'next/headers';
-import { yeniKimlik } from '@/lib/guvenlik';
+import { redirect } from 'next/navigation';
+import { refUret } from '@/lib/guvenlik';
 
 export const dynamic = 'force-dynamic';
 
@@ -8,13 +9,21 @@ export const metadata = {
   robots: { index: false, follow: false, nocache: true },
 };
 
-export default async function EngellendiSayfasi() {
+export default async function EngellendiSayfasi({ searchParams }) {
   const h = await headers();
-  const ip =
+  const baslikIp =
     h.get('cf-connecting-ip') ||
     h.get('x-forwarded-for')?.split(',')[0]?.trim() ||
     'bilinmiyor';
-  const kimlik = (h.get('cf-ray') || '').split('-')[0] || yeniKimlik();
+
+  const sp = (await searchParams) || {};
+  if (typeof sp.refid !== 'string' || typeof sp.ip !== 'string') {
+    const refid = typeof sp.refid === 'string' ? sp.refid : refUret();
+    redirect(`/engellendi?refid=${refid}&ip=${encodeURIComponent(baslikIp)}`);
+  }
+
+  const refid = sp.refid;
+  const ip = sp.ip;
 
   return (
     <main className="relative flex min-h-[100dvh] w-full items-center justify-center overflow-hidden bg-page px-4 py-10">
@@ -45,7 +54,7 @@ export default async function EngellendiSayfasi() {
           <h1 className="text-center text-[22px] font-bold leading-tight text-strong">Erişiminiz Engellendi</h1>
           <p className="mx-auto mt-2.5 max-w-[340px] text-center text-[14px] leading-relaxed text-body">
             Bağlantınız güvenlik politikalarımız gereği engellenmiştir. Bunun bir hata
-            olduğunu düşünüyorsanız aşağıdaki kimlik bilgileriyle bize ulaşın.
+            olduğunu düşünüyorsanız aşağıdaki bilgilerle bize ulaşın.
           </p>
 
           <a
@@ -65,8 +74,8 @@ export default async function EngellendiSayfasi() {
             </div>
             <div className="h-px bg-line" />
             <div className="flex items-center justify-between gap-3 px-4 py-2.5">
-              <span className="text-[12px] font-medium text-muted">Referans Kimliği</span>
-              <span className="font-mono text-[13px] font-medium text-strong">{kimlik}</span>
+              <span className="text-[12px] font-medium text-muted">Referans No</span>
+              <span className="font-mono text-[13px] font-medium text-strong">{refid}</span>
             </div>
           </div>
         </div>

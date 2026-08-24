@@ -5,7 +5,7 @@ import { TURNSTILE_SITE_KEY } from '@/lib/guvenlik-config';
 
 const SCRIPT_SRC = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
 
-export default function TurnstileGecis({ devam }) {
+export default function TurnstileGecis() {
   const kutuRef = useRef(null);
   const formRef = useRef(null);
   const [durum, setDurum] = useState('yukleniyor'); // yukleniyor | hazir | dogrulandi | gonderiliyor | hata
@@ -66,7 +66,6 @@ export default function TurnstileGecis({ devam }) {
       onSubmit={() => setDurum('gonderiliyor')}
       className="flex flex-col items-center gap-4"
     >
-      <input type="hidden" name="devam" value={devam} />
       <div ref={kutuRef} className="flex min-h-[68px] items-center justify-center" />
 
       <button

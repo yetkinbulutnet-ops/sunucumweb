@@ -1,6 +1,7 @@
 import { headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 import TurnstileGecis from './TurnstileGecis';
-import { yeniKimlik } from '@/lib/guvenlik';
+import { refUret } from '@/lib/guvenlik';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,15 +12,19 @@ export const metadata = {
 
 export default async function GuvenlikSayfasi({ searchParams }) {
   const h = await headers();
-  const ip =
+  const baslikIp =
     h.get('cf-connecting-ip') ||
     h.get('x-forwarded-for')?.split(',')[0]?.trim() ||
     'bilinmiyor';
-  const kimlik = (h.get('cf-ray') || '').split('-')[0] || yeniKimlik();
 
   const sp = (await searchParams) || {};
-  const devamRaw = typeof sp.devam === 'string' ? sp.devam : '/';
-  const devam = devamRaw.startsWith('/') && !devamRaw.startsWith('//') ? devamRaw : '/';
+  if (typeof sp.refid !== 'string' || typeof sp.ip !== 'string') {
+    const refid = typeof sp.refid === 'string' ? sp.refid : refUret();
+    redirect(`/guvenlik?refid=${refid}&ip=${encodeURIComponent(baslikIp)}`);
+  }
+
+  const refid = sp.refid;
+  const ip = sp.ip;
   const hata = sp.hata === '1';
 
   return (
@@ -61,10 +66,10 @@ export default async function GuvenlikSayfasi({ searchParams }) {
           )}
 
           <div className="mt-6">
-            <TurnstileGecis devam={devam} />
+            <TurnstileGecis />
           </div>
 
-          <ErisimBilgi ip={ip} kimlik={kimlik} />
+          <ErisimBilgi ip={ip} refid={refid} />
         </div>
 
         <p className="mt-5 text-center text-[12px] text-muted">
@@ -75,7 +80,7 @@ export default async function GuvenlikSayfasi({ searchParams }) {
   );
 }
 
-function ErisimBilgi({ ip, kimlik }) {
+function ErisimBilgi({ ip, refid }) {
   return (
     <div className="mt-6 overflow-hidden rounded-xl border border-line bg-page/70">
       <div className="flex items-center justify-between gap-3 px-4 py-2.5">
@@ -93,9 +98,9 @@ function ErisimBilgi({ ip, kimlik }) {
           <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
             <path d="M4 7V5a1 1 0 0 1 1-1h2M4 17v2a1 1 0 0 0 1 1h2M20 7V5a1 1 0 0 0-1-1h-2M20 17v2a1 1 0 0 1-1 1h-2" /><path d="M8 12h8" />
           </svg>
-          Oturum Kimliği
+          Referans No
         </span>
-        <span className="font-mono text-[13px] font-medium text-strong">{kimlik}</span>
+        <span className="font-mono text-[13px] font-medium text-strong">{refid}</span>
       </div>
     </div>
   );
