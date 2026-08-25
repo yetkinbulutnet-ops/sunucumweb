@@ -22,6 +22,7 @@ export const metadata = {
   },
   description: ACIKLAMA,
   applicationName: SITE_ADI,
+  verification: { google: 'AAHrMCYsk8_atqd1hP5DnFIb_sF_4LhHfn-EMfA4q8c' },
   icons: {
     icon: [
       { url: '/icon/favicon.png', sizes: '256x256', type: 'image/png' },
