@@ -8,7 +8,7 @@ import { dnsYolu } from '@/lib/dns-yol';
 
 export const dynamic = 'force-static';
 
-const YONLENDIRILEN = ['ticari-bilgiler', 'sozlesmeler', 'whois', 'isp-sunucu', 'abd-sunucu'];
+const YONLENDIRILEN = ['ticari-bilgiler', 'sozlesmeler', 'whois', 'isp-sunucu', 'abd-sunucu', 'gizlilik-sozlesmesi', 'iade-politikasi', 'kullanim-kosullari', 'kullanim-politikasi'];
 const ORNEK_ALANLAR = ['sunucumweb.com'];
 
 const SON_GUNCELLEME = new Date('2026-08-24');

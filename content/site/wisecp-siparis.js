@@ -14,6 +14,7 @@ export const WISECP_KATEGORI = {
 
 export const WISECP_PLAN = {
   'web-hosting': { 'cPanel Başlangıç': 'hosting/222', 'cPanel İdeal': 'hosting/223', 'cPanel Plus': 'hosting/224' },
+  'wordpress-hosting': { 'WP Başlangıç': 'hosting/222', 'WP İdeal': 'hosting/223', 'WP Plus': 'hosting/224' },
   'reseller-hosting': { 'Bronz Bayi': 'hosting/124', 'Silver Bayi': 'hosting/125', 'Gold Bayi': 'hosting/126', 'Platin Bayi': 'hosting/127' },
   'kurumsal-hosting': { 'Kurumsal Başlangıç': 'hosting/120', 'Kurumsal Standart': 'hosting/121', 'Kurumsal Plus+': 'hosting/122', 'Kurumsal Premium': 'hosting/123' },
   'sanal-sunucu': { 'TR - VDS 1': 'server/104', 'TR - VDS 2': 'server/105', 'TR - VDS 3': 'server/103', 'TR - VDS 4': 'server/106', 'TR - VDS 5': 'server/107', 'TR - VDS 6': 'server/108', 'TR - VDS 7': 'server/109', 'TR - VDS 8': 'server/189' },
