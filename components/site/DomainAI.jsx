@@ -314,7 +314,7 @@ export default function DomainAI() {
             <span className="hidden sm:inline"> Doğrudan sorgulayın.</span>
           </div>
           <form
-            onSubmit={(e) => { e.preventDefault(); window.location.href = 'https://my.sunucumweb.com'; }}
+            onSubmit={(e) => { e.preventDefault(); const d = dogrudan.trim(); if (!d) return; window.location.href = `https://my.sunucumweb.com/domain/register?domain=${encodeURIComponent(d)}`; }}
             className="flex flex-1 items-center gap-2 rounded-xl border border-white/15 bg-ink/40 p-1.5"
           >
             <span className="pl-2 text-slate-400"><Icon name="search" className="w-4 h-4" /></span>
@@ -405,7 +405,7 @@ export default function DomainAI() {
 
                         <div className="mt-4 flex items-center gap-2">
                           <a
-                            href="https://my.sunucumweb.com"
+                            href={`https://my.sunucumweb.com/domain/register?domain=${encodeURIComponent(i.domain)}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className={`inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-[13px] font-bold transition ${

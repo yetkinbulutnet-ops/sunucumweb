@@ -189,7 +189,7 @@ export default function DomainPage({ mode = 'register' }) {
               <span className="inline-flex items-center gap-2 rounded-full border border-brandline bg-brandsoft/80 px-3.5 py-1.5 text-[13px] font-semibold text-brandtext"><Icon name="globe" className="h-4 w-4" /> {c.eyebrow}</span>
               <h1 className="mt-5 tipo-dev font-extrabold tracking-tight text-strong text-balance">{c.title}</h1>
               <p className="mt-4 max-w-xl tipo-giris text-body">{c.text}</p>
-              <form onSubmit={(e) => { e.preventDefault(); window.location.href = 'https://my.sunucumweb.com'; }} className="mt-8">
+              <form onSubmit={(e) => { e.preventDefault(); const d = q.trim(); if (!d) return; window.location.href = `https://my.sunucumweb.com/domain/${mode === 'transfer' ? 'transfer' : 'register'}?domain=${encodeURIComponent(d)}`; }} className="mt-8">
                 <div className="flex items-center gap-2 rounded-2xl border border-line bg-surface p-2 shadow-[0_20px_50px_-25px_rgba(15,41,66,0.35)] transition focus-within:border-brand-400 focus-within:ring-4 focus-within:ring-brand-100">
                   <span className="pl-3 text-muted"><Icon name="search" className="h-5 w-5" /></span>
                   <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={c.ph} aria-label="Alan adı" className="min-w-0 flex-1 bg-transparent py-2.5 text-[15px] text-strong outline-none placeholder:text-muted" />
