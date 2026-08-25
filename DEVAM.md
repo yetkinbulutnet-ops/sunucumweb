@@ -4,6 +4,17 @@ Sırayla oku: `DEVAM.md` (bu dosya) → `TASARIM-KURALLARI.md` → `lib/engines/
 
 Son güncelleme: 2026-08-25. **Canlı: https://sunucumweb.com (`.17`). ⚠️ ARTIK SADECE 2 ortam: local + `.17` — cPanel/Docker demoları BIRAKILDI (golden rule). Deploy yalnızca `.17`, kaynak-sız.**
 
+**Son iş (2026-08-25) — Hız Testi: sonuç paylaşımı (24s TTL) + ölçüm doğruluğu (`.17`):** Kullanıcı istedi:
+paylaşa basınca o sonuca özel link oto-kopyalansın, 24 saat geçici saklansın (oto-sil), doğruluk max olsun.
+**Paylaşım:** yeni `app/api/araclar/hiz-testi/sonuc` — POST sonucu `.hiz-sonuc/<id>.json`'a yazar (24s TTL, her
+POST'ta lazy temizlik, **IP SAKLANMAZ** — sadece hız+ISP+ülke+tarih), GET `?id=` ile getirir. Paylaş → POST →
+`${origin}/araclar/hiz-testi?s=<id>` linki panoya **oto-kopya** (clipboard + execCommand fallback). `?s=` ile
+açılınca paylaşılan sonuç gösterilir (banner "ISP · X önce" + 'Kendi Testini Yap'). `lib/hiz.js` ortak ISP/ülke
+helper (bilgi+sonuç kullanır). Store `.hiz-sonuc` **gitignore + tar-exclude**; deploy'da diff-delete'ten korunur
+(bir kez oluşunca before.txt'te → otomatik). **Doğruluk:** TCP slow-start **ısınma penceresi (1.2s) ölçümden
+HARİÇ** (steady-state throughput → hızlı hatları olduğundan düşük göstermez), indirme **6 paralel akış**, ping
+14 örnek (ilk 3 ısınma atılır). Doğrulandı (CF): POST/GET çalışıyor, gerçek ISP (AS-TURKSAT) saklanıyor, geçersiz id 404.
+
 **Son iş (2026-08-25) — Hız Testi Ookla tarzı SADELEŞTİRİLDİ + yazı-üst-üste bug'ı çözüldü (`.17`):**
 Kullanıcı "tasarım bok gibi, yazılar üst üste, daha basit şık ookla gibi olsun" dedi. **KÖK NEDEN:** merkez
 sayı HTML overlay'di (sabit 52px), tik yazıları SVG'ydi (viewBox ile ölçekli) → mobilde ölçek uyuşmazlığı →

@@ -19,3 +19,6 @@ yarn-error.log*
 # Yerel yedekler ve gecici klasorler
 _backup_precolor/
 _backup_pretheme/
+
+# Hiz testi paylasim store (runtime, 24s TTL)
+.hiz-sonuc/

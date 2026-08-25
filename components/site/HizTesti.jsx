@@ -6,17 +6,19 @@ const UC = {
   ping: '/api/araclar/hiz-testi/ping',
   indir: '/api/araclar/hiz-testi/indir',
   yukle: '/api/araclar/hiz-testi/yukle',
+  sonuc: '/api/araclar/hiz-testi/sonuc',
 };
 
-const PING_SAYI = 12;
-const INDIRME_SURE = 8000;
-const INDIRME_AKIS = 4;
+const PING_SAYI = 14;
+const ISINMA = 1200;
+const INDIRME_SURE = 9000;
+const INDIRME_AKIS = 6;
 const INDIRME_ISTEK = 30 * 1024 * 1024;
-const INDIRME_TAVAN = 120 * 1024 * 1024;
-const YUKLEME_SURE = 7000;
+const INDIRME_TAVAN = 150 * 1024 * 1024;
+const YUKLEME_SURE = 8000;
 const YUKLEME_AKIS = 3;
 const YUKLEME_BLOK = 6 * 1024 * 1024;
-const YUKLEME_TAVAN = 60 * 1024 * 1024;
+const YUKLEME_TAVAN = 70 * 1024 * 1024;
 
 const NOKTALAR = [0, 1, 5, 10, 30, 50, 100, 250, 500, 1000];
 const SEG = NOKTALAR.length - 1;
@@ -63,6 +65,37 @@ const sayiYaz = (n) => {
 };
 const msYaz = (n) => (Number.isFinite(n) && n > 0 ? String(Math.round(n)) : '—');
 
+function oncekiZaman(iso) {
+  const t = new Date(iso).getTime();
+  if (!t) return '';
+  const dk = Math.max(0, Math.round((Date.now() - t) / 60000));
+  if (dk < 1) return 'az önce';
+  if (dk < 60) return `${dk} dakika önce`;
+  return `${Math.round(dk / 60)} saat önce`;
+}
+
+async function kopyala(metin) {
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(metin);
+      return true;
+    }
+  } catch {}
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = metin;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    const ok = document.execCommand('copy');
+    document.body.removeChild(ta);
+    return ok;
+  } catch {
+    return false;
+  }
+}
+
 function rastgeleBuffer(boyut) {
   const buf = new Uint8Array(boyut);
   for (let i = 0; i < boyut; i += 65536) crypto.getRandomValues(buf.subarray(i, Math.min(i + 65536, boyut)));
@@ -81,8 +114,8 @@ async function olcPing(signal, canli) {
       continue;
     }
     const dt = performance.now() - t0;
-    if (i >= 2) olcumler.push(dt);
-    canli(((i + 1) / PING_SAYI) * 100, olcumler.length ? Math.min(...olcumler) : dt);
+    if (i >= 3) olcumler.push(dt);
+    canli(olcumler.length ? Math.min(...olcumler) : dt);
   }
   if (!olcumler.length) return { ping: 0, jitter: 0 };
   const ping = Math.min(...olcumler);
@@ -149,17 +182,27 @@ function akisOlc({ disSignal, sure, tavan, akisSayisi, isci, canli }) {
   disSignal.addEventListener('abort', durdur, { once: true });
   const zaman = setTimeout(() => ic.abort(), sure);
   let bayt = 0;
+  let olcBayt = 0;
+  let olcBas = 0;
   const t0 = performance.now();
   const ekle = (n) => {
     bayt += n;
+    const now = performance.now();
+    if (now - t0 >= ISINMA) {
+      if (!olcBas) olcBas = now;
+      olcBayt += n;
+    }
     if (bayt >= tavan) ic.abort();
   };
   const tik = setInterval(() => {
-    const sn = (performance.now() - t0) / 1000;
-    canli(Math.min(99, (sn / (sure / 1000)) * 100), mbps(bayt, sn));
+    const now = performance.now();
+    canli(olcBas ? mbps(olcBayt, (now - olcBas) / 1000) : mbps(bayt, (now - t0) / 1000));
   }, 120);
   return Promise.all(Array.from({ length: akisSayisi }, () => isci(ic.signal, ekle)))
-    .then(() => mbps(bayt, (performance.now() - t0) / 1000))
+    .then(() => {
+      const now = performance.now();
+      return olcBas && now - olcBas > 250 ? mbps(olcBayt, (now - olcBas) / 1000) : mbps(bayt, (now - t0) / 1000);
+    })
     .finally(() => {
       clearInterval(tik);
       clearTimeout(zaman);
@@ -184,6 +227,7 @@ const IkonJitter = <svg viewBox="0 0 24 24" {...cizgi} className="h-4 w-4"><path
 const IkonSunucu = <svg viewBox="0 0 24 24" {...cizgi} className="h-4 w-4"><path d="M4 5h16v6H4zM4 13h16v6H4zM8 8h.01M8 16h.01" /></svg>;
 const IkonAg = <svg viewBox="0 0 24 24" {...cizgi} className="h-4 w-4"><path d="M5 12a10 10 0 0 1 14 0M8.5 15.5a5 5 0 0 1 7 0M12 19h.01" /></svg>;
 const IkonPaylas = <svg viewBox="0 0 24 24" {...cizgi} className="h-[18px] w-[18px]"><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4M18 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM6 14.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM18 21a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" /></svg>;
+const IkonLink = <svg viewBox="0 0 24 24" {...cizgi} className="h-[14px] w-[14px]"><path d="M9 15l6-6M10.5 6.5l1-1a4 4 0 0 1 6 6l-1 1M13.5 17.5l-1 1a4 4 0 0 1-6-6l1-1" /></svg>;
 
 const Gauge = memo(function Gauge({ needleRef, arcRef, numRef, birim, calisiyor, idle, baslaEtiket, onBasla }) {
   return (
@@ -299,7 +343,8 @@ export default function HizTesti() {
   const [hata, setHata] = useState('');
   const [bilgi, setBilgi] = useState(null);
   const [azalt, setAzalt] = useState(false);
-  const [kopyalandi, setKopyalandi] = useState(false);
+  const [paylasilan, setPaylasilan] = useState(null);
+  const [paylasDurum, setPaylasDurum] = useState('');
 
   const iptalRef = useRef(null);
   const hedefRef = useRef(0);
@@ -324,6 +369,26 @@ export default function HizTesti() {
       .then((r) => r.json())
       .then((d) => {
         if (!iptal) setBilgi(d);
+      })
+      .catch(() => {});
+    return () => {
+      iptal = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    let iptal = false;
+    const id = new URLSearchParams(window.location.search).get('s');
+    if (!id) return;
+    fetch(`${UC.sonuc}?id=${encodeURIComponent(id)}`, { cache: 'no-store' })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (iptal || !d?.ok) return;
+        setSonuc({ indirme: d.indirme, yukleme: d.yukleme, ping: d.ping, jitter: d.jitter });
+        setPaylasilan({ saglayici: d.saglayici, ulke: d.ulke, tarih: d.tarih });
+        fazRef.current = 'bitti';
+        setAsama('bitti');
+        hedefRef.current = d.indirme || 0;
       })
       .catch(() => {});
     return () => {
@@ -360,10 +425,11 @@ export default function HizTesti() {
     iptalRef.current = ac;
     setHata('');
     setSonuc(null);
-    setKopyalandi(false);
+    setPaylasilan(null);
+    setPaylasDurum('');
     hedefRef.current = 0;
     gosRef.current = 0;
-    const canli = (yuzde, deger) => {
+    const canli = (deger) => {
       hedefRef.current = deger;
     };
     const faz = (f) => {
@@ -410,32 +476,61 @@ export default function HizTesti() {
 
   const iptal = useCallback(() => iptalRef.current?.abort(), []);
 
-  const paylas = useCallback(async () => {
-    if (!sonuc || sonuc.indirme == null) return;
-    const metin = `İnternet hız testim — İndirme ${sayiYaz(sonuc.indirme)} Mbit/s · Yükleme ${sayiYaz(sonuc.yukleme)} Mbit/s · Ping ${msYaz(sonuc.ping)} ms`;
-    const url = 'https://sunucumweb.com/araclar/hiz-testi';
+  const kendiTestin = useCallback(() => {
+    setPaylasilan(null);
+    setSonuc(null);
+    setHata('');
+    setPaylasDurum('');
+    fazRef.current = 'hazir';
+    setAsama('hazir');
+    hedefRef.current = 0;
+    gosRef.current = 0;
     try {
-      if (navigator.share) {
-        await navigator.share({ title: 'SunucumWEB Hız Testi', text: metin, url });
+      window.history.replaceState(null, '', '/araclar/hiz-testi');
+    } catch {}
+  }, []);
+
+  const paylas = useCallback(async () => {
+    if (!sonuc || sonuc.indirme == null || paylasDurum === 'gonderiliyor') return;
+    setPaylasDurum('gonderiliyor');
+    try {
+      const r = await fetch(UC.sonuc, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ indirme: sonuc.indirme, yukleme: sonuc.yukleme, ping: sonuc.ping, jitter: sonuc.jitter }),
+      });
+      const d = await r.json().catch(() => null);
+      if (d?.ok && d.id) {
+        const link = `${window.location.origin}/araclar/hiz-testi?s=${d.id}`;
+        const ok = await kopyala(link);
+        setPaylasDurum(ok ? 'kopyalandi' : 'hata');
+        setTimeout(() => setPaylasDurum(''), 2600);
         return;
       }
-    } catch {
-      return;
-    }
-    try {
-      await navigator.clipboard.writeText(`${metin} — ${url}`);
-      setKopyalandi(true);
-      setTimeout(() => setKopyalandi(false), 2200);
     } catch {}
-  }, [sonuc]);
+    setPaylasDurum('hata');
+    setTimeout(() => setPaylasDurum(''), 2600);
+  }, [sonuc, paylasDurum]);
 
   const birim = asama === 'ping' ? 'ms' : 'Mbit/s';
+  const durumMetni = paylasilan ? 'Paylaşılan sonuç' : DURUM[asama];
+  const paylasEtiket =
+    paylasDurum === 'gonderiliyor' ? 'Hazırlanıyor…' : paylasDurum === 'kopyalandi' ? 'Link kopyalandı' : paylasDurum === 'hata' ? 'Tekrar deneyin' : 'Sonucu Paylaş';
 
   return (
     <div>
       {hata && (
         <div className="mb-6 rounded-2xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-center text-[14px] font-medium text-rose-600 dark:text-rose-400">
           {hata}
+        </div>
+      )}
+
+      {paylasilan && (
+        <div className="mb-6 flex flex-wrap items-center justify-center gap-2 rounded-2xl border border-brandline bg-brandsoft px-4 py-3 text-center text-[13px] font-semibold text-brandtext">
+          {IkonLink}
+          <span>Paylaşılan sonuç</span>
+          {paylasilan.saglayici ? <span className="text-brandtext/80">· {paylasilan.saglayici}</span> : null}
+          {paylasilan.tarih ? <span className="text-brandtext/60">· {oncekiZaman(paylasilan.tarih)}</span> : null}
         </div>
       )}
 
@@ -451,7 +546,7 @@ export default function HizTesti() {
           onBasla={baslat}
         />
 
-        <div className="mt-5 h-6 text-[14px] font-semibold text-muted">{DURUM[asama]}</div>
+        <div className="mt-5 h-6 text-[14px] font-semibold text-muted">{durumMetni}</div>
 
         <div className="mt-3 flex min-h-[48px] flex-wrap items-center justify-center gap-3">
           {calisiyor && (
@@ -463,7 +558,17 @@ export default function HizTesti() {
               İptal
             </button>
           )}
-          {asama === 'bitti' && (
+          {asama === 'bitti' && paylasilan && (
+            <button
+              type="button"
+              onClick={kendiTestin}
+              data-umami-event="Hız Testi Başlat"
+              className="inline-flex h-12 items-center justify-center rounded-full bg-brand-500 px-8 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-600"
+            >
+              Kendi Testini Yap
+            </button>
+          )}
+          {asama === 'bitti' && !paylasilan && (
             <>
               <button
                 type="button"
@@ -481,7 +586,7 @@ export default function HizTesti() {
                   className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-brandline bg-brandsoft px-6 text-[15px] font-bold text-brandtext transition-colors hover:bg-brand-500 hover:text-white"
                 >
                   {IkonPaylas}
-                  {kopyalandi ? 'Kopyalandı' : 'Sonucu Paylaş'}
+                  {paylasEtiket}
                 </button>
               )}
             </>
@@ -500,15 +605,15 @@ export default function HizTesti() {
         <BilgiSatir ikon={IkonSunucu} etiket="Sunucu" ad="SunucumWEB" alt={`Test sunucusu${bilgi?.ulke ? ` · ${bilgi.ulke}` : ' · Türkiye'}`} />
         <BilgiSatir
           ikon={IkonAg}
-          etiket="Sağlayıcınız"
-          ad={bilgi ? bilgi.saglayici || bilgi.asn || 'Bilinmiyor' : 'Algılanıyor…'}
-          alt={[bilgi?.ip, bilgi?.ulke].filter(Boolean).join(' · ') || null}
+          etiket={paylasilan ? 'Bağlantı' : 'Sağlayıcınız'}
+          ad={paylasilan ? paylasilan.saglayici || 'Bilinmiyor' : bilgi ? bilgi.saglayici || bilgi.asn || 'Bilinmiyor' : 'Algılanıyor…'}
+          alt={paylasilan ? paylasilan.ulke || null : [bilgi?.ip, bilgi?.ulke].filter(Boolean).join(' · ') || null}
         />
       </div>
 
       <p className="mt-6 text-center text-[13px] leading-relaxed text-muted">
-        Ölçüm, SunucumWEB sunucusuna karşı gerçek zamanlı yapılır ve bağlantınızın anlık durumuna göre değişebilir.
-        Test, hızınıza bağlı olarak birkaç yüz MB'a kadar veri kullanabilir.
+        Ölçüm, SunucumWEB sunucusuna karşı çoklu bağlantıyla yapılır; en doğru sonuç için kablolu bağlantı kullanın
+        ve arka planda indirme/yükleme olmasın. Paylaştığınız sonuç 24 saat saklanır, sonra otomatik silinir.
       </p>
     </div>
   );
