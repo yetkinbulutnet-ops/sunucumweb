@@ -3,13 +3,11 @@ export const URUN_PLANLARI = {
     { name: "cPanel Başlangıç", sub: "Yeni başlayanlar için ideal", oldPrice: "69,99", discount: "%20", price: 49.9, popular: false, feats: ["1 Adet Site", "10 GB SSD Disk Alanı", "Limitsiz Trafik", "5 Adet E-Posta Adresi", "2 Adet Subdomain", "2 Adet MySQL Veritabanı", "2 Core CPU", "2 GB RAM"] },
     { name: "cPanel İdeal", sub: "Geliştiriciler için özel", oldPrice: "89,99", discount: "%20", price: 79.9, popular: false, feats: ["3 Adet Site", "30 GB SSD Disk Alanı", "Limitsiz Trafik", "10 Adet E-Posta Adresi", "5 Adet Subdomain", "5 Adet MySQL Veritabanı", "4 Core CPU", "4 GB RAM"] },
     { name: "cPanel Plus", sub: "İleri Düzey İşler için", oldPrice: "109,99", discount: "%25", price: 99.99, popular: true, feats: ["5 Adet Site", "50 GB SSD Disk Alanı", "Limitsiz Trafik", "15 Adet E-Posta Adresi", "10 Adet Subdomain", "10 Adet MySQL Veritabanı", "6 Core CPU", "6 GB RAM"] },
-    { name: "cPanel Pro", sub: "Profesyoneller için", oldPrice: "129,90", discount: "%20", price: 119.9, popular: false, feats: ["10 Adet Site", "100 GB SSD Disk Alanı", "Limitsiz Trafik", "Limitsiz E-Posta Adresi", "Limitsiz Subdomain", "Limitsiz MySQL Veritabanı", "8 Core CPU", "8 GB RAM"] },
   ],
   "wordpress-hosting": [
     { name: "WP Başlangıç", sub: "Yeni başlayanlar için ideal", oldPrice: "69,99", discount: "%20", price: 49.9, popular: false, feats: ["1 Adet Site", "10 GB SSD Disk Alanı", "Limitsiz Trafik", "5 Adet E-Posta Adresi", "2 Adet Subdomain", "2 Adet MySQL Veritabanı", "2 Core CPU", "2 GB RAM"] },
     { name: "WP İdeal", sub: "Geliştiriciler için özel", oldPrice: "89,99", discount: "%20", price: 79.9, popular: false, feats: ["3 Adet Site", "30 GB SSD Disk Alanı", "Limitsiz Trafik", "10 Adet E-Posta Adresi", "5 Adet Subdomain", "5 Adet MySQL Veritabanı", "4 Core CPU", "4 GB RAM"] },
     { name: "WP Plus", sub: "İleri Düzey İşler için", oldPrice: "109,99", discount: "%25", price: 99.99, popular: true, feats: ["5 Adet Site", "50 GB SSD Disk Alanı", "Limitsiz Trafik", "15 Adet E-Posta Adresi", "10 Adet Subdomain", "10 Adet MySQL Veritabanı", "6 Core CPU", "6 GB RAM"] },
-    { name: "WP Pro", sub: "Profesyoneller için", oldPrice: "129,90", discount: "%20", price: 119.9, popular: false, feats: ["10 Adet Site", "100 GB SSD Disk Alanı", "Limitsiz Trafik", "Limitsiz E-Posta Adresi", "Limitsiz Subdomain", "Limitsiz MySQL Veritabanı", "8 Core CPU", "8 GB RAM"] },
   ],
   "reseller-hosting": [
     { name: "Bronz Bayi", sub: "Yeni başlayanlar için ideal", oldPrice: "189,90", discount: "%20", price: 149.9, popular: false, feats: ["10 Adet Site", "25 GB SSD Disk Alanı", "Limitsiz Trafik", "Limitsiz E-Posta Adresi", "Limitsiz Subdomain", "Limitsiz MySQL Veritabanı", "2 Core CPU", "2 GB RAM"] },
