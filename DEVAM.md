@@ -2,10 +2,51 @@
 
 Sırayla oku: `DEVAM.md` (bu dosya) → `TASARIM-KURALLARI.md` → `lib/engines/README.md` → `TASIMA.md`.
 
-Son güncelleme: 2026-08-23. Çalışma ağacı temiz, her şey `main` dalında ve canlıda.
-Demo: https://sunucumweb.demo.yetkin.web.tr (arama motorlarına kapalı)
+Son güncelleme: 2026-08-25. **Canlı: https://sunucumweb.com (`.17`). ⚠️ ARTIK SADECE 2 ortam: local + `.17` — cPanel/Docker demoları BIRAKILDI (golden rule). Deploy yalnızca `.17`, kaynak-sız.**
 
-**Son iş (2026-08-23, commit `875553e`):** 8 iş bitti, canlıdan doğrulandı.
+**Son iş (2026-08-25) — SEO crawler muafiyeti CANLI (`.17`):** SEO checker'lar (Seobility ekran
+görüntüsü) Hetzner/AWS/OVH gibi datacenter IP'lerinden taradığı için güvenlik geçidine takılıp
+`/guvenlik` challenge sayfasını analiz ediyordu (Seobility on-page %0, meta %0). Çözüm: `lib/guvenlik.js`
+`SEO_ARAC_UA_RE` — Seobility/Ahrefs/Semrush/Moz(dotbot,rogerbot)/Majestic/Screaming Frog/SISTRIX/
+DataForSEO/SE Ranking/WebPageTest vs. UA ile challenge'dan muaf; `muafBotUA() = MUAF_UA_RE || SEO_ARAC_UA_RE`.
+Hard-block (BLOKLU) muafiyetten önce olduğu için kötü ASN taklit etse de engelli kalır. Doğrulandı:
+Seobility/Ahrefs/ScreamingFrog 200 gerçek sayfa, Chrome+datacenter hâlâ 302→/guvenlik. CF purge gerekmez.
+
+**Son iş (2026-08-25) — IndexNow oto-ping CANLI (`.17`):** `app/api/indexnow/route.js` (GET tam-sitemap
+ping + POST `{urls:[...]}` hedefli/CMS) + `lib/indexnow.js` (`siteHaritasiUrlleri` kendi `/sitemap.xml`'ini
+`127.0.0.1:PORT`'tan çekip `<loc>` parse eder — **kaynak-sız uyumlu**, `getManifest` runtime'da çağrılmaz;
+`indexNowGonder` → `api.indexnow.org` toplu POST, host/keyLocation `SITE_URL`'den). Auth
+`INDEXNOW_TOKEN`||`CRON_TOKEN` (`x-cron-token`/`?key=`), token'sız **401**, `SITE_INDEXABLE!=1` no-op.
+Dedup `.next/BUILD_ID` (yeni build=1 ping, reboot/crash=ping yok; `?zorla=1` zorlar). **Oto-tetik:** systemd
+drop-in `/etc/systemd/system/sunucumweb.service.d/indexnow.conf` `ExecStartPost` → her deploy restart'ında
+ping. **CF purge gerekmez** (dinamik `no-store`, `cf-cache-status: DYNAMIC`). Doğrulandı: 82 URL gönderildi
+(`ok:true`), dedup + 401 + ana sayfa 200. Detay: memory `sunucumweb-son-durum` "INDEXNOW OTO-PING".
+
+**Son iş (2026-08-24, tasarım listesi — YEREL, henüz deploy edilmedi):** Kullanıcının 5 maddelik
+tasarım listesi bitti, `localhost:3000`'de 320–1920 taşmasız doğrulandı. cPanel deploy ile canlıya çıkacak.
+1. **Ürün hero'ları ürüne özel** (`ProductPage.jsx`): donanım ürünleri (VDS/Premium/Dedicated/GPU/
+   Barındırma/IP) gerçek görselini premium çerçevede + yüzen spec çipleriyle; hosting ürünleri fotoğraf
+   yerine "canlı site + performans paneli" (tarayıcı mockup + LiteSpeed/uptime). Ürüne özel vurgu tonu
+   (`HERO_TON`, dekoratif translucent glow — koyu modda güvenli) + artık kullanılan `heroStats`.
+   Yeni bileşenler: `HeroVisual`/`DonanimGorsel`/`HostingGorsel`. `HERO_GORSEL` map.
+2. **Ana sayfa hero slider yenilendi** (`HomePage.jsx` `Hero`+`SLIDES`): demo içerik/stok görsel gitti.
+   Full-bleed yerine **split hero** — koyu markalı zemin (grid+glow) + solda somut gerçek metin
+   (NVMe/cPanel/root/DDoS/WHOIS) + sağda **gerçek veri merkezi fotoğrafı** (`/img/galeri/*.webp`,
+   About'ta beğenilen portre foto'lar, aspect-[4/5] çerçeve, crossfade). Mobilde de görünür (copy→foto).
+   Rotasyon/dokunma/dots mantığı korundu. Eski `/img/slider/*.jpg` artık kullanılmıyor.
+3. **Ana sayfa kurumsallık** (`HomePage.jsx` `AltyapiVitrin`): gerçek galeri foto'larıyla (kabin-dellemc/
+   gpu/acik) "Altyapımız" bölümü — Tier-3/7-24 NOC/yedekli omurga/İstanbul rozeti. Neden↔Paketler arası.
+4. **Alan adı ölü alanları** (`DomainPage.jsx`): dar ortalı hero → iki kolon. Sağda mode'a göre
+   `SonucKart` (register: canlı uygunluk listesi) / `TransferKart` (transfer durumu adımları).
+5. **Site geneli kurumsal görseller**: 2/3 üzerinden gerçek foto'lar (hero + AltyapiVitrin + ürün
+   hero'ları) eklendi. Not: yeni gerçek 16:9 foto gelirse full-bleed hero'ya da dönülebilir.
+
+**Bonus (kaynağında düzeltildi):** 320px'te TÜM sitede gizli header taşması varmış (logo+sağ küme
+sığmıyordu, `scrollWidth 347>320`). `chrome.jsx` SiteHeader: logo `max-w-[44vw] sm:max-w-none`, base
+padding `px-3`, gap `gap-2 sm:gap-3`. Artık 320'de her sayfa temiz. **Not:** dev'de `html.dark` hidrasyon
+uyarısı + Tawk `i18next` hatası ÖNCEDEN VARDI, benim değişikliklerimle ilgisi yok (theme no-flash scripti).
+
+**Önceki iş (2026-08-23, commit `875553e`):** 8 iş bitti, canlıdan doğrulandı.
 1. **Footer üstü Atatürk sözü + imza** — `chrome.jsx` `AtaturkSoz` (SiteShell'de AltyapiSerit
    ile SiteFooter arası). "Hayatta en hakiki mürşit ilimdir, fendir." + `public/img/ataturk-imza.webp`.
    İmza BEYAZ webp; `invert dark:invert-0` → light'ta siyah, dark'ta beyaz (iki modda da görünür).
