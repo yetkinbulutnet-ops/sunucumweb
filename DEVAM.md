@@ -4,6 +4,14 @@ Sırayla oku: `DEVAM.md` (bu dosya) → `TASARIM-KURALLARI.md` → `lib/engines/
 
 Son güncelleme: 2026-08-25. **Canlı: https://sunucumweb.com (`.17`). ⚠️ ARTIK SADECE 2 ortam: local + `.17` — cPanel/Docker demoları BIRAKILDI (golden rule). Deploy yalnızca `.17`, kaynak-sız.**
 
+**Son iş (2026-08-25) — Hız Testi tasarımı: kullanıcı görsel seçeneklerden A'yı seçti (`.17`):** Kullanıcı gauge'ı
+defalarca beğenmedi ("bok gibi", "yazılar üst üste", "kötü duruyor"). Tahmin etmeyi bırakıp `mcp visualize show_widget`
+ile **3 sade tasarım** (A kadran / B büyük-rakam / C çubuklar) görsel sunuldu; kullanıcı **A (sade yarım-daire kadran)**
+seçti. `HizTesti.jsx` gauge artık **tek 180° yay + kocaman merkez rakam (SVG → ölçekli, çakışma yok)**; tik/ibre/disk/
+merkez-buton YOK; **Başla butonu yayın altında**. Helper `yariYol(kesir)` semicircle path + `hizKesir()` non-linear
+0–1 fraksiyon. Ölçüm/paylaşım/doğruluk DEĞİŞMEDİ. Doğrulandı (CF): 200, `?v=hash` CSS. **DERS: aynı bileşeni 4x
+tahminle yapmaktansa görsel seçenek sun, kullanıcı seçsin.**
+
 **Son iş (2026-08-25) — Hız Testi: sonuç paylaşımı (24s TTL) + ölçüm doğruluğu (`.17`):** Kullanıcı istedi:
 paylaşa basınca o sonuca özel link oto-kopyalansın, 24 saat geçici saklansın (oto-sil), doğruluk max olsun.
 **Paylaşım:** yeni `app/api/araclar/hiz-testi/sonuc` — POST sonucu `.hiz-sonuc/<id>.json`'a yazar (24s TTL, her

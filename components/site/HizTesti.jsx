@@ -22,42 +22,26 @@ const YUKLEME_TAVAN = 70 * 1024 * 1024;
 
 const NOKTALAR = [0, 1, 5, 10, 30, 50, 100, 250, 500, 1000];
 const SEG = NOKTALAR.length - 1;
-const ETIKETLI = new Set([0, 10, 50, 100, 500, 1000]);
-const BASLA = 135;
-const YAY = 270;
-const MERKEZ = 120;
-const R_ARC = 86;
 
 const rad = (d) => (d * Math.PI) / 180;
-const nokta = (aci, r) => [MERKEZ + r * Math.cos(rad(BASLA + aci)), MERKEZ + r * Math.sin(rad(BASLA + aci))];
 
-function hizAci(hiz) {
+function hizKesir(hiz) {
   if (hiz <= 0) return 0;
-  if (hiz >= NOKTALAR[SEG]) return YAY;
+  if (hiz >= NOKTALAR[SEG]) return 1;
   let i = 0;
   while (i < SEG && hiz > NOKTALAR[i + 1]) i++;
   const t = (hiz - NOKTALAR[i]) / (NOKTALAR[i + 1] - NOKTALAR[i]);
-  return ((i + t) / SEG) * YAY;
+  return (i + t) / SEG;
 }
 
-function yayPath(aci) {
-  const [x0, y0] = nokta(0, R_ARC);
-  const [x1, y1] = nokta(Math.max(0.01, aci), R_ARC);
-  const buyuk = aci > 180 ? 1 : 0;
-  return `M ${x0.toFixed(2)} ${y0.toFixed(2)} A ${R_ARC} ${R_ARC} 0 ${buyuk} 1 ${x1.toFixed(2)} ${y1.toFixed(2)}`;
+function yariYol(kesir) {
+  const k = Math.max(0.0001, Math.min(1, kesir));
+  const aci = (1 - k) * 180;
+  const x = 100 + 80 * Math.cos(rad(aci));
+  const y = 100 - 80 * Math.sin(rad(aci));
+  return `M 20 100 A 80 80 0 0 1 ${x.toFixed(2)} ${y.toFixed(2)}`;
 }
 
-const TIKLER = NOKTALAR.map((v, i) => {
-  const a = (i / SEG) * YAY;
-  const [ix, iy] = nokta(a, R_ARC);
-  const [ox, oy] = nokta(a, R_ARC + 6);
-  const [lx, ly] = nokta(a, R_ARC + 17);
-  return { v, ix, iy, ox, oy, lx, ly };
-});
-
-const DOT0 = nokta(0, R_ARC);
-
-const etiketYaz = (v) => (v >= 1000 ? '1K' : String(v));
 const mbps = (b, s) => (s > 0 ? (b * 8) / s / 1e6 : 0);
 const sayiYaz = (n) => {
   if (!Number.isFinite(n)) return '—';
@@ -231,40 +215,15 @@ const IkonAg = <svg viewBox="0 0 24 24" {...cizgi} className="h-4 w-4"><path d="
 const IkonPaylas = <svg viewBox="0 0 24 24" {...cizgi} className="h-[18px] w-[18px]"><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4M18 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM6 14.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM18 21a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" /></svg>;
 const IkonLink = <svg viewBox="0 0 24 24" {...cizgi} className="h-[14px] w-[14px]"><path d="M9 15l6-6M10.5 6.5l1-1a4 4 0 0 1 6 6l-1 1M13.5 17.5l-1 1a4 4 0 0 1-6-6l1-1" /></svg>;
 
-const Gauge = memo(function Gauge({ dotRef, arcRef, numRef, birim, calisiyor, idle, baslaEtiket, onBasla }) {
+const Gauge = memo(function Gauge({ arcRef, numRef, birim }) {
   return (
-    <div className="relative aspect-square w-[min(80vw,320px)]">
-      <div
-        aria-hidden
-        className={`pointer-events-none absolute inset-8 rounded-full bg-brand-400/20 blur-2xl transition-opacity duration-500 ${calisiyor ? 'opacity-100' : 'opacity-0'}`}
-      />
-      <svg viewBox="0 0 240 240" className="relative h-full w-full">
-        <path d={yayPath(YAY)} fill="none" strokeWidth="9" strokeLinecap="round" className="stroke-line" />
-        <path ref={arcRef} d={yayPath(0.01)} fill="none" strokeWidth="9" strokeLinecap="round" className="stroke-brand-500" />
-        {TIKLER.map((t) => (
-          <g key={t.v}>
-            <line x1={t.ix} y1={t.iy} x2={t.ox} y2={t.oy} strokeWidth="1.5" strokeLinecap="round" className="stroke-muted" opacity="0.45" />
-            {ETIKETLI.has(t.v) && (
-              <text x={t.lx} y={t.ly} textAnchor="middle" dominantBaseline="middle" className="fill-muted" fontSize="9" fontWeight="600">
-                {etiketYaz(t.v)}
-              </text>
-            )}
-          </g>
-        ))}
-        <circle ref={dotRef} cx={DOT0[0].toFixed(2)} cy={DOT0[1].toFixed(2)} r="6" className="fill-brand-500 stroke-surface" strokeWidth="3" />
-        <text ref={numRef} x={MERKEZ} y="116" textAnchor="middle" dominantBaseline="middle" className="fill-strong" fontSize="42" fontWeight="800" style={{ fontVariantNumeric: 'tabular-nums' }}>0</text>
-        <text x={MERKEZ} y="146" textAnchor="middle" dominantBaseline="middle" className="fill-muted" fontSize="12" fontWeight="600">{birim}</text>
+    <div className="w-[min(88vw,360px)]">
+      <svg viewBox="0 0 200 114" className="w-full">
+        <path d={yariYol(1)} fill="none" strokeWidth="12" strokeLinecap="round" className="stroke-line" />
+        <path ref={arcRef} d={yariYol(0.0001)} fill="none" strokeWidth="12" strokeLinecap="round" className="stroke-brand-500" />
+        <text ref={numRef} x="100" y="74" textAnchor="middle" dominantBaseline="middle" className="fill-strong" fontSize="42" fontWeight="800" style={{ fontVariantNumeric: 'tabular-nums' }}>0</text>
+        <text x="100" y="99" textAnchor="middle" dominantBaseline="middle" className="fill-muted" fontSize="12" fontWeight="600">{birim}</text>
       </svg>
-      {idle && (
-        <button
-          type="button"
-          onClick={onBasla}
-          data-umami-event="Hız Testi Başlat"
-          className="absolute left-1/2 top-1/2 grid aspect-square w-[38%] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-brand-500 text-[17px] font-extrabold uppercase tracking-wide text-white shadow-lg shadow-brand-500/30 transition-[transform,background-color] hover:scale-[1.04] hover:bg-brand-600"
-        >
-          {baslaEtiket}
-        </button>
-      )}
     </div>
   );
 });
@@ -349,7 +308,6 @@ export default function HizTesti() {
   const hedefRef = useRef(0);
   const gosRef = useRef(0);
   const fazRef = useRef('hazir');
-  const dotRef = useRef(null);
   const arcRef = useRef(null);
   const numRef = useRef(null);
 
@@ -406,13 +364,7 @@ export default function HizTesti() {
       const v = gosRef.current;
       const pingFaz = fazRef.current === 'ping';
       if (numRef.current) numRef.current.textContent = pingFaz ? (v > 0 ? String(Math.round(v)) : '0') : sayiYaz(v);
-      const a = pingFaz ? 0 : hizAci(v);
-      if (arcRef.current) arcRef.current.setAttribute('d', yayPath(a));
-      if (dotRef.current) {
-        const [dx, dy] = nokta(a, R_ARC);
-        dotRef.current.setAttribute('cx', dx.toFixed(2));
-        dotRef.current.setAttribute('cy', dy.toFixed(2));
-      }
+      if (arcRef.current) arcRef.current.setAttribute('d', yariYol(pingFaz ? 0 : hizKesir(v)));
       raf = requestAnimationFrame(dongu);
     };
     raf = requestAnimationFrame(dongu);
@@ -538,20 +490,21 @@ export default function HizTesti() {
       )}
 
       <div className="flex flex-col items-center">
-        <Gauge
-          dotRef={dotRef}
-          arcRef={arcRef}
-          numRef={numRef}
-          birim={birim}
-          calisiyor={calisiyor}
-          idle={idle}
-          baslaEtiket={asama === 'hata' ? 'Tekrar' : 'Başla'}
-          onBasla={baslat}
-        />
+        <Gauge arcRef={arcRef} numRef={numRef} birim={birim} />
 
-        <div className="mt-5 h-6 text-[14px] font-semibold text-muted">{durumMetni}</div>
+        <div className="mt-1 h-6 text-[14px] font-semibold text-muted">{durumMetni}</div>
 
-        <div className="mt-3 flex min-h-[48px] flex-wrap items-center justify-center gap-3">
+        <div className="mt-5 flex min-h-[56px] flex-wrap items-center justify-center gap-3">
+          {idle && (
+            <button
+              type="button"
+              onClick={baslat}
+              data-umami-event="Hız Testi Başlat"
+              className="inline-flex h-14 items-center justify-center rounded-full bg-brand-500 px-12 text-[16px] font-bold text-white shadow-lg shadow-brand-500/25 transition-[transform,background-color] hover:scale-[1.03] hover:bg-brand-600"
+            >
+              {asama === 'hata' ? 'Tekrar Dene' : 'Başla'}
+            </button>
+          )}
           {calisiyor && (
             <button
               type="button"
