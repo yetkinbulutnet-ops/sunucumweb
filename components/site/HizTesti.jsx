@@ -55,6 +55,8 @@ const TIKLER = NOKTALAR.map((v, i) => {
   return { v, ix, iy, ox, oy, lx, ly };
 });
 
+const DOT0 = nokta(0, R_ARC);
+
 const etiketYaz = (v) => (v >= 1000 ? '1K' : String(v));
 const mbps = (b, s) => (s > 0 ? (b * 8) / s / 1e6 : 0);
 const sayiYaz = (n) => {
@@ -229,7 +231,7 @@ const IkonAg = <svg viewBox="0 0 24 24" {...cizgi} className="h-4 w-4"><path d="
 const IkonPaylas = <svg viewBox="0 0 24 24" {...cizgi} className="h-[18px] w-[18px]"><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4M18 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM6 14.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM18 21a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" /></svg>;
 const IkonLink = <svg viewBox="0 0 24 24" {...cizgi} className="h-[14px] w-[14px]"><path d="M9 15l6-6M10.5 6.5l1-1a4 4 0 0 1 6 6l-1 1M13.5 17.5l-1 1a4 4 0 0 1-6-6l1-1" /></svg>;
 
-const Gauge = memo(function Gauge({ needleRef, arcRef, numRef, birim, calisiyor, idle, baslaEtiket, onBasla }) {
+const Gauge = memo(function Gauge({ dotRef, arcRef, numRef, birim, calisiyor, idle, baslaEtiket, onBasla }) {
   return (
     <div className="relative aspect-square w-[min(80vw,320px)]">
       <div
@@ -249,12 +251,9 @@ const Gauge = memo(function Gauge({ needleRef, arcRef, numRef, birim, calisiyor,
             )}
           </g>
         ))}
-        <g ref={needleRef} transform={`rotate(-135 ${MERKEZ} ${MERKEZ})`} className="text-brand-500">
-          <path d={`M ${MERKEZ} 46 L ${MERKEZ + 3} ${MERKEZ} L ${MERKEZ - 3} ${MERKEZ} Z`} fill="currentColor" />
-        </g>
-        <circle cx={MERKEZ} cy={MERKEZ} r="47" className="fill-surface stroke-line" strokeWidth="1.5" />
-        <text ref={numRef} x={MERKEZ} y="112" textAnchor="middle" dominantBaseline="middle" className="fill-strong" fontSize="40" fontWeight="800" style={{ fontVariantNumeric: 'tabular-nums' }}>0</text>
-        <text x={MERKEZ} y="140" textAnchor="middle" dominantBaseline="middle" className="fill-muted" fontSize="12" fontWeight="600">{birim}</text>
+        <circle ref={dotRef} cx={DOT0[0].toFixed(2)} cy={DOT0[1].toFixed(2)} r="6" className="fill-brand-500 stroke-surface" strokeWidth="3" />
+        <text ref={numRef} x={MERKEZ} y="116" textAnchor="middle" dominantBaseline="middle" className="fill-strong" fontSize="42" fontWeight="800" style={{ fontVariantNumeric: 'tabular-nums' }}>0</text>
+        <text x={MERKEZ} y="146" textAnchor="middle" dominantBaseline="middle" className="fill-muted" fontSize="12" fontWeight="600">{birim}</text>
       </svg>
       {idle && (
         <button
@@ -350,7 +349,7 @@ export default function HizTesti() {
   const hedefRef = useRef(0);
   const gosRef = useRef(0);
   const fazRef = useRef('hazir');
-  const needleRef = useRef(null);
+  const dotRef = useRef(null);
   const arcRef = useRef(null);
   const numRef = useRef(null);
 
@@ -408,8 +407,12 @@ export default function HizTesti() {
       const pingFaz = fazRef.current === 'ping';
       if (numRef.current) numRef.current.textContent = pingFaz ? (v > 0 ? String(Math.round(v)) : '0') : sayiYaz(v);
       const a = pingFaz ? 0 : hizAci(v);
-      if (needleRef.current) needleRef.current.setAttribute('transform', `rotate(${(a - 135).toFixed(2)} ${MERKEZ} ${MERKEZ})`);
       if (arcRef.current) arcRef.current.setAttribute('d', yayPath(a));
+      if (dotRef.current) {
+        const [dx, dy] = nokta(a, R_ARC);
+        dotRef.current.setAttribute('cx', dx.toFixed(2));
+        dotRef.current.setAttribute('cy', dy.toFixed(2));
+      }
       raf = requestAnimationFrame(dongu);
     };
     raf = requestAnimationFrame(dongu);
@@ -536,7 +539,7 @@ export default function HizTesti() {
 
       <div className="flex flex-col items-center">
         <Gauge
-          needleRef={needleRef}
+          dotRef={dotRef}
           arcRef={arcRef}
           numRef={numRef}
           birim={birim}
