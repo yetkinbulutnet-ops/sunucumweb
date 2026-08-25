@@ -8,6 +8,7 @@ const UMAMI_SRC = 'https://istatistik.yetkinweb.com/script.js';
 const UMAMI_ID = 'e2253ba7-0a0f-4696-8d27-e77254cc845d';
 const TAWK_SRC = 'https://embed.tawk.to/66b732520cca4f8a7a742f23/1i4tpp5dm';
 const GTM_ID = 'GTM-NLL9997R';
+const GA4_ID = 'G-5Q4DXNVM9N';
 
 export default function SiteScripts() {
   const yol = usePathname();
@@ -34,6 +35,11 @@ export default function SiteScripts() {
           style={{ display: 'none', visibility: 'hidden' }}
         />
       </noscript>
+
+      <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`} strategy="afterInteractive" />
+      <Script id="ga4" strategy="afterInteractive">
+        {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA4_ID}');`}
+      </Script>
 
       {trMi && (
         <Script src={UMAMI_SRC} data-website-id={UMAMI_ID} strategy="afterInteractive" />
