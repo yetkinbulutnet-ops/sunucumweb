@@ -4,6 +4,16 @@ Sırayla oku: `DEVAM.md` (bu dosya) → `TASARIM-KURALLARI.md` → `lib/engines/
 
 Son güncelleme: 2026-08-25. **Canlı: https://sunucumweb.com (`.17`). ⚠️ ARTIK SADECE 2 ortam: local + `.17` — cPanel/Docker demoları BIRAKILDI (golden rule). Deploy yalnızca `.17`, kaynak-sız.**
 
+**Son iş (2026-08-25) — Hız Testi speedtest.net tarzı YENİDEN TASARLANDI (`.17`):** Kullanıcı ilk sürümü
+"çok temel" buldu → **animasyonlu ibreli gauge** (rAF ile DOM-sürümlü ibre/yay/sayı, non-linear skala 0–1000
++ tick/etiket + renkli yay dolumu + aktifken glow; **`memo`** ile faz-içi `setIlerleme` re-render'ında rAF
+sahipliği korunur — yoksa React JSX ilk değerine sıfırlar; `gosRef` ile temiz faz sıfırlama), **sayaç
+animasyonlu** metrik kartları (`useSayac` easing), **bağlanılan sunucu + sağlayıcı paneli** (yeni uç
+`app/api/araclar/hiz-testi/bilgi`: CF `x-swb-asn` → Team Cymru `AS{n}.asn.cymru.com` TXT ile ISP adı +
+`cf-connecting-ip` + `cf-ipcountry`; dış API/anahtar YOK, `saglayiciTemizle` " - " dedupe), **Sonucu Paylaş**
+(Web Share API + pano fallback). `transition-all` YOK. `HizTesti.jsx` baştan yazıldı. Doğrulandı (CF):
+sağlayıcı gerçek algılandı (AS-TURKSAT / 94.54.60.9 / TR), sayfa 200, indir 1MB octet-stream.
+
 **Son iş (2026-08-25) — İnternet Hız Testi aracı CANLI (`.17`):** Araçlar'a 8. araç. `/araclar/hiz-testi`
 statik server sayfa (DNS gibi `[arac]` generateStaticParams'tan dışlandı, kendi route'u) + client widget
 `components/site/HizTesti.jsx`: paralel indirme (`fetch`+stream reader), yükleme (`XMLHttpRequest`
