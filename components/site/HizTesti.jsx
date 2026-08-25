@@ -20,10 +20,11 @@ const YUKLEME_TAVAN = 60 * 1024 * 1024;
 
 const NOKTALAR = [0, 1, 5, 10, 30, 50, 100, 250, 500, 1000];
 const SEG = NOKTALAR.length - 1;
+const ETIKETLI = new Set([0, 10, 50, 100, 500, 1000]);
 const BASLA = 135;
 const YAY = 270;
 const MERKEZ = 120;
-const R_YAY = 92;
+const R_ARC = 86;
 
 const rad = (d) => (d * Math.PI) / 180;
 const nokta = (aci, r) => [MERKEZ + r * Math.cos(rad(BASLA + aci)), MERKEZ + r * Math.sin(rad(BASLA + aci))];
@@ -38,17 +39,17 @@ function hizAci(hiz) {
 }
 
 function yayPath(aci) {
-  const [x0, y0] = nokta(0, R_YAY);
-  const [x1, y1] = nokta(Math.max(0.01, aci), R_YAY);
+  const [x0, y0] = nokta(0, R_ARC);
+  const [x1, y1] = nokta(Math.max(0.01, aci), R_ARC);
   const buyuk = aci > 180 ? 1 : 0;
-  return `M ${x0.toFixed(2)} ${y0.toFixed(2)} A ${R_YAY} ${R_YAY} 0 ${buyuk} 1 ${x1.toFixed(2)} ${y1.toFixed(2)}`;
+  return `M ${x0.toFixed(2)} ${y0.toFixed(2)} A ${R_ARC} ${R_ARC} 0 ${buyuk} 1 ${x1.toFixed(2)} ${y1.toFixed(2)}`;
 }
 
 const TIKLER = NOKTALAR.map((v, i) => {
   const a = (i / SEG) * YAY;
-  const [ix, iy] = nokta(a, R_YAY);
-  const [ox, oy] = nokta(a, R_YAY + 7);
-  const [lx, ly] = nokta(a, R_YAY + 19);
+  const [ix, iy] = nokta(a, R_ARC);
+  const [ox, oy] = nokta(a, R_ARC + 6);
+  const [lx, ly] = nokta(a, R_ARC + 17);
   return { v, ix, iy, ox, oy, lx, ly };
 });
 
@@ -166,53 +167,61 @@ function akisOlc({ disSignal, sure, tavan, akisSayisi, isci, canli }) {
     });
 }
 
-const FAZ_BASLIK = {
-  hazir: 'Başlamaya hazır',
+const DURUM = {
+  hazir: 'Ölçmeye hazır',
   ping: 'Gecikme ölçülüyor',
-  indirme: 'İndirme hızı',
-  yukleme: 'Yükleme hızı',
-  bitti: 'İndirme hızınız',
+  indirme: 'İndirme ölçülüyor',
+  yukleme: 'Yükleme ölçülüyor',
+  bitti: 'Test tamamlandı',
   hata: 'Bir sorun oldu',
 };
 
-const svgTemel = 'h-4 w-4';
 const cizgi = { fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round' };
-const IkonIndir = <svg viewBox="0 0 24 24" {...cizgi} className={svgTemel}><path d="M12 4v12M6 11l6 6 6-6M5 20h14" /></svg>;
-const IkonYukle = <svg viewBox="0 0 24 24" {...cizgi} className={svgTemel}><path d="M12 20V8M6 13l6-6 6 6M5 4h14" /></svg>;
-const IkonPing = <svg viewBox="0 0 24 24" {...cizgi} className={svgTemel}><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 8v4l3 2" /></svg>;
-const IkonJitter = <svg viewBox="0 0 24 24" {...cizgi} className={svgTemel}><path d="M3 12h3l2-6 4 12 2-6h4" /></svg>;
+const IkonIndir = <svg viewBox="0 0 24 24" {...cizgi} className="h-4 w-4"><path d="M12 4v12M6 11l6 6 6-6M5 20h14" /></svg>;
+const IkonYukle = <svg viewBox="0 0 24 24" {...cizgi} className="h-4 w-4"><path d="M12 20V8M6 13l6-6 6 6M5 4h14" /></svg>;
+const IkonPing = <svg viewBox="0 0 24 24" {...cizgi} className="h-4 w-4"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 8v4l3 2" /></svg>;
+const IkonJitter = <svg viewBox="0 0 24 24" {...cizgi} className="h-4 w-4"><path d="M3 12h3l2-6 4 12 2-6h4" /></svg>;
 const IkonSunucu = <svg viewBox="0 0 24 24" {...cizgi} className="h-4 w-4"><path d="M4 5h16v6H4zM4 13h16v6H4zM8 8h.01M8 16h.01" /></svg>;
 const IkonAg = <svg viewBox="0 0 24 24" {...cizgi} className="h-4 w-4"><path d="M5 12a10 10 0 0 1 14 0M8.5 15.5a5 5 0 0 1 7 0M12 19h.01" /></svg>;
 const IkonPaylas = <svg viewBox="0 0 24 24" {...cizgi} className="h-[18px] w-[18px]"><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4M18 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM6 14.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM18 21a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" /></svg>;
 
-const Gauge = memo(function Gauge({ needleRef, arcRef, numRef, birim, fazBaslik, calisiyor }) {
+const Gauge = memo(function Gauge({ needleRef, arcRef, numRef, birim, calisiyor, idle, baslaEtiket, onBasla }) {
   return (
-    <div className="relative aspect-square w-[min(82vw,340px)]">
+    <div className="relative aspect-square w-[min(80vw,320px)]">
       <div
         aria-hidden
-        className={`pointer-events-none absolute inset-6 rounded-full bg-brand-400/25 blur-2xl transition-opacity duration-500 ${calisiyor ? 'opacity-100' : 'opacity-0'}`}
+        className={`pointer-events-none absolute inset-8 rounded-full bg-brand-400/20 blur-2xl transition-opacity duration-500 ${calisiyor ? 'opacity-100' : 'opacity-0'}`}
       />
       <svg viewBox="0 0 240 240" className="relative h-full w-full">
-        <path d={yayPath(YAY)} fill="none" strokeWidth="10" strokeLinecap="round" className="stroke-line" />
-        <path ref={arcRef} d={yayPath(0.01)} fill="none" strokeWidth="10" strokeLinecap="round" className="stroke-brand-500" />
+        <path d={yayPath(YAY)} fill="none" strokeWidth="9" strokeLinecap="round" className="stroke-line" />
+        <path ref={arcRef} d={yayPath(0.01)} fill="none" strokeWidth="9" strokeLinecap="round" className="stroke-brand-500" />
         {TIKLER.map((t) => (
           <g key={t.v}>
-            <line x1={t.ix} y1={t.iy} x2={t.ox} y2={t.oy} strokeWidth="1.5" strokeLinecap="round" className="stroke-muted" opacity="0.5" />
-            <text x={t.lx} y={t.ly} textAnchor="middle" dominantBaseline="middle" className="fill-muted" fontSize="8.5" fontWeight="600">
-              {etiketYaz(t.v)}
-            </text>
+            <line x1={t.ix} y1={t.iy} x2={t.ox} y2={t.oy} strokeWidth="1.5" strokeLinecap="round" className="stroke-muted" opacity="0.45" />
+            {ETIKETLI.has(t.v) && (
+              <text x={t.lx} y={t.ly} textAnchor="middle" dominantBaseline="middle" className="fill-muted" fontSize="9" fontWeight="600">
+                {etiketYaz(t.v)}
+              </text>
+            )}
           </g>
         ))}
-        <g ref={needleRef} transform={`rotate(-135 ${MERKEZ} ${MERKEZ})`} className="text-brand-600 dark:text-brand-400">
-          <path d={`M ${MERKEZ} 40 L ${MERKEZ + 3.2} ${MERKEZ} L ${MERKEZ - 3.2} ${MERKEZ} Z`} fill="currentColor" />
+        <g ref={needleRef} transform={`rotate(-135 ${MERKEZ} ${MERKEZ})`} className="text-brand-500">
+          <path d={`M ${MERKEZ} 46 L ${MERKEZ + 3} ${MERKEZ} L ${MERKEZ - 3} ${MERKEZ} Z`} fill="currentColor" />
         </g>
-        <circle cx={MERKEZ} cy={MERKEZ} r="8" className="fill-surface stroke-brand-500" strokeWidth="3" />
+        <circle cx={MERKEZ} cy={MERKEZ} r="47" className="fill-surface stroke-line" strokeWidth="1.5" />
+        <text ref={numRef} x={MERKEZ} y="112" textAnchor="middle" dominantBaseline="middle" className="fill-strong" fontSize="40" fontWeight="800" style={{ fontVariantNumeric: 'tabular-nums' }}>0</text>
+        <text x={MERKEZ} y="140" textAnchor="middle" dominantBaseline="middle" className="fill-muted" fontSize="12" fontWeight="600">{birim}</text>
       </svg>
-      <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center pt-6 text-center">
-        <span className="text-[12px] font-bold uppercase tracking-[0.12em] text-brandtext">{fazBaslik}</span>
-        <span ref={numRef} className="mt-1 text-[52px] font-extrabold leading-none tabular-nums text-strong">0</span>
-        <span className="mt-1 text-[13px] font-semibold text-muted">{birim}</span>
-      </div>
+      {idle && (
+        <button
+          type="button"
+          onClick={onBasla}
+          data-umami-event="Hız Testi Başlat"
+          className="absolute left-1/2 top-1/2 grid aspect-square w-[38%] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-brand-500 text-[17px] font-extrabold uppercase tracking-wide text-white shadow-lg shadow-brand-500/30 transition-[transform,background-color] hover:scale-[1.04] hover:bg-brand-600"
+        >
+          {baslaEtiket}
+        </button>
+      )}
     </div>
   );
 });
@@ -254,7 +263,7 @@ const Metrik = memo(function Metrik({ etiket, deger, birim, ikon, aktif, azalt }
   return (
     <div
       className={`min-w-0 rounded-2xl border bg-surface p-4 [transition:border-color_300ms,box-shadow_300ms] ${
-        aktif ? 'border-brand-500 ring-1 ring-brand-500/40 shadow-lg shadow-brand-500/10' : 'border-line'
+        aktif ? 'border-brand-500 shadow-lg shadow-brand-500/10' : 'border-line'
       }`}
     >
       <div className="flex min-w-0 items-center gap-2">
@@ -286,7 +295,6 @@ function BilgiSatir({ ikon, etiket, ad, alt }) {
 
 export default function HizTesti() {
   const [asama, setAsama] = useState('hazir');
-  const [ilerleme, setIlerleme] = useState(0);
   const [sonuc, setSonuc] = useState(null);
   const [hata, setHata] = useState('');
   const [bilgi, setBilgi] = useState(null);
@@ -344,6 +352,7 @@ export default function HizTesti() {
   }, [azalt]);
 
   const calisiyor = asama === 'ping' || asama === 'indirme' || asama === 'yukleme';
+  const idle = asama === 'hazir' || asama === 'hata';
 
   const baslat = useCallback(async () => {
     if (calisiyor) return;
@@ -356,14 +365,12 @@ export default function HizTesti() {
     gosRef.current = 0;
     const canli = (yuzde, deger) => {
       hedefRef.current = deger;
-      setIlerleme(yuzde);
     };
     const faz = (f) => {
       fazRef.current = f;
       setAsama(f);
       hedefRef.current = 0;
       gosRef.current = 0;
-      setIlerleme(0);
     };
     try {
       faz('ping');
@@ -384,13 +391,11 @@ export default function HizTesti() {
 
       fazRef.current = 'bitti';
       setAsama('bitti');
-      setIlerleme(100);
       hedefRef.current = indirme;
     } catch {
       if (ac.signal.aborted) {
         fazRef.current = 'hazir';
         setAsama('hazir');
-        setIlerleme(0);
         hedefRef.current = 0;
         gosRef.current = 0;
       } else {
@@ -429,23 +434,27 @@ export default function HizTesti() {
   return (
     <div>
       {hata && (
-        <div className="mb-6 rounded-2xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-[14px] font-medium text-rose-600 dark:text-rose-400">
+        <div className="mb-6 rounded-2xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-center text-[14px] font-medium text-rose-600 dark:text-rose-400">
           {hata}
         </div>
       )}
 
       <div className="flex flex-col items-center">
-        <Gauge needleRef={needleRef} arcRef={arcRef} numRef={numRef} birim={birim} fazBaslik={FAZ_BASLIK[asama]} calisiyor={calisiyor} />
+        <Gauge
+          needleRef={needleRef}
+          arcRef={arcRef}
+          numRef={numRef}
+          birim={birim}
+          calisiyor={calisiyor}
+          idle={idle}
+          baslaEtiket={asama === 'hata' ? 'Tekrar' : 'Başla'}
+          onBasla={baslat}
+        />
 
-        <div className="mt-3 h-1.5 w-[min(82vw,340px)] max-w-full overflow-hidden rounded-full bg-line">
-          <div
-            className="h-full rounded-full bg-brand-500 [transition:width_140ms_linear] motion-reduce:transition-none"
-            style={{ width: `${calisiyor || asama === 'bitti' ? ilerleme : 0}%` }}
-          />
-        </div>
+        <div className="mt-5 h-6 text-[14px] font-semibold text-muted">{DURUM[asama]}</div>
 
-        <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
-          {calisiyor ? (
+        <div className="mt-3 flex min-h-[48px] flex-wrap items-center justify-center gap-3">
+          {calisiyor && (
             <button
               type="button"
               onClick={iptal}
@@ -453,31 +462,34 @@ export default function HizTesti() {
             >
               İptal
             </button>
-          ) : (
-            <button
-              type="button"
-              onClick={baslat}
-              data-umami-event="Hız Testi Başlat"
-              className="inline-flex h-12 items-center justify-center rounded-full bg-brand-500 px-9 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-600"
-            >
-              {asama === 'bitti' ? 'Tekrar Test Et' : asama === 'hata' ? 'Tekrar Dene' : 'Testi Başlat'}
-            </button>
           )}
-          {asama === 'bitti' && sonuc?.indirme != null && (
-            <button
-              type="button"
-              onClick={paylas}
-              data-umami-event="Hız Testi Paylaş"
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-brandline bg-brandsoft px-6 text-[15px] font-bold text-brandtext transition-colors hover:bg-brand-500 hover:text-white"
-            >
-              {IkonPaylas}
-              {kopyalandi ? 'Kopyalandı' : 'Sonucu Paylaş'}
-            </button>
+          {asama === 'bitti' && (
+            <>
+              <button
+                type="button"
+                onClick={baslat}
+                data-umami-event="Hız Testi Başlat"
+                className="inline-flex h-12 items-center justify-center rounded-full bg-brand-500 px-8 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-600"
+              >
+                Tekrar Test Et
+              </button>
+              {sonuc?.indirme != null && (
+                <button
+                  type="button"
+                  onClick={paylas}
+                  data-umami-event="Hız Testi Paylaş"
+                  className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-brandline bg-brandsoft px-6 text-[15px] font-bold text-brandtext transition-colors hover:bg-brand-500 hover:text-white"
+                >
+                  {IkonPaylas}
+                  {kopyalandi ? 'Kopyalandı' : 'Sonucu Paylaş'}
+                </button>
+              )}
+            </>
           )}
         </div>
       </div>
 
-      <div className="mt-9 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+      <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         <Metrik etiket="İndirme" deger={sonuc?.indirme ?? null} birim="Mbit/s" ikon={IkonIndir} aktif={asama === 'indirme'} azalt={azalt} />
         <Metrik etiket="Yükleme" deger={sonuc?.yukleme ?? null} birim="Mbit/s" ikon={IkonYukle} aktif={asama === 'yukleme'} azalt={azalt} />
         <Metrik etiket="Ping" deger={sonuc?.ping ?? null} birim="ms" ikon={IkonPing} aktif={asama === 'ping'} azalt={azalt} />

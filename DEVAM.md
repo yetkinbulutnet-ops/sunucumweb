@@ -4,6 +4,15 @@ Sırayla oku: `DEVAM.md` (bu dosya) → `TASARIM-KURALLARI.md` → `lib/engines/
 
 Son güncelleme: 2026-08-25. **Canlı: https://sunucumweb.com (`.17`). ⚠️ ARTIK SADECE 2 ortam: local + `.17` — cPanel/Docker demoları BIRAKILDI (golden rule). Deploy yalnızca `.17`, kaynak-sız.**
 
+**Son iş (2026-08-25) — Hız Testi Ookla tarzı SADELEŞTİRİLDİ + yazı-üst-üste bug'ı çözüldü (`.17`):**
+Kullanıcı "tasarım bok gibi, yazılar üst üste, daha basit şık ookla gibi olsun" dedi. **KÖK NEDEN:** merkez
+sayı HTML overlay'di (sabit 52px), tik yazıları SVG'ydi (viewBox ile ölçekli) → mobilde ölçek uyuşmazlığı →
+üst üste binme. **ÇÖZÜM:** merkez sayı+birim **SVG `<text>`'e taşındı** (her şey birlikte ölçeklenir, çakışma
+imkânsız). Ayrıca: ortada **BAŞLA butonu** (Ookla imzası, idle/hata'da), ibre merkez `fill-surface` diskin
+arkasından çıkıyor, tik SAYILARI azaltıldı [0,10,50,100,500,1K] (marklar hepsinde), progress bar KALDIRILDI,
+tek satır durum metni. `HizTesti.jsx` baştan yazıldı. Doğrulandı (CF): sayfa 200, `tailwind.css?v=hash` yeni
+SVG sınıflarını (`fill-strong`/`stroke-brand-500`) taşıyor → CF purge GEREKMEDİ (versiyonlama çalışıyor).
+
 **Son iş (2026-08-25) — Hız Testi speedtest.net tarzı YENİDEN TASARLANDI (`.17`):** Kullanıcı ilk sürümü
 "çok temel" buldu → **animasyonlu ibreli gauge** (rAF ile DOM-sürümlü ibre/yay/sayı, non-linear skala 0–1000
 + tick/etiket + renkli yay dolumu + aktifken glow; **`memo`** ile faz-içi `setIlerleme` re-render'ında rAF
