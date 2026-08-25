@@ -1,12 +1,24 @@
+import fs from 'fs';
+import path from 'path';
+import crypto from 'crypto';
 import { NO_FLASH_SCRIPT } from '@/lib/engines/theme';
 import { SITE_URL, SITE_ADI } from '@/lib/seo';
 import { firmaSemasi } from '@/lib/semalar';
 import Sema from '@/components/site/Sema';
 import SiteScripts from '@/components/site/SiteScripts';
 
+function cssSurumu() {
+  try {
+    const buf = fs.readFileSync(path.join(process.cwd(), 'public', 'tailwind.css'));
+    return crypto.createHash('md5').update(buf).digest('hex').slice(0, 10);
+  } catch {
+    return '1';
+  }
+}
+
 const CSS = [
   '/assets/_external/fonts.googleapis.com/css2_a685150f.css',
-  '/tailwind.css',
+  `/tailwind.css?v=${cssSurumu()}`,
 ];
 
 const INDEXLENEBILIR = process.env.SITE_INDEXABLE === '1';
