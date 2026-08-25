@@ -6,7 +6,7 @@ import { sayfaMeta } from '@/lib/seo';
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return ARAC_LISTESI.filter((a) => a.slug !== 'dns').map((a) => ({ arac: a.slug }));
+  return ARAC_LISTESI.filter((a) => a.slug !== 'dns' && a.slug !== 'hiz-testi').map((a) => ({ arac: a.slug }));
 }
 
 export async function generateMetadata({ params }) {

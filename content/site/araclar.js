@@ -1,5 +1,15 @@
 export const ARAC_LISTESI = [
   {
+    slug: 'hiz-testi',
+    baslik: 'İnternet Hız Testi',
+    kisa: 'Hız testi',
+    ozet: 'İndirme ve yükleme hızınızı, ping ve jitter değerinizi tarayıcıdan anında ölçün.',
+    icon: 'gauge',
+    aciklama:
+      'Test, bağlantınızın indirme ve yükleme hızını sunucumuza karşı gerçek zamanlı ölçer; ayrıca gecikmeyi (ping) ve gecikme kararlılığını (jitter) raporlar. İndirme hızı büyük dosya indirme ve akış (streaming) deneyiminizi, yükleme hızı dosya gönderme ve görüntülü görüşmeleri, ping ise oyun ve anlık uygulamalardaki tepki süresini belirler. Ölçüm birden çok paralel bağlantı kullanılarak yapılır; sonuç modem, Wi-Fi ve internet sağlayıcınızın o anki durumuna göre değişebilir. En doğru sonuç için testi kablolu bağlantıyla ve arka planda indirme/yükleme yokken çalıştırın.',
+    seo: 'İnternet hız testi: indirme, yükleme, ping ve jitter değerlerinizi ücretsiz, üyeliksiz ölçün.',
+  },
+  {
     slug: 'dns',
     baslik: 'DNS Kayıt Sorgulama',
     kisa: 'DNS sorgulama',

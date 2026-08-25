@@ -4,6 +4,17 @@ Sırayla oku: `DEVAM.md` (bu dosya) → `TASARIM-KURALLARI.md` → `lib/engines/
 
 Son güncelleme: 2026-08-25. **Canlı: https://sunucumweb.com (`.17`). ⚠️ ARTIK SADECE 2 ortam: local + `.17` — cPanel/Docker demoları BIRAKILDI (golden rule). Deploy yalnızca `.17`, kaynak-sız.**
 
+**Son iş (2026-08-25) — İnternet Hız Testi aracı CANLI (`.17`):** Araçlar'a 8. araç. `/araclar/hiz-testi`
+statik server sayfa (DNS gibi `[arac]` generateStaticParams'tan dışlandı, kendi route'u) + client widget
+`components/site/HizTesti.jsx`: paralel indirme (`fetch`+stream reader), yükleme (`XMLHttpRequest`
+`upload.onprogress` ile canlı bayt), ping + jitter, süre+bayt tavanı, iptal, reduced-motion, dark-mode
+(semantic token + `stroke-brand-500` gauge), `min-w-0`/`truncate` taşma-guard, `data-umami-event`.
+API uçları `app/api/araclar/hiz-testi/{indir,yukle,ping}`: indir = incompressible octet-stream akışı
+(`no-transform`, reused 64KB random blok, ≤60MB/istek), yukle = gövdeyi stream ile say+boşalt, ping = 204.
+Ölçüm kendi sunucumuza karşı (hosting firması için marka değeri). `content/site/araclar.js` kaydı (icon
+`gauge`). Doğrulandı (CF üzerinden): sayfa 200, ping 204 DYNAMIC, indir 1MB=1048576 octet-stream, yukle
+doğru sayıyor. Sitemap'e otomatik eklendi → IndexNow bildirdi.
+
 **Son iş (2026-08-25) — SEO crawler muafiyeti CANLI (`.17`):** SEO checker'lar (Seobility ekran
 görüntüsü) Hetzner/AWS/OVH gibi datacenter IP'lerinden taradığı için güvenlik geçidine takılıp
 `/guvenlik` challenge sayfasını analiz ediyordu (Seobility on-page %0, meta %0). Çözüm: `lib/guvenlik.js`
@@ -135,7 +146,7 @@ Hazır Yazılım menüsü+sayfası eklendi; ürün sayfaları gerçek veriyle ya
 | **Şirket Profili** (`/hakkimizda`) | **BİTTİ — DOKUNMA** | Kullanıcı beğendi. 3B küre, marka slider'ı, sayaçlar |
 | **Legal** (`/legal`, `/legal/{belge}`) | **BİTTİ — DOKUNMA** | Kenar çubuklu, şirket bilgileri varsayılan |
 | İletişim (`/iletisim`) | Çalışıyor | Form SMTP yokken günlüğe yazıyor |
-| Araçlar (`/araclar` + 7 araç) | Bitti | DNS SEO şeması, kara liste, güvenlik başlıkları |
+| Araçlar (`/araclar` + 8 araç) | Bitti | İnternet Hız Testi (client ölçüm), DNS SEO şeması, kara liste, güvenlik başlıkları |
 | Alan adı (`/alan-adi`, `/transfer`) | **Bitti** | Demo metin temizlendi; uzantılar + nasıl çalışır + avantajlar + SSS ile dolu/profesyonel yapı |
 | **Hazır Yazılım** (`/hazir-yazilim` + `/hazir-yazilim/[slug]`) | **BİTTİ** | scriptevim.com'dan taşınan **42 gerçek ürün** (banner görselli + **gerçek demo URL'leri**). Liste kartı: banner + eski/yeni fiyat + **İncele + Demo** butonları. Detay: banner + açıklama + özellik + **Sepete Ekle + Demoyu Gör** + benzer ürünler (Satın Al / Hemen Ara yok). Görseller `public/img/yazilim/*.webp`. Veri `content/site/yazilimlar.js` (fiyat + eskiFiyat + demoUrl). Demolar ohesap.com / tahminbaz.com.tr / *.scriptevim.com |
 | 10 ürün sayfası (Hosting/Sunucu/Veri Merkezi) | **BİTTİ — yayında** | Yenilenmiş `ProductPage.jsx`. **Gerçek sunucumweb.com verisi** (`content/site/urun-planlari.js`, 53 paket — router PRODUCTS ile birleştirir). Hosting: kartlar **yan yana** + kategorili **karşılaştırma tablosu**; Sunucu/Veri Merkezi: planlar **alt alta** satır. Aylık/yıllık toggle, Sepete Ekle, eski/yeni fiyat+indirim, fiyatsız (IP)→"görüşün". Sadece **isp/abd** `YAPIM_ASAMASI`'nda |
