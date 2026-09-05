@@ -674,7 +674,7 @@ export const SOSYAL = [
   { ad: 'Facebook', href: 'https://facebook.com/sunucumweb', d: 'M14 8h-2a1 1 0 0 0-1 1v2h3l-.4 3H11v7H8v-7H6v-3h2V9a4 4 0 0 1 4-4h2z' },
   { ad: 'X', href: 'https://x.com/sunucumweb', d: 'M4 4l7.6 9.6L4.4 20h2.1l5.9-6.4 5 6.4H20l-7.6-9.6L19.5 4h-2.1l-5.4 5.9L7.4 4z' },
   { ad: 'Instagram', href: 'https://instagram.com/sunucumweb', d: 'M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4zM12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zM17.5 6.5h.01' },
-  { ad: 'LinkedIn', href: 'https://linkedin.com/company/sunucumweb', d: 'M4.5 9h3v11h-3zM6 4.5a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6zM10.5 9h3v1.6a3.4 3.4 0 0 1 3-1.6c2.4 0 3.5 1.6 3.5 4.3V20h-3v-6c0-1.5-.5-2.4-1.8-2.4-1.1 0-1.7.7-1.7 2.4v6h-3z' },
+  { ad: 'LinkedIn', href: 'https://www.linkedin.com/company/sunucumweb-i%CC%87nternet-hizmetleri/', d: 'M4.5 9h3v11h-3zM6 4.5a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6zM10.5 9h3v1.6a3.4 3.4 0 0 1 3-1.6c2.4 0 3.5 1.6 3.5 4.3V20h-3v-6c0-1.5-.5-2.4-1.8-2.4-1.1 0-1.7.7-1.7 2.4v6h-3z' },
   { ad: 'YouTube', href: 'https://youtube.com/@sunucumweb', d: 'M21 8.5a3 3 0 0 0-2.1-2.1C17.1 6 12 6 12 6s-5.1 0-6.9.4A3 3 0 0 0 3 8.5C2.6 10.3 2.6 12 2.6 12s0 1.7.4 3.5a3 3 0 0 0 2.1 2.1C6.9 18 12 18 12 18s5.1 0 6.9-.4a3 3 0 0 0 2.1-2.1c.4-1.8.4-3.5.4-3.5s0-1.7-.4-3.5zM10.2 15.1V8.9l5.3 3.1z' },
 ];
 
