@@ -7,9 +7,9 @@ import { sssSemasi, ekmekKirintisi } from '@/lib/semalar';
 import DomainAI from './DomainAI';
 
 const TLDS = [
-  ['.com', '299'], ['.com.tr', '149'], ['.net', '329'], ['.org', '319'],
-  ['.tr', '289'], ['.xyz', '89'], ['.io', '899'], ['.dev', '449'],
-  ['.co', '649'], ['.info', '259'], ['.biz', '269'], ['.online', '349'],
+  ['.com', '719'], ['.com.tr', '119'], ['.net', '889'], ['.org', '539'],
+  ['.tr', '209'], ['.xyz', '129'], ['.io', '2829'], ['.dev', '1289'],
+  ['.co', '1229'], ['.info', '289'], ['.biz', '1479'], ['.online', '129'],
 ];
 
 const STEPS = {
@@ -84,9 +84,9 @@ function Faq({ items }) {
 }
 
 const SONUC = [
-  { ad: 'markaniz', uz: '.com', durum: 'uygun', fiyat: '299' },
-  { ad: 'markaniz', uz: '.com.tr', durum: 'uygun', fiyat: '149' },
-  { ad: 'markaniz', uz: '.net', durum: 'uygun', fiyat: '329' },
+  { ad: 'markaniz', uz: '.com', durum: 'uygun', fiyat: '719' },
+  { ad: 'markaniz', uz: '.com.tr', durum: 'uygun', fiyat: '119' },
+  { ad: 'markaniz', uz: '.net', durum: 'uygun', fiyat: '889' },
   { ad: 'markaniz', uz: '.io', durum: 'alinmis' },
 ];
 
