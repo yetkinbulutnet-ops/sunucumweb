@@ -1,20 +1,21 @@
 import HazirYazilimPage from '@/components/site/HazirYazilimPage';
-import { YAZILIMLAR } from '@/content/site/yazilimlar';
+import { yazilimVerisi, sayfaMetinleri } from '@/lib/cms';
 import { sayfaMeta } from '@/lib/seo';
+import SayfaMetni from '@/components/site/SayfaMetni';
 
-export const metadata = sayfaMeta({
-  baslik: 'Hazır Yazılımlar — Kuruluma Hazır Web Yazılımları',
-  aciklama:
-    'E-ticaret, kurumsal tanıtım, blog, rezervasyon, eğitim ve daha fazlası. Mobil uyumlu, SEO dostu, kurulumu bize ait hazır web yazılımları SunucumWEB altyapısında yayında.',
-  yol: '/hazir-yazilim',
-});
+export const revalidate = 300;
 
-function JsonLd() {
+export async function generateMetadata() {
+  const { hazirYazilim: m } = await sayfaMetinleri();
+  return sayfaMeta({ baslik: m.seoBaslik, aciklama: m.seoAciklama, yol: '/hazir-yazilim' });
+}
+
+function JsonLd({ yazilimlar }) {
   const veri = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     name: 'Hazır Yazılımlar',
-    itemListElement: YAZILIMLAR.map((y, i) => ({
+    itemListElement: yazilimlar.map((y, i) => ({
       '@type': 'ListItem',
       position: i + 1,
       item: {
@@ -30,11 +31,14 @@ function JsonLd() {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(veri) }} />;
 }
 
-export default function Page() {
+export default async function Page() {
+  const [{ yazilimlar, kategoriler }, metinler] = await Promise.all([yazilimVerisi(), sayfaMetinleri()]);
   return (
     <>
-      <JsonLd />
-      <HazirYazilimPage />
+      <JsonLd yazilimlar={yazilimlar} />
+      <SayfaMetni onekler={['yazilim']}>
+        <HazirYazilimPage yazilimlar={yazilimlar} kategoriler={kategoriler} seridi={metinler.hazirYazilim} />
+      </SayfaMetni>
     </>
   );
 }

@@ -2,12 +2,13 @@ import { NextResponse } from 'next/server';
 import { suggestDomains } from '@/lib/engines/domain-ai';
 import { rateLimit, clientKey } from '@/lib/engines/core/ratelimit';
 import { errorText } from '@/lib/engines/core/result';
+import { sistemMetinHazirla } from '@/lib/sistem-metin';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export async function POST(request) {
-
+  await sistemMetinHazirla();
   const { allowed, retryAfterSec } = rateLimit(clientKey(request, 'domain-ai'), { limit: 8, windowMs: 60_000 });
   if (!allowed) {
     return NextResponse.json(

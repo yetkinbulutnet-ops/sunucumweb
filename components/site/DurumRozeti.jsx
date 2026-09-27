@@ -1,15 +1,16 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { m } from '@/lib/metin';
 
 const API = '/api/durum';
 const SAYFA = 'https://status.sunucumweb.com';
 const YENILEME = 60_000;
 
 const DURUMLAR = {
-  bekliyor: { metin: 'Sistem durumu', nokta: 'bg-slate-500', halka: 'ring-white/10', yazi: 'text-slate-400' },
-  calisiyor: { metin: 'Tüm sistemler operasyonel', nokta: 'bg-emerald-400', halka: 'ring-emerald-400/25', yazi: 'text-emerald-300', nabiz: true },
+  bekliyor: { metin: 'durum.sistem_durumu', nokta: 'bg-slate-500', halka: 'ring-white/10', yazi: 'text-slate-400' },
+  calisiyor: { metin: 'durum.operasyonel', nokta: 'bg-emerald-400', halka: 'ring-emerald-400/25', yazi: 'text-emerald-300', nabiz: true },
   kesinti: { nokta: 'bg-amber-400', halka: 'ring-amber-400/25', yazi: 'text-amber-300', nabiz: true },
-  ulasilamadi: { metin: 'Durum sayfası', nokta: 'bg-slate-500', halka: 'ring-white/10', yazi: 'text-slate-400' },
+  ulasilamadi: { metin: 'durum.durum_sayfasi', nokta: 'bg-slate-500', halka: 'ring-white/10', yazi: 'text-slate-400' },
 };
 
 export default function DurumRozeti() {
@@ -42,14 +43,14 @@ export default function DurumRozeti() {
 
   const anahtar = hata ? 'ulasilamadi' : !ozet ? 'bekliyor' : ozet.operational ? 'calisiyor' : 'kesinti';
   const stil = DURUMLAR[anahtar];
-  const metin = anahtar === 'kesinti' ? `${ozet.down} serviste kesinti` : stil.metin;
+  const metin = anahtar === 'kesinti' ? m('durum.kesinti', { adet: ozet.down }) : m(stil.metin);
 
   return (
     <a
       href={SAYFA}
       target="_blank"
       rel="noopener noreferrer"
-      title={ozet?.updated_ago ? `Son kontrol: ${ozet.updated_ago}` : 'Sistem durumu'}
+      title={ozet?.updated_ago ? m('durum.son_kontrol', { zaman: ozet.updated_ago }) : m('durum.sistem_durumu')}
       className={`inline-flex items-center gap-2 rounded-full bg-white/5 px-3 py-1.5 text-[13px] font-medium ring-1 transition-colors hover:bg-white/10 ${stil.halka} ${stil.yazi}`}
     >
       <span className="relative flex h-2 w-2 shrink-0">

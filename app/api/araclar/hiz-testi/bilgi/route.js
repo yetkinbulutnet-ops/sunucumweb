@@ -1,10 +1,12 @@
 import { istemciIp } from '@/lib/guvenlik';
 import { saglayiciAdi, ulkeAdi } from '@/lib/hiz';
+import { sistemMetinHazirla } from '@/lib/sistem-metin';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export async function GET(req) {
+  await sistemMetinHazirla();
   const ip = istemciIp((n) => req.headers.get(n));
   const asnNum = parseInt(req.headers.get('x-swb-asn') || '', 10);
   const ulkeKodu = (req.headers.get('cf-ipcountry') || '').toUpperCase().replace(/[^A-Z]/g, '');

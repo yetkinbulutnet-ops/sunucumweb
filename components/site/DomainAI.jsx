@@ -1,37 +1,38 @@
 'use client';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { Icon } from './chrome';
+import { m } from '@/lib/metin';
 
 const MIN_CHARS = 15;
 const MAX_CHARS = 600;
 
-const ORNEKLER = [
-  { t: 'Kahve atölyesi', v: 'Ankara\'da butik bir kahve kavurma atölyesi açıyorum. Kendi çekirdeğimizi kavurup online satacağız, aylık abonelik kutuları da olacak. Sıcak ve zanaatkâr bir marka olsun.' },
-  { t: 'Yazılım ajansı', v: 'İstanbul\'da küçük bir yazılım ajansı kuruyorum. Şirketlere web sitesi ve mobil uygulama geliştireceğiz. Modern, teknolojik ve güven veren bir isim istiyorum.' },
-  { t: 'Butik otel', v: 'Ege\'de 12 odalı taş bir butik otel işletiyorum. Doğayla iç içe, sakin ve tasarım odaklı bir tatil deneyimi sunuyoruz. Rezervasyonları kendi sitemizden alacağız.' },
-  { t: 'Online eğitim', v: 'Lise öğrencilerine matematik ve fizik dersleri veren bir online eğitim platformu kuruyorum. Video dersler ve canlı soru çözümü olacak.' },
+const ORNEKLER = () => [
+  { t: m('alanadiai.ornek_1_baslik'), v: m('alanadiai.ornek_1_metin') },
+  { t: m('alanadiai.ornek_2_baslik'), v: m('alanadiai.ornek_2_metin') },
+  { t: m('alanadiai.ornek_3_baslik'), v: m('alanadiai.ornek_3_metin') },
+  { t: m('alanadiai.ornek_4_baslik'), v: m('alanadiai.ornek_4_metin') },
 ];
 
 const TLD_SECENEKLERI = ['.com', '.com.tr', '.net', '.org', '.co', '.app', '.dev', '.shop', '.online', '.xyz'];
 
-const YUKLENIYOR_ADIMLARI = [
-  'İşiniz analiz ediliyor…',
-  'Marka fikirleri üretiliyor…',
-  'Uzantılar eşleştiriliyor…',
+const YUKLENIYOR_ADIMLARI = () => [
+  m('alanadiai.yukleniyor_1'),
+  m('alanadiai.yukleniyor_2'),
+  m('alanadiai.yukleniyor_3'),
 ];
 
-const DURUM = {
-  musait: { etiket: 'Müsait', icon: 'check', cls: 'bg-emerald-50 text-emerald-700 ring-emerald-200' },
-  alinmis: { etiket: 'Alınmış', icon: 'xmark', cls: 'bg-rose-50 text-rose-600 ring-rose-200' },
-  bilinmiyor: { etiket: 'Kontrol edin', icon: 'question', cls: 'bg-amber-50 text-amber-700 ring-amber-200' },
-};
+const DURUM = () => ({
+  musait: { etiket: m('alanadiai.durum_musait'), icon: 'check', cls: 'bg-emerald-50 text-emerald-700 ring-emerald-200' },
+  alinmis: { etiket: m('alanadiai.durum_alinmis'), icon: 'xmark', cls: 'bg-rose-50 text-rose-600 ring-rose-200' },
+  bilinmiyor: { etiket: m('alanadiai.durum_bilinmiyor'), icon: 'question', cls: 'bg-amber-50 text-amber-700 ring-amber-200' },
+});
 
-const STIL_ETIKET = {
-  kisa: 'Kısa & marka',
-  acikanlam: 'Anlamı açık',
-  yaratici: 'Yaratıcı',
-  sektorel: 'Sektörel',
-};
+const STIL_ETIKET = () => ({
+  kisa: m('alanadiai.stil_kisa'),
+  acikanlam: m('alanadiai.stil_acikanlam'),
+  yaratici: m('alanadiai.stil_yaratici'),
+  sektorel: m('alanadiai.stil_sektorel'),
+});
 
 const SIRA = { musait: 0, bilinmiyor: 1, kontrol: 1, alinmis: 2 };
 
@@ -88,7 +89,7 @@ export default function DomainAI() {
   useEffect(() => {
     if (!yukleniyor) return;
     setAdim(0);
-    const t = setInterval(() => setAdim((a) => (a + 1) % YUKLENIYOR_ADIMLARI.length), 1100);
+    const t = setInterval(() => setAdim((a) => (a + 1) % YUKLENIYOR_ADIMLARI().length), 1100);
     return () => clearInterval(t);
   }, [yukleniyor]);
 
@@ -116,7 +117,7 @@ export default function DomainAI() {
   const uret = useCallback(async () => {
     const metin = brief.trim();
     if (metin.length < MIN_CHARS) {
-      setHata(`İşinizi biraz daha anlatın (en az ${MIN_CHARS} karakter).`);
+      setHata(m('alanadiai.hata_kisa', { min: MIN_CHARS }));
       taRef.current?.focus();
       return;
     }
@@ -134,14 +135,14 @@ export default function DomainAI() {
       const d = await r.json();
 
       if (!d.ok) {
-        setHata(d.error?.message || 'Bir şeyler ters gitti, lütfen tekrar deneyin.');
+        setHata(d.error?.message || m('alanadiai.hata_genel'));
         return;
       }
       setIdeas(d.ideas);
       requestAnimationFrame(() => sonucRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
       musaitlikGetir(d.ideas);
     } catch {
-      setHata('Sunucuya ulaşılamadı. İnternet bağlantınızı kontrol edip tekrar deneyin.');
+      setHata(m('alanadiai.hata_baglanti'));
     } finally {
       setYukleniyor(false);
     }
@@ -156,7 +157,7 @@ export default function DomainAI() {
       }
       setKopyalanan(domain);
     } catch {
-      setHata('Kopyalanamadı; alan adını elle seçip kopyalayabilirsiniz.');
+      setHata(m('alanadiai.hata_kopyalama'));
     }
   };
 
@@ -185,21 +186,20 @@ export default function DomainAI() {
       <div className="relative mx-auto max-w-5xl px-5 lg:px-8 py-20 lg:py-24">
         <div className="text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-brand-400/30 bg-brand-500/10 px-3.5 py-1.5 text-[13px] font-semibold text-brand-300">
-            <Icon name="sparkles" className="w-4 h-4" /> Yapay zekâ destekli
+            <Icon name="sparkles" className="w-4 h-4" /> {m('alanadiai.rozet')}
           </span>
           <h2 className="mt-5 text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold tracking-tight text-white text-balance leading-[1.12]">
-            Aklınızdaki işi anlatın,<br className="hidden sm:block" /> alan adını biz bulalım
+            {m('alanadiai.baslik_1')}<br className="hidden sm:block" /> {m('alanadiai.baslik_2')}
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-[17px] leading-relaxed text-slate-300">
-            Ne yaptığınızı birkaç cümleyle yazın. Yapay zekâ markanıza uygun alan adları üretsin,
-            biz de hangisinin gerçekten boşta olduğunu anında kontrol edelim.
+            {m('alanadiai.aciklama')}
           </p>
         </div>
 
         <div className="mt-10 rounded-3xl border border-white/10 bg-white/[0.06] p-2 backdrop-blur-sm shadow-[0_40px_90px_-40px_rgba(0,0,0,0.8)]">
           <div className="rounded-[1.25rem] bg-surface p-5 sm:p-7">
             <label htmlFor="ai-brief" className="block text-sm font-bold text-strong">
-              İşinizi anlatın
+              {m('alanadiai.brief_etiket')}
             </label>
 
             <div className="relative mt-3">
@@ -211,7 +211,7 @@ export default function DomainAI() {
                 onChange={(e) => { setBrief(e.target.value); if (hata) setHata(''); }}
                 onKeyDown={(e) => { if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') uret(); }}
                 rows={4}
-                placeholder="Örnek: Ankara'da butik bir kahve kavurma atölyesi açıyorum. Kendi çekirdeğimizi kavurup online satacağız, abonelik sistemi de olacak…"
+                placeholder={m('alanadiai.brief_ph')}
                 className={`w-full resize-none rounded-2xl border bg-surface2/60 px-4 py-3.5 text-[15px] leading-relaxed text-strong placeholder:text-muted outline-none transition focus:bg-surface focus:ring-4 ${
                   az ? 'border-amber-300 focus:border-amber-400 focus:ring-amber-100' : 'border-line focus:border-brand-400 focus:ring-brand-100'
                 }`}
@@ -222,8 +222,8 @@ export default function DomainAI() {
             </div>
 
             <div className="mt-4 flex flex-wrap items-center gap-2">
-              <span className="text-[13px] font-medium text-muted">Örnek:</span>
-              {ORNEKLER.map((o) => (
+              <span className="text-[13px] font-medium text-muted">{m('alanadiai.ornek_etiket')}</span>
+              {ORNEKLER().map((o) => (
                 <button
                   key={o.t}
                   type="button"
@@ -243,7 +243,7 @@ export default function DomainAI() {
                 aria-expanded={filtreAcik}
               >
                 <Icon name="chevron" className={`w-4 h-4 transition-transform ${filtreAcik ? 'rotate-180' : ''}`} />
-                Uzantı tercihi {tlds.length > 0 && <span className="rounded-full bg-brandline/60 px-2 py-0.5 text-[11px] font-bold text-brandtext">{tlds.length} seçili</span>}
+                {m('alanadiai.uzanti_tercihi')} {tlds.length > 0 && <span className="rounded-full bg-brandline/60 px-2 py-0.5 text-[11px] font-bold text-brandtext">{m('alanadiai.secili_sayi', { sayi: tlds.length })}</span>}
               </button>
               {filtreAcik && (
                 <div className="mt-3 flex flex-wrap gap-2 animate-[fadeup_0.25s_ease-out]">
@@ -265,7 +265,7 @@ export default function DomainAI() {
                   })}
                   {tlds.length > 0 && (
                     <button type="button" onClick={() => setTlds([])} className="px-2 text-[13px] font-semibold text-muted hover:text-strong">
-                      temizle
+                      {m('alanadiai.temizle')}
                     </button>
                   )}
                 </div>
@@ -284,17 +284,17 @@ export default function DomainAI() {
                     <svg viewBox="0 0 24 24" className="w-4 h-4 animate-spin" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                       <path d="M12 3a9 9 0 1 0 9 9" />
                     </svg>
-                    {YUKLENIYOR_ADIMLARI[adim]}
+                    {YUKLENIYOR_ADIMLARI()[adim]}
                   </>
                 ) : (
                   <>
                     <Icon name="sparkles" className="w-4 h-4" />
-                    {ideas ? 'Yeni fikirler üret' : 'Alan adı önerileri al'}
+                    {ideas ? m('alanadiai.yeni_fikir') : m('alanadiai.oneri_al')}
                   </>
                 )}
               </button>
               <span className="text-[13px] text-muted">
-                veya <kbd className="rounded border border-line bg-surface2 px-1.5 py-0.5 font-sans text-[11px] font-semibold text-body">Ctrl</kbd>
+                {m('alanadiai.veya')} <kbd className="rounded border border-line bg-surface2 px-1.5 py-0.5 font-sans text-[11px] font-semibold text-body">Ctrl</kbd>
                 {' + '}
                 <kbd className="rounded border border-line bg-surface2 px-1.5 py-0.5 font-sans text-[11px] font-semibold text-body">Enter</kbd>
               </span>
@@ -310,8 +310,8 @@ export default function DomainAI() {
 
         <div className="mt-5 flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 sm:flex-row sm:items-center">
           <div className="shrink-0 text-[13.5px] text-slate-300">
-            <span className="font-semibold text-white">Aklınızda bir isim var mı?</span>
-            <span className="hidden sm:inline"> Doğrudan sorgulayın.</span>
+            <span className="font-semibold text-white">{m('alanadiai.isim_var_mi')}</span>
+            <span className="hidden sm:inline"> {m('alanadiai.dogrudan_sorgula')}</span>
           </div>
           <form
             onSubmit={(e) => { e.preventDefault(); const d = dogrudan.trim(); if (!d) return; window.location.href = `https://my.sunucumweb.com/domain/register?domain=${encodeURIComponent(d)}`; }}
@@ -321,12 +321,12 @@ export default function DomainAI() {
             <input
               value={dogrudan}
               onChange={(e) => setDogrudan(e.target.value)}
-              placeholder="firmaadi.com"
-              aria-label="Alan adı sorgula"
+              placeholder={m('alanadiai.dogrudan_ph')}
+              aria-label={m('alanadiai.dogrudan_aria')}
               className="min-w-0 flex-1 bg-transparent py-1.5 text-[14px] text-white placeholder:text-slate-500 outline-none"
             />
             <button type="submit" className="shrink-0 rounded-lg bg-white/10 px-4 py-2 text-[13px] font-bold text-white ring-1 ring-white/20 transition-colors hover:bg-white/20">
-              Sorgula
+              {m('alanadiai.sorgula')}
             </button>
           </form>
         </div>
@@ -348,8 +348,8 @@ export default function DomainAI() {
             <div className="mt-10 animate-[fadeup_0.4s_ease-out]">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <p className="text-[15px] text-slate-300">
-                  <span className="font-bold text-white">{ideas.length} öneri</span> hazır
-                  {musaitSayisi > 0 && <> · <span className="font-bold text-brand-300">{musaitSayisi} tanesi müsait</span></>}
+                  <span className="font-bold text-white">{m('alanadiai.oneri_sayi', { sayi: ideas.length })}</span> {m('alanadiai.hazir')}
+                  {musaitSayisi > 0 && <> · <span className="font-bold text-brand-300">{m('alanadiai.musait_sayi', { sayi: musaitSayisi })}</span></>}
                 </p>
                 <button
                   type="button"
@@ -359,18 +359,18 @@ export default function DomainAI() {
                     sadeceMusait ? 'bg-brand-500 text-white ring-brand-400' : 'bg-white/5 text-slate-300 ring-white/15 hover:bg-white/10'
                   }`}
                 >
-                  Sadece müsait olanlar
+                  {m('alanadiai.sadece_musait')}
                 </button>
               </div>
 
               {sirali.length === 0 ? (
                 <p className="mt-8 rounded-2xl border border-white/10 bg-white/[0.05] p-6 text-center text-[15px] text-slate-300">
-                  Bu turda müsait alan adı çıkmadı. <button type="button" onClick={() => setSadeceMusait(false)} className="font-bold text-brand-300 underline underline-offset-4">Tümünü göster</button> ya da yeni fikirler üretin.
+                  {m('alanadiai.bos_1')} <button type="button" onClick={() => setSadeceMusait(false)} className="font-bold text-brand-300 underline underline-offset-4">{m('alanadiai.bos_tumu')}</button> {m('alanadiai.bos_2')}
                 </p>
               ) : (
                 <div className="mt-5 grid sm:grid-cols-2 gap-4">
                   {sirali.map((i) => {
-                    const d = DURUM[i.durum];
+                    const d = DURUM()[i.durum];
                     const alinmis = i.durum === 'alinmis';
                     return (
                       <div
@@ -387,7 +387,7 @@ export default function DomainAI() {
                               {i.label}<span className="text-brand-300">{i.tld}</span>
                             </div>
                             <span className="mt-1.5 inline-block rounded-md bg-white/10 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-slate-300">
-                              {STIL_ETIKET[i.style] || 'Öneri'}
+                              {STIL_ETIKET()[i.style] || m('alanadiai.stil_varsayilan')}
                             </span>
                           </div>
                           {d ? (
@@ -396,7 +396,7 @@ export default function DomainAI() {
                             </span>
                           ) : (
                             <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-1 text-[11px] font-bold text-slate-300">
-                              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-brand-300" /> kontrol ediliyor
+                              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-brand-300" /> {m('alanadiai.kontrol_ediliyor')}
                             </span>
                           )}
                         </div>
@@ -414,7 +414,7 @@ export default function DomainAI() {
                                 : 'bg-brand-500 text-white shadow shadow-brand-500/25 hover:bg-brand-400'
                             }`}
                           >
-                            {alinmis ? 'Yine de sorgula' : 'Hemen al'} <Icon name="arrow" className="w-3.5 h-3.5" />
+                            {alinmis ? m('alanadiai.yine_sorgula') : m('alanadiai.hemen_al')} <Icon name="arrow" className="w-3.5 h-3.5" />
                           </a>
                           <button
                             type="button"
@@ -422,7 +422,7 @@ export default function DomainAI() {
                             className="inline-flex items-center gap-1.5 rounded-lg bg-white/5 px-3 py-2 text-[13px] font-bold text-slate-300 ring-1 ring-white/10 transition hover:bg-white/10 hover:text-white"
                           >
                             <Icon name={kopyalanan === i.domain ? 'check' : 'copy'} className="w-3.5 h-3.5" />
-                            {kopyalanan === i.domain ? 'Kopyalandı' : 'Kopyala'}
+                            {kopyalanan === i.domain ? m('alanadiai.kopyalandi') : m('alanadiai.kopyala')}
                           </button>
                         </div>
                       </div>
@@ -432,9 +432,7 @@ export default function DomainAI() {
               )}
 
               <p className="mt-6 text-center text-[13px] leading-relaxed text-muted">
-                Müsaitlik bilgisi RDAP ve DNS kayıtlarından anlık olarak alınır; <span className="text-slate-300">&laquo;Kontrol edin&raquo;</span> etiketi
-                o uzantının kayıt sunucusunun sorgulanamadığı anlamına gelir (ör. <span className="text-slate-300">.com.tr</span>).
-                Kesin sonuç için sipariş ekranından teyit edin.
+                {m('alanadiai.not_1')} <span className="text-slate-300">{m('alanadiai.not_etiket')}</span> {m('alanadiai.not_2')} <span className="text-slate-300">.com.tr</span>{m('alanadiai.not_3')}
               </p>
             </div>
           )}

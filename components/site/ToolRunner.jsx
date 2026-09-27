@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { Icon } from './chrome';
 import { Kutu, Satir, Rozet, Bos, tarihYaz, sureYaz } from './tool-ui';
 import DnsRapor from './DnsRapor';
+import { m } from '@/lib/metin';
 import { DNS_TIP_KODLARI } from '@/content/site/dns-tipleri';
 
 const GECMIS_ANAHTARI = 'sunucumweb-arac-gecmis';
@@ -48,8 +49,8 @@ function WhoisSonuc({ veri }) {
   if (!veri.kayitli) {
     return (
       <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/5 p-6">
-        <p className="text-[15px] font-semibold text-strong">{veri.alan} kayıtlı görünmüyor.</p>
-        <p className="mt-1 text-[14px] text-body">Bu alan adı müsait olabilir; tescil için alan adı sayfamızdan sorgulayın.</p>
+        <p className="text-[15px] font-semibold text-strong">{m('arac.whois_kayitsiz', { alan: veri.alan })}</p>
+        <p className="mt-1 text-[14px] text-body">{m('arac.whois_musait')}</p>
       </div>
     );
   }
@@ -59,28 +60,28 @@ function WhoisSonuc({ veri }) {
   return (
     <div className="grid gap-4 sm:grid-cols-2">
       <Kutu
-        baslik="Alan adı"
-        ek={veri.kalanGun !== null && <Rozet durum={bitisTonu}>{veri.kalanGun < 0 ? 'Süresi dolmuş' : `${veri.kalanGun} gün kaldı`}</Rozet>}
+        baslik={m('arac.alan_adi')}
+        ek={veri.kalanGun !== null && <Rozet durum={bitisTonu}>{veri.kalanGun < 0 ? m('arac.suresi_dolmus') : m('arac.gun_kaldi', { gun: veri.kalanGun })}</Rozet>}
       >
-        <Satir etiket="Alan adı" deger={veri.alan} kod />
-        <Satir etiket="Tescil" deger={tarihYaz(veri.tarihler?.kayit)} />
-        <Satir etiket="Son güncelleme" deger={tarihYaz(veri.tarihler?.guncelleme)} />
-        <Satir etiket="Bitiş" deger={tarihYaz(veri.tarihler?.bitis)} />
-        <Satir etiket="Yaş" deger={veri.yasYil !== null && veri.yasGun !== null ? (veri.yasYil >= 1 ? `${veri.yasYil} yıl` : `${veri.yasGun} gün`) : null} />
-        <Satir etiket="DNSSEC" deger={veri.dnssec === null ? null : veri.dnssec ? 'İmzalı' : 'İmzasız'} />
+        <Satir etiket={m('arac.alan_adi')} deger={veri.alan} kod />
+        <Satir etiket={m('arac.tescil')} deger={tarihYaz(veri.tarihler?.kayit)} />
+        <Satir etiket={m('arac.son_guncelleme')} deger={tarihYaz(veri.tarihler?.guncelleme)} />
+        <Satir etiket={m('arac.bitis')} deger={tarihYaz(veri.tarihler?.bitis)} />
+        <Satir etiket={m('arac.yas')} deger={veri.yasYil !== null && veri.yasGun !== null ? (veri.yasYil >= 1 ? m('arac.yil_sayi', { sayi: veri.yasYil }) : m('arac.gun_sayi', { sayi: veri.yasGun })) : null} />
+        <Satir etiket="DNSSEC" deger={veri.dnssec === null ? null : veri.dnssec ? m('arac.imzali') : m('arac.imzasiz')} />
       </Kutu>
 
-      <Kutu baslik="Kayıt firması">
-        <Satir etiket="Firma" deger={veri.kayitFirmasi?.ad} />
-        <Satir etiket="IANA kimliği" deger={veri.kayitFirmasi?.ianaId} />
-        <Satir etiket="Kötüye kullanım" deger={veri.kayitFirmasi?.eposta} kod />
-        <Satir etiket="Telefon" deger={veri.kayitFirmasi?.telefon?.replace('tel:', '')} />
-        <Satir etiket="Web sitesi" deger={veri.kayitFirmasi?.site} kod />
-        {veri.sahip?.kurum && <Satir etiket="Kayıt sahibi" deger={veri.sahip.kurum} />}
-        {veri.sahip?.ulke && <Satir etiket="Ülke" deger={veri.sahip.ulke} />}
+      <Kutu baslik={m('arac.kayit_firmasi')}>
+        <Satir etiket={m('arac.firma')} deger={veri.kayitFirmasi?.ad} />
+        <Satir etiket={m('arac.iana_kimligi')} deger={veri.kayitFirmasi?.ianaId} />
+        <Satir etiket={m('arac.kotuye_kullanim')} deger={veri.kayitFirmasi?.eposta} kod />
+        <Satir etiket={m('arac.telefon')} deger={veri.kayitFirmasi?.telefon?.replace('tel:', '')} />
+        <Satir etiket={m('arac.web_sitesi')} deger={veri.kayitFirmasi?.site} kod />
+        {veri.sahip?.kurum && <Satir etiket={m('arac.kayit_sahibi')} deger={veri.sahip.kurum} />}
+        {veri.sahip?.ulke && <Satir etiket={m('arac.ulke')} deger={veri.sahip.ulke} />}
       </Kutu>
 
-      <Kutu baslik="İsim sunucuları">
+      <Kutu baslik={m('arac.isim_sunuculari')}>
         {veri.isimSunuculari?.length ? (
           <ul className="space-y-2">
             {veri.isimSunuculari.map((n) => (
@@ -88,11 +89,11 @@ function WhoisSonuc({ veri }) {
             ))}
           </ul>
         ) : (
-          <Bos>İsim sunucusu bildirilmemiş.</Bos>
+          <Bos>{m('arac.isim_sunucusu_yok')}</Bos>
         )}
       </Kutu>
 
-      <Kutu baslik="Durum">
+      <Kutu baslik={m('arac.durum')}>
         {veri.durumlar?.length ? (
           <ul className="space-y-2.5">
             {veri.durumlar.map((d) => (
@@ -103,17 +104,17 @@ function WhoisSonuc({ veri }) {
             ))}
           </ul>
         ) : (
-          <Bos>Durum bilgisi yok.</Bos>
+          <Bos>{m('arac.durum_yok')}</Bos>
         )}
         {veri.ekDurum?.transfer && <p className="mt-3 text-[13px] text-body">{veri.ekDurum.transfer}</p>}
       </Kutu>
 
       <div className="sm:col-span-2">
         <div className="flex flex-wrap items-center gap-3 text-[13px] text-muted">
-          <span>Kaynak: {veri.kaynak === 'rdap' ? 'RDAP' : 'WHOIS'} · {String(veri.sunucu).replace(/^https?:\/\//, '')}</span>
+          <span>{m('arac.kaynak', { kaynak: veri.kaynak === 'rdap' ? 'RDAP' : 'WHOIS', sunucu: String(veri.sunucu).replace(/^https?:\/\//, '') })}</span>
           {veri.ham && (
             <button type="button" onClick={() => setHamAcik((v) => !v)} className="font-bold text-brandtext transition-colors hover:text-brand-500">
-              {hamAcik ? 'Ham çıktıyı gizle' : 'Ham çıktıyı göster'}
+              {hamAcik ? m('arac.ham_gizle') : m('arac.ham_goster')}
             </button>
           )}
         </div>
@@ -131,86 +132,86 @@ function SslSonuc({ veri }) {
   return (
     <div className="grid gap-4 sm:grid-cols-2">
       <Kutu
-        baslik="Genel durum"
+        baslik={m('arac.genel_durum')}
         genis
-        ek={<Rozet durum={veri.gecerli && veri.alanEslesmesi ? 'iyi' : 'yok'}>{veri.gecerli && veri.alanEslesmesi ? 'Sertifika geçerli' : 'Sorunlu'}</Rozet>}
+        ek={<Rozet durum={veri.gecerli && veri.alanEslesmesi ? 'iyi' : 'yok'}>{veri.gecerli && veri.alanEslesmesi ? m('arac.sertifika_gecerli') : m('arac.sorunlu')}</Rozet>}
       >
         <div className="grid gap-3 sm:grid-cols-3">
           <div className="rounded-xl bg-surface2 px-4 py-3">
-            <div className="text-[12px] text-muted">Kalan süre</div>
+            <div className="text-[12px] text-muted">{m('arac.kalan_sure')}</div>
             <div className={`mt-0.5 text-[18px] font-extrabold ${bitisTonu === 'iyi' ? 'text-strong' : 'text-amber-600 dark:text-amber-400'}`}>
-              {veri.kalanGun === null ? '—' : `${veri.kalanGun} gün`}
+              {veri.kalanGun === null ? '—' : m('arac.gun_sayi', { sayi: veri.kalanGun })}
             </div>
           </div>
           <div className="rounded-xl bg-surface2 px-4 py-3">
-            <div className="text-[12px] text-muted">Alan adı eşleşmesi</div>
-            <div className="mt-0.5 text-[18px] font-extrabold text-strong">{veri.alanEslesmesi ? 'Uygun' : 'Eşleşmiyor'}</div>
+            <div className="text-[12px] text-muted">{m('arac.alan_eslesmesi')}</div>
+            <div className="mt-0.5 text-[18px] font-extrabold text-strong">{veri.alanEslesmesi ? m('arac.uygun') : m('arac.eslesmiyor')}</div>
           </div>
           <div className="rounded-xl bg-surface2 px-4 py-3">
-            <div className="text-[12px] text-muted">Bağlantı</div>
+            <div className="text-[12px] text-muted">{m('arac.baglanti')}</div>
             <div className="mt-0.5 text-[18px] font-extrabold text-strong">{veri.baglanti.protokol || '—'}</div>
           </div>
         </div>
         {!veri.gecerli && veri.gecersizlikSebebi && (
-          <p className="mt-4 text-[14px] font-medium text-rose-600 dark:text-rose-400">Doğrulama hatası: {veri.gecersizlikSebebi}</p>
+          <p className="mt-4 text-[14px] font-medium text-rose-600 dark:text-rose-400">{m('arac.dogrulama_hatasi', { sebep: veri.gecersizlikSebebi })}</p>
         )}
       </Kutu>
 
-      <Kutu baslik="Sertifika">
-        <Satir etiket="Sahip" deger={veri.sertifika.sahip} kod />
-        <Satir etiket="Kurum" deger={veri.sertifika.kurum} />
-        <Satir etiket="Sağlayıcı" deger={veri.sertifika.saglayici} />
-        <Satir etiket="Başlangıç" deger={tarihYaz(veri.sertifika.baslangic)} />
-        <Satir etiket="Bitiş" deger={tarihYaz(veri.sertifika.bitis)} />
-        <Satir etiket="Anahtar" deger={veri.sertifika.anahtarTipi} />
-        <Satir etiket="Seri no" deger={veri.sertifika.seriNo} kod />
+      <Kutu baslik={m('arac.sertifika')}>
+        <Satir etiket={m('arac.sahip')} deger={veri.sertifika.sahip} kod />
+        <Satir etiket={m('arac.kurum')} deger={veri.sertifika.kurum} />
+        <Satir etiket={m('arac.saglayici')} deger={veri.sertifika.saglayici} />
+        <Satir etiket={m('arac.baslangic')} deger={tarihYaz(veri.sertifika.baslangic)} />
+        <Satir etiket={m('arac.bitis')} deger={tarihYaz(veri.sertifika.bitis)} />
+        <Satir etiket={m('arac.anahtar')} deger={veri.sertifika.anahtarTipi} />
+        <Satir etiket={m('arac.seri_no')} deger={veri.sertifika.seriNo} kod />
       </Kutu>
 
-      <Kutu baslik="Protokol desteği" ek={veri.eskiProtokolAcik && <Rozet durum="riskli">Eski protokol açık</Rozet>}>
+      <Kutu baslik={m('arac.protokol_destegi')} ek={veri.eskiProtokolAcik && <Rozet durum="riskli">{m('arac.eski_protokol_acik')}</Rozet>}>
         <ul className="space-y-2.5">
           {veri.protokoller.map((p) => (
             <li key={p.ad} className="flex items-center justify-between gap-3">
               <span className="text-[14px] font-semibold text-strong">{p.ad}</span>
               <Rozet durum={p.destekli ? (p.guvenli ? 'iyi' : 'riskli') : 'notr'}>
-                {p.destekli ? 'Açık' : 'Kapalı'}
+                {p.destekli ? m('arac.acik') : m('arac.kapali')}
               </Rozet>
             </li>
           ))}
         </ul>
         <p className="mt-3 text-[12px] leading-relaxed text-muted">
-          TLS 1.0 ve 1.1 güncelliğini yitirmiştir; kapalı olmaları beklenir.
+          {m('arac.tls_notu')}
         </p>
       </Kutu>
 
-      <Kutu baslik="Şifreleme">
-        <Satir etiket="Sunulan protokol" deger={veri.baglanti.protokol} />
-        <Satir etiket="Şifre paketi" deger={veri.baglanti.sifreleme} kod />
-        <Satir etiket="Sunucu adresi" deger={veri.adres} kod />
-        <Satir etiket="Parmak izi" deger={veri.sertifika.parmakIzi ? `${veri.sertifika.parmakIzi.slice(0, 29)}…` : null} kod />
+      <Kutu baslik={m('arac.sifreleme')}>
+        <Satir etiket={m('arac.sunulan_protokol')} deger={veri.baglanti.protokol} />
+        <Satir etiket={m('arac.sifre_paketi')} deger={veri.baglanti.sifreleme} kod />
+        <Satir etiket={m('arac.sunucu_adresi')} deger={veri.adres} kod />
+        <Satir etiket={m('arac.parmak_izi')} deger={veri.sertifika.parmakIzi ? `${veri.sertifika.parmakIzi.slice(0, 29)}…` : null} kod />
       </Kutu>
 
-      <Kutu baslik={`Kapsanan alan adları (${veri.alternatifler.length})`}>
+      <Kutu baslik={m('arac.kapsanan_alanlar', { sayi: veri.alternatifler.length })}>
         {veri.alternatifler.length ? (
           <div className="flex flex-wrap gap-2">
             {veri.alternatifler.slice(0, 20).map((a) => (
               <code key={a} className="rounded-lg bg-surface2 px-2.5 py-1 text-[12px] font-semibold text-body">{a}</code>
             ))}
-            {veri.alternatifler.length > 20 && <span className="text-[12px] text-muted">+{veri.alternatifler.length - 20} tane daha</span>}
+            {veri.alternatifler.length > 20 && <span className="text-[12px] text-muted">{m('arac.tane_daha', { sayi: veri.alternatifler.length - 20 })}</span>}
           </div>
         ) : (
-          <Bos>Alternatif ad tanımlı değil.</Bos>
+          <Bos>{m('arac.alternatif_yok')}</Bos>
         )}
       </Kutu>
 
       {veri.zincir.length > 0 && (
-        <Kutu baslik="Sertifika zinciri">
+        <Kutu baslik={m('arac.sertifika_zinciri')}>
           <ol className="space-y-2.5">
             {veri.zincir.map((z, i) => (
               <li key={`${z.sahip}-${i}`} className="flex gap-3">
                 <span className="text-[12px] font-bold tabular-nums text-brandtext">{String(i + 1).padStart(2, '0')}</span>
                 <span className="min-w-0">
-                  <span className="block break-all text-[13px] font-semibold text-strong">{z.sahip || 'Ara sertifika'}</span>
-                  <span className="block text-[12px] text-muted">İmzalayan: {z.saglayici || '—'}</span>
+                  <span className="block break-all text-[13px] font-semibold text-strong">{z.sahip || m('arac.ara_sertifika')}</span>
+                  <span className="block text-[12px] text-muted">{m('arac.imzalayan', { ad: z.saglayici || '—' })}</span>
                 </span>
               </li>
             ))}
@@ -226,13 +227,13 @@ function EpostaSonuc({ veri }) {
 
   return (
     <div className="grid gap-4 sm:grid-cols-2">
-      <Kutu baslik="Genel değerlendirme" genis ek={<Rozet durum={puanTonu}>{veri.puan} / 100</Rozet>}>
+      <Kutu baslik={m('arac.genel_degerlendirme')} genis ek={<Rozet durum={puanTonu}>{veri.puan} / 100</Rozet>}>
         <div className="grid gap-3 sm:grid-cols-4">
           {[
-            ['MX', veri.mx.bulundu ? 'iyi' : 'yok', veri.mx.bulundu ? 'Tanımlı' : 'Yok'],
-            ['SPF', veri.spf.durum, veri.spf.kayit ? 'Tanımlı' : 'Yok'],
-            ['DMARC', veri.dmarc.durum, veri.dmarc.kayit ? 'Tanımlı' : 'Yok'],
-            ['DKIM', veri.dkim.bulundu ? 'iyi' : 'eksik', veri.dkim.bulundu ? `${veri.dkim.kayitlar.length} seçici` : 'Bulunamadı'],
+            ['MX', veri.mx.bulundu ? 'iyi' : 'yok', veri.mx.bulundu ? m('arac.tanimli') : m('arac.yok')],
+            ['SPF', veri.spf.durum, veri.spf.kayit ? m('arac.tanimli') : m('arac.yok')],
+            ['DMARC', veri.dmarc.durum, veri.dmarc.kayit ? m('arac.tanimli') : m('arac.yok')],
+            ['DKIM', veri.dkim.bulundu ? 'iyi' : 'eksik', veri.dkim.bulundu ? m('arac.secici_sayi', { sayi: veri.dkim.kayitlar.length }) : m('arac.bulunamadi')],
           ].map(([ad, durum, metin]) => (
             <div key={ad} className="rounded-xl bg-surface2 px-4 py-3">
               <div className="text-[12px] text-muted">{ad}</div>
@@ -242,53 +243,53 @@ function EpostaSonuc({ veri }) {
         </div>
       </Kutu>
 
-      <Kutu baslik="Posta sunucuları (MX)">
+      <Kutu baslik={m('arac.posta_sunuculari_mx')}>
         {veri.mx.bulundu ? (
           <ul className="space-y-3">
             {veri.mx.sunucular.map((s) => (
               <li key={s.sunucu}>
                 <div className="flex items-baseline justify-between gap-3">
                   <span className="break-all text-[14px] font-semibold text-strong">{s.sunucu}</span>
-                  <span className="shrink-0 text-[12px] text-muted">öncelik {s.oncelik}</span>
+                  <span className="shrink-0 text-[12px] text-muted">{m('arac.oncelik', { sayi: s.oncelik })}</span>
                 </div>
                 {s.adresler.length > 0 && <div className="mt-0.5 break-all font-mono text-[12px] text-muted">{s.adresler.join(' · ')}</div>}
               </li>
             ))}
           </ul>
         ) : (
-          <Bos>MX kaydı yok; bu alan adına e-posta ulaşmaz.</Bos>
+          <Bos>{m('arac.mx_yok')}</Bos>
         )}
       </Kutu>
 
-      <Kutu baslik="SPF" ek={<Rozet durum={veri.spf.durum}>{veri.spf.durum === 'iyi' ? 'Uygun' : veri.spf.durum === 'yok' ? 'Eksik' : 'Dikkat'}</Rozet>}>
+      <Kutu baslik="SPF" ek={<Rozet durum={veri.spf.durum}>{veri.spf.durum === 'iyi' ? m('arac.uygun') : veri.spf.durum === 'yok' ? m('arac.eksik') : m('arac.dikkat')}</Rozet>}>
         <p className="text-[14px] leading-relaxed text-body">{veri.spf.mesaj}</p>
         {veri.spf.kayit && (
           <>
             <code className="mt-3 block break-all rounded-xl bg-surface2 p-3 text-[12px] text-body">{veri.spf.kayit}</code>
             <div className="mt-3">
-              <Satir etiket="DNS sorgu sayısı" deger={`${veri.spf.lookupSayisi} / 10`} />
-              <Satir etiket="Dahil edilenler" deger={veri.spf.includeler?.join(', ') || null} kod />
-              <Satir etiket="Tanımlı IP" deger={veri.spf.ipler?.join(', ') || null} kod />
+              <Satir etiket={m('arac.dns_sorgu_sayisi')} deger={`${veri.spf.lookupSayisi} / 10`} />
+              <Satir etiket={m('arac.dahil_edilenler')} deger={veri.spf.includeler?.join(', ') || null} kod />
+              <Satir etiket={m('arac.tanimli_ip')} deger={veri.spf.ipler?.join(', ') || null} kod />
             </div>
             {veri.spf.lookupAsimi && (
               <p className="mt-2 text-[13px] font-semibold text-rose-600 dark:text-rose-400">
-                10 sorgu sınırı aşılmış; SPF doğrulaması hata verir.
+                {m('arac.spf_sinir_asimi')}
               </p>
             )}
           </>
         )}
       </Kutu>
 
-      <Kutu baslik="DMARC" ek={<Rozet durum={veri.dmarc.durum}>{veri.dmarc.durum === 'iyi' ? 'Uygun' : veri.dmarc.durum === 'yok' ? 'Eksik' : 'Dikkat'}</Rozet>}>
+      <Kutu baslik="DMARC" ek={<Rozet durum={veri.dmarc.durum}>{veri.dmarc.durum === 'iyi' ? m('arac.uygun') : veri.dmarc.durum === 'yok' ? m('arac.eksik') : m('arac.dikkat')}</Rozet>}>
         <p className="text-[14px] leading-relaxed text-body">{veri.dmarc.mesaj}</p>
         {veri.dmarc.kayit && (
           <>
             <code className="mt-3 block break-all rounded-xl bg-surface2 p-3 text-[12px] text-body">{veri.dmarc.kayit}</code>
             <div className="mt-3">
-              <Satir etiket="Politika" deger={veri.dmarc.politika} />
-              <Satir etiket="Alt alan adları" deger={veri.dmarc.altAlanPolitikasi} />
-              <Satir etiket="Uygulama oranı" deger={`%${veri.dmarc.yuzde}`} />
-              <Satir etiket="Rapor adresi" deger={veri.dmarc.raporAdresi?.replace('mailto:', '')} kod />
+              <Satir etiket={m('arac.politika')} deger={veri.dmarc.politika} />
+              <Satir etiket={m('arac.alt_alan_adlari')} deger={veri.dmarc.altAlanPolitikasi} />
+              <Satir etiket={m('arac.uygulama_orani')} deger={`%${veri.dmarc.yuzde}`} />
+              <Satir etiket={m('arac.rapor_adresi')} deger={veri.dmarc.raporAdresi?.replace('mailto:', '')} kod />
             </div>
           </>
         )}
@@ -300,16 +301,16 @@ function EpostaSonuc({ veri }) {
             {veri.dkim.kayitlar.map((k) => (
               <li key={k.secici} className="flex items-baseline gap-3">
                 <code className="text-[13px] font-bold text-strong">{k.secici}</code>
-                <span className="text-[12px] text-muted">._domainkey kaydı bulundu</span>
+                <span className="text-[12px] text-muted">{m('arac.dkim_bulundu')}</span>
               </li>
             ))}
           </ul>
         ) : (
-          <Bos>Bilinen seçicilerde DKIM kaydı bulunamadı. Farklı bir seçici kullanıyor olabilirsiniz.</Bos>
+          <Bos>{m('arac.dkim_yok')}</Bos>
         )}
         <div className="mt-4 space-y-1">
-          <Satir etiket="MTA-STS" deger={veri.mtaSts.bulundu ? 'Tanımlı' : 'Yok'} />
-          <Satir etiket="BIMI" deger={veri.bimi.bulundu ? 'Tanımlı' : 'Yok'} />
+          <Satir etiket="MTA-STS" deger={veri.mtaSts.bulundu ? m('arac.tanimli') : m('arac.yok')} />
+          <Satir etiket="BIMI" deger={veri.bimi.bulundu ? m('arac.tanimli') : m('arac.yok')} />
         </div>
       </Kutu>
     </div>
@@ -322,19 +323,19 @@ function KaraListeSonuc({ veri }) {
   return (
     <div className="grid gap-4 sm:grid-cols-2">
       <Kutu
-        baslik="Genel durum"
+        baslik={m('arac.genel_durum')}
         genis
         ek={
           <Rozet durum={veri.temiz ? 'iyi' : 'yok'}>
-            {veri.temiz ? 'Kara listede değil' : `${veri.listeliToplam} listede kayıtlı`}
+            {veri.temiz ? m('arac.kara_listede_degil') : m('arac.listede_kayitli', { sayi: veri.listeliToplam })}
           </Rozet>
         }
       >
         <p className="text-[14px] leading-relaxed text-body">
-          {veri.adresSayisi} IP adresi, {veri.bolgeSayisi} kara liste bölgesinde sorgulandı.{' '}
+          {m('arac.karaliste_ozet', { adres: veri.adresSayisi, bolge: veri.bolgeSayisi })}{' '}
           {veri.temiz
-            ? 'Sorgulanan adreslerin hiçbiri listelerde görünmüyor.'
-            : 'Listeye düşen adresler aşağıda işaretli; listeden çıkmak için ilgili listenin kendi başvuru sayfasını kullanmanız gerekir.'}
+            ? m('arac.karaliste_temiz')
+            : m('arac.karaliste_listede')}
         </p>
       </Kutu>
 
@@ -343,7 +344,7 @@ function KaraListeSonuc({ veri }) {
           key={s.ip}
           baslik={s.ip}
           genis
-          ek={<Rozet durum={s.listeliSayi ? 'yok' : 'iyi'}>{s.listeliSayi ? `${s.listeliSayi} listede` : 'Temiz'}</Rozet>}
+          ek={<Rozet durum={s.listeliSayi ? 'yok' : 'iyi'}>{s.listeliSayi ? m('arac.listede_sayi', { sayi: s.listeliSayi }) : m('arac.temiz')}</Rozet>}
         >
           <div className="flex flex-wrap gap-x-6 gap-y-1 text-[13px] text-muted">
             <span>{s.kaynak}</span>
@@ -360,7 +361,7 @@ function KaraListeSonuc({ veri }) {
                     <span className="block text-[11px] text-muted">{b.bolge}</span>
                   </span>
                   <Rozet durum={l.durum === 'listede' ? 'yok' : l.durum === 'temiz' ? 'iyi' : 'notr'}>
-                    {l.durum === 'listede' ? 'Listede' : l.durum === 'temiz' ? 'Temiz' : 'Sorgulanamadı'}
+                    {l.durum === 'listede' ? m('arac.listede') : l.durum === 'temiz' ? m('arac.temiz') : m('arac.sorgulanamadi')}
                   </Rozet>
                 </li>
               );
@@ -389,7 +390,7 @@ function KaraListeSonuc({ veri }) {
               <span className="font-bold text-strong">{b.ad}:</span> {b.not}{' '}
               {b.baglanti && (
                 <a href={b.baglanti} target="_blank" rel="noopener noreferrer" className="font-bold text-brandtext hover:text-brand-500">
-                  Sorgu sayfası
+                  {m('arac.sorgu_sayfasi')}
                 </a>
               )}
             </p>
@@ -404,31 +405,31 @@ function BasliklarSonuc({ veri }) {
 
   return (
     <div className="grid gap-4 sm:grid-cols-2">
-      <Kutu baslik="Genel değerlendirme" genis ek={<Rozet durum={puanTonu}>{veri.puan} / 100</Rozet>}>
+      <Kutu baslik={m('arac.genel_degerlendirme')} genis ek={<Rozet durum={puanTonu}>{veri.puan} / 100</Rozet>}>
         <div className="grid gap-3 sm:grid-cols-3">
           <div className="rounded-xl bg-surface2 px-4 py-3">
-            <div className="text-[12px] text-muted">Son adres</div>
+            <div className="text-[12px] text-muted">{m('arac.son_adres')}</div>
             <div className="mt-0.5 break-all text-[14px] font-bold text-strong">{veri.sonUrl}</div>
           </div>
           <div className="rounded-xl bg-surface2 px-4 py-3">
-            <div className="text-[12px] text-muted">Durum kodu</div>
+            <div className="text-[12px] text-muted">{m('arac.durum_kodu')}</div>
             <div className="mt-0.5 text-[18px] font-extrabold text-strong">{veri.durumKodu}</div>
           </div>
           <div className="rounded-xl bg-surface2 px-4 py-3">
-            <div className="text-[12px] text-muted">Sunucu</div>
-            <div className="mt-0.5 break-all text-[14px] font-bold text-strong">{veri.sunucu || 'Bildirilmemiş'}</div>
+            <div className="text-[12px] text-muted">{m('arac.sunucu')}</div>
+            <div className="mt-0.5 break-all text-[14px] font-bold text-strong">{veri.sunucu || m('arac.bildirilmemis')}</div>
           </div>
         </div>
       </Kutu>
 
-      <Kutu baslik="Güvenlik başlıkları" genis>
+      <Kutu baslik={m('arac.guvenlik_basliklari')} genis>
         <ul className="space-y-3">
           {veri.kontroller.map((k) => (
             <li key={k.id} className="border-b border-line/70 pb-3 last:border-0 last:pb-0">
               <div className="flex flex-wrap items-baseline justify-between gap-3">
                 <span className="text-[14px] font-bold text-strong">{k.ad}</span>
                 <Rozet durum={k.durum}>
-                  {k.durum === 'iyi' ? 'Tanımlı' : k.durum === 'orta' ? 'Geliştirilmeli' : 'Eksik'}
+                  {k.durum === 'iyi' ? m('arac.tanimli') : k.durum === 'orta' ? m('arac.gelistirilmeli') : m('arac.eksik')}
                 </Rozet>
               </div>
               <p className="mt-1 text-[13px] leading-relaxed text-muted">{k.aciklama}</p>
@@ -438,7 +439,7 @@ function BasliklarSonuc({ veri }) {
         </ul>
       </Kutu>
 
-      <Kutu baslik="Yönlendirme zinciri">
+      <Kutu baslik={m('arac.yonlendirme_zinciri')}>
         <ol className="space-y-2.5">
           {veri.zincir.map((z, i) => (
             <li key={`${z.url}-${i}`} className="flex gap-3">
@@ -449,14 +450,14 @@ function BasliklarSonuc({ veri }) {
         </ol>
         {veri.hsts && (
           <div className="mt-4">
-            <Satir etiket="HSTS süresi" deger={`${Math.round(veri.hsts.maxAge / 86400)} gün`} />
-            <Satir etiket="Alt alan adları" deger={veri.hsts.altAlanlar ? 'Kapsıyor' : 'Kapsamıyor'} />
-            <Satir etiket="Ön yükleme listesi" deger={veri.hsts.onYukleme ? 'İşaretli' : 'İşaretsiz'} />
+            <Satir etiket={m('arac.hsts_suresi')} deger={m('arac.gun_sayi', { sayi: Math.round(veri.hsts.maxAge / 86400) })} />
+            <Satir etiket={m('arac.alt_alan_adlari')} deger={veri.hsts.altAlanlar ? m('arac.kapsiyor') : m('arac.kapsamiyor')} />
+            <Satir etiket={m('arac.on_yukleme_listesi')} deger={veri.hsts.onYukleme ? m('arac.isaretli') : m('arac.isaretsiz')} />
           </div>
         )}
       </Kutu>
 
-      <Kutu baslik="Çerezler ve sunucu bilgisi">
+      <Kutu baslik={m('arac.cerezler_sunucu')}>
         {veri.cerezler.length ? (
           <ul className="space-y-2.5">
             {veri.cerezler.map((c) => (
@@ -465,25 +466,24 @@ function BasliklarSonuc({ veri }) {
                 <span className="flex flex-wrap gap-1.5">
                   <Rozet durum={c.secure ? 'iyi' : 'orta'}>Secure</Rozet>
                   <Rozet durum={c.httpOnly ? 'iyi' : 'orta'}>HttpOnly</Rozet>
-                  <Rozet durum={c.sameSite ? 'iyi' : 'orta'}>SameSite{c.sameSite ? `=${c.sameSite}` : ' yok'}</Rozet>
+                  <Rozet durum={c.sameSite ? 'iyi' : 'orta'}>SameSite{c.sameSite ? `=${c.sameSite}` : ` ${m('arac.yok_kucuk')}`}</Rozet>
                 </span>
               </li>
             ))}
           </ul>
         ) : (
-          <Bos>Yanıtta çerez ayarlanmıyor.</Bos>
+          <Bos>{m('arac.cerez_yok')}</Bos>
         )}
 
         <div className="mt-4">
-          <Satir etiket="İçerik türü" deger={veri.icerikTuru} kod />
-          <Satir etiket="Sıkıştırma" deger={veri.sikistirma || 'Yok'} />
-          <Satir etiket="Önbellek" deger={veri.onbellek} kod />
+          <Satir etiket={m('arac.icerik_turu')} deger={veri.icerikTuru} kod />
+          <Satir etiket={m('arac.sikistirma')} deger={veri.sikistirma || m('arac.yok')} />
+          <Satir etiket={m('arac.onbellek')} deger={veri.onbellek} kod />
         </div>
 
         {veri.ifsalar.length > 0 && (
           <p className="mt-4 text-[13px] leading-relaxed text-amber-700 dark:text-amber-400">
-            Sürüm bilgisi ifşa ediliyor: {veri.ifsalar.map((i) => `${i.ad}: ${i.deger}`).join(' · ')}. Bu başlıkları
-            gizlemek, bilinen açıkları arayan taramaları zorlaştırır.
+            {m('arac.surum_ifsa', { liste: veri.ifsalar.map((i) => `${i.ad}: ${i.deger}`).join(' · ') })}
           </p>
         )}
       </Kutu>
@@ -494,21 +494,21 @@ function BasliklarSonuc({ veri }) {
 function IpSonuc({ veri }) {
   return (
     <div className="grid gap-4 sm:grid-cols-2">
-      <Kutu baslik={veri.kendiIpiniz ? 'Bağlandığınız IP adresi' : 'Sorgulanan IP'} genis>
+      <Kutu baslik={veri.kendiIpiniz ? m('arac.bagli_ip') : m('arac.sorgulanan_ip')} genis>
         <p className="font-mono text-3xl font-extrabold tracking-tight text-strong">{veri.adres}</p>
-        {veri.kaynakAlan && <p className="mt-1 text-[13px] text-muted">{veri.kaynakAlan} alan adının A kaydı</p>}
+        {veri.kaynakAlan && <p className="mt-1 text-[13px] text-muted">{m('arac.a_kaydi_kaynak', { alan: veri.kaynakAlan })}</p>}
       </Kutu>
 
-      <Kutu baslik="Ağ bilgisi">
-        <Satir etiket="Otonom sistem" deger={veri.asn} kod />
-        <Satir etiket="Operatör" deger={veri.asAdi} />
-        <Satir etiket="IP bloğu" deger={veri.onEk} kod />
-        <Satir etiket="Kayıt kuruluşu" deger={veri.kayitci} />
-        <Satir etiket="Tahsis tarihi" deger={veri.tahsisTarihi} />
-        <Satir etiket="Ülke kodu" deger={veri.ulke} />
+      <Kutu baslik={m('arac.ag_bilgisi')}>
+        <Satir etiket={m('arac.otonom_sistem')} deger={veri.asn} kod />
+        <Satir etiket={m('arac.operator')} deger={veri.asAdi} />
+        <Satir etiket={m('arac.ip_blogu')} deger={veri.onEk} kod />
+        <Satir etiket={m('arac.kayit_kurulusu')} deger={veri.kayitci} />
+        <Satir etiket={m('arac.tahsis_tarihi')} deger={veri.tahsisTarihi} />
+        <Satir etiket={m('arac.ulke_kodu')} deger={veri.ulke} />
       </Kutu>
 
-      <Kutu baslik="Ters DNS (PTR)">
+      <Kutu baslik={m('arac.ters_dns')}>
         {veri.ptr.length ? (
           <ul className="space-y-2">
             {veri.ptr.map((p) => (
@@ -516,7 +516,7 @@ function IpSonuc({ veri }) {
             ))}
           </ul>
         ) : (
-          <Bos>PTR kaydı tanımlı değil. Posta sunucularında bu kayıt teslim edilebilirlik için gereklidir.</Bos>
+          <Bos>{m('arac.ptr_yok')}</Bos>
         )}
       </Kutu>
     </div>
@@ -550,7 +550,7 @@ function TipSecici({ secili, onSec }) {
             secili === t ? 'bg-brand-500 text-white' : 'bg-surface2 text-body hover:bg-brandsoft hover:text-brandtext'
           }`}
         >
-          {t === 'TUM' ? 'Tümü' : t}
+          {t === 'TUM' ? m('arac.tumu') : t}
         </button>
       ))}
     </div>
@@ -580,7 +580,7 @@ export default function ToolRunner({ arac, baslangicGirdi = '', baslangicTip = '
     (deger, istenenTip) => {
       const alan = alanNormalle(deger);
       if (!alan) {
-        setHata('Alan adı girin.');
+        setHata(m('arac.alan_adi_girin'));
         return;
       }
       setHata('');
@@ -599,7 +599,7 @@ export default function ToolRunner({ arac, baslangicGirdi = '', baslangicTip = '
       }
 
       if (!girdi.trim() && !arac.girdiOpsiyonel) {
-        setHata(`${arac.girdiEtiketi} girin.`);
+        setHata(m('arac.girdi_girin', { etiket: arac.girdiEtiketi }));
         return;
       }
       setYukleniyor(true);
@@ -616,10 +616,10 @@ export default function ToolRunner({ arac, baslangicGirdi = '', baslangicTip = '
           setVeri(d.data);
           if (girdi.trim()) setGecmis(gecmisYaz(arac.slug, { girdi: girdi.trim() }));
         } else {
-          setHata(d.error?.message || 'Sorgu tamamlanamadı.');
+          setHata(d.error?.message || m('arac.sorgu_tamamlanamadi'));
         }
       } catch {
-        setHata('Sunucuya ulaşılamadı. Bağlantınızı kontrol edip tekrar deneyin.');
+        setHata(m('arac.sunucuya_ulasilamadi'));
       } finally {
         setYukleniyor(false);
       }
@@ -639,7 +639,7 @@ export default function ToolRunner({ arac, baslangicGirdi = '', baslangicTip = '
             <input
               value={girdi}
               onChange={(e) => { setGirdi(e.target.value); if (hata) setHata(''); }}
-              placeholder={arac.girdiOpsiyonel ? `${arac.ornek} (boş bırakırsanız kendi IP'niz)` : arac.ornek}
+              placeholder={arac.girdiOpsiyonel ? m('arac.girdi_opsiyonel', { ornek: arac.ornek }) : arac.ornek}
               inputMode="url"
               autoComplete="off"
               autoCapitalize="none"
@@ -652,7 +652,7 @@ export default function ToolRunner({ arac, baslangicGirdi = '', baslangicTip = '
             disabled={bekliyor}
             className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-500 px-6 py-3.5 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-600 disabled:opacity-60"
           >
-            {bekliyor ? 'Sorgulanıyor…' : 'Sorgula'}
+            {bekliyor ? m('arac.sorgulaniyor') : m('arac.sorgula')}
             {!bekliyor && <Icon name="arrow" className="h-4 w-4" />}
           </button>
         </div>
@@ -662,7 +662,7 @@ export default function ToolRunner({ arac, baslangicGirdi = '', baslangicTip = '
 
       {gecmis.length > 0 && (
         <div className="mt-3 flex flex-wrap items-center gap-2">
-          <span className="text-[12px] text-muted">Son sorgular:</span>
+          <span className="text-[12px] text-muted">{m('arac.son_sorgular')}</span>
           {gecmis.map((k) => (
             <button
               key={`${k.girdi}|${k.tip || ''}`}

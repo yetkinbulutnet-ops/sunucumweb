@@ -3,11 +3,12 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Icon, CtaBand, SiteShell } from './chrome';
 import AddToCartButton from './AddToCartButton';
-import { ALTYAPI } from '@/content/site/markalar';
-import { wisecpSiparisUrl } from '@/content/site/wisecp-siparis';
+import { useSiteAyarlari } from './SiteAyarlari';
+import { siparisUrl } from '@/content/site/wisecp-siparis';
 import { useParabirimi } from './CurrencyProvider';
 import Sema from './Sema';
 import { urunSemasi, sssSemasi, ekmekKirintisi } from '@/lib/semalar';
+import { m } from '@/lib/metin';
 
 const SUNUCU_GORSEL = '/img/urun/sunucu.webp';
 const SLUG_GORSEL = { 'sanal-sunucu': '/img/urun/xeon.webp', 'premium-sunucu': '/img/urun/xeon-platinum.webp', 'gpu-sunucu': '/img/urun/ekran-karti.webp', 'dedicated-sunucu': '/img/urun/dedicated.webp' };
@@ -28,7 +29,7 @@ const HERO_TON = {
   'web-hosting': 'bg-brand-400/25', 'wordpress-hosting': 'bg-sky-400/25',
   'reseller-hosting': 'bg-violet-400/25', 'kurumsal-hosting': 'bg-indigo-400/25',
 };
-const HOSTING_ALTYAPI = ALTYAPI.filter((a) => ['cPanel', 'LiteSpeed', 'CloudLinux', 'Imunify360', 'JetBackup', 'Softaculous'].includes(a.ad));
+const HOSTING_ALTYAPI_ADLARI = ['cPanel', 'LiteSpeed', 'CloudLinux', 'Imunify360', 'JetBackup', 'Softaculous'];
 
 const num = (s) => {
   if (typeof s === 'number') return s;
@@ -42,33 +43,6 @@ const TIP = {
   'sunucu-barindirma': 'merkez', 'ip-kiralama': 'merkez',
 };
 
-const SERIT = [
-  { icon: 'shield', t: '%99.9 Uptime', d: 'SLA garantili erişilebilirlik' },
-  { icon: 'refresh', t: '30 Gün İade', d: 'Koşulsuz para iade garantisi' },
-  { icon: 'headset', t: '7/24 Destek', d: 'Ortalama 5 dakikada yanıt' },
-  { icon: 'bolt', t: 'Hızlı Kurulum', d: 'Dakikalar içinde aktivasyon' },
-];
-
-const PERFORMANS = [
-  { icon: 'bolt', t: 'NVMe SSD Diskler', d: 'En son nesil NVMe ile üstün okuma/yazma performansı.' },
-  { icon: 'gauge', t: 'LiteSpeed & Önbellek', d: 'Optimize sunucu yazılımı ve gelişmiş önbellekleme.' },
-  { icon: 'pin', t: 'İstanbul Lokasyonu', d: 'Türkiye içi düşük gecikme, hedef kitlenize yakın.' },
-  { icon: 'wifi', t: 'Yedekli Premium Ağ', d: 'Çift hatlı, yüksek bant genişlikli kesintisiz bağlantı.' },
-];
-
-const GUVENLIK = [
-  { icon: 'shield', t: 'DDoS Koruması', d: 'Gelişmiş filtreleme ile saldırılara karşı sürekli koruma.' },
-  { icon: 'lock', t: 'Ücretsiz SSL', d: 'Otomatik kurulan Let\'s Encrypt sertifikaları.' },
-  { icon: 'refresh', t: 'Otomatik Yedekleme', d: 'Düzenli yedekle verileriniz her zaman güvende.' },
-  { icon: 'check', t: 'Güvenlik Duvarı', d: 'Katmanlı güvenlik, kötü amaçlı trafik filtreleme.' },
-];
-
-const HOSTING_ADIM = [
-  { t: 'Paketinizi seçin', d: 'İhtiyacınıza uygun paketi seçip sepete ekleyin.' },
-  { t: 'Kurulum & ücretsiz taşıma', d: 'Hesabınız anında kurulur; mevcut sitenizi biz taşırız.' },
-  { t: 'Dakikalar içinde yayında', d: 'Siteniz canlıda; her şeyi kolay panelden yönetin.' },
-];
-
 const OS_LOGO = [
   { ad: 'Ubuntu', logo: '/img/os/ubuntu.webp' },
   { ad: 'Debian', logo: '/img/os/debian.webp' },
@@ -77,12 +51,6 @@ const OS_LOGO = [
   { ad: 'Windows Server', logo: '/img/os/windows-server.webp' },
 ];
 const PANEL_LOGO = [{ ad: 'cPanel', logo: '/img/altyapi/cpanel.webp' }];
-
-const KARSILASTIRMA = [
-  { grup: 'Genel Özellikler', satirlar: ['cPanel Kontrol Paneli', '24/7 FTP Erişimi', 'Haftalık Otomatik Yedekleme', 'Sınırsız Alan Adı Yönlendirme', 'Ziyaretçi & Trafik İstatistikleri', 'Şifre Korumalı Dizin', 'Özel Hata Sayfaları', 'Web Üzerinden Dosya Yönetimi'] },
-  { grup: 'E-Posta Özellikleri', satirlar: ['SMTP / POP3 / IMAP', 'Web Mail Erişimi', 'Anti-Spam / Anti-Virüs', 'Otomatik Cevaplama', 'Takma Ad (Alias)', 'E-posta Yönlendirme', 'E-posta Grupları'] },
-  { grup: 'Güvenlik & Altyapı', satirlar: ['Ücretsiz SSL Sertifikası', 'DDoS Koruması', 'NVMe SSD Disk', 'LiteSpeed Web Sunucusu', 'Imunify360 Güvenlik', 'Softaculous Oto Kurulum'] },
-];
 
 function Faq({ items }) {
   const [open, setOpen] = useState(0);
@@ -121,12 +89,12 @@ function Fiyat({ p, yillik, koyu }) {
   const { fiyat } = useParabirimi();
   const aylik = num(p.price);
   if (aylik <= 0) {
-    return <div className={`text-[19px] font-extrabold ${koyu ? 'text-white' : 'text-strong'}`}>Fiyat için görüşün</div>;
+    return <div className={`text-[19px] font-extrabold ${koyu ? 'text-white' : 'text-strong'}`}>{m('urun.fiyat_gorusun')}</div>;
   }
   const yillikAy = Math.round(aylik * 10 / 12);
   const gosterilen = yillik ? yillikAy : aylik;
   const eski = yillik ? aylik : (p.oldPrice ? num(p.oldPrice) : 0);
-  const rozet = yillik ? '2 ay bedava' : (p.discount || null);
+  const rozet = yillik ? m('urun.iki_ay_bedava') : (p.discount || null);
   return (
     <div>
       {(eski > gosterilen || rozet) && (
@@ -137,7 +105,7 @@ function Fiyat({ p, yillik, koyu }) {
       )}
       <div className="flex items-baseline gap-1">
         <span className={`text-4xl font-extrabold tracking-tight ${koyu ? 'text-white' : 'text-strong'}`}>{fiyat(gosterilen)}</span>
-        <span className={`text-sm ${koyu ? 'text-slate-300' : 'text-muted'}`}>/ay</span>
+        <span className={`text-sm ${koyu ? 'text-slate-300' : 'text-muted'}`}>{m('urun.ay_eki')}</span>
       </div>
     </div>
   );
@@ -147,7 +115,7 @@ function PlanKart({ p, urun, yillik, tip, slug }) {
   const koyu = p.popular;
   return (
     <div className={`relative flex flex-col rounded-3xl p-7 transition-[transform,box-shadow,border-color] duration-300 ${koyu ? 'bg-ink text-white shadow-[0_40px_80px_-30px_rgba(15,41,66,0.6)] lg:-translate-y-4 ring-1 ring-brand-400/40' : 'bg-surface border border-line shadow-[0_20px_50px_-30px_rgba(15,41,66,0.3)] hover:-translate-y-1'}`}>
-      {koyu && <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-brand-600 px-4 py-1 text-xs font-bold text-white shadow-lg shadow-brand-500/40">EN POPÜLER</span>}
+      {koyu && <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-brand-600 px-4 py-1 text-xs font-bold text-white shadow-lg shadow-brand-500/40">{m('urun.en_populer')}</span>}
       <div className={`text-xl font-extrabold ${koyu ? 'text-white' : 'text-strong'}`}>{p.name}</div>
       {p.sub && <div className={`mt-1 text-[13px] ${koyu ? 'text-slate-400' : 'text-muted'}`}>{p.sub}</div>}
       <div className="mt-4"><Fiyat p={p} yillik={yillik} koyu={koyu} /></div>
@@ -160,9 +128,9 @@ function PlanKart({ p, urun, yillik, tip, slug }) {
         ))}
       </ul>
       {tip === 'merkez' ? (
-        <Link href="/iletisim" className={`mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3.5 text-[15px] font-bold transition-colors ${koyu ? 'bg-brand-500 text-white hover:bg-brand-400' : 'bg-ink text-white hover:bg-brand-600'}`}>Teklif Al <Icon name="arrow" className="h-4 w-4" /></Link>
+        <Link href="/iletisim" className={`mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3.5 text-[15px] font-bold transition-colors ${koyu ? 'bg-brand-500 text-white hover:bg-brand-400' : 'bg-ink text-white hover:bg-brand-600'}`}>{m('urun.teklif_al')} <Icon name="arrow" className="h-4 w-4" /></Link>
       ) : (
-        <AddToCartButton item={{ name: p.name, product: urun.title, price: yillik ? Math.round(num(p.price) * 10 / 12) : num(p.price), period: '/ay' }} href={wisecpSiparisUrl(slug, p.name)} tema={koyu ? 'dolu' : 'acik'} className="mt-8 w-full py-3.5 text-[15px]" />
+        <AddToCartButton item={{ name: p.name, product: urun.title, price: yillik ? Math.round(num(p.price) * 10 / 12) : num(p.price), period: '/ay' }} href={siparisUrl(urun, p)} tema={koyu ? 'dolu' : 'acik'} className="mt-8 w-full py-3.5 text-[15px]" />
       )}
     </div>
   );
@@ -178,11 +146,11 @@ function PlanSatir({ p, urun, yillik, tip, gorsel, slug }) {
     <div className={`relative flex flex-col gap-5 rounded-3xl border p-6 lg:flex-row lg:items-center lg:gap-6 ${one ? 'border-brand-400/50 bg-surface ring-1 ring-brand-400/30 shadow-[0_24px_60px_-30px_rgba(20,184,166,0.4)]' : 'border-line bg-surface shadow-[0_16px_50px_-32px_rgba(15,41,66,0.3)]'}`}>
       {gorsel && (
         <div className="hidden shrink-0 sm:block lg:w-28">
-          <img src={gorsel} alt={`${p.name} sunucu`} width={480} height={360} loading="lazy" className="mx-auto h-14 w-auto object-contain lg:h-[72px]" />
+          <img src={gorsel} alt={m('urun.plan_gorsel_alt', { ad: p.name })} width={480} height={360} loading="lazy" className="mx-auto h-14 w-auto object-contain lg:h-[72px]" />
         </div>
       )}
       <div className="lg:w-44 lg:shrink-0">
-        {one && <span className="mb-2 inline-block rounded-full bg-brand-600 px-3 py-0.5 text-[11px] font-bold text-white">EN POPÜLER</span>}
+        {one && <span className="mb-2 inline-block rounded-full bg-brand-600 px-3 py-0.5 text-[11px] font-bold text-white">{m('urun.en_populer')}</span>}
         <div className="text-lg font-extrabold text-strong">{p.name}</div>
         {p.sub && <div className="mt-0.5 text-[12.5px] leading-snug text-muted">{p.sub}</div>}
       </div>
@@ -213,9 +181,9 @@ function PlanSatir({ p, urun, yillik, tip, gorsel, slug }) {
         <div className="lg:flex lg:flex-col lg:items-end"><Fiyat p={p} yillik={yillik} koyu={false} /></div>
         <div className="mt-4">
           {tip === 'merkez' ? (
-            <Link href="/iletisim" className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-ink px-5 py-3 text-[14.5px] font-bold text-white transition-colors hover:bg-brand-600">Teklif Al <Icon name="arrow" className="h-4 w-4" /></Link>
+            <Link href="/iletisim" className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-ink px-5 py-3 text-[14.5px] font-bold text-white transition-colors hover:bg-brand-600">{m('urun.teklif_al')} <Icon name="arrow" className="h-4 w-4" /></Link>
           ) : (
-            <AddToCartButton item={{ name: p.name, product: urun.title, price: yillik ? Math.round(num(p.price) * 10 / 12) : num(p.price), period: '/ay' }} href={wisecpSiparisUrl(slug, p.name)} tema={one ? 'dolu' : 'acik'} className="w-full py-3 text-[14.5px]" />
+            <AddToCartButton item={{ name: p.name, product: urun.title, price: yillik ? Math.round(num(p.price) * 10 / 12) : num(p.price), period: '/ay' }} href={siparisUrl(urun, p)} tema={one ? 'dolu' : 'acik'} className="w-full py-3 text-[14.5px]" />
           )}
         </div>
       </div>
@@ -223,7 +191,7 @@ function PlanSatir({ p, urun, yillik, tip, gorsel, slug }) {
   );
 }
 
-function KarsilastirmaTablosu({ plans }) {
+function KarsilastirmaTablosu({ plans, KARSILASTIRMA }) {
   const rows = [];
   KARSILASTIRMA.forEach((g) => { rows.push({ grup: g.grup }); g.satirlar.forEach((s) => rows.push({ satir: s })); });
   return (
@@ -231,7 +199,7 @@ function KarsilastirmaTablosu({ plans }) {
       <table className="w-full min-w-[620px] border-collapse text-left">
         <thead>
           <tr>
-            <th className="sticky left-0 z-10 bg-surface2 px-5 py-4 text-[14px] font-extrabold text-strong">Özellik</th>
+            <th className="sticky left-0 z-10 bg-surface2 px-5 py-4 text-[14px] font-extrabold text-strong">{m('urun.tablo_ozellik')}</th>
             {plans.map((p) => (
               <th key={p.name} className={`px-4 py-4 text-center text-[14px] font-extrabold ${p.popular ? 'text-brandtext' : 'text-strong'}`}>{p.name}</th>
             ))}
@@ -268,12 +236,12 @@ function DonanimGorsel({ d, gorsel, tonGlow }) {
         <div className="relative overflow-hidden rounded-2xl">
           {gorsel.foto ? (
             <div className="relative aspect-[4/3]">
-              <img src={gorsel.src} alt={`${d.title} altyapısı`} width={1200} height={900} loading="eager" fetchPriority="high" className="h-full w-full object-cover" />
+              <img src={gorsel.src} alt={m('urun.hero_foto_alt', { urun: d.title })} width={1200} height={900} loading="eager" fetchPriority="high" className="h-full w-full object-cover" />
               <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-transparent" />
             </div>
           ) : (
             <div className="grid aspect-[4/3] place-items-center bg-[radial-gradient(circle_at_50%_38%,rgb(var(--c-surface2)),rgb(var(--c-surface)))] p-6">
-              <img src={gorsel.src} alt={`${d.title} görseli`} width={900} height={700} loading="eager" fetchPriority="high" className="max-h-full w-auto object-contain drop-shadow-[0_30px_45px_rgba(15,41,66,0.4)]" />
+              <img src={gorsel.src} alt={m('urun.hero_gorsel_alt', { urun: d.title })} width={900} height={700} loading="eager" fetchPriority="high" className="max-h-full w-auto object-contain drop-shadow-[0_30px_45px_rgba(15,41,66,0.4)]" />
             </div>
           )}
         </div>
@@ -303,7 +271,7 @@ function HostingGorsel({ d, tonGlow }) {
       <div className="relative overflow-hidden rounded-3xl border border-line/80 bg-surface shadow-[0_40px_90px_-40px_rgba(15,41,66,0.5)]">
         <div className="flex items-center gap-2 border-b border-line bg-surface2 px-4 py-3">
           <span className="h-3 w-3 rounded-full bg-rose-400/70" /><span className="h-3 w-3 rounded-full bg-amber-400/70" /><span className="h-3 w-3 rounded-full bg-emerald-400/70" />
-          <span className="ml-2 flex min-w-0 flex-1 items-center gap-1.5 rounded-lg bg-page px-3 py-1.5 text-[12px] text-muted"><Icon name="lock" className="h-3.5 w-3.5 shrink-0 text-brandtext" /><span className="truncate">https://siteniz.com.tr</span></span>
+          <span className="ml-2 flex min-w-0 flex-1 items-center gap-1.5 rounded-lg bg-page px-3 py-1.5 text-[12px] text-muted"><Icon name="lock" className="h-3.5 w-3.5 shrink-0 text-brandtext" /><span className="truncate">{m('urun.ornek_adres')}</span></span>
         </div>
         <div className="p-5">
           <div className="flex items-center gap-3">
@@ -323,7 +291,7 @@ function HostingGorsel({ d, tonGlow }) {
       </div>
       <div className="absolute -bottom-4 -left-2 flex items-center gap-2.5 rounded-2xl border border-line bg-surface px-4 py-3 shadow-xl shadow-ink/10 animate-[float_6s_ease-in-out_infinite] sm:-left-4">
         <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-brandsoft text-brandtext"><Icon name="bolt" className="h-5 w-5" /></span>
-        <div><div className="text-[13px] font-extrabold leading-none text-strong">LiteSpeed</div><div className="mt-1 text-[11px] text-muted">Önbellekli hız</div></div>
+        <div><div className="text-[13px] font-extrabold leading-none text-strong">LiteSpeed</div><div className="mt-1 text-[11px] text-muted">{m('urun.onbellekli_hiz')}</div></div>
       </div>
     </div>
   );
@@ -333,7 +301,9 @@ function HeroVisual({ d, gorsel, tonGlow }) {
   return gorsel ? <DonanimGorsel d={d} gorsel={gorsel} tonGlow={tonGlow} /> : <HostingGorsel d={d} tonGlow={tonGlow} />;
 }
 
-export default function ProductPage({ data, slug }) {
+export default function ProductPage({ data, slug, ortak }) {
+  const { serit: SERIT, performans: PERFORMANS, guvenlik: GUVENLIK, hostingAdim: HOSTING_ADIM, karsilastirma: KARSILASTIRMA } = ortak;
+  const HOSTING_ALTYAPI = useSiteAyarlari().altyapi.liste.filter((a) => HOSTING_ALTYAPI_ADLARI.includes(a.ad));
   const d = data;
   const tip = TIP[slug] || 'hosting';
   const { fiyat } = useParabirimi();
@@ -350,7 +320,7 @@ export default function ProductPage({ data, slug }) {
       <Sema veri={[
         urunSemasi({ ad: d.title, aciklama: d.subtitle, yol: `/${slug}`, gorsel, planlar: (d.plans || []).map((p) => ({ name: p.name, fiyat: num(p.price) })) }),
         ...(d.faq ? [sssSemasi(d.faq)] : []),
-        ekmekKirintisi([{ ad: 'Ana Sayfa', yol: '/' }, { ad: d.eyebrow || d.title, yol: `/${slug}` }]),
+        ekmekKirintisi([{ ad: m('urun.ana_sayfa'), yol: '/' }, { ad: d.eyebrow || d.title, yol: `/${slug}` }]),
       ]} />
       <section className="relative overflow-hidden border-b border-line">
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
@@ -360,22 +330,22 @@ export default function ProductPage({ data, slug }) {
         <div className="mx-auto max-w-7xl px-5 lg:px-8 py-16 lg:py-20">
           <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
             <div className="min-w-0 animate-[fadeup_0.6s_ease-out]">
-              <div className="mb-5 flex items-center gap-2 text-sm text-muted"><Link href="/" className="hover:text-brandtext">Ana Sayfa</Link><span>/</span><span className="font-medium text-strong/70">{d.title}</span></div>
+              <div className="mb-5 flex items-center gap-2 text-sm text-muted"><Link href="/" className="hover:text-brandtext">{m('urun.ana_sayfa')}</Link><span>/</span><span className="font-medium text-strong/70">{d.title}</span></div>
               <span className="inline-flex items-center gap-2 rounded-full border border-brandline bg-brandsoft/80 px-3.5 py-1.5 text-[13px] font-semibold text-brandtext"><Icon name={d.icon} className="h-4 w-4" /> {d.eyebrow}</span>
               <h1 className="mt-5 tipo-dev font-extrabold tracking-tight text-strong text-balance">{d.title}</h1>
               <p className="mt-5 max-w-xl tipo-giris text-body">{d.subtitle}</p>
 
               {Number.isFinite(minFiyat) && (
                 <div className="mt-6 flex items-baseline gap-2">
-                  <span className="text-[15px] text-muted">Başlangıç</span>
+                  <span className="text-[15px] text-muted">{m('urun.baslangic')}</span>
                   <span className="text-2xl font-extrabold text-strong">{fiyat(minFiyat)}</span>
-                  <span className="text-[15px] text-muted">/ay'dan</span>
+                  <span className="text-[15px] text-muted">{m('urun.aydan')}</span>
                 </div>
               )}
 
               <div className="mt-6 flex flex-wrap gap-3">
-                <a href="#paketler" className="inline-flex items-center gap-2 rounded-xl bg-brand-500 px-6 py-3.5 text-[15px] font-semibold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-600">Paketleri Gör <Icon name="arrow" className="h-4 w-4" /></a>
-                <Link href="/iletisim" className="inline-flex items-center gap-2 rounded-xl bg-surface px-6 py-3.5 text-[15px] font-semibold text-strong ring-1 ring-line transition hover:ring-brandtext/50">Bize Ulaşın</Link>
+                <a href="#paketler" className="inline-flex items-center gap-2 rounded-xl bg-brand-500 px-6 py-3.5 text-[15px] font-semibold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-600">{m('urun.paketleri_gor')} <Icon name="arrow" className="h-4 w-4" /></a>
+                <Link href="/iletisim" className="inline-flex items-center gap-2 rounded-xl bg-surface px-6 py-3.5 text-[15px] font-semibold text-strong ring-1 ring-line transition hover:ring-brandtext/50">{m('urun.bize_ulasin')}</Link>
               </div>
 
               {d.heroStats?.length > 0 && (
@@ -409,14 +379,14 @@ export default function ProductPage({ data, slug }) {
       </section>
 
       <section id="paketler" className="scroll-mt-20 bg-surface2 border-b border-line"><div className="mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-24">
-        <div className="text-center max-w-2xl mx-auto"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Paketler</span><h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">{d.title} Paketleri</h2><p className="mt-4 tipo-metin text-body">İhtiyacınıza göre ölçeklenen, şeffaf fiyatlı paketler.</p></div>
+        <div className="text-center max-w-2xl mx-auto"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">{m('urun.paketler_etiket')}</span><h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">{m('urun.paketler_baslik', { urun: d.title })}</h2><p className="mt-4 tipo-metin text-body">{m('urun.paketler_aciklama')}</p></div>
 
         {minFiyat > 0 && (
           <div className="mt-8 flex items-center justify-center">
             <div className="inline-flex items-center rounded-full border border-line bg-surface p-1 text-[13.5px] font-semibold">
-              <button onClick={() => setYillik(false)} className={`rounded-full px-4 py-2 transition-colors ${!yillik ? 'bg-brand-500 text-white shadow' : 'text-body hover:text-strong'}`}>Aylık</button>
+              <button onClick={() => setYillik(false)} className={`rounded-full px-4 py-2 transition-colors ${!yillik ? 'bg-brand-500 text-white shadow' : 'text-body hover:text-strong'}`}>{m('urun.aylik')}</button>
               <button onClick={() => setYillik(true)} className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 transition-colors ${yillik ? 'bg-brand-500 text-white shadow' : 'text-body hover:text-strong'}`}>
-                Yıllık <span className={`rounded-md px-1.5 py-0.5 text-[10px] font-extrabold ${yillik ? 'bg-white/20 text-white' : 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'}`}>2 AY BEDAVA</span>
+                {m('urun.yillik')} <span className={`rounded-md px-1.5 py-0.5 text-[10px] font-extrabold ${yillik ? 'bg-white/20 text-white' : 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'}`}>{m('urun.iki_ay_bedava_rozet')}</span>
               </button>
             </div>
           </div>
@@ -427,23 +397,23 @@ export default function ProductPage({ data, slug }) {
         ) : (
           <div className="mt-12 space-y-4">{d.plans.map((p) => <PlanSatir key={p.name} p={p} urun={d} yillik={yillik} tip={tip} gorsel={tip === 'sunucu' ? (SLUG_GORSEL[slug] || SUNUCU_GORSEL) : null} slug={slug} />)}</div>
         )}
-        <p className="mt-6 text-center text-sm text-muted">Fiyatlara KDV dahil değildir. İhtiyacınıza özel yapılandırma için <Link href="/iletisim" className="font-semibold text-brandtext hover:underline">bize ulaşın</Link>.</p>
+        <p className="mt-6 text-center text-sm text-muted">{m('urun.kdv_notu')} <Link href="/iletisim" className="font-semibold text-brandtext hover:underline">{m('urun.kdv_notu_link')}</Link>.</p>
       </div></section>
 
       {hosting && (
         <section className="mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-24">
-          <div className="mx-auto mb-12 max-w-2xl text-center"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Karşılaştırma</span><h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">Tüm paketlerde neler var?</h2></div>
-          <KarsilastirmaTablosu plans={d.plans} />
+          <div className="mx-auto mb-12 max-w-2xl text-center"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">{m('urun.karsilastirma_etiket')}</span><h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">{m('urun.karsilastirma_baslik')}</h2></div>
+          <KarsilastirmaTablosu plans={d.plans} KARSILASTIRMA={KARSILASTIRMA} />
 
           <div className="mx-auto mt-20 mb-10 max-w-2xl text-center">
-            <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Altyapımız</span>
-            <h3 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">Endüstri standardı teknolojiler</h3>
-            <p className="mt-3 tipo-metin text-body">Sunucularımız cPanel, LiteSpeed, CloudLinux ve Imunify360 gibi güvenilir yazılımlarla güçlendirilir.</p>
+            <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">{m('urun.altyapi_etiket')}</span>
+            <h3 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">{m('urun.altyapi_baslik')}</h3>
+            <p className="mt-3 tipo-metin text-body">{m('urun.altyapi_aciklama')}</p>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
             {HOSTING_ALTYAPI.map((a) => (
               <div key={a.ad} className="grid h-16 w-32 place-items-center rounded-2xl bg-white px-5 ring-1 ring-line sm:w-36">
-                <img src={a.logo} alt={`${a.ad} logosu`} width={a.g} height={a.y} loading="lazy" className="max-h-8 w-auto max-w-[120px] object-contain" />
+                <img src={a.logo} alt={m('urun.logo_alt', { ad: a.ad })} width={a.g} height={a.y} loading="lazy" className="max-h-8 w-auto max-w-[120px] object-contain" />
               </div>
             ))}
           </div>
@@ -451,20 +421,20 @@ export default function ProductPage({ data, slug }) {
       )}
 
       <section className={hosting ? 'bg-surface2 border-y border-line' : 'mx-auto max-w-7xl px-5 lg:px-8'}><div className={hosting ? 'mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-24' : 'py-20 lg:py-24'}>
-        <div className="max-w-2xl"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Öne Çıkanlar</span><h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">{d.featuresTitle}</h2></div>
+        <div className="max-w-2xl"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">{m('urun.one_cikanlar')}</span><h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">{d.featuresTitle}</h2></div>
         <div className="mt-12"><OzellikGrid items={d.features} /></div>
       </div></section>
 
       <section className={hosting ? 'mx-auto max-w-7xl px-5 lg:px-8' : 'bg-surface2 border-y border-line'}><div className={hosting ? 'py-20 lg:py-24' : 'mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-24'}>
         <div className="grid gap-10 lg:grid-cols-2">
           <div>
-            <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Performans</span>
-            <h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">Hız için tasarlandı</h2>
+            <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">{m('urun.performans_etiket')}</span>
+            <h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">{m('urun.performans_baslik')}</h2>
             <div className="mt-8 space-y-5">{PERFORMANS.map((f) => (<div key={f.t} className="flex gap-4"><span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-brandsoft text-brandtext"><Icon name={f.icon} className="h-5 w-5" /></span><div><h3 className="text-[16px] font-bold text-strong">{f.t}</h3><p className="mt-1 text-[14px] leading-relaxed text-body">{f.d}</p></div></div>))}</div>
           </div>
           <div>
-            <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Güvenlik</span>
-            <h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">Verileriniz güvende</h2>
+            <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">{m('urun.guvenlik_etiket')}</span>
+            <h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">{m('urun.guvenlik_baslik')}</h2>
             <div className="mt-8 space-y-5">{GUVENLIK.map((f) => (<div key={f.t} className="flex gap-4"><span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-brandsoft text-brandtext"><Icon name={f.icon} className="h-5 w-5" /></span><div><h3 className="text-[16px] font-bold text-strong">{f.t}</h3><p className="mt-1 text-[14px] leading-relaxed text-body">{f.d}</p></div></div>))}</div>
           </div>
         </div>
@@ -472,7 +442,7 @@ export default function ProductPage({ data, slug }) {
 
       {tip === 'hosting' && (
         <section className="bg-surface2 border-y border-line"><div className="mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-24">
-          <div className="mx-auto mb-12 max-w-2xl text-center"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Nasıl Çalışır</span><h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">3 adımda yayında</h2></div>
+          <div className="mx-auto mb-12 max-w-2xl text-center"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">{m('urun.nasil_calisir')}</span><h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">{m('urun.adim_baslik')}</h2></div>
           <div className="grid gap-5 md:grid-cols-3">
             {HOSTING_ADIM.map((s, i) => (
               <div key={s.t} className="relative rounded-2xl border border-line bg-surface p-7 shadow-[0_10px_40px_-24px_rgba(15,41,66,0.25)]">
@@ -487,23 +457,23 @@ export default function ProductPage({ data, slug }) {
 
       {tip === 'sunucu' && (
         <section className="mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-24">
-          <div className="mx-auto mb-10 max-w-2xl text-center"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Tam Kontrol</span><h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">İşletim sistemi ve panel özgürlüğü</h2><p className="mt-4 tipo-metin text-body">Kurulumda dilediğiniz işletim sistemini ve yönetim panelini seçin; tam root erişimiyle her şey sizin kontrolünüzde.</p></div>
+          <div className="mx-auto mb-10 max-w-2xl text-center"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">{m('urun.tam_kontrol_etiket')}</span><h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">{m('urun.tam_kontrol_baslik')}</h2><p className="mt-4 tipo-metin text-body">{m('urun.tam_kontrol_aciklama')}</p></div>
           <div className="mx-auto grid max-w-3xl gap-6 sm:grid-cols-2">
-            <div className="rounded-2xl border border-line bg-surface p-6"><div className="text-[13px] font-bold uppercase tracking-wide text-muted">İşletim Sistemleri</div><div className="mt-4 flex flex-wrap items-center gap-3">{OS_LOGO.map((o) => <div key={o.ad} title={o.ad} className="grid h-14 w-24 place-items-center rounded-xl bg-white px-3 ring-1 ring-line"><img src={o.logo} alt={`${o.ad} logosu`} width={200} height={120} loading="lazy" className="max-h-9 w-auto max-w-full object-contain" /></div>)}</div></div>
-            <div className="rounded-2xl border border-line bg-surface p-6"><div className="text-[13px] font-bold uppercase tracking-wide text-muted">Yönetim Paneli</div><div className="mt-4 flex flex-wrap items-center gap-3">{PANEL_LOGO.map((o) => <div key={o.ad} title={o.ad} className="grid h-14 w-24 place-items-center rounded-xl bg-white px-3 ring-1 ring-line"><img src={o.logo} alt={`${o.ad} logosu`} width={200} height={80} loading="lazy" className="max-h-8 w-auto max-w-full object-contain" /></div>)}</div></div>
+            <div className="rounded-2xl border border-line bg-surface p-6"><div className="text-[13px] font-bold uppercase tracking-wide text-muted">{m('urun.isletim_sistemleri')}</div><div className="mt-4 flex flex-wrap items-center gap-3">{OS_LOGO.map((o) => <div key={o.ad} title={o.ad} className="grid h-14 w-24 place-items-center rounded-xl bg-white px-3 ring-1 ring-line"><img src={o.logo} alt={m('urun.logo_alt', { ad: o.ad })} width={200} height={120} loading="lazy" className="max-h-9 w-auto max-w-full object-contain" /></div>)}</div></div>
+            <div className="rounded-2xl border border-line bg-surface p-6"><div className="text-[13px] font-bold uppercase tracking-wide text-muted">{m('urun.yonetim_paneli')}</div><div className="mt-4 flex flex-wrap items-center gap-3">{PANEL_LOGO.map((o) => <div key={o.ad} title={o.ad} className="grid h-14 w-24 place-items-center rounded-xl bg-white px-3 ring-1 ring-line"><img src={o.logo} alt={m('urun.logo_alt', { ad: o.ad })} width={200} height={80} loading="lazy" className="max-h-8 w-auto max-w-full object-contain" /></div>)}</div></div>
           </div>
-          <p className="mt-6 text-center text-[14px] text-body"><Icon name="pin" className="mr-1 inline h-4 w-4 text-brandtext" /> İstanbul lokasyonu ile Türkiye içinden düşük gecikme.</p>
+          <p className="mt-6 text-center text-[14px] text-body"><Icon name="pin" className="mr-1 inline h-4 w-4 text-brandtext" /> {m('urun.lokasyon_notu')}</p>
         </section>
       )}
 
       {d.faq && (
         <section className="border-y border-line"><div className="mx-auto max-w-7xl px-5 lg:px-8 py-20 lg:py-24">
-          <div className="text-center max-w-2xl mx-auto mb-12"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">SSS</span><h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">Sık sorulan sorular</h2></div>
+          <div className="text-center max-w-2xl mx-auto mb-12"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">{m('urun.sss_etiket')}</span><h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">{m('urun.sss_baslik')}</h2></div>
           <Faq items={d.faq} />
         </div></section>
       )}
 
-      <CtaBand title={`${d.title} ile hemen başlayın`} />
+      <CtaBand title={m('urun.cta_baslik', { urun: d.title })} />
     </SiteShell>
   );
 }

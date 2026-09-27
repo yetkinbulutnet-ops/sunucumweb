@@ -26,7 +26,6 @@ function rlYaz(res, deger) {
   return res;
 }
 
-// Ziyaretçi ülkesini istemciye aç (Umami yalnız TR'de yüklensin). httpOnly DEĞİL.
 function ulkeCerez(req, res) {
   const ulke = req.headers.get('x-swb-ulke') || req.headers.get('cf-ipcountry') || '';
   if (ulke) res.cookies.set('swb_ulke', ulke, { sameSite: 'lax', path: '/', maxAge: 1800 });

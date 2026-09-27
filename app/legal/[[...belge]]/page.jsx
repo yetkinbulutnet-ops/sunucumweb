@@ -1,25 +1,30 @@
 import { notFound } from 'next/navigation';
+import { marked } from 'marked';
 import LegalHubPage from '@/components/site/LegalHubPage';
-import { LEGAL_BELGELER, belgeBul } from '@/content/site/legal';
-import { getLegalHtml } from '@/lib/content';
+import { yasalBelgeleriGetir, ticariBilgiler, sayfaMetinleri } from '@/lib/cms';
 import { sayfaMeta } from '@/lib/seo';
 
-export const dynamicParams = false;
+export const dynamicParams = true;
+export const revalidate = 300;
 
-const VARSAYILAN = LEGAL_BELGELER[0];
+const belgeler = async () => [(await ticariBilgiler()).belge, ...(await yasalBelgeleriGetir())];
 
-export function generateStaticParams() {
-  return [{ belge: [] }, ...LEGAL_BELGELER.slice(1).map((b) => ({ belge: [b.slug] }))];
+export async function generateStaticParams() {
+  const liste = await yasalBelgeleriGetir();
+  return [{ belge: [] }, ...liste.map((b) => ({ belge: [b.slug] }))];
 }
 
-const secilen = (parcalar) => (parcalar && parcalar.length ? belgeBul(parcalar[0]) : VARSAYILAN);
+const secilen = async (parcalar) => {
+  if (!parcalar || !parcalar.length) return (await ticariBilgiler()).belge;
+  return (await yasalBelgeleriGetir()).find((b) => b.slug === parcalar[0]) || null;
+};
 
 export async function generateMetadata({ params }) {
   const { belge: parcalar } = await params;
-  const belge = secilen(parcalar);
+  const belge = await secilen(parcalar);
   if (!belge) return {};
 
-  const kok = belge.slug === VARSAYILAN.slug;
+  const kok = belge.tur === 'ticari';
 
   return sayfaMeta({
     baslik: belge.baslik,
@@ -30,8 +35,10 @@ export async function generateMetadata({ params }) {
 
 export default async function Page({ params }) {
   const { belge: parcalar } = await params;
-  const belge = secilen(parcalar);
+  const belge = await secilen(parcalar);
   if (!belge) notFound();
 
-  return <LegalHubPage belge={belge} html={getLegalHtml(belge.slug)} />;
+  const html = belge.icerik ? marked.parse(belge.icerik, { gfm: true, breaks: false }) : '';
+  const [liste, t, metinler] = await Promise.all([belgeler(), ticariBilgiler(), sayfaMetinleri()]);
+  return <LegalHubPage belge={belge} html={html} belgeler={liste} metin={metinler.legal} ticari={t.ticari} />;
 }

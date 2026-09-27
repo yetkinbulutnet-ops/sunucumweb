@@ -1,12 +1,13 @@
 import { ToolsHubPage } from '@/components/site/ToolsPage';
-import { ARACLAR_SAYFA } from '@/content/site/araclar';
+import { sayfaMetinleri } from '@/lib/cms';
 import { sayfaMeta } from '@/lib/seo';
 
-export const metadata = sayfaMeta({
-  baslik: 'Ağ ve Alan Adı Araçları',
-  aciklama: ARACLAR_SAYFA.lede,
-  yol: '/araclar',
-});
+export const revalidate = 300;
+
+export async function generateMetadata() {
+  const { araclar: m } = await sayfaMetinleri();
+  return sayfaMeta({ baslik: m.seoBaslik, aciklama: m.seoAciklama, yol: '/araclar' });
+}
 
 export default function Page() {
   return <ToolsHubPage />;

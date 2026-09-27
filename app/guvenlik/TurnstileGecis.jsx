@@ -2,13 +2,14 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { TURNSTILE_SITE_KEY } from '@/lib/guvenlik-config';
+import { m } from '@/lib/metin';
 
 const SCRIPT_SRC = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
 
 export default function TurnstileGecis() {
   const kutuRef = useRef(null);
   const formRef = useRef(null);
-  const [durum, setDurum] = useState('yukleniyor'); // yukleniyor | hazir | dogrulandi | gonderiliyor | hata
+  const [durum, setDurum] = useState('yukleniyor');
 
   useEffect(() => {
     let iptal = false;
@@ -76,11 +77,11 @@ export default function TurnstileGecis() {
         {durum === 'gonderiliyor' ? (
           <>
             <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-            Yönlendiriliyor…
+            {m('guvenlik.yonlendiriliyor')}
           </>
         ) : (
           <>
-            Devam Et
+            {m('guvenlik.devam_et')}
             <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M5 12h14M13 6l6 6-6 6" />
             </svg>
@@ -89,10 +90,10 @@ export default function TurnstileGecis() {
       </button>
 
       {durum === 'yukleniyor' && (
-        <p className="text-[13px] text-muted">Güvenlik doğrulaması yükleniyor…</p>
+        <p className="text-[13px] text-muted">{m('guvenlik.yukleniyor')}</p>
       )}
       {durum === 'hazir' && (
-        <p className="text-[13px] text-muted">Devam etmek için önce yukarıdaki kutucuğu işaretleyin.</p>
+        <p className="text-[13px] text-muted">{m('guvenlik.hazir')}</p>
       )}
       {durum === 'hata' && (
         <button
@@ -100,7 +101,7 @@ export default function TurnstileGecis() {
           onClick={() => window.location.reload()}
           className="text-[13px] font-medium text-brandtext underline underline-offset-2"
         >
-          Bir sorun oluştu — tekrar deneyin
+          {m('guvenlik.widget_hata')}
         </button>
       )}
     </form>

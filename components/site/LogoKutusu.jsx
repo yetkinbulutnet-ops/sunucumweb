@@ -1,3 +1,5 @@
+import { m } from '@/lib/metin';
+
 const BOYUT = {
   serit: { kutu: 'h-[76px] w-[188px]', gorsel: 'max-h-9 max-w-[136px]', harf: 'text-xl' },
   izgara: { kutu: 'h-[92px] w-full', gorsel: 'max-h-11 max-w-[168px]', harf: 'text-2xl' },
@@ -22,7 +24,7 @@ export default function LogoKutusu({ marka, boyut = 'izgara' }) {
       {marka.logo ? (
         <img
           src={marka.logo}
-          alt={`${marka.ad} logosu`}
+          alt={m('genel.logo_alt', { ad: marka.ad })}
           width={marka.g || 168}
           height={marka.y || 44}
           loading="lazy"

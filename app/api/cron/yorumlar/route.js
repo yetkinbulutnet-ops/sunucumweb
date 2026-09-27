@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { yorumOzeti, yorumDurumu } from '@/lib/engines/google-reviews';
+import { sistemMetinHazirla } from '@/lib/sistem-metin';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -13,6 +14,7 @@ function yetkili(request) {
 }
 
 export async function GET(request) {
+  await sistemMetinHazirla();
   if (!yetkili(request)) {
     return NextResponse.json({ ok: false, error: { code: 'YETKISIZ' } }, { status: 401 });
   }

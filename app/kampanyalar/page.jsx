@@ -1,20 +1,21 @@
 import KampanyalarPage from '@/components/site/KampanyalarPage';
-import { KAMPANYALAR } from '@/content/site/kampanyalar';
+import { kampanyalariGetir, sayfaMetinleri } from '@/lib/cms';
 import { mutlakUrl, sayfaMeta } from '@/lib/seo';
+import SayfaMetni from '@/components/site/SayfaMetni';
 
-export const metadata = sayfaMeta({
-  baslik: 'Kampanyalar — Hosting, Sunucu ve Alan Adı Fırsatları',
-  aciklama:
-    'SunucumWEB güncel kampanyaları: hosting, sanal sunucu (VDS) ve alan adı hizmetlerinde sınırlı süreli indirimler. Kampanya kodunu sipariş sırasında girin.',
-  yol: '/kampanyalar',
-});
+export const revalidate = 300;
 
-function JsonLd() {
+export async function generateMetadata() {
+  const { kampanyalar: m } = await sayfaMetinleri();
+  return sayfaMeta({ baslik: m.seoBaslik, aciklama: m.seoAciklama, yol: '/kampanyalar' });
+}
+
+function JsonLd({ kampanyalar }) {
   const veri = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     name: 'Kampanyalar',
-    itemListElement: KAMPANYALAR.map((k, i) => ({
+    itemListElement: kampanyalar.map((k, i) => ({
       '@type': 'ListItem',
       position: i + 1,
       item: {
@@ -31,11 +32,14 @@ function JsonLd() {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(veri) }} />;
 }
 
-export default function Page() {
+export default async function Page() {
+  const [kampanyalar, metinler] = await Promise.all([kampanyalariGetir(), sayfaMetinleri()]);
   return (
     <>
-      <JsonLd />
-      <KampanyalarPage />
+      <JsonLd kampanyalar={kampanyalar} />
+      <SayfaMetni onekler={['kampanya']}>
+        <KampanyalarPage kampanyalar={kampanyalar} meta={metinler.kampanyalar} />
+      </SayfaMetni>
     </>
   );
 }

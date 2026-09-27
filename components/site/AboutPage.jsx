@@ -3,34 +3,39 @@ import { Icon, CtaBand, SiteShell } from './chrome';
 import LogoSerit from './LogoSerit';
 import VeriMerkeziBolumu from './VeriMerkeziBolumu';
 import SayacKartlari from './SayacKartlari';
-import { MARKALAR, MARKA_SERIDI } from '@/content/site/markalar';
 import KabinSlider from './KabinSlider';
-import { HAKKIMIZDA as C } from '@/content/site/hakkimizda';
+import { hakkimizdaSabit } from '@/content/site/hakkimizda';
+import { metinAl } from '@/lib/cms';
 
-const SEMA = {
+const semaYap = (f, unvan) => ({
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'SunucumWEB',
-  legalName: 'SunucumWEB Bilişim Hizmetleri',
+  legalName: unvan,
   url: 'https://sunucumweb.com',
   foundingDate: '2023',
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'Hasanbey Mahallesi, Sokullu Sokak No: 16',
-    addressLocality: 'Keçiborlu',
-    addressRegion: 'Isparta',
+    streetAddress: f.adresSokak,
+    addressLocality: f.adresIlce,
+    addressRegion: f.adresIl,
     addressCountry: 'TR',
   },
   contactPoint: {
     '@type': 'ContactPoint',
-    telephone: '+908503025809',
-    email: 'destek@sunucumweb.com',
+    telephone: String(f.telefonHref || '').replace(/^tel:/, '').replace(/^0/, '+90'),
+    email: f.eposta,
     contactType: 'customer support',
     availableLanguage: 'Turkish',
   },
-};
+});
 
-export default function AboutPage() {
+export default async function AboutPage({ veri, markalar: MARKALAR, markaSeridi, ayar, resmiUnvan }) {
+  const m = await metinAl();
+  const HAKKIMIZDA_SABIT = hakkimizdaSabit(m);
+  const SEMA = semaYap(ayar.firma, resmiUnvan);
+  const C = { ...veri, kisayollar: HAKKIMIZDA_SABIT.kisayollar, veriMerkezi: { ...veri.veriMerkezi, konum: HAKKIMIZDA_SABIT.konum, tesis: HAKKIMIZDA_SABIT.tesis, kart: { ...veri.veriMerkezi.kart, eyebrow: HAKKIMIZDA_SABIT.kartUstBaslik } } };
+  const MARKA_SERIDI = { baslik: markaSeridi.baslik, metin: markaSeridi.aciklama };
   return (
     <SiteShell>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SEMA) }} />
@@ -43,9 +48,9 @@ export default function AboutPage() {
 
         <div className="mx-auto max-w-7xl px-5 lg:px-8 pt-12 pb-16 lg:pt-14 lg:pb-20">
           <div className="flex items-center gap-2 text-sm text-muted">
-            <Link href="/" className="hover:text-brandtext">Ana Sayfa</Link>
+            <Link href="/" className="hover:text-brandtext">{m('hakkimizda.kirinti_ana_sayfa')}</Link>
             <span>/</span>
-            <span className="font-medium text-strong/70">Kurumsal</span>
+            <span className="font-medium text-strong/70">{m('hakkimizda.kirinti_kurumsal')}</span>
           </div>
 
           <div className="mt-8 grid items-start gap-12 lg:grid-cols-[1fr_0.62fr] lg:items-center lg:gap-16">

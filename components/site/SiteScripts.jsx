@@ -19,7 +19,7 @@ export default function SiteScripts() {
     setTrMi((m?.[1] || '').toUpperCase() === 'TR');
   }, []);
 
-  if (yol === '/guvenlik' || yol === '/engellendi') return null;
+  if (yol === '/guvenlik' || yol === '/engellendi' || yol === '/bulten') return null;
 
   return (
     <>

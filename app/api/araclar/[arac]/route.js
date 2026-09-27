@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { aracCalistir } from '@/lib/engines/tools';
 import { rateLimit, clientKey } from '@/lib/engines/core/ratelimit';
+import { sistemMetinHazirla, sm } from '@/lib/sistem-metin';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -13,6 +14,7 @@ const ziyaretciIpAl = (request) =>
   '';
 
 export async function POST(request, { params }) {
+  await sistemMetinHazirla();
   const { arac } = await params;
 
   const limit = rateLimit(clientKey(request, `arac:${arac}`), {
@@ -21,7 +23,7 @@ export async function POST(request, { params }) {
   });
   if (!limit.allowed) {
     return NextResponse.json(
-      { ok: false, error: { code: 'RATE_LIMITED', message: 'Çok fazla sorgu gönderdiniz, biraz bekleyin.' } },
+      { ok: false, error: { code: 'RATE_LIMITED', message: sm('sistem.api_cok_fazla_sorgu') } },
       { status: 429, headers: { 'Retry-After': String(limit.retryAfterSec) } },
     );
   }

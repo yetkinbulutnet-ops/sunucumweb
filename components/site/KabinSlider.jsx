@@ -1,5 +1,6 @@
 'use client';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { m } from '@/lib/metin';
 
 const KATMAN = [
   { x: 0, y: 0, olcek: 1, aci: 0, saydam: 1 },
@@ -42,8 +43,8 @@ export default function KabinSlider({ fotograflar }) {
       <div
         className="relative aspect-[3/4] cursor-grab touch-pan-y select-none active:cursor-grabbing"
         role="group"
-        aria-roledescription="galeri"
-        aria-label={`Veri merkezi fotoğrafı ${aktif + 1} / ${adet}`}
+        aria-roledescription={m('hakkimizda_vm.galeri')}
+        aria-label={m('hakkimizda_vm.foto_aria', { no: aktif + 1, toplam: adet })}
         onPointerEnter={(e) => e.pointerType === 'mouse' && setOtomatik(true)}
         onPointerLeave={(e) => e.pointerType === 'mouse' && setOtomatik(false)}
         onPointerDown={basladi}
@@ -89,7 +90,7 @@ export default function KabinSlider({ fotograflar }) {
           <button
             type="button"
             onClick={() => git(-1)}
-            aria-label="Önceki fotoğraf"
+            aria-label={m('hakkimizda_vm.onceki_foto')}
             className="grid h-10 w-10 place-items-center rounded-full border border-line bg-surface text-strong transition-colors hover:border-brandline hover:text-brandtext"
           >
             <svg viewBox="0 0 24 24" className="h-4 w-4 rotate-180" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -99,7 +100,7 @@ export default function KabinSlider({ fotograflar }) {
           <button
             type="button"
             onClick={() => git(1)}
-            aria-label="Sonraki fotoğraf"
+            aria-label={m('hakkimizda_vm.sonraki_foto')}
             className="grid h-10 w-10 place-items-center rounded-full border border-line bg-surface text-strong transition-colors hover:border-brandline hover:text-brandtext"
           >
             <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

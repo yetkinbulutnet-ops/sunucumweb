@@ -1,16 +1,10 @@
 'use client';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { Icon, SiteShell, PageHero, SOSYAL } from './chrome';
-import { KONULAR } from '@/content/site/iletisim';
+import { Icon, SiteShell, PageHero } from './chrome';
+import { useSiteAyarlari } from './SiteAyarlari';
 import { mesaiDurumu } from '@/lib/engines/mesai';
-
-const KANALLAR = [
-  { icon: 'phone', t: 'Telefon', v: '0(850) 302 5809', d: 'Hafta içi 09:00 – 18:00', href: 'tel:08503025809' },
-  { icon: 'chat', t: 'Canlı destek', v: 'Müşteri paneli', d: '7/24 teknik ekip', href: 'https://my.sunucumweb.com' },
-  { icon: 'mail', t: 'E-posta', v: 'info@sunucumweb.com', d: 'Aynı gün içinde yanıt', href: 'mailto:info@sunucumweb.com' },
-  { icon: 'pin', t: 'Adres', v: 'Hasanbey Mah. Sokullu Sok. No: 16', d: 'Keçiborlu / Isparta', href: null },
-];
+import { m } from '@/lib/metin';
 
 function MesaiRozeti() {
   const [durum, setDurum] = useState(null);
@@ -80,7 +74,9 @@ function Alan({ etiket, ad, tip = 'text', deger, onChange, hata, ipucu, ...kalan
 
 const BOS = { ad: '', telefon: '', eposta: '', konu: '', mesaj: '', website: '' };
 
-export default function ContactPage() {
+export default function ContactPage({ veri }) {
+  const { sosyal: SOSYAL } = useSiteAyarlari();
+  const { kanallar: KANALLAR, konular: KONULAR, ust } = veri;
   const [form, setForm] = useState(BOS);
   const [hatalar, setHatalar] = useState({});
   const [durum, setDurum] = useState('bos');
@@ -114,20 +110,20 @@ export default function ContactPage() {
 
       setDurum('bos');
       setHatalar(d.meta?.hatalar || {});
-      setUyari(d.error?.message || 'Mesajınız iletilemedi.');
+      setUyari(d.error?.message || m('iletisim.hata_iletilemedi'));
     } catch {
       setDurum('bos');
-      setUyari('Sunucuya ulaşılamadı. Bağlantınızı kontrol edip tekrar deneyin.');
+      setUyari(m('iletisim.hata_sunucu'));
     }
   }, [form]);
 
   return (
     <SiteShell>
       <PageHero
-        eyebrow="İletişim"
-        title="Size nasıl yardımcı olabiliriz?"
-        breadcrumb="İletişim"
-        text="Satış, teknik destek veya kurumsal talepleriniz için formu doldurun; ekibimiz aynı gün içinde dönüş yapsın."
+        eyebrow={ust.eyebrow}
+        title={ust.baslik}
+        breadcrumb={m('iletisim.breadcrumb')}
+        text={ust.aciklama}
       />
 
       <section className="mx-auto max-w-7xl px-5 lg:px-8 py-14 lg:py-20">
@@ -161,7 +157,7 @@ export default function ContactPage() {
             </div>
 
             <div className="rounded-2xl border border-line bg-surface p-5">
-              <div className="text-[12px] font-bold uppercase tracking-wider text-muted">Sosyal medya</div>
+              <div className="text-[12px] font-bold uppercase tracking-wider text-muted">{m('iletisim.sosyal_medya')}</div>
               <div className="mt-3 flex flex-wrap gap-2">
                 {SOSYAL.map((s) => (
                   <a
@@ -188,23 +184,23 @@ export default function ContactPage() {
                 <span className="grid h-14 w-14 place-items-center rounded-2xl bg-brand-500 text-white">
                   <Icon name="check" className="h-7 w-7" />
                 </span>
-                <h2 className="mt-5 text-2xl font-extrabold tracking-tight text-strong">Mesajınız bize ulaştı</h2>
+                <h2 className="mt-5 text-2xl font-extrabold tracking-tight text-strong">{m('iletisim.basari_baslik')}</h2>
                 <p className="mt-2 max-w-sm text-[15px] leading-relaxed text-body">
-                  Talebiniz ilgili ekibe iletildi. Acil bir konuysa 0(850) 302 5809 numaralı hattımızdan doğrudan ulaşabilirsiniz.
+                  {veri.basariMetni}
                 </p>
                 <button
                   type="button"
                   onClick={() => setDurum('bos')}
                   className="mt-6 inline-flex items-center gap-2 rounded-xl border border-line px-5 py-2.5 text-[14px] font-bold text-strong transition-colors hover:border-brandline hover:text-brandtext"
                 >
-                  Yeni mesaj yaz
+                  {m('iletisim.yeni_mesaj')}
                 </button>
               </div>
             ) : (
               <>
-                <h2 className="text-2xl font-extrabold tracking-tight text-strong">Bize yazın</h2>
+                <h2 className="text-2xl font-extrabold tracking-tight text-strong">{m('iletisim.form_baslik')}</h2>
                 <p className="mt-2 text-[15px] text-body">
-                  Yıldızlı alanların tamamı zorunludur. Talebinizi doğru ekibe yönlendirebilmek için konuyu seçin.
+                  {m('iletisim.form_metin')}
                 </p>
 
                 <form onSubmit={gonder} noValidate className="mt-7 grid gap-4">
@@ -220,14 +216,14 @@ export default function ContactPage() {
                   />
 
                   <div className="grid gap-4 sm:grid-cols-2">
-                    <Alan etiket="Ad Soyad" ad="ad" deger={form.ad} onChange={degistir} hata={hatalar.ad} placeholder="Adınız Soyadınız" autoComplete="name" required />
-                    <Alan etiket="Telefon" ad="telefon" tip="tel" deger={form.telefon} onChange={degistir} hata={hatalar.telefon} placeholder="0555 555 55 55" autoComplete="tel" inputMode="tel" required />
+                    <Alan etiket={m('iletisim.ad_soyad')} ad="ad" deger={form.ad} onChange={degistir} hata={hatalar.ad} placeholder={m('iletisim.ad_soyad_ph')} autoComplete="name" required />
+                    <Alan etiket={m('iletisim.telefon')} ad="telefon" tip="tel" deger={form.telefon} onChange={degistir} hata={hatalar.telefon} placeholder="0555 555 55 55" autoComplete="tel" inputMode="tel" required />
                   </div>
 
-                  <Alan etiket="E-posta" ad="eposta" tip="email" deger={form.eposta} onChange={degistir} hata={hatalar.eposta} placeholder="ornek@firma.com" autoComplete="email" inputMode="email" required />
+                  <Alan etiket={m('iletisim.eposta')} ad="eposta" tip="email" deger={form.eposta} onChange={degistir} hata={hatalar.eposta} placeholder={m('iletisim.eposta_ph')} autoComplete="email" inputMode="email" required />
 
                   <label className="block">
-                    <span className="text-[13px] font-semibold text-strong">Görüşme konusu <span className="text-brandtext">*</span></span>
+                    <span className="text-[13px] font-semibold text-strong">{m('iletisim.konu')} <span className="text-brandtext">*</span></span>
                     <select
                       name="konu"
                       value={form.konu}
@@ -239,7 +235,7 @@ export default function ContactPage() {
                       } ${form.konu ? 'text-strong' : 'text-muted'}`}
                       style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2376869b' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E\")" }}
                     >
-                      <option value="">Konu seçin…</option>
+                      <option value="">{m('iletisim.konu_sec')}</option>
                       {KONULAR.map((k) => (
                         <option key={k.deger} value={k.deger}>{k.etiket}</option>
                       ))}
@@ -248,7 +244,7 @@ export default function ContactPage() {
                   </label>
 
                   <label className="block">
-                    <span className="text-[13px] font-semibold text-strong">Mesajınız <span className="text-brandtext">*</span></span>
+                    <span className="text-[13px] font-semibold text-strong">{m('iletisim.mesaj')} <span className="text-brandtext">*</span></span>
                     <textarea
                       name="mesaj"
                       value={form.mesaj}
@@ -256,7 +252,7 @@ export default function ContactPage() {
                       rows={6}
                       required
                       aria-invalid={!!hatalar.mesaj}
-                      placeholder="Talebinizi kısaca anlatın: kullandığınız hizmet, alan adı, karşılaştığınız durum…"
+                      placeholder={m('iletisim.mesaj_ph')}
                       className={`mt-1.5 w-full rounded-xl border bg-surface px-4 py-3 text-[16px] leading-relaxed text-strong outline-none transition-colors placeholder:text-muted focus:border-brand-400 ${
                         hatalar.mesaj ? 'border-rose-400' : 'border-line'
                       }`}
@@ -264,7 +260,7 @@ export default function ContactPage() {
                     {hatalar.mesaj ? (
                       <span className="mt-1 block text-[12px] font-medium text-rose-600 dark:text-rose-400">{hatalar.mesaj}</span>
                     ) : (
-                      <span className="mt-1 block text-[12px] text-muted">{form.mesaj.length} / 4000 karakter</span>
+                      <span className="mt-1 block text-[12px] text-muted">{m('iletisim.karakter', { adet: form.mesaj.length })}</span>
                     )}
                   </label>
 
@@ -279,13 +275,12 @@ export default function ContactPage() {
                     disabled={durum === 'gonderiliyor'}
                     className="mt-1 inline-flex items-center justify-center gap-2 rounded-xl bg-brand-500 px-6 py-3.5 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-600 disabled:opacity-60"
                   >
-                    {durum === 'gonderiliyor' ? 'Gönderiliyor…' : 'Mesajı Gönder'}
+                    {durum === 'gonderiliyor' ? m('iletisim.gonderiliyor') : m('iletisim.gonder')}
                     {durum !== 'gonderiliyor' && <Icon name="arrow" className="h-4 w-4" />}
                   </button>
 
                   <p className="text-[12px] leading-relaxed text-muted">
-                    Paylaştığınız bilgiler yalnızca talebinize dönüş yapmak için kullanılır.
-                    Ayrıntılar için <Link href="/gizlilik-sozlesmesi" className="font-semibold text-brandtext hover:underline">Gizlilik Sözleşmesi</Link>.
+                    {m('iletisim.gizlilik_on')} <Link href="/gizlilik-sozlesmesi" className="font-semibold text-brandtext hover:underline">{m('iletisim.gizlilik_link')}</Link>.
                   </p>
                 </form>
               </>

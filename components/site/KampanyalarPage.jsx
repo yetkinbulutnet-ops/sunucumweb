@@ -2,8 +2,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Icon, SiteShell, CtaBand, PageHero } from './chrome';
-import { KAMPANYALAR, KAMPANYA_META } from '@/content/site/kampanyalar';
+import BultenFormu from './BultenFormu';
 import { useParabirimi } from './CurrencyProvider';
+import { m } from '@/lib/metin';
 
 const TON = {
   yesil: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 ring-emerald-500/30',
@@ -42,12 +43,12 @@ function KuponKutu({ kod }) {
       className="mt-4 flex w-full items-center justify-between gap-3 rounded-xl border border-dashed border-brandline bg-brandsoft/50 px-3.5 py-2.5 text-left transition-colors hover:bg-brandsoft"
     >
       <span className="min-w-0">
-        <span className="block text-[11px] font-semibold uppercase tracking-wide text-muted">Kampanya kodu</span>
+        <span className="block text-[11px] font-semibold uppercase tracking-wide text-muted">{m('kampanya.kod_etiket')}</span>
         <span className="block truncate font-mono text-[15px] font-extrabold tracking-wider text-brandtext">{kod}</span>
       </span>
       <span className="inline-flex shrink-0 items-center gap-1.5 text-[12.5px] font-bold text-brandtext">
         <Icon name={kopya ? 'check' : 'copy'} className="h-4 w-4" />
-        {kopya ? 'Kopyalandı' : 'Kopyala'}
+        {kopya ? m('kampanya.kopyalandi') : m('kampanya.kopyala')}
       </span>
     </button>
   );
@@ -67,7 +68,7 @@ function KampanyaKart({ k }) {
         </span>
         <span className="inline-flex items-baseline gap-1 rounded-xl bg-brand-500 px-3 py-1.5 text-white shadow-lg shadow-brand-500/25">
           <span className="text-[18px] font-extrabold leading-none">%{k.indirim}</span>
-          <span className="text-[11px] font-bold uppercase tracking-wide opacity-90">indirim</span>
+          <span className="text-[11px] font-bold uppercase tracking-wide opacity-90">{m('kampanya.indirim')}</span>
         </span>
       </div>
 
@@ -95,7 +96,7 @@ function KampanyaKart({ k }) {
 
       {k.bitis && (
         <div className="mt-3 flex items-center gap-1.5 text-[12.5px] text-muted">
-          <Icon name="clock" className="h-3.5 w-3.5 shrink-0" /> Son tarih: {k.bitis}
+          <Icon name="clock" className="h-3.5 w-3.5 shrink-0" /> {m('kampanya.son_tarih', { tarih: k.bitis })}
         </div>
       )}
 
@@ -105,16 +106,16 @@ function KampanyaKart({ k }) {
         data-umami-event-kampanya={k.baslik}
         className="mt-5 inline-flex items-center justify-center gap-2 rounded-xl bg-brand-500 px-5 py-3 text-[14px] font-bold text-white transition-colors hover:bg-brand-600"
       >
-        {k.cta || 'İncele'} <Icon name="arrow" className="h-4 w-4" />
+        {k.cta || m('kampanya.incele')} <Icon name="arrow" className="h-4 w-4" />
       </Link>
     </article>
   );
 }
 
-export default function KampanyalarPage() {
+export default function KampanyalarPage({ kampanyalar: KAMPANYALAR, meta: KAMPANYA_META }) {
   return (
     <SiteShell>
-      <PageHero eyebrow={KAMPANYA_META.eyebrow} title={KAMPANYA_META.baslik} text={KAMPANYA_META.aciklama} breadcrumb="Kampanyalar" />
+      <PageHero eyebrow={KAMPANYA_META.eyebrow} title={KAMPANYA_META.baslik} text={KAMPANYA_META.aciklama} breadcrumb={m('kampanya.kirinti')} />
 
       <section className="mx-auto max-w-7xl px-5 lg:px-8 py-16 lg:py-20">
         {KAMPANYALAR.length === 0 ? (
@@ -122,12 +123,12 @@ export default function KampanyalarPage() {
             <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-surface2 text-muted">
               <Icon name="tag" className="h-6 w-6" />
             </span>
-            <p className="mt-5 text-[16px] font-bold text-strong">Şu an aktif kampanya yok</p>
+            <p className="mt-5 text-[16px] font-bold text-strong">{m('kampanya.bos_baslik')}</p>
             <p className="mt-2 text-[14px] leading-relaxed text-body">
-              Yeni fırsatlar için takipte kalın. Dilerseniz güncel paketlerimizi hemen inceleyebilirsiniz.
+              {m('kampanya.bos_metin')}
             </p>
             <Link href="/web-hosting" className="mt-6 inline-flex items-center gap-2 rounded-xl bg-brand-500 px-5 py-3 text-[14px] font-bold text-white transition-colors hover:bg-brand-600">
-              Paketleri Gör <Icon name="arrow" className="h-4 w-4" />
+              {m('kampanya.paketleri_gor')} <Icon name="arrow" className="h-4 w-4" />
             </Link>
           </div>
         ) : (
@@ -137,12 +138,13 @@ export default function KampanyalarPage() {
         )}
 
         <p className="mt-10 text-center text-sm text-muted">
-          Kampanya kodunu sipariş sırasında “İndirim Kodu” alanına girmeniz yeterli. Sorularınız için{' '}
-          <Link href="/iletisim" className="font-semibold text-brandtext hover:underline">bize ulaşın</Link>.
+          {m('kampanya.not_on')}{' '}
+          <Link href="/iletisim" className="font-semibold text-brandtext hover:underline">{m('kampanya.not_link')}</Link>{m('kampanya.not_son')}
         </p>
       </section>
 
-      <CtaBand title="Fırsatı kaçırmayın" text="Kampanyalı paketler sınırlı sürelidir. Doğru çözümü birlikte belirleyelim." />
+      <BultenFormu kaynak="kampanyalar" />
+      <CtaBand title={m('kampanya.cta_baslik')} text={m('kampanya.cta_metin')} />
     </SiteShell>
   );
 }

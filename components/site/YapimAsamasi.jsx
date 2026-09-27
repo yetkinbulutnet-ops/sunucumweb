@@ -1,13 +1,16 @@
 import Link from 'next/link';
 import { Icon, SiteShell } from './chrome';
+import { metinAl } from '@/lib/cms';
 
-const SECENEKLER = [
-  { t: 'Hazır Yazılımlar', d: 'E-ticaret, kurumsal tanıtım ve daha fazlası; kuruluma hazır paketler.', href: '/hazir-yazilim', icon: 'sparkles' },
-  { t: 'Alan Adı', d: 'Markanıza uygun uzantıyı sorgulayın, saniyeler içinde sahiplenin.', href: '/alan-adi', icon: 'globe' },
-  { t: 'İletişim', d: 'Bu hizmet için fiyat ve bilgi almak isterseniz sizi arayalım.', href: '/iletisim', icon: 'chat' },
+const secenekler = (m) => [
+  { t: m('yapim.secenek_yazilim_baslik'), d: m('yapim.secenek_yazilim_metin'), href: '/hazir-yazilim', icon: 'sparkles' },
+  { t: m('yapim.secenek_alan_adi_baslik'), d: m('yapim.secenek_alan_adi_metin'), href: '/alan-adi', icon: 'globe' },
+  { t: m('yapim.secenek_iletisim_baslik'), d: m('yapim.secenek_iletisim_metin'), href: '/iletisim', icon: 'chat' },
 ];
 
-export default function YapimAsamasi({ baslik = 'Bu hizmet', ozet }) {
+export default async function YapimAsamasi({ baslik: baslikProp, ozet }) {
+  const m = await metinAl();
+  const baslik = baslikProp ?? m('yapim.varsayilan_baslik');
   return (
     <SiteShell>
       <section className="relative overflow-hidden border-b border-line">
@@ -19,7 +22,7 @@ export default function YapimAsamasi({ baslik = 'Bu hizmet', ozet }) {
 
         <div className="mx-auto max-w-3xl px-5 lg:px-8 py-20 lg:py-28 text-center">
           <div className="mb-6 flex items-center justify-center gap-2 text-sm text-muted">
-            <Link href="/" className="hover:text-brandtext">Ana Sayfa</Link>
+            <Link href="/" className="hover:text-brandtext">{m('yapim.kirinti_ana_sayfa')}</Link>
             <span>/</span>
             <span className="font-medium text-strong/70">{baslik}</span>
           </div>
@@ -34,14 +37,14 @@ export default function YapimAsamasi({ baslik = 'Bu hizmet', ozet }) {
               <span className="absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75 motion-safe:animate-ping" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-500" />
             </span>
-            Yapım aşamasında
+            {m('yapim.rozet')}
           </span>
 
           <h1 className="mt-5 tipo-dev font-extrabold tracking-tight text-strong text-balance">
-            {baslik} sayfası yakında sizlerle
+            {m('yapim.baslik', { baslik })}
           </h1>
           <p className="mt-5 tipo-giris text-body">
-            {ozet || 'Bu bölümü sizin için hazırlıyoruz. Detaylar, paketler ve fiyatlar çok yakında burada olacak. O zamana kadar aşağıdaki hizmetlerimize göz atabilir veya bize ulaşabilirsiniz.'}
+            {ozet || m('yapim.aciklama')}
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
@@ -51,13 +54,13 @@ export default function YapimAsamasi({ baslik = 'Bu hizmet', ozet }) {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-xl bg-brand-500 px-6 py-3.5 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-600"
             >
-              <Icon name="user" className="h-4 w-4" /> Müşteri Paneli
+              <Icon name="user" className="h-4 w-4" /> {m('yapim.musteri_paneli')}
             </a>
             <Link
               href="/iletisim"
               className="inline-flex items-center gap-2 rounded-xl bg-surface px-6 py-3.5 text-[15px] font-semibold text-strong ring-1 ring-line transition hover:ring-brandtext/50"
             >
-              Bilgi Alın <Icon name="arrow" className="h-4 w-4" />
+              {m('yapim.bilgi_alin')} <Icon name="arrow" className="h-4 w-4" />
             </Link>
           </div>
         </div>
@@ -65,11 +68,11 @@ export default function YapimAsamasi({ baslik = 'Bu hizmet', ozet }) {
 
       <section className="mx-auto max-w-7xl px-5 lg:px-8 py-16 lg:py-20">
         <div className="mx-auto max-w-2xl text-center">
-          <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Bu arada</span>
-          <h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">Aktif hizmetlerimize göz atın</h2>
+          <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">{m('yapim.bu_arada')}</span>
+          <h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">{m('yapim.aktif_hizmetler')}</h2>
         </div>
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
-          {SECENEKLER.map((s) => (
+          {secenekler(m).map((s) => (
             <Link
               key={s.href}
               href={s.href}
@@ -81,7 +84,7 @@ export default function YapimAsamasi({ baslik = 'Bu hizmet', ozet }) {
               <h3 className="mt-5 text-lg font-bold text-strong">{s.t}</h3>
               <p className="mt-2 flex-1 text-[15px] leading-relaxed text-body">{s.d}</p>
               <span className="mt-4 inline-flex items-center gap-1.5 text-[14px] font-bold text-brandtext">
-                İncele <Icon name="arrow" className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                {m('yapim.incele')} <Icon name="arrow" className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </span>
             </Link>
           ))}

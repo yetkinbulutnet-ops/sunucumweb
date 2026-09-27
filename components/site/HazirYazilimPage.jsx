@@ -2,23 +2,23 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { Icon, SiteShell, CtaBand } from './chrome';
-import { YAZILIMLAR, YAZILIM_KATEGORILERI, YAZILIM_SERIDI } from '@/content/site/yazilimlar';
 import { useParabirimi } from './CurrencyProvider';
+import { m } from '@/lib/metin';
 
 const PER = 12;
 
-const SIRALAMALAR = [
-  { v: 'populer', l: 'Önerilen' },
-  { v: 'fiyat-artan', l: 'Fiyat: Artan' },
-  { v: 'fiyat-azalan', l: 'Fiyat: Azalan' },
-  { v: 'isim', l: 'İsme göre (A-Z)' },
+const siralamalar = () => [
+  { v: 'populer', l: m('yazilim.sirala_onerilen') },
+  { v: 'fiyat-artan', l: m('yazilim.sirala_fiyat_artan') },
+  { v: 'fiyat-azalan', l: m('yazilim.sirala_fiyat_azalan') },
+  { v: 'isim', l: m('yazilim.sirala_isim') },
 ];
 
 const fiyatYaz = (n) => new Intl.NumberFormat('tr-TR').format(n);
 const kucuk = (s) => s.toLocaleLowerCase('tr');
 
-function KategoriIkon({ slug }) {
-  const k = YAZILIM_KATEGORILERI.find((x) => x.slug === slug);
+function KategoriIkon({ slug, kategoriler }) {
+  const k = kategoriler.find((x) => x.slug === slug);
   return <Icon name={k ? k.icon : 'layers'} className="h-4 w-4" />;
 }
 
@@ -28,14 +28,14 @@ function IndirimRozet({ eski, yeni }) {
   if (oran < 1) return null;
   return (
     <span className="absolute left-3 top-3 rounded-lg bg-rose-500 px-2 py-1 text-[11px] font-extrabold text-white shadow-lg">
-      %{oran} indirim
+      {m('yazilim.indirim', { oran })}
     </span>
   );
 }
 
-function Kart({ y }) {
+function Kart({ y, kategoriler }) {
   const { fiyat } = useParabirimi();
-  const kat = YAZILIM_KATEGORILERI.find((x) => x.slug === y.kategori);
+  const kat = kategoriler.find((x) => x.slug === y.kategori);
   return (
     <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-[0_10px_40px_-24px_rgba(15,41,66,0.22)] transition-[transform,box-shadow,border-color] hover:-translate-y-1 hover:border-brandline hover:shadow-[0_24px_60px_-28px_rgba(20,184,166,0.35)]">
       <Link href={`/hazir-yazilim/${y.id}`} className="relative block aspect-[4/3] overflow-hidden bg-surface2">
@@ -50,14 +50,14 @@ function Kart({ y }) {
         <IndirimRozet eski={y.eskiFiyat} yeni={y.fiyat} />
         {y.oneCikan && (
           <span className="absolute right-3 top-3 rounded-md bg-amber-500 px-1.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-white shadow">
-            Popüler
+            {m('yazilim.populer')}
           </span>
         )}
       </Link>
 
       <div className="flex flex-1 flex-col p-5">
         <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-brandsoft px-2.5 py-1 text-[11.5px] font-bold text-brandtext">
-          <KategoriIkon slug={y.kategori} /> {kat ? kat.ad : 'Yazılım'}
+          <KategoriIkon slug={y.kategori} kategoriler={kategoriler} /> {kat ? kat.ad : m('yazilim.varsayilan_kategori')}
         </span>
         <Link href={`/hazir-yazilim/${y.id}`} className="mt-3">
           <h3 className="text-[16px] font-extrabold text-strong transition-colors hover:text-brandtext">{y.ad}</h3>
@@ -78,7 +78,7 @@ function Kart({ y }) {
               href={`/hazir-yazilim/${y.id}`}
               className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-ink px-3 py-2.5 text-[13.5px] font-bold text-white transition-colors hover:bg-brand-600"
             >
-              İncele <Icon name="arrow" className="h-3.5 w-3.5" />
+              {m('yazilim.incele')} <Icon name="arrow" className="h-3.5 w-3.5" />
             </Link>
             {y.demoUrl && (
               <a
@@ -89,7 +89,7 @@ function Kart({ y }) {
                 data-umami-event-urun={y.ad}
                 className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-line bg-surface px-3 py-2.5 text-[13.5px] font-bold text-strong transition-colors hover:border-brandline hover:text-brandtext"
               >
-                Demo <Icon name="external" className="h-3.5 w-3.5" />
+                {m('yazilim.demo')} <Icon name="external" className="h-3.5 w-3.5" />
               </a>
             )}
           </div>
@@ -99,7 +99,8 @@ function Kart({ y }) {
   );
 }
 
-export default function HazirYazilimPage() {
+export default function HazirYazilimPage({ yazilimlar: YAZILIMLAR, kategoriler: YAZILIM_KATEGORILERI, seridi }) {
+  const YAZILIM_SERIDI = { eyebrow: seridi.eyebrow, baslik: seridi.baslik, metin: seridi.aciklama };
   const [kategori, setKategori] = useState('hepsi');
   const [arama, setArama] = useState('');
   const [sirala, setSirala] = useState('populer');
@@ -108,9 +109,9 @@ export default function HazirYazilimPage() {
   const ilkRender = useRef(true);
 
   const sayimlar = useMemo(() => {
-    const m = {};
-    for (const y of YAZILIMLAR) m[y.kategori] = (m[y.kategori] || 0) + 1;
-    return m;
+    const sayac = {};
+    for (const y of YAZILIMLAR) sayac[y.kategori] = (sayac[y.kategori] || 0) + 1;
+    return sayac;
   }, []);
 
   const filtrelenmis = useMemo(() => {
@@ -152,8 +153,8 @@ export default function HazirYazilimPage() {
         </div>
         <div className="mx-auto max-w-7xl px-5 lg:px-8 py-14 lg:py-16">
           <div className="mb-5 flex items-center gap-2 text-sm text-muted">
-            <Link href="/" className="hover:text-brandtext">Ana Sayfa</Link><span>/</span>
-            <span className="font-medium text-strong/70">Hazır Yazılımlar</span>
+            <Link href="/" className="hover:text-brandtext">{m('yazilim.kirinti_ana_sayfa')}</Link><span>/</span>
+            <span className="font-medium text-strong/70">{m('yazilim.kirinti_hazir_yazilimlar')}</span>
           </div>
           <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">{YAZILIM_SERIDI.eyebrow}</span>
           <h1 className="mt-3 max-w-3xl tipo-dev font-extrabold tracking-tight text-strong text-balance">{YAZILIM_SERIDI.baslik}</h1>
@@ -164,7 +165,7 @@ export default function HazirYazilimPage() {
       <div ref={listeUst} className="scroll-mt-24 mx-auto max-w-7xl px-5 lg:px-8 py-12 lg:py-16">
         <div className="lg:grid lg:grid-cols-[248px_minmax(0,1fr)] lg:gap-8">
           <aside className="lg:sticky lg:top-28 lg:self-start">
-            <div className="mb-2 hidden px-1 text-[12px] font-bold uppercase tracking-wider text-muted lg:block">Kategoriler</div>
+            <div className="mb-2 hidden px-1 text-[12px] font-bold uppercase tracking-wider text-muted lg:block">{m('yazilim.kategoriler')}</div>
             <div className="flex gap-2 overflow-x-auto pb-1 lg:flex-col lg:gap-1 lg:overflow-visible lg:pb-0 [-webkit-overflow-scrolling:touch]">
               <button
                 onClick={() => setKategori('hepsi')}
@@ -172,7 +173,7 @@ export default function HazirYazilimPage() {
                   kategori === 'hepsi' ? 'bg-brand-500 text-white shadow-lg shadow-brand-500/20' : 'bg-surface text-strong ring-1 ring-line hover:bg-surface2'
                 }`}
               >
-                <span className="flex items-center gap-2"><Icon name="layers" className="h-4 w-4" /> Tümü</span>
+                <span className="flex items-center gap-2"><Icon name="layers" className="h-4 w-4" /> {m('yazilim.tumu')}</span>
                 <span className={`hidden text-[12px] font-bold lg:inline ${kategori === 'hepsi' ? 'text-white/80' : 'text-muted'}`}>{YAZILIMLAR.length}</span>
               </button>
               {YAZILIM_KATEGORILERI.map((k) => {
@@ -194,11 +195,11 @@ export default function HazirYazilimPage() {
 
             <div className="mt-6 hidden rounded-2xl border border-line bg-surface2/60 p-5 lg:block">
               <div className="flex items-center gap-2 text-[14px] font-extrabold text-strong">
-                <Icon name="chat" className="h-4 w-4 text-brandtext" /> Özel yazılım mı lazım?
+                <Icon name="chat" className="h-4 w-4 text-brandtext" /> {m('yazilim.ozel_baslik')}
               </div>
-              <p className="mt-2 text-[13px] leading-relaxed text-body">İhtiyacınıza özel geliştirme için ekibimizle görüşün.</p>
+              <p className="mt-2 text-[13px] leading-relaxed text-body">{m('yazilim.ozel_metin')}</p>
               <Link href="/iletisim" className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-bold text-brandtext hover:underline underline-offset-4">
-                Teklif alın <Icon name="arrow" className="h-3.5 w-3.5" />
+                {m('yazilim.teklif_alin')} <Icon name="arrow" className="h-3.5 w-3.5" />
               </Link>
             </div>
           </aside>
@@ -211,50 +212,50 @@ export default function HazirYazilimPage() {
                   value={arama}
                   onChange={(e) => setArama(e.target.value)}
                   type="search"
-                  placeholder="Yazılım ara (ör. e-ticaret, randevu, blog)"
-                  aria-label="Yazılım ara"
+                  placeholder={m('yazilim.arama_placeholder')}
+                  aria-label={m('yazilim.arama_aria')}
                   className="min-w-0 flex-1 bg-transparent py-3 text-[15px] text-strong placeholder:text-muted outline-none"
                 />
               </div>
               <label className="flex shrink-0 items-center gap-2 rounded-xl border border-line bg-surface px-3.5 py-1">
-                <span className="text-[13px] font-semibold text-muted">Sırala</span>
+                <span className="text-[13px] font-semibold text-muted">{m('yazilim.sirala')}</span>
                 <select
                   value={sirala}
                   onChange={(e) => setSirala(e.target.value)}
-                  aria-label="Sıralama"
+                  aria-label={m('yazilim.siralama_aria')}
                   className="cursor-pointer bg-transparent py-2 pr-1 text-[14px] font-semibold text-strong outline-none"
                 >
-                  {SIRALAMALAR.map((s) => <option key={s.v} value={s.v} className="bg-surface text-strong">{s.l}</option>)}
+                  {siralamalar().map((s) => <option key={s.v} value={s.v} className="bg-surface text-strong">{s.l}</option>)}
                 </select>
               </label>
             </div>
 
             <p className="mt-4 text-[13.5px] text-muted">
-              <span className="font-bold text-strong">{filtrelenmis.length}</span> yazılım bulundu
-              {kategori !== 'hepsi' && <> · <button onClick={() => setKategori('hepsi')} className="font-semibold text-brandtext hover:underline">filtreyi temizle</button></>}
+              <span className="font-bold text-strong">{filtrelenmis.length}</span> {m('yazilim.sonuc_sayisi')}
+              {kategori !== 'hepsi' && <> · <button onClick={() => setKategori('hepsi')} className="font-semibold text-brandtext hover:underline">{m('yazilim.filtre_temizle')}</button></>}
             </p>
 
             {gorunen.length === 0 ? (
               <div className="mt-10 rounded-2xl border border-dashed border-line bg-surface2/50 px-6 py-16 text-center">
                 <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-surface text-muted ring-1 ring-line"><Icon name="search" className="h-6 w-6" /></span>
-                <p className="mt-5 text-[16px] font-bold text-strong">Sonuç bulunamadı</p>
-                <p className="mt-1.5 text-[14px] text-body">Aramanızı değiştirin veya farklı bir kategori seçin.</p>
+                <p className="mt-5 text-[16px] font-bold text-strong">{m('yazilim.sonuc_yok_baslik')}</p>
+                <p className="mt-1.5 text-[14px] text-body">{m('yazilim.sonuc_yok_metin')}</p>
                 <button onClick={() => { setArama(''); setKategori('hepsi'); }} className="mt-5 inline-flex items-center gap-2 rounded-xl bg-brand-500 px-5 py-2.5 text-[14px] font-bold text-white transition-colors hover:bg-brand-600">
-                  <Icon name="refresh" className="h-4 w-4" /> Filtreleri sıfırla
+                  <Icon name="refresh" className="h-4 w-4" /> {m('yazilim.filtre_sifirla')}
                 </button>
               </div>
             ) : (
               <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
-                {gorunen.map((y) => <Kart key={y.id} y={y} />)}
+                {gorunen.map((y) => <Kart key={y.id} y={y} kategoriler={YAZILIM_KATEGORILERI} />)}
               </div>
             )}
 
             {toplamSayfa > 1 && (
-              <nav className="mt-10 flex items-center justify-center gap-1.5" aria-label="Sayfalama">
+              <nav className="mt-10 flex items-center justify-center gap-1.5" aria-label={m('yazilim.sayfalama_aria')}>
                 <button
                   onClick={() => setSayfa((s) => Math.max(1, s - 1))}
                   disabled={guncelSayfa === 1}
-                  aria-label="Önceki sayfa"
+                  aria-label={m('yazilim.onceki_sayfa')}
                   className="grid h-10 w-10 place-items-center rounded-xl border border-line bg-surface text-strong transition-colors hover:bg-surface2 disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   <Icon name="arrow" className="h-4 w-4 rotate-180" />
@@ -274,7 +275,7 @@ export default function HazirYazilimPage() {
                 <button
                   onClick={() => setSayfa((s) => Math.min(toplamSayfa, s + 1))}
                   disabled={guncelSayfa === toplamSayfa}
-                  aria-label="Sonraki sayfa"
+                  aria-label={m('yazilim.sonraki_sayfa')}
                   className="grid h-10 w-10 place-items-center rounded-xl border border-line bg-surface text-strong transition-colors hover:bg-surface2 disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   <Icon name="arrow" className="h-4 w-4" />
@@ -285,7 +286,7 @@ export default function HazirYazilimPage() {
         </div>
       </div>
 
-      <CtaBand title="Aradığınız yazılımı bulamadınız mı?" text="İhtiyacınıza özel çözüm için ekibimizle konuşun; projenizi birlikte planlayalım." />
+      <CtaBand title={m('yazilim.cta_baslik')} text={m('yazilim.cta_metin')} />
     </SiteShell>
   );
 }

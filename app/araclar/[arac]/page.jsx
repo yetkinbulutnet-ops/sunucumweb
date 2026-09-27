@@ -1,24 +1,26 @@
 import { notFound } from 'next/navigation';
 import { ToolDetailPage } from '@/components/site/ToolsPage';
-import { ARAC_LISTESI, aracBul } from '@/content/site/araclar';
+import { araclariGetir, aracGetir } from '@/lib/cms';
 import { sayfaMeta } from '@/lib/seo';
 
-export const dynamicParams = false;
+export const dynamicParams = true;
 
-export function generateStaticParams() {
-  return ARAC_LISTESI.filter((a) => a.slug !== 'dns' && a.slug !== 'hiz-testi').map((a) => ({ arac: a.slug }));
+export const revalidate = 300;
+
+export async function generateStaticParams() {
+  return (await araclariGetir()).filter((a) => a.slug !== 'dns' && a.slug !== 'hiz-testi').map((a) => ({ arac: a.slug }));
 }
 
 export async function generateMetadata({ params }) {
   const { arac: slug } = await params;
-  const arac = aracBul(slug);
-  if (!arac) return {};
+  const arac = await aracGetir(slug);
+  if (!arac || arac.slug === 'dns' || arac.slug === 'hiz-testi') return {};
   return sayfaMeta({ baslik: arac.baslik, aciklama: arac.seo, yol: `/araclar/${slug}` });
 }
 
 export default async function Page({ params }) {
   const { arac: slug } = await params;
-  const arac = aracBul(slug);
-  if (!arac) notFound();
+  const arac = await aracGetir(slug);
+  if (!arac || arac.slug === 'dns' || arac.slug === 'hiz-testi') notFound();
   return <ToolDetailPage arac={arac} />;
 }

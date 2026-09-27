@@ -8,11 +8,14 @@ import { currentTheme, toggleTheme } from '@/lib/engines/theme';
 import { formatTRY, CHECKOUT_URL } from '@/lib/engines/cart';
 import { scrollKilitle } from '@/lib/engines/scroll-lock';
 import SmoothScroll from './SmoothScroll';
+import BultenFormu from './BultenFormu';
 import { CartProvider, useCart } from './CartProvider';
 import { CurrencyProvider, ParaBirimiSecici } from './CurrencyProvider';
 import OdemeLogolari from './OdemeLogolari';
 import DurumRozeti from './DurumRozeti';
 import AltyapiSerit from './AltyapiSerit';
+import { useSiteAyarlari } from './SiteAyarlari';
+import { m } from '@/lib/metin';
 
 const PATHS = {
   bolt: 'M13 2 3 14h7l-1 8 10-12h-7z',
@@ -82,53 +85,6 @@ const AiRozet = () => (
   <span className="inline-flex items-center rounded-md bg-gradient-to-br from-violet-500 via-fuchsia-500 to-emerald-400 px-1.5 py-[3px] text-[10px] font-extrabold uppercase leading-none tracking-wide text-white shadow-sm">AI</span>
 );
 
-export const MENU = [
-  { label: 'Ana Sayfa', href: '/' },
-  { label: 'Domain', ai: true, kolon: 3, items: [
-    { t: 'Domain Tescil', d: 'Yeni domain tescil işlemleri için hemen tıklayın.', href: '/alan-adi', icon: 'globe', r: '%20 İndirim', rTon: 'yesil' },
-    { t: 'Domain Transfer', d: 'Mevcut domaininizi güvenle bize transfer edin.', href: '/transfer', icon: 'refresh' },
-    { t: 'Domain Sorgulama', d: 'Kayıt firması, tescil ve bitiş tarihi ile isim sunucularını görün.', href: '/araclar/whois', icon: 'search' },
-  ]},
-  { label: 'Hosting', kolon: 4, items: [
-    { t: 'Web Hosting', d: 'Sınırsız hosting paketlerini deneyin, dakikalar içinde yayında olun.', href: '/web-hosting', icon: 'globe', r: '%20 İndirim', rTon: 'yesil', logo: '/img/altyapi/cpanel.webp' },
-    { t: 'WordPress Hosting', d: 'WordPress için optimize edilmiş, hızlı ve güvenli altyapı.', href: '/wordpress-hosting', icon: 'bolt', logo: '/img/marka/wordpress.png' },
-    { t: 'Reseller Hosting', d: 'Linux hosting paketleri ile kendi hosting işinizi başlatın.', href: '/reseller-hosting', icon: 'magaza', r: 'Fırsatı Yakala', rTon: 'sari' },
-    { t: 'Kurumsal Hosting', d: 'Yüksek trafik ve izole kaynak gerektiren projeler için.', href: '/kurumsal-hosting', icon: 'kurumsal' },
-  ]},
-  { label: 'Sunucu', kolon: 2, items: [
-    { t: 'Sanal Sunucu (VDS)', d: 'E5-2699 v4 sanal sunucularla projelerinizi başlatın.', href: '/sanal-sunucu', icon: 'vds', logo: '/img/urun/xeon.webp', r: 'Kampanya', rTon: 'mavi' },
-    { t: 'Premium Sunucu', d: 'Jet hızında diskler ve Xeon Platinum ile tam güç!', href: '/premium-sunucu', icon: 'rocket', r: 'PREMIUM', rTon: 'sari', vurgu: true, logo: '/img/urun/xeon-platinum.webp' },
-    { t: 'Dedicated Sunucu', d: 'Fiziksel sunucular ile maksimum performans elde edin.', href: '/dedicated-sunucu', icon: 'dedicated', logo: '/img/urun/dedicated.webp' },
-    { t: 'GPU Sunucu', d: 'Yüksek performanslı GPU ile AI ve grafik iş yükleriniz için ideal.', href: '/gpu-sunucu', icon: 'gpu', logo: '/img/urun/ekran-karti.webp', r: 'Popüler', rTon: 'kirmizi' },
-  ]},
-  { label: 'Veri Merkezi', kolon: 2, items: [
-    { t: 'Sunucu Barındırma', d: 'Kendi donanımınız bizim Tier-3 veri merkezimizde güvende.', href: '/sunucu-barindirma', icon: 'colocation', logo: '/img/urun/sunucu-barindirma.webp', r: 'TIER III', rTon: 'yesil' },
-    { t: 'IP Kiralama', d: 'Kolay ve hızlı IP kiralama seçenekleri ile ihtiyacınız olan adresleri hemen edinin.', href: '/ip-kiralama', icon: 'globe', logo: '/img/urun/ip-kiralama.webp', r: 'Özel', rTon: 'yesil' },
-  ]},
-  { label: 'Hazır Yazılım', href: '/hazir-yazilim' },
-  { label: 'Kurumsal', kolon: 2, items: [
-    { t: 'Şirket Profili', d: 'SunucumWEB hakkında detaylı bilgi alın.', href: '/hakkimizda', icon: 'binaOfis' },
-    { t: 'Kampanyalar', d: 'Güncel indirimler ve sınırlı süreli fırsatlar.', href: '/kampanyalar', icon: 'tag', r: 'Fırsat', rTon: 'sari' },
-    { t: 'Legal', d: 'Sözleşmeler, yasal metinler ve resmî ticari bilgiler.', href: '/legal', icon: 'doc' },
-    { t: 'İletişim', d: 'Telefon, e-posta ve destek kanallarımız.', href: '/iletisim', icon: 'chat' },
-  ]},
-];
-
-export const ARAC_MENU = {
-  label: 'Araçlar',
-  kolon: 3,
-  items: [
-    { t: 'DNS Kayıt Sorgulama', d: 'Kayıt tipini seçin, dokuz çözümleyiciden canlı sorgulayın.', href: '/araclar/dns', icon: 'server' },
-    { t: 'WHOIS Sorgulama', d: 'Kayıt firması, tescil ve bitiş tarihi ile isim sunucuları.', href: '/araclar/whois', icon: 'search' },
-    { t: 'SSL Sertifika Kontrolü', d: 'Sertifika geçerli mi, kaç gün kaldı, kim sağlamış?', href: '/araclar/ssl', icon: 'lock' },
-    { t: 'E-posta Kayıt Kontrolü', d: 'MX, SPF ve DMARC ayarlarınızı denetleyin.', href: '/araclar/eposta', icon: 'mail' },
-    { t: 'Kara Liste Kontrolü', d: 'Sunucu adresiniz 12 spam kara listesinde var mı?', href: '/araclar/karaliste', icon: 'ban' },
-    { t: 'HTTP Güvenlik Başlıkları', d: 'HSTS, CSP ve çerçeveleme koruması denetimi.', href: '/araclar/basliklar', icon: 'shield' },
-    { t: 'IP Sorgulama', d: 'Kendi IP adresiniz ve ters DNS (PTR) kaydı.', href: '/araclar/ip', icon: 'globe' },
-    { t: 'Tüm araçlar', d: 'Ücretsiz ağ ve alan adı araçlarının tamamı.', href: '/araclar', icon: 'layers' },
-  ],
-};
-
 const ROZET_TON = {
   yesil: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 ring-emerald-500/30',
   sari: 'bg-amber-500/15 text-amber-600 dark:text-amber-400 ring-amber-500/30',
@@ -174,7 +130,7 @@ export function ThemeToggle({ variant = 'topbar' }) {
   useEffect(() => { setTema(currentTheme()); setMonte(true); }, []);
 
   const koyu = tema === 'dark';
-  const etiket = koyu ? 'Açık moda geç' : 'Koyu moda geç';
+  const etiket = koyu ? m('genel.acik_moda_gec') : m('genel.koyu_moda_gec');
 
   if (variant === 'satir') {
 
@@ -185,7 +141,7 @@ export function ThemeToggle({ variant = 'topbar' }) {
       >
         <span className="flex items-center gap-2.5">
           <Icon name={monte && koyu ? 'sun' : 'moon'} className="w-[18px] h-[18px] text-brandtext" />
-          {monte ? (koyu ? 'Açık mod' : 'Koyu mod') : 'Tema'}
+          {monte ? (koyu ? m('genel.acik_mod') : m('genel.koyu_mod')) : m('genel.tema')}
         </span>
         <span className={`relative h-6 w-11 rounded-full transition-colors ${monte && koyu ? 'bg-brand-500' : 'bg-line'}`}>
           <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-[transform,box-shadow,border-color,opacity] ${monte && koyu ? 'left-[22px]' : 'left-0.5'}`} />
@@ -207,14 +163,15 @@ export function ThemeToggle({ variant = 'topbar' }) {
 }
 
 export function TopBar() {
+  const { firma } = useSiteAyarlari();
   return (
     <div className="bg-ink text-slate-300">
       <div className="mx-auto max-w-7xl px-4 sm:px-5 lg:px-8">
         <div className="flex h-10 items-center justify-between gap-2 text-[12.5px]">
           <div className="flex min-w-0 items-center gap-2 sm:gap-3.5">
-            <a href="tel:08503025809" data-umami-event="Telefon" className="inline-flex shrink-0 items-center gap-1.5 font-semibold text-white transition-colors hover:text-brand-300">
+            <a href={firma.telefonHref} data-umami-event="Telefon" className="inline-flex shrink-0 items-center gap-1.5 font-semibold text-white transition-colors hover:text-brand-300">
               <Icon name="phone" className="w-[14px] h-[14px] text-brand-400" />
-              <span className="whitespace-nowrap">0(850) 302 5809</span>
+              <span className="whitespace-nowrap">{firma.telefon}</span>
             </a>
             <span className="hidden sm:block h-3.5 w-px bg-white/15" />
             <Link
@@ -222,22 +179,22 @@ export function TopBar() {
               className="hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap font-semibold text-white transition-colors hover:text-brand-300"
             >
               <Icon name="terminal" className="h-[14px] w-[14px] text-brand-400" />
-              Ücretsiz Araçlar
+              {m('genel.ucretsiz_araclar')}
             </Link>
           </div>
 
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             <ThemeToggle />
-            <a href="https://status.sunucumweb.com" target="_blank" rel="noopener noreferrer" className="hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-emerald-500/10 px-2.5 py-1 font-semibold text-emerald-300 ring-1 ring-emerald-400/20 transition-colors hover:bg-emerald-500/20">
+            <a href={firma.durum} target="_blank" rel="noopener noreferrer" className="hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-emerald-500/10 px-2.5 py-1 font-semibold text-emerald-300 ring-1 ring-emerald-400/20 transition-colors hover:bg-emerald-500/20">
               <span className="relative flex h-1.5 w-1.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
               </span>
-              Ağ Durumu
+              {m('genel.ag_durumu')}
             </a>
-            <a href="https://my.sunucumweb.com" target="_blank" rel="noopener noreferrer" data-umami-event="Müşteri Paneli" className="inline-flex items-center gap-1.5 whitespace-nowrap font-semibold text-white transition-colors hover:text-brand-300">
+            <a href={firma.panel} target="_blank" rel="noopener noreferrer" data-umami-event="Müşteri Paneli" className="inline-flex items-center gap-1.5 whitespace-nowrap font-semibold text-white transition-colors hover:text-brand-300">
               <Icon name="user" className="w-[14px] h-[14px]" />
-              <span className="hidden sm:inline">Müşteri Paneli</span>
+              <span className="hidden sm:inline">{m('genel.musteri_paneli')}</span>
             </a>
           </div>
         </div>
@@ -252,7 +209,7 @@ function CartButton() {
     <div className="relative">
       <button
         onClick={() => setPanelAcik(true)}
-        aria-label={`Sepet (${adet} ürün)`}
+        aria-label={m('sepet.buton_aria', { adet })}
         className="relative inline-grid h-11 w-11 place-items-center rounded-xl text-strong transition-colors hover:bg-surface2"
       >
         <Icon name="cart" className="w-[22px] h-[22px]" />
@@ -264,7 +221,7 @@ function CartButton() {
       </button>
       {sonEklenen && (
         <span className="pointer-events-none absolute right-0 top-full z-50 mt-1 hidden whitespace-nowrap rounded-lg bg-ink px-3 py-1.5 text-[12px] font-semibold text-white shadow-lg animate-[fadeup_0.25s_ease-out] sm:block">
-          {sonEklenen} sepete eklendi
+          {m('sepet.eklendi', { urun: sonEklenen })}
         </span>
       )}
     </div>
@@ -289,15 +246,15 @@ function CartDrawer() {
   if (!panelAcik) return null;
 
   return (
-    <div className="fixed inset-0 z-[90]" role="dialog" aria-modal="true" aria-label="Sepet">
+    <div className="fixed inset-0 z-[90]" role="dialog" aria-modal="true" aria-label={m('sepet.sepet')}>
       <div onClick={() => setPanelAcik(false)} className="absolute inset-0 bg-ink/60 backdrop-blur-sm animate-[fadeup_0.2s_ease-out]" />
       <div className="absolute right-0 top-0 flex h-full w-full max-w-[420px] flex-col bg-surface shadow-2xl animate-[fadeup_0.3s_ease-out]">
         <div className="flex items-center justify-between border-b border-line px-5 py-4">
           <h2 className="flex items-center gap-2 text-[17px] font-extrabold text-strong">
-            <Icon name="cart" className="w-5 h-5 text-brandtext" /> Sepetim
+            <Icon name="cart" className="w-5 h-5 text-brandtext" /> {m('sepet.sepetim')}
             {adet > 0 && <span className="rounded-full bg-brandsoft px-2 py-0.5 text-[12px] font-bold text-brandtext">{adet}</span>}
           </h2>
-          <button onClick={() => setPanelAcik(false)} aria-label="Kapat" className="grid h-9 w-9 place-items-center rounded-full text-muted transition-colors hover:bg-surface2 hover:text-strong">
+          <button onClick={() => setPanelAcik(false)} aria-label={m('genel.kapat')} className="grid h-9 w-9 place-items-center rounded-full text-muted transition-colors hover:bg-surface2 hover:text-strong">
             <Icon name="xmark" className="w-5 h-5" />
           </button>
         </div>
@@ -305,10 +262,10 @@ function CartDrawer() {
         {items.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center px-8 text-center">
             <span className="grid h-16 w-16 place-items-center rounded-2xl bg-surface2 text-muted"><Icon name="cart" className="w-8 h-8" /></span>
-            <p className="mt-5 text-[15px] font-semibold text-strong">Sepetiniz boş</p>
-            <p className="mt-1.5 text-[14px] leading-relaxed text-body">Paketleri inceleyip beğendiğinizi sepete ekleyin.</p>
+            <p className="mt-5 text-[15px] font-semibold text-strong">{m('sepet.bos')}</p>
+            <p className="mt-1.5 text-[14px] leading-relaxed text-body">{m('sepet.bos_metin')}</p>
             <Link href="/hazir-yazilim" onClick={() => setPanelAcik(false)} className="mt-6 inline-flex items-center gap-2 rounded-xl bg-brand-500 px-5 py-3 text-[14px] font-bold text-white transition hover:bg-brand-600">
-              Yazılımları İncele <Icon name="arrow" className="w-4 h-4" />
+              {m('sepet.yazilimlari_incele')} <Icon name="arrow" className="w-4 h-4" />
             </Link>
           </div>
         ) : (
@@ -322,41 +279,41 @@ function CartDrawer() {
                         {i.product && <div className="text-[11px] font-bold uppercase tracking-wide text-brandtext">{i.product}</div>}
                         <div className="truncate text-[15px] font-bold text-strong">{i.name}</div>
                         <div className="mt-0.5 text-[13px] text-body">{formatTRY(i.price)}<span className="text-muted">{i.period}</span></div>
-                        {i.wisecpUrl && <a href={i.wisecpUrl} target="_blank" rel="noopener noreferrer" className="mt-1 inline-flex items-center gap-1 text-[12px] font-semibold text-brandtext hover:underline">Satın Al <Icon name="arrow" className="h-3 w-3" /></a>}
+                        {i.wisecpUrl && <a href={i.wisecpUrl} target="_blank" rel="noopener noreferrer" className="mt-1 inline-flex items-center gap-1 text-[12px] font-semibold text-brandtext hover:underline">{m('sepet.satin_al')} <Icon name="arrow" className="h-3 w-3" /></a>}
                       </div>
-                      <button onClick={() => cikar(i.id)} aria-label={`${i.name} paketini sepetten çıkar`} className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-muted transition-colors hover:bg-rose-50 hover:text-rose-600">
+                      <button onClick={() => cikar(i.id)} aria-label={m('sepet.cikar_aria', { paket: i.name })} className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-muted transition-colors hover:bg-rose-50 hover:text-rose-600">
                         <Icon name="trash" className="w-4 h-4" />
                       </button>
                     </div>
                     <div className="mt-3 flex items-center justify-between">
                       <div className="inline-flex items-center rounded-lg border border-line bg-surface">
-                        <button onClick={() => adetAyarla(i.id, i.qty - 1)} aria-label="Azalt" className="grid h-8 w-8 place-items-center text-body transition-colors hover:text-brandtext"><Icon name="minus" className="w-3.5 h-3.5" /></button>
+                        <button onClick={() => adetAyarla(i.id, i.qty - 1)} aria-label={m('sepet.azalt')} className="grid h-8 w-8 place-items-center text-body transition-colors hover:text-brandtext"><Icon name="minus" className="w-3.5 h-3.5" /></button>
                         <span className="w-8 text-center text-[14px] font-bold tabular-nums text-strong">{i.qty}</span>
-                        <button onClick={() => adetAyarla(i.id, i.qty + 1)} aria-label="Artır" className="grid h-8 w-8 place-items-center text-body transition-colors hover:text-brandtext"><Icon name="plus" className="w-3.5 h-3.5" /></button>
+                        <button onClick={() => adetAyarla(i.id, i.qty + 1)} aria-label={m('sepet.artir')} className="grid h-8 w-8 place-items-center text-body transition-colors hover:text-brandtext"><Icon name="plus" className="w-3.5 h-3.5" /></button>
                       </div>
                       <span className="text-[15px] font-extrabold text-strong">{formatTRY(i.price * i.qty)}</span>
                     </div>
                   </li>
                 ))}
               </ul>
-              <button onClick={temizle} className="mt-4 text-[13px] font-semibold text-muted transition-colors hover:text-rose-600">Sepeti boşalt</button>
+              <button onClick={temizle} className="mt-4 text-[13px] font-semibold text-muted transition-colors hover:text-rose-600">{m('sepet.bosalt')}</button>
             </div>
 
             <div className="border-t border-line bg-surface px-5 py-4">
               <div className="flex items-baseline justify-between">
-                <span className="text-[14px] text-body">Ara toplam</span>
+                <span className="text-[14px] text-body">{m('sepet.ara_toplam')}</span>
                 <span className="text-[22px] font-extrabold text-strong">{formatTRY(toplam)}</span>
               </div>
-              <p className="mt-1 text-[12px] leading-relaxed text-muted">KDV ve varsa kurulum ücretleri ödeme adımında hesaplanır.</p>
+              <p className="mt-1 text-[12px] leading-relaxed text-muted">{m('sepet.kdv_notu')}</p>
               <button
                 type="button"
                 onClick={odemeyeGec}
                 className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-500 px-5 py-3.5 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition hover:bg-brand-600"
               >
-                Ödemeye Geç <Icon name="arrow" className="w-4 h-4" />
+                {m('sepet.odemeye_gec')} <Icon name="arrow" className="w-4 h-4" />
               </button>
               <button onClick={() => setPanelAcik(false)} className="mt-2 w-full rounded-xl px-5 py-2.5 text-[14px] font-semibold text-body transition-colors hover:text-strong">
-                Alışverişe devam et
+                {m('sepet.devam')}
               </button>
             </div>
           </>
@@ -367,6 +324,7 @@ function CartDrawer() {
 }
 
 function BaslaModal({ open, onClose }) {
+  const { menu: MENU } = useSiteAyarlari();
   useEffect(() => {
     if (!open) return;
     const esc = (e) => e.key === 'Escape' && onClose();
@@ -378,23 +336,23 @@ function BaslaModal({ open, onClose }) {
   if (!open) return null;
 
   const gruplar = [
-    ...MENU.filter((m) => m.items && m.label !== 'Kurumsal'),
-    { label: 'Yazılım & Araçlar', items: [
-      { t: 'Hazır Yazılımlar', d: 'Kuruluma hazır e-ticaret, kurumsal site, blog ve daha fazlası.', href: '/hazir-yazilim', icon: 'sparkles' },
-      { t: 'Ücretsiz Araçlar', d: 'DNS, WHOIS, SSL, e-posta ve IP sorgulama; kayıt gerekmez.', href: '/araclar', icon: 'layers' },
+    ...MENU.filter((g) => g.items && g.label !== 'Kurumsal'),
+    { label: m('genel.basla_yazilim_grup'), items: [
+      { t: m('genel.basla_hazir_yazilim'), d: m('genel.basla_hazir_yazilim_metin'), href: '/hazir-yazilim', icon: 'sparkles' },
+      { t: m('genel.ucretsiz_araclar'), d: m('genel.basla_araclar_metin'), href: '/araclar', icon: 'layers' },
     ]},
   ];
 
   return (
-    <div className="fixed inset-0 z-[95] flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="Hangi hizmetle başlayalım?">
+    <div className="fixed inset-0 z-[95] flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label={m('genel.basla_aria')}>
       <div onClick={onClose} className="absolute inset-0 bg-ink/60 backdrop-blur-sm animate-[fadeup_0.2s_ease-out]" />
       <div className="relative flex max-h-[88vh] w-full max-w-3xl flex-col overflow-hidden rounded-3xl bg-surface shadow-2xl animate-[fadeup_0.3s_ease-out]">
         <div className="flex items-start justify-between gap-4 border-b border-line px-6 py-5">
           <div>
-            <h2 className="text-[19px] font-extrabold tracking-tight text-strong">Nereden başlamak istersiniz?</h2>
-            <p className="mt-1 text-[14px] leading-relaxed text-body">İlgilendiğiniz hizmeti seçin, sizi doğru sayfaya götürelim.</p>
+            <h2 className="text-[19px] font-extrabold tracking-tight text-strong">{m('genel.basla_baslik')}</h2>
+            <p className="mt-1 text-[14px] leading-relaxed text-body">{m('genel.basla_metin')}</p>
           </div>
-          <button onClick={onClose} aria-label="Kapat" className="grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted transition-colors hover:bg-surface2 hover:text-strong">
+          <button onClick={onClose} aria-label={m('genel.kapat')} className="grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted transition-colors hover:bg-surface2 hover:text-strong">
             <Icon name="xmark" className="w-5 h-5" />
           </button>
         </div>
@@ -418,6 +376,7 @@ function BaslaModal({ open, onClose }) {
 }
 
 export function SiteHeader() {
+  const { menu: MENU, aracMenu: ARAC_MENU, firma } = useSiteAyarlari();
   const [open, setOpen] = useState(false);
   const [basla, setBasla] = useState(false);
   const [acc, setAcc] = useState(-1);
@@ -468,29 +427,29 @@ export function SiteHeader() {
             </Link>
 
             <nav className="hidden xl:flex items-center gap-0.5" onMouseLeave={menuKapatGecikmeli}>
-              {MENU.map((m, n) => {
+              {MENU.map((g, n) => {
                 const acikMi = acikMenu === n;
-                if (!m.items) {
+                if (!g.items) {
                   return (
                     <Link
-                      key={m.label}
-                      href={m.href}
+                      key={g.label}
+                      href={g.href}
                       onMouseEnter={menuKapatHemen}
                       className="whitespace-nowrap rounded-lg px-2 py-2 text-[14px] font-medium text-strong/80 transition-colors hover:text-brandtext 2xl:px-3.5 2xl:text-[15px]"
                     >
-                      {m.label}
+                      {g.label}
                     </Link>
                   );
                 }
                 return (
-                  <div key={m.label} className="static" onMouseEnter={() => menuAc(n)}>
+                  <div key={g.label} className="static" onMouseEnter={() => menuAc(n)}>
                     <button
                       aria-expanded={acikMi}
                       onClick={() => (acikMi ? menuKapatHemen() : menuAc(n))}
                       className={`inline-flex items-center gap-1 whitespace-nowrap rounded-lg px-2 py-2 text-[14px] font-medium transition-colors 2xl:px-3.5 2xl:text-[15px] ${acikMi ? 'bg-brandsoft/60 text-brandtext' : 'text-strong/80 hover:text-brandtext'}`}
                     >
-                      {m.label}
-                      {m.ai && <AiRozet />}
+                      {g.label}
+                      {g.ai && <AiRozet />}
                       <Icon name="chevron" className={`mt-0.5 w-3.5 h-3.5 shrink-0 transition-transform ${acikMi ? 'rotate-180' : ''}`} />
                     </button>
 
@@ -501,8 +460,8 @@ export function SiteHeader() {
                     >
                       <div className="mx-auto max-w-7xl px-4 sm:px-5 lg:px-8">
                         <div className="rounded-2xl border border-line bg-surface2 p-3 shadow-[0_30px_70px_-25px_rgba(15,41,66,0.45)]">
-                          <div className={`grid gap-3 ${m.kolon === 2 ? 'grid-cols-2' : m.kolon === 3 ? 'grid-cols-3' : 'grid-cols-4'}`}>
-                            {m.items.map((it) => <MegaItem key={it.href + it.t} it={it} onClick={menuKapatHemen} />)}
+                          <div className={`grid gap-3 ${g.kolon === 2 ? 'grid-cols-2' : g.kolon === 3 ? 'grid-cols-3' : 'grid-cols-4'}`}>
+                            {g.items.map((it) => <MegaItem key={it.href + it.t} it={it} onClick={menuKapatHemen} />)}
                           </div>
                         </div>
                       </div>
@@ -516,9 +475,9 @@ export function SiteHeader() {
             <div className="flex shrink-0 items-center gap-1 sm:gap-2">
               <ParaBirimiSecici />
               <button type="button" onClick={() => setBasla(true)} data-umami-event="Hemen Başla" className="group hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap rounded-xl bg-brand-500 px-4 py-2.5 text-[14px] font-semibold text-white shadow-lg shadow-brand-500/25 transition-[transform,box-shadow,border-color,opacity] hover:bg-brand-600 2xl:px-5 2xl:text-[15px]">
-                Hemen Başla <Icon name="arrow" className="hidden h-4 w-4 transition-transform group-hover:translate-x-0.5 sm:block" />
+                {m('genel.hemen_basla')} <Icon name="arrow" className="hidden h-4 w-4 transition-transform group-hover:translate-x-0.5 sm:block" />
               </button>
-              <button onClick={() => setOpen((v) => !v)} className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-strong transition-colors hover:bg-surface2 xl:hidden" aria-label="Menü" aria-expanded={open}>
+              <button onClick={() => setOpen((v) => !v)} className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-strong transition-colors hover:bg-surface2 xl:hidden" aria-label={m('genel.menu')} aria-expanded={open}>
                 <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                   {open ? <path d="M6 6l12 12M18 6 6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
                 </svg>
@@ -531,7 +490,7 @@ export function SiteHeader() {
       </div>
 
       {open && (
-        <div className="fixed inset-0 z-[80] xl:hidden" role="dialog" aria-modal="true" aria-label="Menü">
+        <div className="fixed inset-0 z-[80] xl:hidden" role="dialog" aria-modal="true" aria-label={m('genel.menu')}>
           <div onClick={() => setOpen(false)} className="absolute inset-0 bg-ink/70 animate-[fadeup_0.2s_ease-out]" />
 
           <div className="absolute inset-x-0 top-0 flex max-h-full flex-col bg-surface shadow-2xl animate-[fadeup_0.3s_ease-out]">
@@ -539,21 +498,21 @@ export function SiteHeader() {
               <Link href="/" onClick={() => setOpen(false)} className="flex items-center">
                 <img src="/icon/logo.png" alt="SunucumWEB" className="h-7 w-auto dark:brightness-0 dark:invert" />
               </Link>
-              <button onClick={() => setOpen(false)} aria-label="Kapat" className="grid h-10 w-10 place-items-center rounded-xl text-strong transition-colors hover:bg-surface2">
+              <button onClick={() => setOpen(false)} aria-label={m('genel.kapat')} className="grid h-10 w-10 place-items-center rounded-xl text-strong transition-colors hover:bg-surface2">
                 <Icon name="xmark" className="w-5 h-5" />
               </button>
             </div>
 
             <div data-lenis-prevent className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-6 pt-2">
-              {[...MENU, ARAC_MENU].map((m, i) => (
-                <div key={m.label} className="border-b border-line/60">
-                  {!m.items ? (
+              {[...MENU, ...(ARAC_MENU ? [ARAC_MENU] : [])].map((g, i) => (
+                <div key={g.label} className="border-b border-line/60">
+                  {!g.items ? (
                     <Link
-                      href={m.href}
+                      href={g.href}
                       onClick={() => setOpen(false)}
                       className="flex w-full items-center justify-between py-3.5 text-[15px] font-semibold text-strong"
                     >
-                      {m.label}
+                      {g.label}
                       <Icon name="arrow" className="w-4 h-4 text-muted" />
                     </Link>
                   ) : (
@@ -562,30 +521,30 @@ export function SiteHeader() {
                     aria-expanded={acc === i}
                     className="flex w-full items-center justify-between py-3.5 text-[15px] font-semibold text-strong"
                   >
-                    <span className="inline-flex items-center gap-1.5">{m.label}{m.ai && <AiRozet />}</span>
+                    <span className="inline-flex items-center gap-1.5">{g.label}{g.ai && <AiRozet />}</span>
                     <Icon name="chevron" className={`w-4 h-4 text-muted transition-transform ${acc === i ? 'rotate-180' : ''}`} />
                   </button>
                   )}
-                  {m.items && acc === i && (
+                  {g.items && acc === i && (
                     <div className="grid gap-1 pb-3 animate-[fadeup_0.25s_ease-out]">
-                      {m.items.map((it) => <MegaItem key={it.href + it.t} it={it} onClick={() => setOpen(false)} />)}
+                      {g.items.map((it) => <MegaItem key={it.href + it.t} it={it} onClick={() => setOpen(false)} />)}
                     </div>
                   )}
                 </div>
               ))}
 
               <button type="button" onClick={() => { setOpen(false); setBasla(true); }} data-umami-event="Hemen Başla" className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-500 px-5 py-3.5 text-center font-bold text-white shadow-lg shadow-brand-500/25">
-                Hemen Başla <Icon name="arrow" className="h-4 w-4" />
+                {m('genel.hemen_basla')} <Icon name="arrow" className="h-4 w-4" />
               </button>
 
               <div className="mt-4 rounded-2xl border border-line bg-surface2/60 p-3">
-                <div className="px-1 pb-2 text-[11px] font-bold uppercase tracking-wider text-muted">Hızlı erişim</div>
+                <div className="px-1 pb-2 text-[11px] font-bold uppercase tracking-wider text-muted">{m('genel.hizli_erisim')}</div>
                 <div className="grid grid-cols-2 gap-2">
-                  <a href="tel:08503025809" className="flex items-center gap-2 rounded-xl bg-surface px-3 py-2.5 text-[13px] font-semibold text-strong ring-1 ring-line">
-                    <Icon name="phone" className="w-4 h-4 text-brandtext" /> Ara
+                  <a href={firma.telefonHref} className="flex items-center gap-2 rounded-xl bg-surface px-3 py-2.5 text-[13px] font-semibold text-strong ring-1 ring-line">
+                    <Icon name="phone" className="w-4 h-4 text-brandtext" /> {m('genel.ara')}
                   </a>
-                  <a href="https://my.sunucumweb.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-xl bg-surface px-3 py-2.5 text-[13px] font-semibold text-strong ring-1 ring-line">
-                    <Icon name="user" className="w-4 h-4 text-brandtext" /> Müşteri Girişi
+                  <a href={firma.panel} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-xl bg-surface px-3 py-2.5 text-[13px] font-semibold text-strong ring-1 ring-line">
+                    <Icon name="user" className="w-4 h-4 text-brandtext" /> {m('genel.musteri_girisi')}
                   </a>
                   <button
                     type="button"
@@ -593,14 +552,14 @@ export function SiteHeader() {
                     data-umami-event="Canlı Destek"
                     className="flex items-center gap-2 rounded-xl bg-surface px-3 py-2.5 text-[13px] font-semibold text-strong ring-1 ring-line"
                   >
-                    <Icon name="chat" className="w-4 h-4 text-brandtext" /> Canlı Destek
+                    <Icon name="chat" className="w-4 h-4 text-brandtext" /> {m('genel.canli_destek')}
                   </button>
-                  <a href="https://status.sunucumweb.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-xl bg-surface px-3 py-2.5 text-[13px] font-semibold text-strong ring-1 ring-line">
+                  <a href={firma.durum} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-xl bg-surface px-3 py-2.5 text-[13px] font-semibold text-strong ring-1 ring-line">
                     <span className="relative flex h-2 w-2">
                       <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                       <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
                     </span>
-                    Ağ Durumu
+                    {m('genel.ag_durumu')}
                   </a>
                 </div>
                 <div className="mt-2"><ThemeToggle variant="satir" /></div>
@@ -615,68 +574,6 @@ export function SiteHeader() {
   );
 }
 
-const FIRMA = {
-  unvan: 'SunucumWEB Bilişim Teknolojileri',
-  adres: 'Hasanbey Mahallesi, Sokullu Sokak No: 16, Keçiborlu / ISPARTA',
-  telefon: '0(850) 302 5809',
-  telefonHref: 'tel:08503025809',
-  eposta: 'destek@sunucumweb.com',
-  panel: 'https://my.sunucumweb.com',
-};
-
-const BTK = {
-  metin: '5651 sayılı kanun kapsamında Bilgi Teknolojileri ve İletişim Kurumu tarafından yetkilendirilmiş Yer Sağlayıcı\'dır.',
-  liste: 'https://internet.btk.gov.tr/yer-saglayici-listesi?page=1&q=SunucumWEB',
-  logo: 'https://cdn.yetkinweb.com/genel/genel/btklogo_320x320.png',
-};
-
-const GOOGLE_YORUM_URL = 'https://www.google.com/search?q=SunucumWEB&rldimm=10560064220033697496&tbm=lcl#lkt=LocalPoiReviews';
-
-const FOOT_KOLON = [
-  { h: 'Hosting', items: [
-    ['Web Hosting', '/web-hosting'],
-    ['WordPress Hosting', '/wordpress-hosting'],
-    ['Reseller Hosting', '/reseller-hosting'],
-    ['Kurumsal Hosting', '/kurumsal-hosting'],
-  ]},
-  { h: 'Sunucular', items: [
-    ['Sanal Sunucu (VDS)', '/sanal-sunucu'],
-    ['Premium Sunucu', '/premium-sunucu'],
-    ['Dedicated Sunucu', '/dedicated-sunucu'],
-    ['GPU Sunucu', '/gpu-sunucu'],
-  ]},
-  { h: 'Alan Adı', items: [
-    ['Alan Adı Tescil', '/alan-adi'],
-    ['Alan Adı Transfer', '/transfer'],
-    ['WHOIS Sorgulama', '/araclar/whois'],
-  ]},
-  { h: 'Veri Merkezi', items: [
-    ['Sunucu Barındırma', '/sunucu-barindirma'],
-    ['IP Kiralama', '/ip-kiralama'],
-  ]},
-  { h: 'Araçlar', items: [
-    ['DNS Sorgulama', '/araclar/dns'],
-    ['WHOIS Sorgulama', '/araclar/whois'],
-    ['SSL Kontrolü', '/araclar/ssl'],
-    ['E-posta Kayıtları', '/araclar/eposta'],
-    ['IP Sorgulama', '/araclar/ip'],
-  ]},
-  { h: 'Kurumsal', items: [
-    ['Şirket Profili', '/hakkimizda'],
-    ['Kampanyalar', '/kampanyalar'],
-    ['Hazır Yazılımlar', '/hazir-yazilim'],
-    ['Legal', '/legal'],
-    ['İletişim', '/iletisim'],
-  ]},
-];
-
-export const SOSYAL = [
-  { ad: 'Facebook', href: 'https://facebook.com/sunucumweb', d: 'M14 8h-2a1 1 0 0 0-1 1v2h3l-.4 3H11v7H8v-7H6v-3h2V9a4 4 0 0 1 4-4h2z' },
-  { ad: 'X', href: 'https://x.com/sunucumweb', d: 'M4 4l7.6 9.6L4.4 20h2.1l5.9-6.4 5 6.4H20l-7.6-9.6L19.5 4h-2.1l-5.4 5.9L7.4 4z' },
-  { ad: 'Instagram', href: 'https://instagram.com/sunucumweb', d: 'M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4zM12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zM17.5 6.5h.01' },
-  { ad: 'LinkedIn', href: 'https://www.linkedin.com/company/sunucumweb-i%CC%87nternet-hizmetleri/', d: 'M4.5 9h3v11h-3zM6 4.5a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6zM10.5 9h3v1.6a3.4 3.4 0 0 1 3-1.6c2.4 0 3.5 1.6 3.5 4.3V20h-3v-6c0-1.5-.5-2.4-1.8-2.4-1.1 0-1.7.7-1.7 2.4v6h-3z' },
-  { ad: 'YouTube', href: 'https://youtube.com/@sunucumweb', d: 'M21 8.5a3 3 0 0 0-2.1-2.1C17.1 6 12 6 12 6s-5.1 0-6.9.4A3 3 0 0 0 3 8.5C2.6 10.3 2.6 12 2.6 12s0 1.7.4 3.5a3 3 0 0 0 2.1 2.1C6.9 18 12 18 12 18s5.1 0 6.9-.4a3 3 0 0 0 2.1-2.1c.4-1.8.4-3.5.4-3.5s0-1.7-.4-3.5zM10.2 15.1V8.9l5.3 3.1z' },
-];
 
 function Yildizlar({ puan }) {
   const benzersiz = useId().replace(/:/g, '');
@@ -704,6 +601,7 @@ function Yildizlar({ puan }) {
 const YORUM_TAZELEME_MS = 5 * 60 * 1000;
 
 function GoogleYorum() {
+  const { googleYorumUrl: GOOGLE_YORUM_URL } = useSiteAyarlari();
   const [ozet, setOzet] = useState(null);
 
   useEffect(() => {
@@ -751,7 +649,7 @@ function GoogleYorum() {
       href={ozet.harita || GOOGLE_YORUM_URL}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`Google değerlendirmemiz 5 üzerinden ${puanYazi}, ${ozet.adet} yorum`}
+      aria-label={m('genel.google_aria', { puan: puanYazi, adet: ozet.adet })}
       className="group flex min-h-[46px] items-center gap-3 rounded-xl bg-white/5 px-4 py-2.5 ring-1 ring-white/10 transition-colors hover:bg-white/10"
     >
       <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0" aria-hidden>
@@ -769,17 +667,17 @@ function GoogleYorum() {
 
 export function AtaturkSoz() {
   return (
-    <section aria-label="Atatürk sözü" className="border-t border-line bg-surface2/40">
+    <section aria-label={m('genel.ataturk_aria')} className="border-t border-line bg-surface2/40">
       <div className="mx-auto flex max-w-3xl flex-col items-center px-5 lg:px-8 py-12 lg:py-14 text-center">
         <svg viewBox="0 0 24 24" aria-hidden className="h-8 w-8 text-brandtext/40" fill="currentColor">
           <path d="M9.7 5.2C6.6 6.6 5 9.1 5 12.3V18h6v-6H8.1c0-1.9.9-3.3 2.6-4.2L9.7 5.2zm9 0C15.6 6.6 14 9.1 14 12.3V18h6v-6h-2.9c0-1.9.9-3.3 2.6-4.2L18.7 5.2z" />
         </svg>
         <p className="mt-4 text-balance text-2xl font-semibold leading-snug tracking-tight text-strong sm:text-3xl">
-          Hayatta en hakiki mürşit ilimdir, fendir.
+          {m('genel.ataturk_soz')}
         </p>
         <img
           src="/img/ataturk-imza.webp"
-          alt="Mustafa Kemal Atatürk imzası"
+          alt={m('genel.ataturk_imza')}
           width={480}
           height={172}
           loading="lazy"
@@ -790,23 +688,20 @@ export function AtaturkSoz() {
   );
 }
 
-const TRUSTPILOT = {
-  puan: 3.8,
-  adet: 2,
-  url: 'https://www.trustpilot.com/review/sunucumweb.com',
-};
 const TP_YESIL = '#00b67a';
 const TP_STAR = 'M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7-6.2-3.8-6.2 3.8 1.6-7L2 9.5l7.1-.6z';
 
 function TrustpilotKutu() {
-  const { puan, adet, url } = TRUSTPILOT;
+  const tp = useSiteAyarlari().trustpilot;
+  if (!tp) return null;
+  const { puan, adet, url } = tp;
   const dolu = Math.round(puan);
   return (
     <a
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`Trustpilot değerlendirmemiz 5 üzerinden ${puan}, ${adet} yorum`}
+      aria-label={m('genel.trustpilot_aria', { puan, adet })}
       data-umami-event="Trustpilot"
       className="group inline-flex min-h-[46px] items-center gap-2.5 rounded-xl bg-white/5 px-4 py-2.5 ring-1 ring-white/10 transition-colors hover:bg-white/10"
     >
@@ -829,14 +724,16 @@ function TrustpilotKutu() {
 }
 
 export function SiteFooter() {
+  const { firma: FIRMA, btk: BTK, etbis: ETBIS, footKolon: FOOT_KOLON, sosyal: SOSYAL } = useSiteAyarlari();
   return (
     <footer className="bg-ink text-slate-300">
       <div className="mx-auto max-w-7xl px-5 lg:px-8 pt-14 lg:pt-16">
+        <BultenFormu kaynak="footer" />
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,3fr)]">
           <div className="max-w-sm">
             <img src="/icon/logo.png" alt={FIRMA.unvan} className="h-8 w-auto brightness-0 invert" />
             <p className="mt-4 text-sm leading-relaxed text-slate-400">
-              Isparta merkezli veri merkezimizden hosting, sanal sunucu ve dedicated sunucu hizmeti veriyoruz.
+              {m('genel.footer_tanitim')}
             </p>
 
             <ul className="mt-5 space-y-3 text-sm">
@@ -852,6 +749,10 @@ export function SiteFooter() {
                 <Icon name="mail" className="h-4 w-4 shrink-0 text-brand-400" />
                 <a href={`mailto:${FIRMA.eposta}`} className="break-words text-slate-300 transition-colors hover:text-brand-300">{FIRMA.eposta}</a>
               </li>
+              <li className="flex items-center gap-2.5">
+                <Icon name="shield" className="h-4 w-4 shrink-0 text-brand-400" />
+                <span className="break-all text-slate-300"><span className="text-slate-500">{m('genel.kep')}</span> {FIRMA.kep}</span>
+              </li>
             </ul>
 
             <a
@@ -860,7 +761,7 @@ export function SiteFooter() {
               rel="noopener noreferrer"
               className="mt-6 inline-flex items-center gap-2 rounded-xl bg-brand-500 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-brand-400"
             >
-              <Icon name="user" className="h-4 w-4" /> Müşteri Paneli
+              <Icon name="user" className="h-4 w-4" /> {m('genel.musteri_paneli')}
             </a>
 
             <ul className="mt-6 flex flex-wrap gap-2">
@@ -883,7 +784,7 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          <nav className="grid grid-cols-2 gap-x-6 gap-y-9 sm:grid-cols-3 lg:grid-cols-5" aria-label="Alt menü">
+          <nav className="grid grid-cols-2 gap-x-6 gap-y-9 sm:grid-cols-3 lg:grid-cols-5" aria-label={m('genel.alt_menu')}>
             {FOOT_KOLON.map((col) => (
               <div key={col.h} className="min-w-0">
                 <div className="text-[13px] font-bold uppercase tracking-wider text-white">{col.h}</div>
@@ -899,31 +800,57 @@ export function SiteFooter() {
           </nav>
         </div>
 
-        <div className="mt-12 flex flex-col gap-6 border-t border-white/10 pt-8 lg:flex-row lg:items-center lg:justify-between">
+        <div className="mt-12 flex flex-col gap-6 border-t border-white/10 pt-8 lg:flex-row lg:items-start lg:justify-between">
           <div className="flex flex-col items-start gap-3">
             <GoogleYorum />
             <TrustpilotKutu />
           </div>
 
-          <a
-            href={BTK.liste}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex max-w-xl items-center gap-4 rounded-xl bg-white/5 px-4 py-3 ring-1 ring-white/10 transition-colors hover:bg-white/10"
-          >
-            <img
-              src={BTK.logo}
-              alt="BTK"
-              width={320}
-              height={320}
-              loading="lazy"
-              className="h-11 w-11 shrink-0 rounded-lg bg-white object-contain p-1"
-            />
-            <span className="text-[12.5px] leading-relaxed text-slate-400">
-              <span className="font-semibold text-white">{FIRMA.unvan}</span>, {BTK.metin}
-              <span className="ml-1 inline-block text-brand-300 transition-transform group-hover:translate-x-0.5">→</span>
-            </span>
-          </a>
+          <div className="flex w-full flex-col gap-3 lg:max-w-xl lg:items-end">
+            <a
+              href={BTK.liste}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-4 rounded-xl bg-white/5 px-4 py-3 ring-1 ring-white/10 transition-colors hover:bg-white/10"
+            >
+              <img
+                src={BTK.logo}
+                alt="BTK"
+                width={320}
+                height={320}
+                loading="lazy"
+                className="h-11 w-11 shrink-0 rounded-lg bg-white object-contain p-1"
+              />
+              <span className="text-[12.5px] leading-relaxed text-slate-400">
+                <span className="font-semibold text-white">{FIRMA.unvan}</span>, {BTK.metin}
+                <span className="ml-1 inline-block text-brand-300 transition-transform group-hover:translate-x-0.5">→</span>
+              </span>
+            </a>
+
+            <a
+              href={ETBIS.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={m('genel.etbis_aria')}
+              data-umami-event="ETBIS"
+              className="group flex items-center gap-4 rounded-xl bg-white/5 px-4 py-3 ring-1 ring-white/10 transition-colors hover:bg-white/10"
+            >
+              <span className="flex h-11 w-[104px] shrink-0 items-center justify-center rounded-lg bg-white p-1.5">
+                <img
+                  src={ETBIS.logo}
+                  alt="ETBİS"
+                  width={200}
+                  height={70}
+                  loading="lazy"
+                  className="max-h-7 w-auto max-w-full object-contain"
+                />
+              </span>
+              <span className="text-[12.5px] leading-relaxed text-slate-400">
+                {ETBIS.metin}
+                <span className="ml-1 inline-block text-brand-300 transition-transform group-hover:translate-x-0.5">→</span>
+              </span>
+            </a>
+          </div>
         </div>
 
       </div>
@@ -931,7 +858,7 @@ export function SiteFooter() {
       <div className="mt-10 border-t border-white/10">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-5 py-6 lg:flex-row lg:px-8">
           <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm text-slate-400">
-            <span>© 2026 {FIRMA.unvan}</span>
+            <span>{m('genel.telif', { unvan: FIRMA.unvan })}</span>
             <span className="hidden text-white/20 sm:inline">|</span>
             <DurumRozeti />
           </div>
@@ -943,17 +870,18 @@ export function SiteFooter() {
   );
 }
 
-export function CtaBand({ title = 'Bugün başlayın, farkı hemen hissedin', text = 'Dakikalar içinde kurulum, 30 gün içinde memnun kalmazsanız iade garantisi.' }) {
+export function CtaBand({ title, text }) {
+  const { cta, firma } = useSiteAyarlari();
   return (
     <section className="mx-auto max-w-7xl px-5 lg:px-8 py-20">
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-600 to-brand-800 px-8 py-14 sm:px-14 text-center shadow-[0_40px_90px_-40px_rgba(15,118,110,0.7)]">
         <div aria-hidden className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.25),transparent_55%)]" />
         <div className="relative">
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white text-balance">{title}</h2>
-          <p className="mt-4 max-w-xl mx-auto text-lg text-white/85">{text}</p>
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white text-balance">{title ?? cta.baslik}</h2>
+          <p className="mt-4 max-w-xl mx-auto text-lg text-white/85">{text ?? cta.metin}</p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Link href="/iletisim" className="inline-flex items-center gap-2 rounded-xl bg-surface px-6 py-3.5 text-[15px] font-bold text-strong hover:bg-brandsoft transition">Bize Ulaşın <Icon name="arrow" className="w-4 h-4" /></Link>
-            <a href="tel:08503025809" className="inline-flex items-center gap-2 rounded-xl bg-ink/20 px-6 py-3.5 text-[15px] font-semibold text-white ring-1 ring-white/25 hover:bg-ink/30 transition">0(850) 302 5809</a>
+            <Link href="/iletisim" className="inline-flex items-center gap-2 rounded-xl bg-surface px-6 py-3.5 text-[15px] font-bold text-strong hover:bg-brandsoft transition">{m('genel.bize_ulasin')} <Icon name="arrow" className="w-4 h-4" /></Link>
+            <a href={firma.telefonHref} className="inline-flex items-center gap-2 rounded-xl bg-ink/20 px-6 py-3.5 text-[15px] font-semibold text-white ring-1 ring-white/25 hover:bg-ink/30 transition">{firma.telefon}</a>
           </div>
         </div>
       </div>
@@ -980,13 +908,13 @@ export function PageHero({ eyebrow, title, text, breadcrumb }) {
   const yol = usePathname();
   return (
     <section className="relative overflow-hidden border-b border-line">
-      {breadcrumb && <Sema veri={ekmekKirintisi([{ ad: 'Ana Sayfa', yol: '/' }, { ad: breadcrumb, yol }])} />}
+      {breadcrumb && <Sema veri={ekmekKirintisi([{ ad: m('genel.ana_sayfa'), yol: '/' }, { ad: breadcrumb, yol }])} />}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute -top-32 right-[-8%] h-[420px] w-[420px] rounded-full bg-brand-200/40 blur-[120px]" />
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgb(var(--c-grid))_1px,transparent_1px),linear-gradient(to_bottom,rgb(var(--c-grid))_1px,transparent_1px)] bg-[size:44px_44px] [mask-image:radial-gradient(ellipse_at_top,black,transparent_75%)]" />
       </div>
       <div className="mx-auto max-w-7xl px-5 lg:px-8 py-16 lg:py-20">
-        {breadcrumb && (<div className="mb-5 flex items-center gap-2 text-sm text-muted"><Link href="/" className="hover:text-brandtext">Ana Sayfa</Link><span>/</span><span className="text-strong/70 font-medium">{breadcrumb}</span></div>)}
+        {breadcrumb && (<div className="mb-5 flex items-center gap-2 text-sm text-muted"><Link href="/" className="hover:text-brandtext">{m('genel.ana_sayfa')}</Link><span>/</span><span className="text-strong/70 font-medium">{breadcrumb}</span></div>)}
         {eyebrow && <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">{eyebrow}</span>}
         <h1 className="mt-3 max-w-3xl text-4xl sm:text-5xl font-extrabold tracking-tight text-strong text-balance">{title}</h1>
         {text && <p className="mt-5 max-w-2xl text-lg leading-relaxed text-body">{text}</p>}

@@ -1,16 +1,18 @@
 import DnsToolPage from '@/components/site/DnsToolPage';
-import { aracBul } from '@/content/site/araclar';
+import { aracGetir, metinAl } from '@/lib/cms';
 import { kanonik } from '@/lib/seo';
 
-const ARAC = aracBul('dns');
+export async function generateMetadata() {
+  const m = await metinAl();
+  return {
+    title: m('dns.meta_baslik'),
+    description: m('dns.meta_aciklama'),
+    alternates: kanonik('/araclar/dns'),
+  };
+}
 
-export const metadata = {
-  title: 'DNS Kayıt Sorgulama — A, AAAA, MX, NS, TXT, CAA',
-  description:
-    'Alan adının DNS kayıtlarını dokuz farklı genel çözümleyiciden canlı sorgulayın. Kayıt tipini seçin, değerleri ve yayılım durumunu anında görün.',
-  alternates: kanonik('/araclar/dns'),
-};
+export const revalidate = 300;
 
-export default function Page() {
-  return <DnsToolPage arac={ARAC} />;
+export default async function Page() {
+  return <DnsToolPage arac={await aracGetir('dns')} />;
 }

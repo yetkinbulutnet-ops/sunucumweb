@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { Icon } from './chrome';
+import { m } from '@/lib/metin';
 
 const VeriMerkeziKure = dynamic(() => import('./VeriMerkeziKure'), { ssr: false });
 
@@ -130,7 +131,7 @@ export default function VeriMerkeziBolumu({ veri }) {
                     className="inline-flex items-center gap-1.5 text-[13px] font-bold text-brandtext transition-colors hover:text-brand-500"
                   >
                     <Icon name="arrow" className="h-4 w-4 rotate-180" />
-                    Dünyaya dön
+                    {m('hakkimizda_vm.dunyaya_don')}
                   </button>
                 </div>
               </div>
@@ -138,7 +139,7 @@ export default function VeriMerkeziBolumu({ veri }) {
 
             {yakinda && !kartAcik && asama !== 'ucuyor' && (
               <p className="pointer-events-none absolute inset-x-0 bottom-1 text-center text-[12px] text-muted">
-                {konum.etiket} işaretine dokunun
+                {m('hakkimizda_vm.isarete_dokun', { etiket: konum.etiket })}
               </p>
             )}
           </div>
@@ -152,14 +153,14 @@ export default function VeriMerkeziBolumu({ veri }) {
 
             <dl className="mt-8 grid gap-4 sm:grid-cols-2">
               <div className="rounded-2xl border border-line bg-surface p-5">
-                <dt className="text-[12px] font-bold uppercase tracking-[0.12em] text-muted">Konum</dt>
+                <dt className="text-[12px] font-bold uppercase tracking-[0.12em] text-muted">{m('hakkimizda_vm.konum')}</dt>
                 <dd className="mt-2 text-[17px] font-bold text-strong">
                   {konum.sehir}, {konum.ulke}
                 </dd>
                 <dd className="mt-1 font-mono text-[12px] text-muted">{konum.koordinat}</dd>
               </div>
               <div className="rounded-2xl border border-line bg-surface p-5">
-                <dt className="text-[12px] font-bold uppercase tracking-[0.12em] text-muted">Tesis</dt>
+                <dt className="text-[12px] font-bold uppercase tracking-[0.12em] text-muted">{m('hakkimizda_vm.tesis')}</dt>
                 <dd className="mt-2 text-[17px] font-bold text-strong">
                   <a
                     href={tesis.site}

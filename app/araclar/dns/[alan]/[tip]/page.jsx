@@ -1,15 +1,13 @@
 import { notFound, permanentRedirect } from 'next/navigation';
 import DnsToolPage from '@/components/site/DnsToolPage';
-import { aracBul } from '@/content/site/araclar';
+import { aracGetir, dnsTipGetir, metinAl } from '@/lib/cms';
 import { dnsSorgulaOnbellekli } from '@/lib/dns-onbellek';
-import { dnsTipBul } from '@/content/site/dns-tipleri';
 import { alanNormalle, gecerliHedef, tipNormalle, gecerliTip, dnsYolu } from '@/lib/dns-yol';
 import { kanonik } from '@/lib/seo';
+import { sistemMetinHazirla } from '@/lib/sistem-metin';
 
 export const revalidate = 900;
 export const fetchCache = 'force-cache';
-
-const ARAC = aracBul('dns');
 
 function coz(hamAlan, hamTip) {
   const tip = tipNormalle(hamTip);
@@ -29,28 +27,31 @@ export async function generateMetadata({ params }) {
   const { alan: hamAlan, tip: hamTip } = await params;
   const tip = tipNormalle(hamTip);
   const alan = alanNormalle(hamAlan);
-  const bilgi = dnsTipBul(tip);
+  const bilgi = await dnsTipGetir(tip);
   if (!bilgi || !gecerliHedef(alan, tip)) return {};
+  const m = await metinAl();
 
   return {
-    title: `${alan} ${tip} kayıtları — DNS sorgulama`,
-    description: `${alan} alan adının ${tip} kayıtlarını dokuz farklı DNS çözümleyicisinden canlı sorgulayın. ${bilgi.ozet} Değerleri, TTL sürelerini ve yayılım durumunu görün.`,
+    title: m('dns.meta_tip_baslik', { alan, tip }),
+    description: m('dns.meta_tip_aciklama', { alan, tip, ozet: bilgi.ozet }),
     alternates: kanonik(dnsYolu(alan, tip)),
   };
 }
 
 export default async function Page({ params }) {
+  await sistemMetinHazirla();
   const { alan: hamAlan, tip: hamTip } = await params;
   const { alan, tip } = coz(hamAlan, hamTip);
   const sonuc = await dnsSorgulaOnbellekli(alan, tip);
+  const m = await metinAl();
 
   return (
     <DnsToolPage
-      arac={ARAC}
+      arac={await aracGetir('dns')}
       alan={alan}
       tip={tip}
       veri={sonuc.ok ? sonuc.data : null}
-      hata={sonuc.ok ? '' : 'Sorgu şu anda tamamlanamadı. Birkaç saniye sonra tekrar deneyin.'}
+      hata={sonuc.ok ? '' : m('dns.sorgu_hata')}
     />
   );
 }

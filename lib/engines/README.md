@@ -64,7 +64,7 @@ rozet hiçbir durumda boş kalmaz.
 
 `/araclar` altındaki beş ücretsiz sorgu aracını besler: DNS, WHOIS, SSL, e-posta
 kayıtları ve IP. Araçlar `ARACLAR` sabitinde tanımlıdır; yeni araç eklemek için
-o nesneye bir anahtar eklemek ve `content/site/araclar.js` içine sayfa metnini
+o nesneye bir anahtar eklemek ve CMS’te (Araç koleksiyonu) sayfa metnini
 yazmak yeterli — route ve API kendiliğinden çalışır.
 
 **Güvenlik notları:**

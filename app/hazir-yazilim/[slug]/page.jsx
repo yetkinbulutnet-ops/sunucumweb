@@ -1,34 +1,41 @@
 import { notFound } from 'next/navigation';
 import HazirYazilimDetay from '@/components/site/HazirYazilimDetay';
-import { YAZILIMLAR } from '@/content/site/yazilimlar';
+import { yazilimVerisi, metinAl } from '@/lib/cms';
 import { mutlakUrl } from '@/lib/seo';
+import SayfaMetni from '@/components/site/SayfaMetni';
 
-export const dynamicParams = false;
+export const dynamicParams = true;
+export const revalidate = 300;
 
-export function generateStaticParams() {
-  return YAZILIMLAR.map((y) => ({ slug: y.id }));
+export async function generateStaticParams() {
+  const { yazilimlar } = await yazilimVerisi();
+  return yazilimlar.map((y) => ({ slug: y.id }));
 }
 
-const bul = (slug) => YAZILIMLAR.find((y) => y.id === slug) || null;
+const bul = async (slug) => (await yazilimVerisi()).yazilimlar.find((y) => y.id === slug) || null;
+
+const gorselUrl = (img) => (img && /^https?:/.test(img) ? img : mutlakUrl(img || '/'));
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const u = bul(slug);
+  const u = await bul(slug);
   if (!u) return {};
-  const baslik = `${u.ad} — Hazır Yazılım`;
+  const m = await metinAl();
+  const baslik = m('yazilim.meta_baslik', { ad: u.ad });
   const url = mutlakUrl(`/hazir-yazilim/${u.id}`);
   return {
     title: baslik,
     description: u.aciklama,
     alternates: { canonical: url },
-    openGraph: { title: baslik, description: u.aciklama, images: [u.img], type: 'website', url },
-    twitter: { card: 'summary_large_image', title: baslik, description: u.aciklama, images: [u.img] },
+    openGraph: { title: baslik, description: u.aciklama, images: [gorselUrl(u.img)], type: 'website', url },
+    twitter: { card: 'summary_large_image', title: baslik, description: u.aciklama, images: [gorselUrl(u.img)] },
   };
 }
 
 export default async function Page({ params }) {
   const { slug } = await params;
-  const u = bul(slug);
+  const veri = await yazilimVerisi();
+  const u = veri.yazilimlar.find((y) => y.id === slug) || null;
   if (!u) notFound();
 
   const jsonld = {
@@ -36,7 +43,7 @@ export default async function Page({ params }) {
     '@type': 'Product',
     name: u.ad,
     description: u.aciklama,
-    image: mutlakUrl(u.img),
+    image: gorselUrl(u.img),
     offers: {
       '@type': 'Offer',
       price: u.fiyat,
@@ -49,7 +56,9 @@ export default async function Page({ params }) {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonld) }} />
-      <HazirYazilimDetay urun={u} />
+      <SayfaMetni onekler={['yazilim']}>
+        <HazirYazilimDetay urun={u} yazilimlar={veri.yazilimlar} kategoriler={veri.kategoriler} />
+      </SayfaMetni>
     </>
   );
 }

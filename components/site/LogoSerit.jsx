@@ -1,4 +1,6 @@
+'use client';
 import LogoKutusu from './LogoKutusu';
+import { m } from '@/lib/metin';
 
 const KUTU_GENISLIGI = { serit: 204, izgara: 316, ortak: 316, altyapi: 168 };
 const EN_AZ_GENISLIK = 1800;
@@ -26,7 +28,7 @@ function Oge({ marka, boyut, gizli }) {
       rel="noopener noreferrer nofollow"
       aria-hidden={gizli ? 'true' : undefined}
       tabIndex={gizli ? -1 : undefined}
-      title={`${marka.ad} — siteyi aç`}
+      title={m('genel.logo_siteyi_ac', { ad: marka.ad })}
       className="shrink-0 rounded-2xl ring-1 ring-line transition-[transform,box-shadow] hover:-translate-y-0.5 hover:shadow-[0_18px_40px_-24px_rgba(15,41,66,0.45)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500"
     >
       {govde}

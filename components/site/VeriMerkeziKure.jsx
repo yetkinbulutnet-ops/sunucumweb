@@ -1,5 +1,6 @@
 'use client';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { m } from '@/lib/metin';
 import {
   AdditiveBlending,
   BackSide,
@@ -211,7 +212,7 @@ export default function VeriMerkeziKure({ enlem, boylam, etiket, onDurum, onHazi
     renderer.domElement.style.touchAction = 'pan-y';
     renderer.domElement.style.cursor = 'grab';
     renderer.domElement.setAttribute('role', 'img');
-    renderer.domElement.setAttribute('aria-label', etiket + ' veri merkezi konumu');
+    renderer.domElement.setAttribute('aria-label', m('hakkimizda_vm.kure_aria', { etiket }));
 
     const olcekle = () => {
       const genislik = kap.clientWidth;
@@ -372,7 +373,7 @@ export default function VeriMerkeziKure({ enlem, boylam, etiket, onDurum, onHazi
       renderer.domElement.removeEventListener('pointerup', birakti);
       renderer.domElement.removeEventListener('pointercancel', birakti);
       [kureGeo, agGeo, haleGeo, isaretGeo, halkaGeo, karaGeo].forEach((g) => g?.dispose());
-      [kureMat, agMat, haleMat, isaretMat, halkaMat, karaMat].forEach((m) => m?.dispose());
+      [kureMat, agMat, haleMat, isaretMat, halkaMat, karaMat].forEach((mat) => mat?.dispose());
       doku?.dispose();
       if (renderer.domElement.parentNode === kap) kap.removeChild(renderer.domElement);
       renderer.dispose();
@@ -383,7 +384,7 @@ export default function VeriMerkeziKure({ enlem, boylam, etiket, onDurum, onHazi
     return (
       <div className="grid h-full place-items-center rounded-3xl border border-line bg-surface2 px-6 text-center">
         <p className="text-[14px] leading-relaxed text-body">
-          Tarayıcınız 3B görüntülemeyi desteklemiyor. Veri merkezimiz {etiket} konumundadır.
+          {m('hakkimizda_vm.destek_yok', { etiket })}
         </p>
       </div>
     );

@@ -2,13 +2,18 @@ import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import TurnstileGecis from './TurnstileGecis';
 import { refUret, istemciIp } from '@/lib/guvenlik';
+import { metinAl } from '@/lib/cms';
+import SayfaMetni from '@/components/site/SayfaMetni';
 
 export const dynamic = 'force-dynamic';
 
-export const metadata = {
-  title: 'Güvenlik Kontrolü',
-  robots: { index: false, follow: false, nocache: true },
-};
+export async function generateMetadata() {
+  const m = await metinAl();
+  return {
+    title: m('guvenlik.baslik'),
+    robots: { index: false, follow: false, nocache: true },
+  };
+}
 
 export default async function GuvenlikSayfasi({ searchParams }) {
   const h = await headers();
@@ -20,12 +25,14 @@ export default async function GuvenlikSayfasi({ searchParams }) {
     redirect(`/guvenlik?refid=${refid}&ip=${encodeURIComponent(baslikIp || 'bilinmiyor')}`);
   }
 
+  const m = await metinAl();
   const refid = sp.refid;
   const urlIp = sp.ip;
-  const ip = baslikIp || (urlIp && urlIp !== 'bilinmiyor' ? urlIp : 'Tespit edilemedi');
+  const ip = baslikIp || (urlIp && urlIp !== 'bilinmiyor' ? urlIp : m('guvenlik.ip_tespit_edilemedi'));
   const hata = sp.hata === '1';
 
   return (
+    <SayfaMetni onekler={['guvenlik']}>
     <main className="relative flex min-h-[100dvh] w-full items-center justify-center overflow-hidden bg-page px-4 py-10">
       <div
         aria-hidden
@@ -52,14 +59,14 @@ export default async function GuvenlikSayfasi({ searchParams }) {
             </svg>
           </div>
 
-          <h1 className="text-center text-[22px] font-bold leading-tight text-strong">Güvenlik Kontrolü</h1>
+          <h1 className="text-center text-[22px] font-bold leading-tight text-strong">{m('guvenlik.baslik')}</h1>
           <p className="mx-auto mt-2.5 max-w-[330px] text-center text-[14px] leading-relaxed text-body">
-            Bağlantınızın güvenliği doğrulanıyor. Devam etmek için aşağıdaki kutucuğu işaretleyin.
+            {m('guvenlik.aciklama')}
           </p>
 
           {hata && (
             <p className="mt-4 rounded-lg border border-red-300/60 bg-red-50 px-3 py-2 text-center text-[13px] font-medium text-red-700 dark:border-red-500/30 dark:bg-red-950/40 dark:text-red-300">
-              Doğrulama tamamlanamadı. Lütfen tekrar deneyin.
+              {m('guvenlik.hata')}
             </p>
           )}
 
@@ -67,18 +74,19 @@ export default async function GuvenlikSayfasi({ searchParams }) {
             <TurnstileGecis />
           </div>
 
-          <ErisimBilgi ip={ip} refid={refid} />
+          <ErisimBilgi m={m} ip={ip} refid={refid} />
         </div>
 
         <p className="mt-5 text-center text-[12px] text-muted">
-          © SunucumWEB Bilişim Teknolojileri · Güvenli Erişim Kontrolü
+          {m('guvenlik.alt_bilgi')}
         </p>
       </div>
     </main>
+    </SayfaMetni>
   );
 }
 
-function ErisimBilgi({ ip, refid }) {
+function ErisimBilgi({ m, ip, refid }) {
   return (
     <div className="mt-6 overflow-hidden rounded-xl border border-line bg-page/70">
       <div className="flex items-center justify-between gap-3 px-4 py-2.5">
@@ -86,7 +94,7 @@ function ErisimBilgi({ ip, refid }) {
           <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18" />
           </svg>
-          IP Adresi
+          {m('guvenlik.ip_adresi')}
         </span>
         <span className="font-mono text-[13px] font-medium text-strong">{ip}</span>
       </div>
@@ -96,7 +104,7 @@ function ErisimBilgi({ ip, refid }) {
           <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
             <path d="M4 7V5a1 1 0 0 1 1-1h2M4 17v2a1 1 0 0 0 1 1h2M20 7V5a1 1 0 0 0-1-1h-2M20 17v2a1 1 0 0 1-1 1h-2" /><path d="M8 12h8" />
           </svg>
-          Referans No
+          {m('guvenlik.referans_no')}
         </span>
         <span className="font-mono text-[13px] font-medium text-strong">{refid}</span>
       </div>

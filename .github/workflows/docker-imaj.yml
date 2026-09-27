@@ -3,11 +3,9 @@ name: Docker imajı derle ve yayınla
 # Bu makinede Docker YOK; imajı GitHub derleyip GHCR'ye koyar,
 # Bunny Magic Containers oradan çeker.
 #
-# Tetikleme: main dalına her push + Actions sekmesinden elle çalıştırma.
+# Tetikleme: sadece Actions sekmesinden elle çalıştırma (demolar kullanılmıyor).
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
     inputs:
       site_indexable:

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import parse from 'html-react-parser';
 import { Icon, SiteShell } from './chrome';
-import { LEGAL as C, LEGAL_BELGELER } from '@/content/site/legal';
+import { TICARI_SLUG, metinAl } from '@/lib/cms';
 
 const PROSE = `
 .legal-prose h2{font-size:1.3rem;font-weight:800;color:rgb(var(--c-strong));margin:2rem 0 .7rem;letter-spacing:-.01em}
@@ -17,12 +17,12 @@ const PROSE = `
 .legal-prose li::before{content:'';position:absolute;left:.15rem;top:.6em;width:.45rem;height:.45rem;border-radius:9999px;background:rgb(var(--c-brandtext))}
 `;
 
-const yol = (slug) => (slug === LEGAL_BELGELER[0].slug ? '/legal' : `/legal/${slug}`);
+const yol = (slug) => (slug === TICARI_SLUG ? '/legal' : `/legal/${slug}`);
 
-function Kenar({ aktif }) {
+function Kenar({ m, aktif, belgeler: LEGAL_BELGELER }) {
   return (
-    <nav aria-label="Sözleşmeler" className="min-w-0 lg:sticky lg:top-28">
-      <p className="hidden text-[12px] font-bold uppercase tracking-[0.14em] text-muted lg:block">Belgeler</p>
+    <nav aria-label={m('legal.kenar_aria')} className="min-w-0 lg:sticky lg:top-28">
+      <p className="hidden text-[12px] font-bold uppercase tracking-[0.14em] text-muted lg:block">{m('legal.belgeler')}</p>
 
       <ul className="flex snap-x gap-2 overflow-x-auto pb-2 lg:mt-4 lg:flex-col lg:gap-1.5 lg:overflow-visible lg:pb-0">
         {LEGAL_BELGELER.map((b) => {
@@ -51,19 +51,18 @@ function Kenar({ aktif }) {
 
       <div className="mt-6 hidden rounded-2xl border border-line bg-surface2 p-4 lg:block">
         <p className="text-[13px] leading-relaxed text-body">
-          Sözleşmelerle ilgili sorularınız için{' '}
+          {m('legal.soru_on')}{' '}
           <Link href="/iletisim" className="font-bold text-brandtext hover:text-brand-500">
-            iletişim
+            {m('legal.soru_link')}
           </Link>{' '}
-          sayfamızdan bize yazabilirsiniz.
+          {m('legal.soru_son')}
         </p>
       </div>
     </nav>
   );
 }
 
-function TicariIcerik() {
-  const T = C.ticari;
+function TicariIcerik({ m, T }) {
 
   return (
     <div className="mt-7">
@@ -88,20 +87,32 @@ function TicariIcerik() {
 
       <div className="mt-5 grid gap-5 sm:grid-cols-2">
         <div className="rounded-2xl border border-line bg-surface p-5">
-          <h3 className="text-[13px] font-bold uppercase tracking-[0.12em] text-muted">Belgeler</h3>
-          <div className="mt-4 flex flex-col gap-2.5">
-            {T.belgeler.map((b) => {
-              const dis = b.href.startsWith('http');
+          <h3 className="text-[13px] font-bold uppercase tracking-[0.12em] text-muted">{m('legal.resmi_kayitlar')}</h3>
+          <div className="mt-4 flex flex-col gap-3">
+            {T.kayitlar.map((k) => {
+              const dis = k.href.startsWith('http');
               return (
                 <a
-                  key={b.href}
-                  href={b.href}
+                  key={k.ad}
+                  href={k.href}
                   target={dis ? '_blank' : undefined}
                   rel={dis ? 'noopener noreferrer' : undefined}
-                  className="inline-flex items-center gap-2 rounded-xl border border-line bg-surface2 px-4 py-2.5 text-[13px] font-bold text-strong transition-colors hover:border-brandline hover:text-brandtext"
+                  className="group flex items-center gap-4 rounded-xl border border-line bg-surface2 p-3 transition-colors hover:border-brandline"
                 >
-                  <Icon name={b.icon} className="h-4 w-4 shrink-0 text-brandtext" />
-                  {b.etiket}
+                  {k.logo ? (
+                    <span className="flex h-12 w-20 shrink-0 items-center justify-center rounded-lg bg-white p-1.5">
+                      <img src={k.logo} alt={k.ad} width={k.en} height={k.boy} loading="lazy" className="max-h-8 w-auto max-w-full object-contain" />
+                    </span>
+                  ) : (
+                    <span className="grid h-12 w-20 shrink-0 place-items-center rounded-lg bg-brandsoft">
+                      <Icon name={k.icon} className="h-5 w-5 text-brandtext" />
+                    </span>
+                  )}
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[14px] font-bold text-strong">{k.ad}</span>
+                    <span className="block text-[12.5px] leading-snug text-muted">{k.aciklama}</span>
+                  </span>
+                  <Icon name="arrow" className="h-4 w-4 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-brandtext" />
                 </a>
               );
             })}
@@ -109,7 +120,7 @@ function TicariIcerik() {
         </div>
 
         <div className="rounded-2xl border border-line bg-surface p-5">
-          <h3 className="text-[13px] font-bold uppercase tracking-[0.12em] text-muted">E-posta adresleri</h3>
+          <h3 className="text-[13px] font-bold uppercase tracking-[0.12em] text-muted">{m('legal.epostalar')}</h3>
           <dl className="mt-4 divide-y divide-line">
             {T.epostalar.map(([etiket, adres]) => (
               <div key={adres} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5 py-2.5 first:pt-0 last:pb-0">
@@ -129,7 +140,7 @@ function TicariIcerik() {
       </div>
 
       <div className="mt-5 rounded-2xl border border-line bg-surface p-5">
-        <h3 className="text-[13px] font-bold uppercase tracking-[0.12em] text-muted">Hizmet kapsamı</h3>
+        <h3 className="text-[13px] font-bold uppercase tracking-[0.12em] text-muted">{m('legal.hizmet_kapsami')}</h3>
         <div className="mt-3.5 flex flex-wrap gap-2">
           {T.hizmetler.map((h) => (
             <span key={h} className="rounded-lg bg-surface2 px-3 py-1.5 text-[13px] font-semibold text-body ring-1 ring-line">
@@ -142,27 +153,28 @@ function TicariIcerik() {
   );
 }
 
-export default function LegalHubPage({ belge, html }) {
+export default async function LegalHubPage({ belge, html, belgeler, metin: C, ticari }) {
+  const m = await metinAl();
   return (
     <SiteShell>
       <section className="border-b border-line bg-surface2/50">
         <div className="mx-auto max-w-7xl px-5 lg:px-8 pt-10 pb-8 lg:pt-12">
-          <nav aria-label="Site haritası" className="flex flex-wrap items-center gap-2 text-sm text-muted">
-            <Link href="/" className="hover:text-brandtext">Ana Sayfa</Link>
+          <nav aria-label={m('legal.kirinti_aria')} className="flex flex-wrap items-center gap-2 text-sm text-muted">
+            <Link href="/" className="hover:text-brandtext">{m('legal.kirinti_ana_sayfa')}</Link>
             <span>/</span>
-            <Link href="/legal" className="hover:text-brandtext">Legal</Link>
+            <Link href="/legal" className="hover:text-brandtext">{m('legal.kirinti_legal')}</Link>
             <span>/</span>
             <span className="font-medium text-strong/70">{belge.baslik}</span>
           </nav>
 
-          <h1 className="tipo-dev mt-4 font-extrabold text-strong text-balance">{C.title}</h1>
-          <p className="tipo-giris mt-3 max-w-2xl text-body">{C.lede}</p>
+          <h1 className="tipo-dev mt-4 font-extrabold text-strong text-balance">{C.baslik}</h1>
+          <p className="tipo-giris mt-3 max-w-2xl text-body">{C.aciklama}</p>
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-5 lg:px-8 py-10 lg:py-14">
         <div className="grid min-w-0 gap-8 lg:grid-cols-[280px_minmax(0,1fr)] lg:gap-14">
-          <Kenar aktif={belge.slug} />
+          <Kenar m={m} aktif={belge.slug} belgeler={belgeler} />
 
           <article className="min-w-0">
             <header className="border-b border-line pb-5">
@@ -171,7 +183,7 @@ export default function LegalHubPage({ belge, html }) {
             </header>
 
             {belge.tur === 'ticari' ? (
-              <TicariIcerik />
+              <TicariIcerik m={m} T={ticari} />
             ) : (
               <>
                 <style dangerouslySetInnerHTML={{ __html: PROSE }} />

@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
 import { saglayiciAdi, ulkeAdi } from '@/lib/hiz';
+import { sistemMetinHazirla } from '@/lib/sistem-metin';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -24,6 +25,7 @@ function temizle() {
 const sayi = (v) => (typeof v === 'number' && Number.isFinite(v) && v >= 0 && v < 1e6 ? Math.round(v * 100) / 100 : null);
 
 export async function POST(req) {
+  await sistemMetinHazirla();
   try {
     fs.mkdirSync(DIZIN, { recursive: true });
   } catch {}
@@ -61,6 +63,7 @@ export async function POST(req) {
 }
 
 export async function GET(req) {
+  await sistemMetinHazirla();
   const id = (new URL(req.url).searchParams.get('id') || '').replace(/[^a-f0-9]/g, '').slice(0, 24);
   if (!id) return Response.json({ ok: false }, { status: 400 });
 

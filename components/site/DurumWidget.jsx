@@ -1,14 +1,15 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { m } from '@/lib/metin';
 
 const API = '/api/durum';
 const SAYFA = 'https://status.sunucumweb.com';
 const YENILEME = 60_000;
 
 const DURUM = {
-  up: { nokta: 'bg-emerald-500', yazi: 'text-emerald-600 dark:text-emerald-400', etiket: 'Aktif' },
-  down: { nokta: 'bg-rose-500', yazi: 'text-rose-600 dark:text-rose-400', etiket: 'Kesinti' },
-  unknown: { nokta: 'bg-slate-400', yazi: 'text-muted', etiket: 'Bilinmiyor' },
+  up: { nokta: 'bg-emerald-500', yazi: 'text-emerald-600 dark:text-emerald-400', etiket: 'durum.aktif' },
+  down: { nokta: 'bg-rose-500', yazi: 'text-rose-600 dark:text-rose-400', etiket: 'durum.kesinti_etiket' },
+  unknown: { nokta: 'bg-slate-400', yazi: 'text-muted', etiket: 'durum.bilinmiyor' },
 };
 
 function Sparkline({ veri }) {
@@ -48,8 +49,8 @@ export default function DurumWidget() {
   if (hata) {
     return (
       <div className="w-full max-w-[820px] rounded-2xl border border-line bg-surface p-8 text-center">
-        <p className="text-[15px] text-body">Durum bilgisi şu an alınamadı.</p>
-        <a href={SAYFA} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block text-[14px] font-semibold text-brandtext hover:underline">Durum sayfasını aç →</a>
+        <p className="text-[15px] text-body">{m('durum.alinamadi')}</p>
+        <a href={SAYFA} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block text-[14px] font-semibold text-brandtext hover:underline">{m('durum.sayfayi_ac')}</a>
       </div>
     );
   }
@@ -71,12 +72,12 @@ export default function DurumWidget() {
             <span className={`relative inline-flex h-2.5 w-2.5 rounded-full ${nabizRenk}`} />
           </span>
           <span className="truncate text-[15px] font-bold text-strong">
-            {op ? 'Tüm sistemler operasyonel' : `${summary.down} serviste kesinti`}
+            {op ? m('durum.operasyonel') : m('durum.kesinti', { adet: summary.down })}
           </span>
           <span className="shrink-0 rounded-full bg-surface px-2 py-0.5 text-[12px] font-semibold text-muted ring-1 ring-line">{summary.up}/{summary.total}</span>
         </div>
         <a href={SAYFA} target="_blank" rel="noopener noreferrer" className="shrink-0 text-[13px] font-semibold text-brandtext transition-colors hover:underline">
-          {updated_ago ? `Güncellendi: ${updated_ago}` : 'Durum sayfası'} →
+          {updated_ago ? m('durum.guncellendi', { zaman: updated_ago }) : m('durum.durum_sayfasi')} →
         </a>
       </div>
 
@@ -88,7 +89,7 @@ export default function DurumWidget() {
               <span className="flex min-w-0 flex-1 items-center gap-2.5">
                 <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${st.nokta}`} />
                 <span className="truncate text-[15px] font-semibold text-strong">{s.name}</span>
-                <span className={`shrink-0 rounded-md bg-surface2 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide ${st.yazi}`}>{st.etiket}</span>
+                <span className={`shrink-0 rounded-md bg-surface2 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide ${st.yazi}`}>{m(st.etiket)}</span>
               </span>
               <Sparkline veri={s.history} />
               <span className="hidden shrink-0 tabular-nums text-[13px] text-muted md:inline">{s.ping} ms</span>

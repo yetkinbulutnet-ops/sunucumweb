@@ -1,5 +1,6 @@
 'use client';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { m } from '@/lib/metin';
 
 const UC = {
   bilgi: '/api/araclar/hiz-testi/bilgi',
@@ -55,9 +56,9 @@ function oncekiZaman(iso) {
   const t = new Date(iso).getTime();
   if (!t) return '';
   const dk = Math.max(0, Math.round((Date.now() - t) / 60000));
-  if (dk < 1) return 'az önce';
-  if (dk < 60) return `${dk} dakika önce`;
-  return `${Math.round(dk / 60)} saat önce`;
+  if (dk < 1) return m('hiztesti.az_once');
+  if (dk < 60) return m('hiztesti.dakika_once', { sayi: dk });
+  return m('hiztesti.saat_once', { sayi: Math.round(dk / 60) });
 }
 
 async function kopyala(metin) {
@@ -196,14 +197,14 @@ function akisOlc({ disSignal, sure, tavan, akisSayisi, isci, canli }) {
     });
 }
 
-const DURUM = {
-  hazir: 'Ölçmeye hazır',
-  ping: 'Gecikme ölçülüyor',
-  indirme: 'İndirme ölçülüyor',
-  yukleme: 'Yükleme ölçülüyor',
-  bitti: 'Test tamamlandı',
-  hata: 'Bir sorun oldu',
-};
+const DURUM = () => ({
+  hazir: m('hiztesti.durum_hazir'),
+  ping: m('hiztesti.durum_ping'),
+  indirme: m('hiztesti.durum_indirme'),
+  yukleme: m('hiztesti.durum_yukleme'),
+  bitti: m('hiztesti.durum_bitti'),
+  hata: m('hiztesti.durum_hata'),
+});
 
 const cizgi = { fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round' };
 const IkonIndir = <svg viewBox="0 0 24 24" {...cizgi} className="h-4 w-4"><path d="M12 4v12M6 11l6 6 6-6M5 20h14" /></svg>;
@@ -420,7 +421,7 @@ export default function HizTesti() {
         hedefRef.current = 0;
         gosRef.current = 0;
       } else {
-        setHata('Ölçüm tamamlanamadı. Bağlantınızı kontrol edip tekrar deneyin.');
+        setHata(m('hiztesti.olcum_hata'));
         fazRef.current = 'hata';
         setAsama('hata');
       }
@@ -468,9 +469,9 @@ export default function HizTesti() {
   }, [sonuc, paylasDurum]);
 
   const birim = asama === 'ping' ? 'ms' : 'Mbit/s';
-  const durumMetni = paylasilan ? 'Paylaşılan sonuç' : DURUM[asama];
+  const durumMetni = paylasilan ? m('hiztesti.paylasilan_sonuc') : DURUM()[asama];
   const paylasEtiket =
-    paylasDurum === 'gonderiliyor' ? 'Hazırlanıyor…' : paylasDurum === 'kopyalandi' ? 'Link kopyalandı' : paylasDurum === 'hata' ? 'Tekrar deneyin' : 'Sonucu Paylaş';
+    paylasDurum === 'gonderiliyor' ? m('hiztesti.paylas_hazirlaniyor') : paylasDurum === 'kopyalandi' ? m('hiztesti.paylas_kopyalandi') : paylasDurum === 'hata' ? m('hiztesti.paylas_tekrar') : m('hiztesti.paylas');
 
   return (
     <div>
@@ -483,7 +484,7 @@ export default function HizTesti() {
       {paylasilan && (
         <div className="mb-6 flex flex-wrap items-center justify-center gap-2 rounded-2xl border border-brandline bg-brandsoft px-4 py-3 text-center text-[13px] font-semibold text-brandtext">
           {IkonLink}
-          <span>Paylaşılan sonuç</span>
+          <span>{m('hiztesti.paylasilan_sonuc')}</span>
           {paylasilan.saglayici ? <span className="text-brandtext/80">· {paylasilan.saglayici}</span> : null}
           {paylasilan.tarih ? <span className="text-brandtext/60">· {oncekiZaman(paylasilan.tarih)}</span> : null}
         </div>
@@ -502,7 +503,7 @@ export default function HizTesti() {
               data-umami-event="Hız Testi Başlat"
               className="inline-flex h-14 items-center justify-center rounded-full bg-brand-500 px-12 text-[16px] font-bold text-white shadow-lg shadow-brand-500/25 transition-[transform,background-color] hover:scale-[1.03] hover:bg-brand-600"
             >
-              {asama === 'hata' ? 'Tekrar Dene' : 'Başla'}
+              {asama === 'hata' ? m('hiztesti.tekrar_dene') : m('hiztesti.basla')}
             </button>
           )}
           {calisiyor && (
@@ -511,7 +512,7 @@ export default function HizTesti() {
               onClick={iptal}
               className="inline-flex h-12 items-center justify-center rounded-full border border-line bg-surface px-8 text-[15px] font-bold text-strong transition-colors hover:border-brandline"
             >
-              İptal
+              {m('hiztesti.iptal')}
             </button>
           )}
           {asama === 'bitti' && paylasilan && (
@@ -521,7 +522,7 @@ export default function HizTesti() {
               data-umami-event="Hız Testi Başlat"
               className="inline-flex h-12 items-center justify-center rounded-full bg-brand-500 px-8 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-600"
             >
-              Kendi Testini Yap
+              {m('hiztesti.kendi_testin')}
             </button>
           )}
           {asama === 'bitti' && !paylasilan && (
@@ -532,7 +533,7 @@ export default function HizTesti() {
                 data-umami-event="Hız Testi Başlat"
                 className="inline-flex h-12 items-center justify-center rounded-full bg-brand-500 px-8 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-600"
               >
-                Tekrar Test Et
+                {m('hiztesti.tekrar_test')}
               </button>
               {sonuc?.indirme != null && (
                 <button
@@ -551,25 +552,24 @@ export default function HizTesti() {
       </div>
 
       <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-        <Metrik etiket="İndirme" deger={sonuc?.indirme ?? null} birim="Mbit/s" ikon={IkonIndir} aktif={asama === 'indirme'} azalt={azalt} />
-        <Metrik etiket="Yükleme" deger={sonuc?.yukleme ?? null} birim="Mbit/s" ikon={IkonYukle} aktif={asama === 'yukleme'} azalt={azalt} />
+        <Metrik etiket={m('hiztesti.indirme')} deger={sonuc?.indirme ?? null} birim="Mbit/s" ikon={IkonIndir} aktif={asama === 'indirme'} azalt={azalt} />
+        <Metrik etiket={m('hiztesti.yukleme')} deger={sonuc?.yukleme ?? null} birim="Mbit/s" ikon={IkonYukle} aktif={asama === 'yukleme'} azalt={azalt} />
         <Metrik etiket="Ping" deger={sonuc?.ping ?? null} birim="ms" ikon={IkonPing} aktif={asama === 'ping'} azalt={azalt} />
         <Metrik etiket="Jitter" deger={sonuc?.jitter ?? null} birim="ms" ikon={IkonJitter} aktif={asama === 'ping'} azalt={azalt} />
       </div>
 
       <div className="mt-6 grid gap-3 sm:grid-cols-2">
-        <BilgiSatir ikon={IkonSunucu} etiket="Sunucu" ad="SunucumWEB" alt={`Test sunucusu${bilgi?.ulke ? ` · ${bilgi.ulke}` : ' · Türkiye'}`} />
+        <BilgiSatir ikon={IkonSunucu} etiket={m('hiztesti.sunucu')} ad="SunucumWEB" alt={`${m('hiztesti.test_sunucusu')}${bilgi?.ulke ? ` · ${bilgi.ulke}` : ` · ${m('hiztesti.turkiye')}`}`} />
         <BilgiSatir
           ikon={IkonAg}
-          etiket={paylasilan ? 'Bağlantı' : 'Sağlayıcınız'}
-          ad={paylasilan ? paylasilan.saglayici || 'Bilinmiyor' : bilgi ? bilgi.saglayici || bilgi.asn || 'Bilinmiyor' : 'Algılanıyor…'}
+          etiket={paylasilan ? m('hiztesti.baglanti') : m('hiztesti.saglayiciniz')}
+          ad={paylasilan ? paylasilan.saglayici || m('hiztesti.bilinmiyor') : bilgi ? bilgi.saglayici || bilgi.asn || m('hiztesti.bilinmiyor') : m('hiztesti.algilaniyor')}
           alt={paylasilan ? paylasilan.ulke || null : [bilgi?.ip, bilgi?.ulke].filter(Boolean).join(' · ') || null}
         />
       </div>
 
       <p className="mt-6 text-center text-[13px] leading-relaxed text-muted">
-        Ölçüm, SunucumWEB sunucusuna karşı çoklu bağlantıyla yapılır; en doğru sonuç için kablolu bağlantı kullanın
-        ve arka planda indirme/yükleme olmasın. Paylaştığınız sonuç 24 saat saklanır, sonra otomatik silinir.
+        {m('hiztesti.alt_not')}
       </p>
     </div>
   );

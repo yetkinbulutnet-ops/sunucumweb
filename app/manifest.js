@@ -1,13 +1,14 @@
 import { SITE_ADI } from '@/lib/seo';
+import { metinAl } from '@/lib/cms';
 
 export const dynamic = 'force-static';
 
-export default function manifest() {
+export default async function manifest() {
+  const m = await metinAl();
   return {
-    name: 'SunucumWEB — Hosting ve Sunucu Çözümleri',
+    name: m('seo.manifest_ad'),
     short_name: SITE_ADI,
-    description:
-      'Isparta merkezli veri merkezimizden NVMe hosting, sanal sunucu (VDS), dedicated sunucu ve alan adı hizmetleri.',
+    description: m('seo.manifest_aciklama'),
     start_url: '/',
     scope: '/',
     display: 'standalone',

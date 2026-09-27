@@ -1,5 +1,6 @@
 'use client';
 import { createContext, useContext, useEffect, useState, useCallback, useMemo, useRef } from 'react';
+import { m } from '@/lib/metin';
 
 const Ctx = createContext(null);
 const KEY = 'swb-parabirimi';
@@ -49,8 +50,8 @@ export function useParabirimi() {
 }
 
 const SECENEKLER = [
-  { kod: 'USD', sembol: '$', kisa: 'USD', ad: 'Amerikan Doları' },
-  { kod: 'TRY', sembol: '₺', kisa: 'TL', ad: 'Türk Lirası' },
+  { kod: 'USD', sembol: '$', kisa: 'USD', adK: 'genel.pb_usd' },
+  { kod: 'TRY', sembol: '₺', kisa: 'TL', adK: 'genel.pb_try' },
 ];
 
 export function ParaBirimiSecici({ className = '' }) {
@@ -80,7 +81,7 @@ export function ParaBirimiSecici({ className = '' }) {
         onClick={() => setAcik((v) => !v)}
         aria-haspopup="listbox"
         aria-expanded={acik}
-        aria-label={`Para birimi: ${goster.ad}`}
+        aria-label={m('genel.pb_aria', { ad: m(goster.adK) })}
         data-umami-event="Para Birimi Aç"
         className="inline-flex items-center gap-1 rounded-xl bg-surface2 px-2.5 py-2 text-[13px] font-bold text-strong ring-1 ring-line transition-colors hover:bg-surface"
       >
@@ -90,7 +91,7 @@ export function ParaBirimiSecici({ className = '' }) {
       </button>
 
       {acik && (
-        <div role="listbox" aria-label="Para birimi seçin" className="absolute right-0 top-full z-[70] mt-1.5 w-32 overflow-hidden rounded-xl border border-line bg-surface p-1 shadow-[0_20px_50px_-20px_rgba(15,41,66,0.5)] animate-[fadeup_0.16s_ease-out]">
+        <div role="listbox" aria-label={m('genel.pb_sec')} className="absolute right-0 top-full z-[70] mt-1.5 w-32 overflow-hidden rounded-xl border border-line bg-surface p-1 shadow-[0_20px_50px_-20px_rgba(15,41,66,0.5)] animate-[fadeup_0.16s_ease-out]">
           {SECENEKLER.map((s) => {
             const sec = s.kod === parabirimi;
             return (
@@ -99,7 +100,7 @@ export function ParaBirimiSecici({ className = '' }) {
                 type="button"
                 role="option"
                 aria-selected={sec}
-                aria-label={s.ad}
+                aria-label={m(s.adK)}
                 onClick={() => { setParabirimi(s.kod); setAcik(false); }}
                 data-umami-event="Para Birimi Seç"
                 data-umami-event-birim={s.kod}

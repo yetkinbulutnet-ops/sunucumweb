@@ -1,11 +1,13 @@
 import { NextResponse } from 'next/server';
 import { wisecpHazir, faturaOlustur, odemeUrl } from '@/lib/engines/wisecp';
+import { sistemMetinHazirla } from '@/lib/sistem-metin';
 
 export const runtime = 'nodejs';
 
 const TEST_USER_ID = process.env.WISECP_TEST_USER_ID || '';
 
 export async function POST(req) {
+  await sistemMetinHazirla();
   if (!wisecpHazir()) return NextResponse.json({ ok: false, hata: 'wisecp-yapilandirilmadi' }, { status: 503 });
 
   let govde;

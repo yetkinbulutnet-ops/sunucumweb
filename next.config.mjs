@@ -1,5 +1,3 @@
-/** @type {import('next').NextConfig} */
-
 const INDEXLENEBILIR = process.env.SITE_INDEXABLE === '1';
 const dusukCpu = process.env.BUILD_CPUS ? { cpus: Number(process.env.BUILD_CPUS) } : {};
 

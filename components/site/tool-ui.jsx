@@ -1,3 +1,5 @@
+import { m } from '@/lib/metin';
+
 export const TON = {
   iyi: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 ring-emerald-500/25',
   orta: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 ring-amber-500/25',
@@ -15,10 +17,10 @@ export const tarihYaz = (deger) => {
 
 export const sureYaz = (saniye) => {
   if (!Number.isFinite(saniye)) return '—';
-  if (saniye >= 86400) return `${Math.round(saniye / 86400)} gün`;
-  if (saniye >= 3600) return `${Math.round(saniye / 3600)} saat`;
-  if (saniye >= 60) return `${Math.round(saniye / 60)} dakika`;
-  return `${saniye} sn`;
+  if (saniye >= 86400) return m('arac.sure_gun', { n: Math.round(saniye / 86400) });
+  if (saniye >= 3600) return m('arac.sure_saat', { n: Math.round(saniye / 3600) });
+  if (saniye >= 60) return m('arac.sure_dakika', { n: Math.round(saniye / 60) });
+  return m('arac.sure_saniye', { n: saniye });
 };
 
 export function Kutu({ baslik, ek, children, genis }) {

@@ -1,9 +1,11 @@
 import Link from 'next/link';
 import { Icon, CtaBand, SiteShell, PageHero } from './chrome';
 import ToolRunner from './ToolRunner';
-import { ARAC_LISTESI, ARACLAR_SAYFA } from '@/content/site/araclar';
+import { araclariGetir, sayfaMetinleri, metinAl } from '@/lib/cms';
+import SayfaMetni from './SayfaMetni';
 
-function AracKarti({ arac }) {
+async function AracKarti({ arac }) {
+  const m = await metinAl();
   return (
     <Link
       href={`/araclar/${arac.slug}`}
@@ -15,17 +17,20 @@ function AracKarti({ arac }) {
       <h3 className="mt-5 text-[16px] font-bold text-strong text-balance">{arac.baslik}</h3>
       <p className="mt-2 flex-1 text-[14px] leading-relaxed text-body">{arac.ozet}</p>
       <span className="mt-5 inline-flex items-center gap-1.5 text-[14px] font-bold text-brandtext">
-        Aracı aç
+        {m('arac.araci_ac')}
         <Icon name="arrow" className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
       </span>
     </Link>
   );
 }
 
-export function ToolsHubPage() {
+export async function ToolsHubPage() {
+  const [ARAC_LISTESI, metinler] = await Promise.all([araclariGetir(), sayfaMetinleri()]);
+  const ARACLAR_SAYFA = metinler.araclar;
+  const m = await metinAl();
   return (
     <SiteShell>
-      <PageHero eyebrow={ARACLAR_SAYFA.eyebrow} breadcrumb="Araçlar" title={ARACLAR_SAYFA.baslik} text={ARACLAR_SAYFA.lede} />
+      <PageHero eyebrow={ARACLAR_SAYFA.eyebrow} breadcrumb={m('arac.araclar')} title={ARACLAR_SAYFA.baslik} text={ARACLAR_SAYFA.aciklama} />
 
       <section className="mx-auto max-w-7xl px-5 lg:px-8 py-16 lg:py-20">
         <div className="grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -38,13 +43,14 @@ export function ToolsHubPage() {
   );
 }
 
-export function DigerAraclar({ slug }) {
-  const digerleri = ARAC_LISTESI.filter((a) => a.slug !== slug);
+export async function DigerAraclar({ slug }) {
+  const digerleri = (await araclariGetir()).filter((a) => a.slug !== slug);
+  const m = await metinAl();
 
   return (
     <section className="border-t border-line bg-surface2">
       <div className="mx-auto max-w-7xl px-5 lg:px-8 py-14 lg:py-16">
-        <h2 className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Diğer araçlar</h2>
+        <h2 className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">{m('arac.diger_araclar')}</h2>
         <div className="mt-6 grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {digerleri.map((a) => (
             <Link
@@ -64,7 +70,8 @@ export function DigerAraclar({ slug }) {
   );
 }
 
-export function AracKabugu({ arac, kirinti = [], baslik, ozet, children }) {
+export async function AracKabugu({ arac, kirinti = [], baslik, ozet, children }) {
+  const m = await metinAl();
   return (
     <section className="relative overflow-hidden border-b border-line">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
@@ -73,10 +80,10 @@ export function AracKabugu({ arac, kirinti = [], baslik, ozet, children }) {
       </div>
 
       <div className="mx-auto max-w-4xl px-5 lg:px-8 py-14 lg:py-16">
-        <nav aria-label="Site haritası" className="flex flex-wrap items-center gap-2 text-sm text-muted">
-          <Link href="/" className="hover:text-brandtext">Ana Sayfa</Link>
+        <nav aria-label={m('arac.site_haritasi')} className="flex flex-wrap items-center gap-2 text-sm text-muted">
+          <Link href="/" className="hover:text-brandtext">{m('arac.ana_sayfa')}</Link>
           <span>/</span>
-          <Link href="/araclar" className="hover:text-brandtext">Araçlar</Link>
+          <Link href="/araclar" className="hover:text-brandtext">{m('arac.araclar')}</Link>
           {kirinti.map((k) => (
             <span key={k.metin} className="flex items-center gap-2">
               <span>/</span>
@@ -105,21 +112,24 @@ export function AracKabugu({ arac, kirinti = [], baslik, ozet, children }) {
   );
 }
 
-export function ToolDetailPage({ arac }) {
+export async function ToolDetailPage({ arac }) {
+  const m = await metinAl();
   return (
     <SiteShell>
+      <SayfaMetni onekler={['arac', 'dnsrapor']}>
       <AracKabugu arac={arac} kirinti={[{ metin: arac.kisa }]} baslik={arac.baslik} ozet={arac.ozet}>
         <ToolRunner arac={arac} />
       </AracKabugu>
 
       <section className="mx-auto max-w-4xl px-5 lg:px-8 py-14 lg:py-16">
-        <h2 className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">Bu araç ne işe yarar?</h2>
+        <h2 className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">{m('arac.ne_ise_yarar')}</h2>
         <p className="mt-4 text-[16px] leading-relaxed text-body">{arac.aciklama}</p>
       </section>
 
       <DigerAraclar slug={arac.slug} />
 
       <CtaBand />
+      </SayfaMetni>
     </SiteShell>
   );
 }
