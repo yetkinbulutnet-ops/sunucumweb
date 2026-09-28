@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { COOKIE_ADI, GECERLILIK_SN } from '@/lib/guvenlik-config';
-import { kartOlustur, refUret } from '@/lib/guvenlik';
+import { kartOlustur, refUret, istemciIp } from '@/lib/guvenlik';
 
 export const dynamic = 'force-dynamic';
 
@@ -25,7 +25,7 @@ function hataYonlendir(base, ip) {
 
 export async function POST(req) {
   const base = taban(req);
-  const ip = req.headers.get('cf-connecting-ip') || '';
+  const ip = istemciIp((n) => req.headers.get(n));
   const devam = guvenliDevam(req.cookies.get('swb_devam')?.value);
   try {
     const ham = await req.text();

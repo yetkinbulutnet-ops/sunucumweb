@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { sistemMetinHazirla, sm } from '@/lib/sistem-metin';
+import { istemciIp } from '@/lib/engines/core/ratelimit';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -19,7 +20,7 @@ const yanit = (status, message) =>
 
 export async function POST(req) {
   await sistemMetinHazirla();
-  const ip = (req.headers.get('cf-connecting-ip') || req.headers.get('x-real-ip') || '').slice(0, 64);
+  const ip = istemciIp(req);
   if (limitAsildi(ip || 'bilinmiyor')) return yanit(429, sm('sistem.cark_cok_fazla_deneme'));
 
   let b = {};

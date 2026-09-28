@@ -5,6 +5,8 @@ import { Icon, SiteShell, PageHero } from './chrome';
 import { useSiteAyarlari } from './SiteAyarlari';
 import { mesaiDurumu } from '@/lib/engines/mesai';
 import { m } from '@/lib/metin';
+import { turnstileYukle } from '@/lib/turnstile';
+import { TURNSTILE_SITE_KEY } from '@/lib/guvenlik-config';
 
 function MesaiRozeti() {
   const [durum, setDurum] = useState(null);
@@ -82,6 +84,56 @@ export default function ContactPage({ veri }) {
   const [durum, setDurum] = useState('bos');
   const [uyari, setUyari] = useState('');
   const acilis = useRef(Date.now());
+  const kutu = useRef(null);
+  const widget = useRef(null);
+  const token = useRef('');
+
+  useEffect(
+    () => () => {
+      try {
+        if (widget.current != null) window.turnstile?.remove(widget.current);
+      } catch {}
+    },
+    []
+  );
+
+  const hazirla = useCallback(async () => {
+    if (widget.current != null || !kutu.current) return;
+    try {
+      const ts = await turnstileYukle();
+      if (widget.current != null || !kutu.current) return;
+      widget.current = ts.render(kutu.current, {
+        sitekey: TURNSTILE_SITE_KEY,
+        theme: 'auto',
+        language: 'tr',
+        size: 'flexible',
+        appearance: 'interaction-only',
+        callback: (t) => {
+          token.current = t;
+        },
+        'expired-callback': () => {
+          token.current = '';
+        },
+        'error-callback': () => {
+          token.current = '';
+        },
+      });
+    } catch {}
+  }, []);
+
+  const tokenBekle = useCallback(async () => {
+    await hazirla();
+    const bitis = Date.now() + 12000;
+    while (!token.current && Date.now() < bitis) await new Promise((r) => setTimeout(r, 200));
+    return token.current;
+  }, [hazirla]);
+
+  const sifirla = useCallback(() => {
+    token.current = '';
+    try {
+      if (widget.current != null) window.turnstile.reset(widget.current);
+    } catch {}
+  }, []);
 
   const degistir = useCallback((e) => {
     const { name, value } = e.target;
@@ -93,13 +145,20 @@ export default function ContactPage({ veri }) {
     e.preventDefault();
     setDurum('gonderiliyor');
     setUyari('');
+    const t = await tokenBekle();
+    if (!t) {
+      setDurum('bos');
+      setUyari(m('iletisim.hata_dogrulama'));
+      return;
+    }
     try {
       const r = await fetch('/api/iletisim', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, sure: Date.now() - acilis.current }),
+        body: JSON.stringify({ ...form, sure: Date.now() - acilis.current, token: t }),
       });
       const d = await r.json();
+      sifirla();
 
       if (d.ok) {
         setDurum('tamam');
@@ -112,10 +171,11 @@ export default function ContactPage({ veri }) {
       setHatalar(d.meta?.hatalar || {});
       setUyari(d.error?.message || m('iletisim.hata_iletilemedi'));
     } catch {
+      sifirla();
       setDurum('bos');
       setUyari(m('iletisim.hata_sunucu'));
     }
-  }, [form]);
+  }, [form, tokenBekle, sifirla]);
 
   return (
     <SiteShell>
@@ -203,7 +263,7 @@ export default function ContactPage({ veri }) {
                   {m('iletisim.form_metin')}
                 </p>
 
-                <form onSubmit={gonder} noValidate className="mt-7 grid gap-4">
+                <form onSubmit={gonder} onFocus={hazirla} noValidate className="mt-7 grid gap-4">
                   <input
                     type="text"
                     name="website"
@@ -263,6 +323,8 @@ export default function ContactPage({ veri }) {
                       <span className="mt-1 block text-[12px] text-muted">{m('iletisim.karakter', { adet: form.mesaj.length })}</span>
                     )}
                   </label>
+
+                  <div ref={kutu} className="min-w-0" />
 
                   {uyari && (
                     <p className="rounded-xl border border-rose-500/30 bg-rose-500/5 px-4 py-3 text-[14px] font-medium text-rose-600 dark:text-rose-400">

@@ -115,6 +115,10 @@ async function indirmeIsci(signal, ekle) {
   while (!signal.aborted) {
     try {
       const r = await fetch(`${UC.indir}?bayt=${INDIRME_ISTEK}&t=${Math.random()}`, { cache: 'no-store', signal });
+      if (!r.ok) {
+        r.body?.cancel?.().catch(() => {});
+        break;
+      }
       const okuyucu = r.body?.getReader?.();
       if (!okuyucu) {
         ekle((await r.arrayBuffer()).byteLength);
@@ -143,8 +147,8 @@ function yuklemeGonder(veri, signal, ekle) {
       ekle(e.loaded - onceki);
       onceki = e.loaded;
     };
-    xhr.onloadend = () => cozum();
-    xhr.onerror = () => cozum();
+    xhr.onloadend = () => cozum(xhr.status);
+    xhr.onerror = () => cozum(0);
     signal.addEventListener('abort', () => {
       try {
         xhr.abort();
@@ -154,13 +158,16 @@ function yuklemeGonder(veri, signal, ekle) {
       xhr.open('POST', `${UC.yukle}?t=${Math.random()}`);
       xhr.send(veri);
     } catch {
-      cozum();
+      cozum(0);
     }
   });
 }
 
 async function yuklemeIsci(signal, veri, ekle) {
-  while (!signal.aborted) await yuklemeGonder(veri, signal, ekle);
+  while (!signal.aborted) {
+    const durum = await yuklemeGonder(veri, signal, ekle);
+    if (durum !== 200) break;
+  }
 }
 
 function akisOlc({ disSignal, sure, tavan, akisSayisi, isci, canli }) {

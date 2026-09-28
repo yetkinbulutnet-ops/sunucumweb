@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { aracCalistir } from '@/lib/engines/tools';
-import { rateLimit, clientKey } from '@/lib/engines/core/ratelimit';
+import { rateLimit, clientKey, istemciIp } from '@/lib/engines/core/ratelimit';
 import { sistemMetinHazirla, sm } from '@/lib/sistem-metin';
 
 export const runtime = 'nodejs';
@@ -8,10 +8,7 @@ export const dynamic = 'force-dynamic';
 
 const ARAC_SINIRI = { karaliste: 6, basliklar: 10, ssl: 12 };
 
-const ziyaretciIpAl = (request) =>
-  (request.headers.get('x-forwarded-for') || '').split(',')[0].trim() ||
-  request.headers.get('x-real-ip') ||
-  '';
+const ziyaretciIpAl = (request) => istemciIp(request);
 
 export async function POST(request, { params }) {
   await sistemMetinHazirla();
