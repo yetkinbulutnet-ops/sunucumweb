@@ -21,7 +21,7 @@ export async function POST(req) {
   const kalemler = items
     .slice(0, 30)
     .map((i) => ({
-      description: [i.product, i.name].filter(Boolean).join(' — ') || 'Urun',
+      description: [i.product, i.name].filter(Boolean).join(' - ') || 'Urun',
       quantity: Math.max(1, Math.min(24, Number(i.qty) || 1)),
       amount: Math.max(0, Number(i.price) || 0),
     }))

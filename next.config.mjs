@@ -7,7 +7,7 @@ const nextConfig = {
   images: { unoptimized: true },
   output: 'standalone',
   poweredByHeader: false,
-  experimental: { ...dusukCpu },
+  experimental: { ...dusukCpu, staleTimes: { dynamic: 0, static: 30 } },
 
   async redirects() {
     return [
