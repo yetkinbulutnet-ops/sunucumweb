@@ -16,6 +16,22 @@ const bul = async (slug) => (await yazilimVerisi()).yazilimlar.find((y) => y.id 
 
 const gorselUrl = (img) => (img && /^https?:/.test(img) ? img : mutlakUrl(img || '/'));
 
+function metaAciklama(u, m) {
+  const temel = String(u.aciklama || '').trim();
+  if (temel.length >= 120) return temel;
+  const fiyat = Number.isFinite(u.fiyat) ? u.fiyat.toLocaleString('tr-TR') : null;
+  const ozellikler = (u.etiketler || []).join(', ');
+  const adaylar = [
+    ozellikler && fiyat ? m('yazilim.meta_ek', { ozellikler, fiyat }) : null,
+    fiyat ? m('yazilim.meta_ek_fiyat', { fiyat }) : null,
+  ].filter(Boolean);
+  for (const ek of adaylar) {
+    const tam = `${temel} ${ek}`.trim();
+    if (tam.length <= 165) return tam;
+  }
+  return temel;
+}
+
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const u = await bul(slug);
@@ -23,12 +39,13 @@ export async function generateMetadata({ params }) {
   const m = await metinAl();
   const baslik = m('yazilim.meta_baslik', { ad: u.ad });
   const url = mutlakUrl(`/hazir-yazilim/${u.id}`);
+  const aciklama = metaAciklama(u, m);
   return {
     title: baslik,
-    description: u.aciklama,
+    description: aciklama,
     alternates: { canonical: url },
-    openGraph: { title: baslik, description: u.aciklama, images: [gorselUrl(u.img)], type: 'website', url },
-    twitter: { card: 'summary_large_image', title: baslik, description: u.aciklama, images: [gorselUrl(u.img)] },
+    openGraph: { title: baslik, description: aciklama, images: [gorselUrl(u.img)], type: 'website', url },
+    twitter: { card: 'summary_large_image', title: baslik, description: aciklama, images: [gorselUrl(u.img)] },
   };
 }
 

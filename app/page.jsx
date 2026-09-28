@@ -5,6 +5,8 @@ import SayfaMetni from '@/components/site/SayfaMetni';
 
 export const revalidate = 300;
 
+export const metadata = { alternates: { canonical: '/' } };
+
 export default async function Page() {
   const [{ yazilimlar, kategoriler }, markalar, metinler, slaytlar, anasayfa] = await Promise.all([
     yazilimVerisi(),

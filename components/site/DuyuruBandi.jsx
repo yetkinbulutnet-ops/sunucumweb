@@ -6,7 +6,7 @@ import { DUYURU_ANAHTARI } from '@/lib/duyuru';
 import { m } from '@/lib/metin';
 
 const TON = {
-  marka: 'bg-brand-600 text-white',
+  marka: 'bg-brand-700 text-white',
   bilgi: 'bg-sky-600 text-white',
   kampanya: 'bg-amber-400 text-ink',
   uyari: 'bg-rose-600 text-white',

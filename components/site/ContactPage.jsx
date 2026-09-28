@@ -35,7 +35,7 @@ function MesaiRozeti() {
           {durum.acik && <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />}
           <span className={`relative inline-flex h-2.5 w-2.5 rounded-full ${durum.acik ? 'bg-emerald-500' : 'bg-muted'}`} />
         </span>
-        <span className={`text-[15px] font-extrabold ${durum.acik ? 'text-emerald-600 dark:text-emerald-400' : 'text-strong'}`}>
+        <span className={`text-[15px] font-extrabold ${durum.acik ? 'text-emerald-700 dark:text-emerald-400' : 'text-strong'}`}>
           {durum.baslik}
         </span>
         <span className="ml-auto text-[12px] tabular-nums text-muted">
@@ -195,7 +195,7 @@ export default function ContactPage({ veri }) {
               {KANALLAR.map((k) => {
                 const icerik = (
                   <>
-                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brandsoft text-brandtext transition-colors group-hover:bg-brand-500 group-hover:text-white">
+                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brandsoft text-brandtext transition-colors group-hover:bg-brand-700 group-hover:text-white">
                       <Icon name={k.icon} className="h-5 w-5" />
                     </span>
                     <span className="min-w-0">
@@ -227,7 +227,7 @@ export default function ContactPage({ veri }) {
                     rel="noopener noreferrer"
                     aria-label={s.ad}
                     title={s.ad}
-                    className="grid h-10 w-10 place-items-center rounded-xl border border-line bg-surface2 text-body transition-colors hover:border-brandline hover:bg-brand-500 hover:text-white"
+                    className="grid h-10 w-10 place-items-center rounded-xl border border-line bg-surface2 text-body transition-colors hover:border-brandline hover:bg-brand-700 hover:text-white"
                   >
                     <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                       <path d={s.d} />
@@ -241,7 +241,7 @@ export default function ContactPage({ veri }) {
           <div className="rounded-3xl border border-line bg-surface p-6 shadow-[0_30px_70px_-45px_rgba(15,41,66,0.45)] sm:p-8">
             {durum === 'tamam' ? (
               <div className="flex min-h-[420px] flex-col items-center justify-center text-center">
-                <span className="grid h-14 w-14 place-items-center rounded-2xl bg-brand-500 text-white">
+                <span className="grid h-14 w-14 place-items-center rounded-2xl bg-brand-700 text-white">
                   <Icon name="check" className="h-7 w-7" />
                 </span>
                 <h2 className="mt-5 text-2xl font-extrabold tracking-tight text-strong">{m('iletisim.basari_baslik')}</h2>
@@ -293,7 +293,7 @@ export default function ContactPage({ veri }) {
                       className={`mt-1.5 w-full appearance-none rounded-xl border bg-surface bg-[length:18px] bg-[right_1rem_center] bg-no-repeat px-4 py-3 text-[16px] text-strong outline-none transition-colors focus:border-brand-400 ${
                         hatalar.konu ? 'border-rose-400' : 'border-line'
                       } ${form.konu ? 'text-strong' : 'text-muted'}`}
-                      style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2376869b' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E\")" }}
+                      style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235f6f84' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E\")" }}
                     >
                       <option value="">{m('iletisim.konu_sec')}</option>
                       {KONULAR.map((k) => (
@@ -335,7 +335,7 @@ export default function ContactPage({ veri }) {
                   <button
                     type="submit"
                     disabled={durum === 'gonderiliyor'}
-                    className="mt-1 inline-flex items-center justify-center gap-2 rounded-xl bg-brand-500 px-6 py-3.5 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-600 disabled:opacity-60"
+                    className="mt-1 inline-flex items-center justify-center gap-2 rounded-xl bg-brand-700 px-6 py-3.5 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-800 disabled:opacity-60"
                   >
                     {durum === 'gonderiliyor' ? m('iletisim.gonderiliyor') : m('iletisim.gonder')}
                     {durum !== 'gonderiliyor' && <Icon name="arrow" className="h-4 w-4" />}

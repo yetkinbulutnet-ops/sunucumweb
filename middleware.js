@@ -22,13 +22,13 @@ function rlDurum(req, now) {
 }
 
 function rlYaz(res, deger) {
-  res.cookies.set(RL_COOKIE, deger, { httpOnly: true, sameSite: 'lax', path: '/', maxAge: 20 });
+  res.cookies.set(RL_COOKIE, deger, { httpOnly: true, secure: true, sameSite: 'lax', path: '/', maxAge: 20 });
   return res;
 }
 
 function ulkeCerez(req, res) {
   const ulke = req.headers.get('x-swb-ulke') || req.headers.get('cf-ipcountry') || '';
-  if (ulke) res.cookies.set('swb_ulke', ulke, { sameSite: 'lax', path: '/', maxAge: 1800 });
+  if (ulke) res.cookies.set('swb_ulke', ulke, { secure: true, sameSite: 'lax', path: '/', maxAge: 1800 });
   return res;
 }
 
@@ -40,7 +40,7 @@ function yonlendir(req, yol, ip, devam) {
   res.headers.set('x-robots-tag', 'noindex, nofollow');
   res.headers.set('cache-control', 'no-store');
   if (devam) {
-    res.cookies.set('swb_devam', devam, { httpOnly: true, sameSite: 'lax', path: '/', maxAge: 600 });
+    res.cookies.set('swb_devam', devam, { httpOnly: true, secure: true, sameSite: 'lax', path: '/', maxAge: 600 });
   }
   return res;
 }

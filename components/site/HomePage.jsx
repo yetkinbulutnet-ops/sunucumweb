@@ -83,7 +83,7 @@ function Hero({ slaytlar: SLIDES }) {
             <p className="mt-5 max-w-xl text-[15px] sm:text-[17px] leading-relaxed text-slate-300">{s.text}</p>
 
             <div className="mt-7 flex flex-wrap items-center gap-3">
-              <Link href={s.cta.href} className="inline-flex items-center gap-2 rounded-xl bg-brand-500 px-5 py-3 text-[14px] font-bold text-white shadow-lg shadow-brand-900/40 transition-colors hover:bg-brand-400 sm:px-6 sm:py-3.5 sm:text-[15px]">
+              <Link href={s.cta.href} className="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-5 py-3 text-[14px] font-bold text-white shadow-lg shadow-brand-900/40 transition-colors hover:bg-brand-800 sm:px-6 sm:py-3.5 sm:text-[15px]">
                 {s.cta.t} <Icon name="arrow" className="h-4 w-4" />
               </Link>
               {s.cta2 && <Link href={s.cta2.href} className="inline-flex items-center gap-2 rounded-xl bg-white/10 px-5 py-3 text-[14px] font-semibold text-white ring-1 ring-white/25 backdrop-blur-sm transition-colors hover:bg-white/20 sm:px-6 sm:py-3.5 sm:text-[15px]">
@@ -174,7 +174,7 @@ function ProductFinder({ open, onClose }) {
             <div className="mt-6 grid gap-3">
               {sorular[step].opts.map((o) => (
                 <button key={o.v} onClick={() => pick(sorular[step].key, o.v)} className="group flex items-center gap-4 rounded-2xl border border-line bg-surface px-5 py-4 text-left hover:border-brand-400 hover:bg-brandsoft/50 transition-[transform,box-shadow,border-color,opacity]">
-                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-brandsoft text-brandtext group-hover:bg-brand-500 group-hover:text-white transition-colors"><Icon name={o.icon} className="w-5 h-5" /></span>
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-brandsoft text-brandtext group-hover:bg-brand-700 group-hover:text-white transition-colors"><Icon name={o.icon} className="w-5 h-5" /></span>
                   <span className="flex-1 text-[15px] font-semibold text-strong">{o.l}</span>
                   <Icon name="arrow" className="w-5 h-5 text-slate-300 group-hover:text-brand-500 group-hover:translate-x-0.5 transition-[transform,box-shadow,border-color,opacity]" />
                 </button>
@@ -184,12 +184,12 @@ function ProductFinder({ open, onClose }) {
           </div>
         ) : (
           <div className="mt-7 text-center animate-[fadeup_0.4s_ease-out]">
-            <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-brand-500 text-white shadow-lg shadow-brand-500/30"><Icon name="check" className="w-7 h-7" /></span>
+            <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-brand-700 text-white shadow-lg shadow-brand-500/30"><Icon name="check" className="w-7 h-7" /></span>
             <div className="mt-5 text-[13px] font-bold uppercase tracking-wider text-brandtext">{m('urunbulucu.onerimiz')}</div>
             <h3 className="mt-1 text-3xl font-extrabold tracking-tight text-strong">{rec.name}</h3>
             <p className="mt-3 text-[15px] leading-relaxed text-body">{rec.why}</p>
             <div className="mt-7 flex flex-col sm:flex-row gap-3 justify-center">
-              <Link href={rec.slug} onClick={onClose} className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-500 px-6 py-3.5 text-[15px] font-semibold text-white shadow-lg shadow-brand-500/25 hover:bg-brand-600 transition">{m('urunbulucu.urun_incele', { ad: rec.name })} <Icon name="arrow" className="w-4 h-4" /></Link>
+              <Link href={rec.slug} onClick={onClose} className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-700 px-6 py-3.5 text-[15px] font-semibold text-white shadow-lg shadow-brand-500/25 hover:bg-brand-800 transition">{m('urunbulucu.urun_incele', { ad: rec.name })} <Icon name="arrow" className="w-4 h-4" /></Link>
               <button onClick={() => { setStep(0); setAns({}); }} className="inline-flex items-center justify-center gap-2 rounded-xl bg-surface2 px-6 py-3.5 text-[15px] font-semibold text-strong hover:bg-line transition"><Icon name="refresh" className="w-4 h-4" /> {m('urunbulucu.bastan')}</button>
             </div>
           </div>
@@ -209,7 +209,7 @@ function FinderBanner({ onOpen }) {
       <div className="relative mx-auto max-w-7xl px-5 lg:px-8 py-14 lg:py-16">
         <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div className="flex items-start gap-4">
-            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-brand-600 text-white shadow-lg shadow-brand-600/25">
+            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-brand-700 text-white shadow-lg shadow-brand-600/25">
               <Icon name="chat" className="w-6 h-6" />
             </span>
             <div>
@@ -245,7 +245,7 @@ function FinderBanner({ onOpen }) {
 
 function FinderTab({ onOpen }) {
   return (
-    <button onClick={onOpen} className="fixed right-0 top-1/2 -translate-y-1/2 z-40 hidden md:flex items-center gap-2 rounded-l-2xl bg-brand-600 px-3 py-4 text-white shadow-lg shadow-brand-600/30 hover:bg-brand-700 hover:pr-5 transition-[transform,box-shadow,border-color,opacity] [writing-mode:vertical-rl] rotate-180" aria-label={m('anasayfa.urun_bulucu')}>
+    <button onClick={onOpen} className="fixed right-0 top-1/2 -translate-y-1/2 z-40 hidden md:flex items-center gap-2 rounded-l-2xl bg-brand-700 px-3 py-4 text-white shadow-lg shadow-brand-600/30 hover:bg-brand-800 hover:pr-5 transition-[transform,box-shadow,border-color,opacity] [writing-mode:vertical-rl] rotate-180" aria-label={m('anasayfa.urun_bulucu')}>
       <Icon name="chat" className="w-5 h-5 rotate-90" /> <span className="text-[13px] font-bold tracking-wide">{m('anasayfa.sana_uygun')}</span>
     </button>
   );
@@ -313,7 +313,7 @@ function PaketlerVitrin({ paketler: OZET_PAKETLER, b }) {
       <div className="mt-12 grid gap-6 lg:grid-cols-3 items-stretch">
         {OZET_PAKETLER.map((p) => (
           <div key={p.urun} className={`relative flex flex-col rounded-3xl p-7 transition-[transform,box-shadow,border-color] duration-300 ${p.vurgu ? 'bg-ink text-white shadow-[0_40px_80px_-30px_rgba(15,41,66,0.6)] lg:-translate-y-3 ring-1 ring-brand-400/40' : 'bg-surface border border-line shadow-[0_20px_50px_-30px_rgba(15,41,66,0.3)] hover:-translate-y-1'}`}>
-            {p.vurgu && <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-brand-600 px-4 py-1 text-xs font-bold text-white shadow-lg shadow-brand-500/40">{m('anasayfa.en_populer')}</span>}
+            {p.vurgu && <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-brand-700 px-4 py-1 text-xs font-bold text-white shadow-lg shadow-brand-500/40">{m('anasayfa.en_populer')}</span>}
             <div className="flex items-center gap-3">
               <span className={`grid h-11 w-11 place-items-center rounded-2xl ${p.vurgu ? 'bg-white/10 text-brand-300' : 'bg-brandsoft text-brandtext'}`}><Icon name={p.icon} /></span>
               <div>
@@ -335,7 +335,7 @@ function PaketlerVitrin({ paketler: OZET_PAKETLER, b }) {
                 </li>
               ))}
             </ul>
-            <Link href="/iletisim" className={`mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3.5 text-[15px] font-bold transition-colors ${p.vurgu ? 'bg-brand-500 text-white hover:bg-brand-400' : 'bg-ink text-white hover:bg-brand-600'}`}>{m('anasayfa.teklif_al')} <Icon name="arrow" className="h-4 w-4" /></Link>
+            <Link href="/iletisim" className={`mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3.5 text-[15px] font-bold transition-colors ${p.vurgu ? 'bg-brand-700 text-white hover:bg-brand-400' : 'bg-ink text-white hover:bg-brand-600'}`}>{m('anasayfa.teklif_al')} <Icon name="arrow" className="h-4 w-4" /></Link>
           </div>
         ))}
       </div>
@@ -356,7 +356,7 @@ function YazilimVitrin({ yazilimlar: YAZILIMLAR, kategoriler: YAZILIM_KATEGORILE
             <h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">{b.baslik}</h2>
             <p className="mt-4 tipo-metin text-body">{b.aciklama}</p>
           </div>
-          <Link href="/hazir-yazilim" className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-brand-500 px-5 py-3 text-[14px] font-bold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-600">
+          <Link href="/hazir-yazilim" className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-brand-700 px-5 py-3 text-[14px] font-bold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-800">
             {m('anasayfa.tum_yazilimlar')} <Icon name="arrow" className="h-4 w-4" />
           </Link>
         </div>
@@ -365,7 +365,7 @@ function YazilimVitrin({ yazilimlar: YAZILIMLAR, kategoriler: YAZILIM_KATEGORILE
             const k = kat(y.kategori);
             return (
               <Link key={y.id} href="/hazir-yazilim" className="group flex h-full flex-col rounded-2xl border border-line bg-surface p-6 shadow-[0_10px_40px_-24px_rgba(15,41,66,0.2)] transition-[transform,box-shadow,border-color] hover:-translate-y-1 hover:border-brandline">
-                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-brandsoft text-brandtext transition-colors group-hover:bg-brand-500 group-hover:text-white"><Icon name={k ? k.icon : 'layers'} /></span>
+                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-brandsoft text-brandtext transition-colors group-hover:bg-brand-700 group-hover:text-white"><Icon name={k ? k.icon : 'layers'} /></span>
                 <div className="mt-4 text-[11px] font-bold uppercase tracking-wide text-muted">{k ? k.ad : m('anasayfa.yazilim')}</div>
                 <h3 className="mt-1 text-[16px] font-extrabold text-strong">{y.ad}</h3>
                 <p className="mt-2 flex-1 text-[13.5px] leading-relaxed text-body">{y.aciklama}</p>
@@ -444,7 +444,7 @@ export default function HomePage({ yazilimlar, kategoriler, markalar, markaSerid
             </div>
           ))}
         </div>
-        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">{FEATURES.map((f) => (<div key={f.t} className="group rounded-2xl border border-line bg-surface p-6 shadow-[0_10px_40px_-20px_rgba(15,41,66,0.18)] hover:shadow-[0_24px_60px_-24px_rgba(20,184,166,0.35)] hover:-translate-y-1 transition-[transform,box-shadow,border-color,opacity] duration-300"><span className="grid h-12 w-12 place-items-center rounded-2xl bg-brandsoft text-brandtext group-hover:bg-brand-500 group-hover:text-white transition-colors"><Icon name={f.icon} /></span><h3 className="mt-5 text-lg font-bold text-strong">{f.t}</h3><p className="mt-2 text-[15px] leading-relaxed text-body">{f.d}</p></div>))}</div>
+        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">{FEATURES.map((f) => (<div key={f.t} className="group rounded-2xl border border-line bg-surface p-6 shadow-[0_10px_40px_-20px_rgba(15,41,66,0.18)] hover:shadow-[0_24px_60px_-24px_rgba(20,184,166,0.35)] hover:-translate-y-1 transition-[transform,box-shadow,border-color,opacity] duration-300"><span className="grid h-12 w-12 place-items-center rounded-2xl bg-brandsoft text-brandtext group-hover:bg-brand-700 group-hover:text-white transition-colors"><Icon name={f.icon} /></span><h3 className="mt-5 text-lg font-bold text-strong">{f.t}</h3><p className="mt-2 text-[15px] leading-relaxed text-body">{f.d}</p></div>))}</div>
       </section>
 
       <AltyapiVitrin maddeler={altyapiMaddeleri} b={B.altyapi} />

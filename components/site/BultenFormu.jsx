@@ -151,13 +151,13 @@ export default function BultenFormu({ kaynak }) {
                 onFocus={hazirla}
                 disabled={durum === 'gonderiliyor'}
                 placeholder={m('bulten.eposta_placeholder')}
-                className={`min-w-0 flex-1 rounded-xl px-4 py-3 text-[15px] outline-none transition focus:ring-4 ${koyu ? 'border border-white/15 bg-white/5 text-white placeholder:text-slate-500 focus:border-brand-400 focus:ring-brand-400/20' : 'border border-line bg-page text-strong focus:border-brand-500 focus:ring-brand-500/15'}`}
+                className={`min-w-0 flex-1 rounded-xl px-4 py-3 text-[15px] outline-none transition focus:ring-4 ${koyu ? 'border border-white/15 bg-white/5 text-white placeholder:text-slate-400 focus:border-brand-400 focus:ring-brand-400/20' : 'border border-line bg-page text-strong focus:border-brand-500 focus:ring-brand-500/15'}`}
               />
               <button
                 type="submit"
                 disabled={durum === 'gonderiliyor'}
                 data-umami-event={`bulten-${kaynak}`}
-                className="shrink-0 rounded-xl bg-brand-500 px-5 py-3 text-[15px] font-bold text-white shadow-lg shadow-brand-500/20 transition-colors hover:bg-brand-600 disabled:cursor-not-allowed disabled:opacity-60"
+                className="shrink-0 rounded-xl bg-brand-700 px-5 py-3 text-[15px] font-bold text-white shadow-lg shadow-brand-500/20 transition-colors hover:bg-brand-800 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {durum === 'gonderiliyor' ? m('bulten.gonderiliyor') : m('bulten.buton')}
               </button>
@@ -175,7 +175,7 @@ export default function BultenFormu({ kaynak }) {
             {durum === 'hata' && mesaj && (
               <p role="alert" className={`mt-3 rounded-xl px-3.5 py-2.5 text-[13.5px] font-semibold ring-1 ${koyu ? 'bg-rose-500/10 text-rose-300 ring-rose-400/25' : 'bg-rose-500/10 text-rose-600 ring-rose-500/25 dark:text-rose-400'}`}>{mesaj}</p>
             )}
-            <p className={`mt-2.5 text-[12px] ${koyu ? 'text-slate-500' : 'text-muted'}`}>{m('bulten.not')}</p>
+            <p className={`mt-2.5 text-[12px] ${koyu ? 'text-slate-400' : 'text-muted'}`}>{m('bulten.not')}</p>
           </form>
         )}
       </div>

@@ -76,7 +76,7 @@ export default function BultenIslem({ islem, token }) {
                 onClick={onayla}
                 disabled={asama === 'gonderiliyor'}
                 data-umami-event={`bulten-${islem}`}
-                className={`w-full rounded-xl px-6 py-3.5 text-[15px] font-bold transition-colors disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto ${islem === 'iptal' ? 'bg-surface2 text-strong ring-1 ring-line hover:ring-brandline' : 'bg-brand-500 text-white shadow-lg shadow-brand-500/25 hover:bg-brand-600'}`}
+                className={`w-full rounded-xl px-6 py-3.5 text-[15px] font-bold transition-colors disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto ${islem === 'iptal' ? 'bg-surface2 text-strong ring-1 ring-line hover:ring-brandline' : 'bg-brand-700 text-white shadow-lg shadow-brand-500/25 hover:bg-brand-600'}`}
               >
                 {asama === 'gonderiliyor' ? m('bulten.gonderiliyor') : m(k.buton)}
               </button>

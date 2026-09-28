@@ -45,7 +45,7 @@ export default async function EngellendiSayfasi({ searchParams }) {
 
       <div className="relative z-10 w-full max-w-[430px]">
         <div className="mb-7 flex justify-center">
-          <img src="/icon/logo.png" alt="SunucumWEB" className="h-9 w-auto object-contain dark:brightness-0 dark:invert" />
+          <img src="/icon/logo.png" width={2297} height={332} alt="SunucumWEB" className="h-9 w-auto object-contain dark:brightness-0 dark:invert" />
         </div>
 
         <div className="rounded-2xl border border-line bg-surface p-6 shadow-card sm:p-8">

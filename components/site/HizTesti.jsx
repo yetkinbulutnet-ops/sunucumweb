@@ -508,7 +508,7 @@ export default function HizTesti() {
               type="button"
               onClick={baslat}
               data-umami-event="Hız Testi Başlat"
-              className="inline-flex h-14 items-center justify-center rounded-full bg-brand-500 px-12 text-[16px] font-bold text-white shadow-lg shadow-brand-500/25 transition-[transform,background-color] hover:scale-[1.03] hover:bg-brand-600"
+              className="inline-flex h-14 items-center justify-center rounded-full bg-brand-700 px-12 text-[16px] font-bold text-white shadow-lg shadow-brand-500/25 transition-[transform,background-color] hover:scale-[1.03] hover:bg-brand-800"
             >
               {asama === 'hata' ? m('hiztesti.tekrar_dene') : m('hiztesti.basla')}
             </button>
@@ -527,7 +527,7 @@ export default function HizTesti() {
               type="button"
               onClick={kendiTestin}
               data-umami-event="Hız Testi Başlat"
-              className="inline-flex h-12 items-center justify-center rounded-full bg-brand-500 px-8 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-600"
+              className="inline-flex h-12 items-center justify-center rounded-full bg-brand-700 px-8 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-800"
             >
               {m('hiztesti.kendi_testin')}
             </button>
@@ -538,7 +538,7 @@ export default function HizTesti() {
                 type="button"
                 onClick={baslat}
                 data-umami-event="Hız Testi Başlat"
-                className="inline-flex h-12 items-center justify-center rounded-full bg-brand-500 px-8 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-600"
+                className="inline-flex h-12 items-center justify-center rounded-full bg-brand-700 px-8 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-800"
               >
                 {m('hiztesti.tekrar_test')}
               </button>
@@ -547,7 +547,7 @@ export default function HizTesti() {
                   type="button"
                   onClick={paylas}
                   data-umami-event="Hız Testi Paylaş"
-                  className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-brandline bg-brandsoft px-6 text-[15px] font-bold text-brandtext transition-colors hover:bg-brand-500 hover:text-white"
+                  className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-brandline bg-brandsoft px-6 text-[15px] font-bold text-brandtext transition-colors hover:bg-brand-700 hover:text-white"
                 >
                   {IkonPaylas}
                   {paylasEtiket}

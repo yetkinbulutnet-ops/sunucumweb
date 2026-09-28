@@ -52,7 +52,7 @@ export default async function YapimAsamasi({ baslik: baslikProp, ozet }) {
               href="https://my.sunucumweb.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl bg-brand-500 px-6 py-3.5 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-600"
+              className="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-6 py-3.5 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-800"
             >
               <Icon name="user" className="h-4 w-4" /> {m('yapim.musteri_paneli')}
             </a>
@@ -78,7 +78,7 @@ export default async function YapimAsamasi({ baslik: baslikProp, ozet }) {
               href={s.href}
               className="group flex h-full flex-col rounded-2xl border border-line bg-surface p-6 shadow-[0_10px_40px_-20px_rgba(15,41,66,0.18)] transition-[transform,box-shadow,border-color] hover:-translate-y-1 hover:border-brandline hover:shadow-[0_24px_60px_-24px_rgba(20,184,166,0.35)]"
             >
-              <span className="grid h-12 w-12 place-items-center rounded-2xl bg-brandsoft text-brandtext transition-colors group-hover:bg-brand-500 group-hover:text-white">
+              <span className="grid h-12 w-12 place-items-center rounded-2xl bg-brandsoft text-brandtext transition-colors group-hover:bg-brand-700 group-hover:text-white">
                 <Icon name={s.icon} />
               </span>
               <h3 className="mt-5 text-lg font-bold text-strong">{s.t}</h3>

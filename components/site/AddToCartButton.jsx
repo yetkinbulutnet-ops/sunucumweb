@@ -26,7 +26,7 @@ export default function AddToCartButton({ item, tema = 'acik', className = '', h
 
     acik: 'bg-surface2 text-strong hover:bg-line',
 
-    dolu: 'bg-brand-500 text-white shadow-lg shadow-brand-500/30 hover:bg-brand-600',
+    dolu: 'bg-brand-700 text-white shadow-lg shadow-brand-500/30 hover:bg-brand-800',
   };
 
   const cls = `inline-flex items-center justify-center gap-1.5 rounded-xl px-5 py-3 text-[14px] font-semibold transition-[transform,box-shadow,border-color,opacity] ${stiller[tema] || stiller.acik} ${className}`;

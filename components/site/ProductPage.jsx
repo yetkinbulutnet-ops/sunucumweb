@@ -100,7 +100,7 @@ function Fiyat({ p, yillik, koyu }) {
       {(eski > gosterilen || rozet) && (
         <div className="flex items-center gap-2">
           {eski > gosterilen && <span className={`text-sm line-through ${koyu ? 'text-slate-400' : 'text-muted'}`}>{fiyat(eski)}</span>}
-          {rozet && <span className="rounded-md bg-emerald-500/15 px-1.5 py-0.5 text-[11px] font-extrabold text-emerald-500 ring-1 ring-emerald-500/30">{rozet}</span>}
+          {rozet && <span className={`rounded-md bg-emerald-500/15 px-1.5 py-0.5 text-[11px] font-extrabold ring-1 ring-emerald-500/30 ${koyu ? 'text-emerald-300' : 'text-emerald-700 dark:text-emerald-400'}`}>{rozet}</span>}
         </div>
       )}
       <div className="flex items-baseline gap-1">
@@ -115,7 +115,7 @@ function PlanKart({ p, urun, yillik, tip, slug }) {
   const koyu = p.popular;
   return (
     <div className={`relative flex flex-col rounded-3xl p-7 transition-[transform,box-shadow,border-color] duration-300 ${koyu ? 'bg-ink text-white shadow-[0_40px_80px_-30px_rgba(15,41,66,0.6)] lg:-translate-y-4 ring-1 ring-brand-400/40' : 'bg-surface border border-line shadow-[0_20px_50px_-30px_rgba(15,41,66,0.3)] hover:-translate-y-1'}`}>
-      {koyu && <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-brand-600 px-4 py-1 text-xs font-bold text-white shadow-lg shadow-brand-500/40">{m('urun.en_populer')}</span>}
+      {koyu && <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-brand-700 px-4 py-1 text-xs font-bold text-white shadow-lg shadow-brand-500/40">{m('urun.en_populer')}</span>}
       <div className={`text-xl font-extrabold ${koyu ? 'text-white' : 'text-strong'}`}>{p.name}</div>
       {p.sub && <div className={`mt-1 text-[13px] ${koyu ? 'text-slate-400' : 'text-muted'}`}>{p.sub}</div>}
       <div className="mt-4"><Fiyat p={p} yillik={yillik} koyu={koyu} /></div>
@@ -128,7 +128,7 @@ function PlanKart({ p, urun, yillik, tip, slug }) {
         ))}
       </ul>
       {tip === 'merkez' ? (
-        <Link href="/iletisim" className={`mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3.5 text-[15px] font-bold transition-colors ${koyu ? 'bg-brand-500 text-white hover:bg-brand-400' : 'bg-ink text-white hover:bg-brand-600'}`}>{m('urun.teklif_al')} <Icon name="arrow" className="h-4 w-4" /></Link>
+        <Link href="/iletisim" className={`mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3.5 text-[15px] font-bold transition-colors ${koyu ? 'bg-brand-700 text-white hover:bg-brand-400' : 'bg-ink text-white hover:bg-brand-600'}`}>{m('urun.teklif_al')} <Icon name="arrow" className="h-4 w-4" /></Link>
       ) : (
         <AddToCartButton item={{ name: p.name, product: urun.title, price: yillik ? Math.round(num(p.price) * 10 / 12) : num(p.price), period: '/ay' }} href={siparisUrl(urun, p)} tema={koyu ? 'dolu' : 'acik'} className="mt-8 w-full py-3.5 text-[15px]" />
       )}
@@ -150,7 +150,7 @@ function PlanSatir({ p, urun, yillik, tip, gorsel, slug }) {
         </div>
       )}
       <div className="lg:w-44 lg:shrink-0">
-        {one && <span className="mb-2 inline-block rounded-full bg-brand-600 px-3 py-0.5 text-[11px] font-bold text-white">{m('urun.en_populer')}</span>}
+        {one && <span className="mb-2 inline-block rounded-full bg-brand-700 px-3 py-0.5 text-[11px] font-bold text-white">{m('urun.en_populer')}</span>}
         <div className="text-lg font-extrabold text-strong">{p.name}</div>
         {p.sub && <div className="mt-0.5 text-[12.5px] leading-snug text-muted">{p.sub}</div>}
       </div>
@@ -195,7 +195,7 @@ function KarsilastirmaTablosu({ plans, KARSILASTIRMA }) {
   const rows = [];
   KARSILASTIRMA.forEach((g) => { rows.push({ grup: g.grup }); g.satirlar.forEach((s) => rows.push({ satir: s })); });
   return (
-    <div className="overflow-x-auto rounded-2xl border border-line bg-surface">
+    <div tabIndex={0} role="region" aria-label={m('urun.karsilastirma_baslik')} className="overflow-x-auto rounded-2xl border border-line bg-surface outline-none focus-visible:ring-2 focus-visible:ring-brand-400">
       <table className="w-full min-w-[620px] border-collapse text-left">
         <thead>
           <tr>
@@ -215,7 +215,7 @@ function KarsilastirmaTablosu({ plans, KARSILASTIRMA }) {
               <td className="sticky left-0 z-10 bg-surface px-5 py-3 text-[14px] text-body">{r.satir}</td>
               {plans.map((p) => (
                 <td key={p.name} className="px-4 py-3 text-center">
-                  <Icon name="check" className="mx-auto h-4 w-4 text-emerald-500" />
+                  <Icon name="check" className="mx-auto h-4 w-4 text-emerald-700 dark:text-emerald-400" />
                 </td>
               ))}
             </tr>
@@ -344,7 +344,7 @@ export default function ProductPage({ data, slug, ortak }) {
               )}
 
               <div className="mt-6 flex flex-wrap gap-3">
-                <a href="#paketler" className="inline-flex items-center gap-2 rounded-xl bg-brand-500 px-6 py-3.5 text-[15px] font-semibold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-600">{m('urun.paketleri_gor')} <Icon name="arrow" className="h-4 w-4" /></a>
+                <a href="#paketler" className="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-6 py-3.5 text-[15px] font-semibold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-800">{m('urun.paketleri_gor')} <Icon name="arrow" className="h-4 w-4" /></a>
                 <Link href="/iletisim" className="inline-flex items-center gap-2 rounded-xl bg-surface px-6 py-3.5 text-[15px] font-semibold text-strong ring-1 ring-line transition hover:ring-brandtext/50">{m('urun.bize_ulasin')}</Link>
               </div>
 
@@ -384,9 +384,9 @@ export default function ProductPage({ data, slug, ortak }) {
         {minFiyat > 0 && (
           <div className="mt-8 flex items-center justify-center">
             <div className="inline-flex items-center rounded-full border border-line bg-surface p-1 text-[13.5px] font-semibold">
-              <button onClick={() => setYillik(false)} className={`rounded-full px-4 py-2 transition-colors ${!yillik ? 'bg-brand-500 text-white shadow' : 'text-body hover:text-strong'}`}>{m('urun.aylik')}</button>
-              <button onClick={() => setYillik(true)} className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 transition-colors ${yillik ? 'bg-brand-500 text-white shadow' : 'text-body hover:text-strong'}`}>
-                {m('urun.yillik')} <span className={`rounded-md px-1.5 py-0.5 text-[10px] font-extrabold ${yillik ? 'bg-white/20 text-white' : 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'}`}>{m('urun.iki_ay_bedava_rozet')}</span>
+              <button onClick={() => setYillik(false)} className={`rounded-full px-4 py-2 transition-colors ${!yillik ? 'bg-brand-700 text-white shadow' : 'text-body hover:text-strong'}`}>{m('urun.aylik')}</button>
+              <button onClick={() => setYillik(true)} className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 transition-colors ${yillik ? 'bg-brand-700 text-white shadow' : 'text-body hover:text-strong'}`}>
+                {m('urun.yillik')} <span className={`rounded-md px-1.5 py-0.5 text-[10px] font-extrabold ${yillik ? 'bg-white/20 text-white' : 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400'}`}>{m('urun.iki_ay_bedava_rozet')}</span>
               </button>
             </div>
           </div>
@@ -446,7 +446,7 @@ export default function ProductPage({ data, slug, ortak }) {
           <div className="grid gap-5 md:grid-cols-3">
             {HOSTING_ADIM.map((s, i) => (
               <div key={s.t} className="relative rounded-2xl border border-line bg-surface p-7 shadow-[0_10px_40px_-24px_rgba(15,41,66,0.25)]">
-                <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand-500 text-white font-extrabold">{i + 1}</span>
+                <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand-700 text-white font-extrabold">{i + 1}</span>
                 <h3 className="mt-4 text-lg font-bold text-strong">{s.t}</h3>
                 <p className="mt-2 text-[15px] leading-relaxed text-body">{s.d}</p>
               </div>

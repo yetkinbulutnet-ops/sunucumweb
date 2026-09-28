@@ -72,7 +72,7 @@ export default function TurnstileGecis() {
       <button
         type="submit"
         disabled={!gonderilebilir}
-        className="flex w-full items-center justify-center gap-2 rounded-xl bg-brand-500 px-5 py-3 text-[15px] font-semibold text-white shadow-lg shadow-brand-500/25 transition-colors enabled:hover:bg-brand-600 disabled:cursor-not-allowed disabled:opacity-45"
+        className="flex w-full items-center justify-center gap-2 rounded-xl bg-brand-700 px-5 py-3 text-[15px] font-semibold text-white shadow-lg shadow-brand-500/25 transition-colors enabled:hover:bg-brand-800 disabled:cursor-not-allowed disabled:opacity-45"
       >
         {durum === 'gonderiliyor' ? (
           <>

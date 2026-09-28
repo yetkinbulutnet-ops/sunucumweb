@@ -106,7 +106,7 @@ export default async function DnsToolPage({ arac, alan = '', tip = '', veri = nu
         <ToolRunner arac={arac} baslangicGirdi={alan} baslangicTip={tipBilgi ? tipBilgi.tip : 'TUM'} veri={veri} />
 
         {hata && (
-          <p className="mt-6 rounded-xl border border-amber-500/30 bg-amber-500/5 px-4 py-3 text-[14px] font-medium text-amber-700 dark:text-amber-400">
+          <p className="mt-6 rounded-xl border border-amber-500/30 bg-amber-500/5 px-4 py-3 text-[14px] font-medium text-amber-800 dark:text-amber-400">
             {hata}
           </p>
         )}
@@ -122,7 +122,7 @@ export default async function DnsToolPage({ arac, alan = '', tip = '', veri = nu
               <Link
                 href={yol(alan)}
                 className={`rounded-lg px-3 py-1.5 text-[13px] font-bold transition-colors ${
-                  tipBilgi ? 'bg-surface text-body hover:bg-brandsoft hover:text-brandtext' : 'bg-brand-500 text-white'
+                  tipBilgi ? 'bg-surface text-body hover:bg-brandsoft hover:text-brandtext' : 'bg-brand-700 text-white'
                 }`}
               >
                 {m('arac.tumu')}
@@ -132,7 +132,7 @@ export default async function DnsToolPage({ arac, alan = '', tip = '', veri = nu
                   key={t.tip}
                   href={yol(alan, t.tip)}
                   className={`rounded-lg px-3 py-1.5 text-[13px] font-bold transition-colors ${
-                    tipBilgi?.tip === t.tip ? 'bg-brand-500 text-white' : 'bg-surface text-body hover:bg-brandsoft hover:text-brandtext'
+                    tipBilgi?.tip === t.tip ? 'bg-brand-700 text-white' : 'bg-surface text-body hover:bg-brandsoft hover:text-brandtext'
                   }`}
                 >
                   {t.tip}

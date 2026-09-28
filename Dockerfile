@@ -5,13 +5,13 @@
 # Calis:  docker run -p 3000:3000 -e GROQ_API_KEY=... <kullanici>/sunucumweb:latest
 
 # ---------- 1) bagimliliklar ----------
-FROM node:20-alpine AS deps
+FROM node:24-alpine AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 
 # ---------- 2) derleme ----------
-FROM node:20-alpine AS builder
+FROM node:24-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -21,12 +21,13 @@ COPY . .
 ARG SITE_INDEXABLE=0
 ENV SITE_INDEXABLE=$SITE_INDEXABLE
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV DOCKER_BUILD=1
 
 # Tailwind CSS + Next build (package.json'daki "build" script'i ikisini de yapar)
 RUN npm run build
 
 # ---------- 3) calistirma ----------
-FROM node:20-alpine AS runner
+FROM node:24-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1

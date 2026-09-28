@@ -12,7 +12,7 @@ export default async function NotFound() {
           <div className="text-[7rem] font-extrabold leading-none text-brand-500">404</div>
           <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-ink">{m('hata.bulunamadi_baslik')}</h1>
           <p className="mt-4 text-lg text-slate-600">{m('hata.bulunamadi_metin')}</p>
-          <Link href="/" className="mt-8 inline-flex items-center gap-2 rounded-xl bg-brand-500 px-6 py-3.5 font-semibold text-white shadow-lg shadow-brand-500/25 hover:bg-brand-600 transition">
+          <Link href="/" className="mt-8 inline-flex items-center gap-2 rounded-xl bg-brand-700 px-6 py-3.5 font-semibold text-white shadow-lg shadow-brand-500/25 hover:bg-brand-800 transition">
             <Icon name="arrow" className="w-4 h-4 rotate-180" /> {m('hata.ana_sayfaya_don')}
           </Link>
         </div>

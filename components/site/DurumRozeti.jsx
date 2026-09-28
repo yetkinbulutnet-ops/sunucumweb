@@ -59,7 +59,7 @@ export default function DurumRozeti() {
       </span>
       <span className="whitespace-nowrap">{metin}</span>
       {ozet && anahtar === 'calisiyor' && (
-        <span className="hidden text-slate-500 sm:inline">{ozet.up}/{ozet.total}</span>
+        <span className="hidden text-slate-400 sm:inline">{ozet.up}/{ozet.total}</span>
       )}
     </a>
   );

@@ -33,7 +33,7 @@ export default function LogoKutusu({ marka, boyut = 'izgara' }) {
         />
       ) : (
         <span className="flex items-center gap-2.5">
-          <span className={`grid h-9 w-9 place-items-center rounded-xl bg-brand-500 ${o.harf} font-extrabold leading-none text-white`}>
+          <span className={`grid h-9 w-9 place-items-center rounded-xl bg-brand-700 ${o.harf} font-extrabold leading-none text-white`}>
             {basHarfler(marka.ad)}
           </span>
           <span className="max-w-[112px] truncate text-[14px] font-bold text-ink-700">{marka.ad}</span>

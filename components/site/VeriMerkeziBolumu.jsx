@@ -85,6 +85,7 @@ export default function VeriMerkeziBolumu({ veri }) {
                   : 'pointer-events-none mt-0 h-0 translate-y-4 overflow-hidden opacity-0 lg:h-auto'
               }`}
               aria-hidden={!kartAcik}
+              inert={!kartAcik}
             >
               <div className="pointer-events-auto rounded-2xl border border-line bg-surface/95 p-4 shadow-[0_30px_70px_-30px_rgba(15,41,66,0.55)] backdrop-blur sm:p-5">
                 <div className="flex flex-wrap items-start justify-between gap-3">

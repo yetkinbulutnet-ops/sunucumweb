@@ -38,7 +38,7 @@ export default function CarkRozeti({ cark }) {
             type="button"
             onClick={() => setAcik(true)}
             data-umami-event="cark-ac"
-            className="group relative flex items-center gap-2.5 rounded-full bg-gradient-to-r from-brand-600 to-brand-500 py-2.5 pl-2.5 pr-5 text-[14px] font-extrabold text-white shadow-[0_18px_40px_-12px_rgba(13,148,136,0.7)] ring-1 ring-white/20 transition-transform hover:-translate-y-0.5"
+            className="group relative flex items-center gap-2.5 rounded-full bg-gradient-to-r from-brand-800 to-brand-700 py-2.5 pl-2.5 pr-5 text-[14px] font-extrabold text-white shadow-[0_18px_40px_-12px_rgba(13,148,136,0.7)] ring-1 ring-white/20 transition-transform hover:-translate-y-0.5"
           >
             <span className="relative grid h-9 w-9 place-items-center rounded-full bg-white/20">
               <span aria-hidden className="absolute inset-0 rounded-full bg-white/30 motion-safe:animate-ping" />

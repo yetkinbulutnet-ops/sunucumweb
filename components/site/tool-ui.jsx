@@ -1,9 +1,9 @@
 import { m } from '@/lib/metin';
 
 export const TON = {
-  iyi: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 ring-emerald-500/25',
-  orta: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 ring-amber-500/25',
-  eksik: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 ring-amber-500/25',
+  iyi: 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 ring-emerald-500/25',
+  orta: 'bg-amber-500/10 text-amber-800 dark:text-amber-400 ring-amber-500/25',
+  eksik: 'bg-amber-500/10 text-amber-800 dark:text-amber-400 ring-amber-500/25',
   riskli: 'bg-rose-500/10 text-rose-600 dark:text-rose-400 ring-rose-500/25',
   yok: 'bg-rose-500/10 text-rose-600 dark:text-rose-400 ring-rose-500/25',
   notr: 'bg-surface2 text-body ring-line',

@@ -7,9 +7,9 @@ import { useParabirimi } from './CurrencyProvider';
 import { m } from '@/lib/metin';
 
 const TON = {
-  yesil: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 ring-emerald-500/30',
-  sari: 'bg-amber-500/15 text-amber-600 dark:text-amber-400 ring-amber-500/30',
-  mavi: 'bg-sky-500/15 text-sky-600 dark:text-sky-400 ring-sky-500/30',
+  yesil: 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 ring-emerald-500/30',
+  sari: 'bg-amber-500/15 text-amber-800 dark:text-amber-400 ring-amber-500/30',
+  mavi: 'bg-sky-500/15 text-sky-700 dark:text-sky-400 ring-sky-500/30',
   kirmizi: 'bg-rose-500/15 text-rose-600 dark:text-rose-400 ring-rose-500/30',
 };
 
@@ -66,7 +66,7 @@ function KampanyaKart({ k }) {
         <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-brandsoft text-brandtext">
           <Icon name={k.icon || 'tag'} />
         </span>
-        <span className="inline-flex items-baseline gap-1 rounded-xl bg-brand-500 px-3 py-1.5 text-white shadow-lg shadow-brand-500/25">
+        <span className="inline-flex items-baseline gap-1 rounded-xl bg-brand-700 px-3 py-1.5 text-white shadow-lg shadow-brand-500/25">
           <span className="text-[18px] font-extrabold leading-none">%{k.indirim}</span>
           <span className="text-[11px] font-bold uppercase tracking-wide opacity-90">{m('kampanya.indirim')}</span>
         </span>
@@ -104,7 +104,7 @@ function KampanyaKart({ k }) {
         href={k.href}
         data-umami-event="Kampanya"
         data-umami-event-kampanya={k.baslik}
-        className="mt-5 inline-flex items-center justify-center gap-2 rounded-xl bg-brand-500 px-5 py-3 text-[14px] font-bold text-white transition-colors hover:bg-brand-600"
+        className="mt-5 inline-flex items-center justify-center gap-2 rounded-xl bg-brand-700 px-5 py-3 text-[14px] font-bold text-white transition-colors hover:bg-brand-800"
       >
         {k.cta || m('kampanya.incele')} <Icon name="arrow" className="h-4 w-4" />
       </Link>
@@ -127,7 +127,7 @@ export default function KampanyalarPage({ kampanyalar: KAMPANYALAR, meta: KAMPAN
             <p className="mt-2 text-[14px] leading-relaxed text-body">
               {m('kampanya.bos_metin')}
             </p>
-            <Link href="/web-hosting" className="mt-6 inline-flex items-center gap-2 rounded-xl bg-brand-500 px-5 py-3 text-[14px] font-bold text-white transition-colors hover:bg-brand-600">
+            <Link href="/web-hosting" className="mt-6 inline-flex items-center gap-2 rounded-xl bg-brand-700 px-5 py-3 text-[14px] font-bold text-white transition-colors hover:bg-brand-800">
               {m('kampanya.paketleri_gor')} <Icon name="arrow" className="h-4 w-4" />
             </Link>
           </div>

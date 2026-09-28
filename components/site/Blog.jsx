@@ -57,7 +57,7 @@ function Gorsel({ g, className, sizes, oncelikli = false }) {
 function KategoriRozet({ k }) {
   if (!k) return null;
   return (
-    <Link href={`/blog/kategori/${k.slug}`} className="relative z-10 inline-flex w-fit items-center gap-1.5 rounded-full bg-brandsoft px-2.5 py-1 text-[12px] font-bold text-brandtext ring-1 ring-brandline transition-colors hover:bg-brand-500 hover:text-white">
+    <Link href={`/blog/kategori/${k.slug}`} className="relative z-10 inline-flex w-fit items-center gap-1.5 rounded-full bg-brandsoft px-2.5 py-1 text-[12px] font-bold text-brandtext ring-1 ring-brandline transition-colors hover:bg-brand-700 hover:text-white">
       {k.ad}
     </Link>
   );
@@ -97,7 +97,7 @@ function Kategoriler({ m, kategoriler, aktif }) {
   if (!liste.length) return null;
   const cip = (secili) =>
     `inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-[14px] font-bold transition-colors ${
-      secili ? 'bg-brand-500 text-white shadow-lg shadow-brand-500/25' : 'bg-surface text-body ring-1 ring-line hover:text-brandtext hover:ring-brandline'
+      secili ? 'bg-brand-700 text-white shadow-lg shadow-brand-500/25' : 'bg-surface text-body ring-1 ring-line hover:text-brandtext hover:ring-brandline'
     }`;
   return (
     <nav aria-label={m('blog.kategoriler_aria')} className="-mx-5 overflow-x-auto px-5 pb-2 lg:mx-0 lg:px-0">
@@ -108,7 +108,7 @@ function Kategoriler({ m, kategoriler, aktif }) {
         {liste.map((k) => (
           <li key={k.slug}>
             <Link href={`/blog/kategori/${k.slug}`} className={cip(aktif === k.slug)} aria-current={aktif === k.slug ? 'page' : undefined}>
-              {k.ad} <span className={`text-[12px] ${aktif === k.slug ? 'text-white/80' : 'text-muted'}`}>{k.adet}</span>
+              {k.ad} <span className={`text-[12px] ${aktif === k.slug ? 'text-white' : 'text-muted'}`}>{k.adet}</span>
             </Link>
           </li>
         ))}
@@ -146,7 +146,7 @@ function OneCikanKart({ m, y }) {
       </div>
       <div className="flex min-w-0 flex-col justify-center p-6 sm:p-8 lg:p-10">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2.5 py-1 text-[12px] font-bold text-amber-600 ring-1 ring-amber-500/30 dark:text-amber-400">
+          <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2.5 py-1 text-[12px] font-bold text-amber-800 ring-1 ring-amber-500/30 dark:text-amber-400">
             <Icon name="star" className="h-3.5 w-3.5" /> {m('blog.one_cikan')}
           </span>
           <KategoriRozet k={y.kategori} />
@@ -186,7 +186,7 @@ function Sayfalama({ m, sayfa, sayfaSayisi, tabanYol }) {
         n === '…' ? (
           <span key={`b${i}`} className="px-1 text-muted">…</span>
         ) : (
-          <Link key={n} href={href(n)} aria-current={n === sayfa ? 'page' : undefined} className={`${kutu} ${n === sayfa ? 'bg-brand-500 text-white' : 'bg-surface text-body ring-1 ring-line hover:text-brandtext'}`}>
+          <Link key={n} href={href(n)} aria-current={n === sayfa ? 'page' : undefined} className={`${kutu} ${n === sayfa ? 'bg-brand-700 text-white' : 'bg-surface text-body ring-1 ring-line hover:text-brandtext'}`}>
             {n}
           </Link>
         )
@@ -209,7 +209,7 @@ function BosDurum({ m }) {
       <h2 className="mt-5 text-2xl font-extrabold tracking-tight text-strong">{m('blog.bos_baslik')}</h2>
       <p className="mt-3 text-[15.5px] leading-relaxed text-body">{m('blog.bos_metin')}</p>
       <div className="mt-7 flex flex-wrap justify-center gap-3">
-        <Link href="/web-hosting" className="inline-flex items-center gap-2 rounded-xl bg-brand-500 px-5 py-3 text-[14px] font-bold text-white hover:bg-brand-600">{m('blog.bos_hosting')} <Icon name="arrow" className="h-4 w-4" /></Link>
+        <Link href="/web-hosting" className="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-5 py-3 text-[14px] font-bold text-white hover:bg-brand-800">{m('blog.bos_hosting')} <Icon name="arrow" className="h-4 w-4" /></Link>
         <Link href="/iletisim" className="inline-flex items-center gap-2 rounded-xl bg-surface px-5 py-3 text-[14px] font-bold text-strong ring-1 ring-line hover:text-brandtext">{m('blog.bos_iletisim')}</Link>
       </div>
     </div>

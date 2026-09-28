@@ -482,7 +482,7 @@ function BasliklarSonuc({ veri }) {
         </div>
 
         {veri.ifsalar.length > 0 && (
-          <p className="mt-4 text-[13px] leading-relaxed text-amber-700 dark:text-amber-400">
+          <p className="mt-4 text-[13px] leading-relaxed text-amber-800 dark:text-amber-400">
             {m('arac.surum_ifsa', { liste: veri.ifsalar.map((i) => `${i.ad}: ${i.deger}`).join(' · ') })}
           </p>
         )}
@@ -547,7 +547,7 @@ function TipSecici({ secili, onSec }) {
           onClick={() => onSec(t)}
           aria-pressed={secili === t}
           className={`shrink-0 snap-start rounded-lg px-3 py-1.5 text-[13px] font-bold transition-colors ${
-            secili === t ? 'bg-brand-500 text-white' : 'bg-surface2 text-body hover:bg-brandsoft hover:text-brandtext'
+            secili === t ? 'bg-brand-700 text-white' : 'bg-surface2 text-body hover:bg-brandsoft hover:text-brandtext'
           }`}
         >
           {t === 'TUM' ? m('arac.tumu') : t}
@@ -650,7 +650,7 @@ export default function ToolRunner({ arac, baslangicGirdi = '', baslangicTip = '
           <button
             type="submit"
             disabled={bekliyor}
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-500 px-6 py-3.5 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-600 disabled:opacity-60"
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-700 px-6 py-3.5 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-800 disabled:opacity-60"
           >
             {bekliyor ? m('arac.sorgulaniyor') : m('arac.sorgula')}
             {!bekliyor && <Icon name="arrow" className="h-4 w-4" />}

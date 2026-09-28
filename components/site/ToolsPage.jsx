@@ -11,7 +11,7 @@ async function AracKarti({ arac }) {
       href={`/araclar/${arac.slug}`}
       className="group flex h-full flex-col rounded-2xl border border-line bg-surface p-6 shadow-[0_10px_40px_-24px_rgba(15,41,66,0.25)] transition-[transform,box-shadow,border-color] hover:-translate-y-1 hover:border-brandline hover:shadow-[0_24px_60px_-28px_rgba(20,184,166,0.35)]"
     >
-      <span className="grid h-11 w-11 place-items-center rounded-2xl bg-brandsoft text-brandtext transition-colors group-hover:bg-brand-500 group-hover:text-white">
+      <span className="grid h-11 w-11 place-items-center rounded-2xl bg-brandsoft text-brandtext transition-colors group-hover:bg-brand-700 group-hover:text-white">
         <Icon name={arac.icon} className="h-5 w-5" />
       </span>
       <h3 className="mt-5 text-[16px] font-bold text-strong text-balance">{arac.baslik}</h3>
@@ -58,7 +58,7 @@ export async function DigerAraclar({ slug }) {
               href={`/araclar/${a.slug}`}
               className="group flex items-center gap-3 rounded-2xl border border-line bg-surface p-4 transition-colors hover:border-brandline"
             >
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brandsoft text-brandtext transition-colors group-hover:bg-brand-500 group-hover:text-white">
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brandsoft text-brandtext transition-colors group-hover:bg-brand-700 group-hover:text-white">
                 <Icon name={a.icon} className="h-5 w-5" />
               </span>
               <span className="text-[14px] font-bold text-strong">{a.kisa}</span>
@@ -97,7 +97,7 @@ export async function AracKabugu({ arac, kirinti = [], baslik, ozet, children })
         </nav>
 
         <div className="mt-6 flex items-start gap-4">
-          <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-brand-500 text-white shadow-lg shadow-brand-500/25">
+          <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-brand-700 text-white shadow-lg shadow-brand-500/25">
             <Icon name={arac.icon} />
           </span>
           <div className="min-w-0">

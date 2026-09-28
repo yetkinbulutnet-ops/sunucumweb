@@ -7,7 +7,7 @@ const SAYFA = 'https://status.sunucumweb.com';
 const YENILEME = 60_000;
 
 const DURUM = {
-  up: { nokta: 'bg-emerald-500', yazi: 'text-emerald-600 dark:text-emerald-400', etiket: 'durum.aktif' },
+  up: { nokta: 'bg-emerald-500', yazi: 'text-emerald-700 dark:text-emerald-400', etiket: 'durum.aktif' },
   down: { nokta: 'bg-rose-500', yazi: 'text-rose-600 dark:text-rose-400', etiket: 'durum.kesinti_etiket' },
   unknown: { nokta: 'bg-slate-400', yazi: 'text-muted', etiket: 'durum.bilinmiyor' },
 };

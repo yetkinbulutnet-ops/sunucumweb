@@ -38,6 +38,15 @@ export async function generateMetadata({ params }) {
     const h = await hakkimizdaGetir();
     return sayfaMeta({ baslik: h.seo.title, aciklama: h.seo.description, yol: '/hakkimizda' });
   }
+  if (slug === 'alan-adi' || slug === 'transfer') {
+    const m = await metinAl();
+    const tescil = slug === 'alan-adi';
+    return sayfaMeta({
+      baslik: tescil ? m('seo.alanadi_baslik') : m('seo.transfer_baslik'),
+      aciklama: tescil ? m('seo.alanadi_aciklama') : m('seo.transfer_aciklama'),
+      yol: `/${slug}`,
+    });
+  }
   if (pr?.durum === 'yapim-asamasi') {
     return {
       title: (await metinAl())('yapim.meta_baslik', { ad: pr.title }),

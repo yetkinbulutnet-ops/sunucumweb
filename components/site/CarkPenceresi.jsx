@@ -259,7 +259,7 @@ export default function CarkPenceresi({ cark, kapat, bitti }) {
                   type="submit"
                   disabled={asama !== 'form'}
                   data-umami-event="cark-cevir"
-                  className="mt-4 w-full rounded-xl bg-brand-500 px-5 py-3.5 text-[15px] font-extrabold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-600 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="mt-4 w-full rounded-xl bg-brand-700 px-5 py-3.5 text-[15px] font-extrabold text-white shadow-lg shadow-brand-500/25 transition-colors hover:bg-brand-800 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {asama === 'form' ? m('cark.cevir') : asama === 'gonderiliyor' ? m('cark.hazirlaniyor') : m('cark.donuyor')}
                 </button>
@@ -270,13 +270,13 @@ export default function CarkPenceresi({ cark, kapat, bitti }) {
                 <h2 id="cark-baslik" className="text-2xl font-extrabold tracking-tight text-strong text-balance">{m('cark.tekrar_baslik')}</h2>
                 <p className="mt-2 text-[15px] leading-relaxed text-body">{m('cark.tekrar_metin')}</p>
                 <span className="mt-4 inline-flex w-fit items-center gap-2 rounded-full bg-brandsoft px-3.5 py-1.5 text-[13px] font-bold text-brandtext ring-1 ring-brandline">{m('cark.kalan_hak', { adet: sonuc.kalanHak })}</span>
-                <button type="button" onClick={tekrarla} data-umami-event="cark-tekrar" className="mt-6 inline-flex items-center justify-center rounded-xl bg-brand-500 px-5 py-3.5 text-[15px] font-extrabold text-white shadow-lg shadow-brand-500/25 hover:bg-brand-600">{m('cark.tekrar_cevir')}</button>
+                <button type="button" onClick={tekrarla} data-umami-event="cark-tekrar" className="mt-6 inline-flex items-center justify-center rounded-xl bg-brand-700 px-5 py-3.5 text-[15px] font-extrabold text-white shadow-lg shadow-brand-500/25 hover:bg-brand-800">{m('cark.tekrar_cevir')}</button>
               </div>
             ) : sonuc.kazanamaz || !sonuc.kupon ? (
               <div className="flex h-full flex-col justify-center">
                 <h2 id="cark-baslik" className="text-2xl font-extrabold tracking-tight text-strong">{m('cark.kaybetti_baslik')}</h2>
                 <p className="mt-2 text-[15px] leading-relaxed text-body">{m('cark.kaybetti_metin')}</p>
-                <Link href="/kampanyalar" onClick={kapatVeBitir} className="mt-6 inline-flex items-center justify-center rounded-xl bg-brand-500 px-5 py-3.5 text-[15px] font-extrabold text-white hover:bg-brand-600">{m('cark.kampanyalari_gor')}</Link>
+                <Link href="/kampanyalar" onClick={kapatVeBitir} className="mt-6 inline-flex items-center justify-center rounded-xl bg-brand-700 px-5 py-3.5 text-[15px] font-extrabold text-white hover:bg-brand-800">{m('cark.kampanyalari_gor')}</Link>
               </div>
             ) : (
               <div className="flex h-full flex-col justify-center">
@@ -289,7 +289,7 @@ export default function CarkPenceresi({ cark, kapat, bitti }) {
                 </div>
                 {sonuc.gecerlilik && <p className="mt-2 text-[13px] text-muted">{m('cark.gecerlilik', { gecerlilik: sonuc.gecerlilik })}</p>}
                 <p className="mt-3 text-[13.5px] text-body">{m('cark.eposta_gonderildi')}</p>
-                <Link href={sonuc.baglanti || '/kampanyalar'} onClick={kapatVeBitir} className="mt-6 inline-flex items-center justify-center rounded-xl bg-brand-500 px-5 py-3.5 text-[15px] font-extrabold text-white hover:bg-brand-600" data-umami-event="cark-kupon-kullan">{m('cark.hemen_kullan')}</Link>
+                <Link href={sonuc.baglanti || '/kampanyalar'} onClick={kapatVeBitir} className="mt-6 inline-flex items-center justify-center rounded-xl bg-brand-700 px-5 py-3.5 text-[15px] font-extrabold text-white hover:bg-brand-800" data-umami-event="cark-kupon-kullan">{m('cark.hemen_kullan')}</Link>
               </div>
             )}
           </div>

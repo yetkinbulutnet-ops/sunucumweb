@@ -60,7 +60,7 @@ export default function HazirYazilimDetay({ urun, yazilimlar: YAZILIMLAR, katego
             <div className="relative overflow-hidden rounded-2xl border border-line bg-surface2 shadow-[0_30px_70px_-30px_rgba(15,41,66,0.4)]">
               <img src={urun.img} alt={m('yazilim.ekran_goruntusu_alt', { ad: urun.ad })} width={900} height={640} className="h-auto w-full" />
               {indirim > 0 && (
-                <span className="absolute left-4 top-4 rounded-lg bg-rose-500 px-2.5 py-1 text-[12px] font-extrabold text-white shadow-lg">{m('yazilim.indirim', { oran: indirim })}</span>
+                <span className="absolute left-4 top-4 rounded-lg bg-rose-600 px-2.5 py-1 text-[12px] font-extrabold text-white shadow-lg">{m('yazilim.indirim', { oran: indirim })}</span>
               )}
             </div>
 
@@ -69,8 +69,8 @@ export default function HazirYazilimDetay({ urun, yazilimlar: YAZILIMLAR, katego
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-brandline bg-brandsoft/80 px-3 py-1 text-[12.5px] font-semibold text-brandtext">
                   <Icon name={kat ? kat.icon : 'layers'} className="h-4 w-4" /> {kat ? kat.ad : m('yazilim.varsayilan_kategori')}
                 </span>
-                {urun.acikKaynak && <span className="rounded-md bg-emerald-500/15 px-2 py-0.5 text-[11px] font-extrabold uppercase tracking-wide text-emerald-600 ring-1 ring-emerald-500/30 dark:text-emerald-400">{m('yazilim.acik_kaynak')}</span>}
-                {urun.oneCikan && <span className="rounded-md bg-amber-500/15 px-2 py-0.5 text-[11px] font-extrabold uppercase tracking-wide text-amber-600 ring-1 ring-amber-500/30 dark:text-amber-400">{m('yazilim.populer')}</span>}
+                {urun.acikKaynak && <span className="rounded-md bg-emerald-500/15 px-2 py-0.5 text-[11px] font-extrabold uppercase tracking-wide text-emerald-700 ring-1 ring-emerald-500/30 dark:text-emerald-400">{m('yazilim.acik_kaynak')}</span>}
+                {urun.oneCikan && <span className="rounded-md bg-amber-500/15 px-2 py-0.5 text-[11px] font-extrabold uppercase tracking-wide text-amber-800 ring-1 ring-amber-500/30 dark:text-amber-400">{m('yazilim.populer')}</span>}
               </div>
 
               <h1 className="mt-4 tipo-dev font-extrabold tracking-tight text-strong text-balance">{urun.ad}</h1>

@@ -86,9 +86,9 @@ const AiRozet = () => (
 );
 
 const ROZET_TON = {
-  yesil: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 ring-emerald-500/30',
-  sari: 'bg-amber-500/15 text-amber-600 dark:text-amber-400 ring-amber-500/30',
-  mavi: 'bg-sky-500/15 text-sky-600 dark:text-sky-400 ring-sky-500/30',
+  yesil: 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 ring-emerald-500/30',
+  sari: 'bg-amber-500/15 text-amber-800 dark:text-amber-400 ring-amber-500/30',
+  mavi: 'bg-sky-500/15 text-sky-700 dark:text-sky-400 ring-sky-500/30',
   kirmizi: 'bg-rose-500/15 text-rose-600 dark:text-rose-400 ring-rose-500/30',
 };
 
@@ -102,7 +102,7 @@ function MegaItem({ it, onClick }) {
       }`}
     >
       <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-xl transition-colors ${
-        it.logo ? 'bg-surface2 ring-1 ring-line' : 'bg-brandsoft text-brandtext group-hover/i:bg-brand-500 group-hover/i:text-white'
+        it.logo ? 'bg-surface2 ring-1 ring-line' : 'bg-brandsoft text-brandtext group-hover/i:bg-brand-700 group-hover/i:text-white'
       }`}>
         {it.logo
           ? <img src={it.logo} alt="" width={128} height={128} loading="lazy" className="h-7 w-7 object-contain" />
@@ -192,7 +192,7 @@ export function TopBar() {
               </span>
               {m('genel.ag_durumu')}
             </a>
-            <a href={firma.panel} target="_blank" rel="noopener noreferrer" data-umami-event="Müşteri Paneli" className="inline-flex items-center gap-1.5 whitespace-nowrap font-semibold text-white transition-colors hover:text-brand-300">
+            <a href={firma.panel} target="_blank" rel="noopener noreferrer" data-umami-event="Müşteri Paneli" aria-label={m('genel.musteri_paneli')} className="inline-flex items-center gap-1.5 whitespace-nowrap font-semibold text-white transition-colors hover:text-brand-300">
               <Icon name="user" className="w-[14px] h-[14px]" />
               <span className="hidden sm:inline">{m('genel.musteri_paneli')}</span>
             </a>
@@ -214,7 +214,7 @@ function CartButton() {
       >
         <Icon name="cart" className="w-[22px] h-[22px]" />
         {adet > 0 && (
-          <span className="absolute right-1 top-1 grid h-[18px] min-w-[18px] place-items-center rounded-full bg-brand-500 px-1 text-[11px] font-bold leading-none text-white ring-2 ring-surface">
+          <span className="absolute right-1 top-1 grid h-[18px] min-w-[18px] place-items-center rounded-full bg-brand-700 px-1 text-[11px] font-bold leading-none text-white ring-2 ring-surface">
             {adet}
           </span>
         )}
@@ -264,7 +264,7 @@ function CartDrawer() {
             <span className="grid h-16 w-16 place-items-center rounded-2xl bg-surface2 text-muted"><Icon name="cart" className="w-8 h-8" /></span>
             <p className="mt-5 text-[15px] font-semibold text-strong">{m('sepet.bos')}</p>
             <p className="mt-1.5 text-[14px] leading-relaxed text-body">{m('sepet.bos_metin')}</p>
-            <Link href="/hazir-yazilim" onClick={() => setPanelAcik(false)} className="mt-6 inline-flex items-center gap-2 rounded-xl bg-brand-500 px-5 py-3 text-[14px] font-bold text-white transition hover:bg-brand-600">
+            <Link href="/hazir-yazilim" onClick={() => setPanelAcik(false)} className="mt-6 inline-flex items-center gap-2 rounded-xl bg-brand-700 px-5 py-3 text-[14px] font-bold text-white transition hover:bg-brand-800">
               {m('sepet.yazilimlari_incele')} <Icon name="arrow" className="w-4 h-4" />
             </Link>
           </div>
@@ -308,7 +308,7 @@ function CartDrawer() {
               <button
                 type="button"
                 onClick={odemeyeGec}
-                className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-500 px-5 py-3.5 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition hover:bg-brand-600"
+                className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-700 px-5 py-3.5 text-[15px] font-bold text-white shadow-lg shadow-brand-500/25 transition hover:bg-brand-800"
               >
                 {m('sepet.odemeye_gec')} <Icon name="arrow" className="w-4 h-4" />
               </button>
@@ -423,7 +423,7 @@ export function SiteHeader() {
         <div className="mx-auto max-w-7xl px-3 sm:px-5 lg:px-5 xl:px-8">
           <div className="flex h-[68px] lg:h-[74px] items-center justify-between gap-2 sm:gap-3">
             <Link href="/" className="flex shrink-0 items-center">
-              <img src="/icon/logo.png" alt="SunucumWEB" className="h-7 w-auto max-w-[44vw] object-contain sm:h-8 sm:max-w-none dark:brightness-0 dark:invert" />
+              <img src="/icon/logo.png" width={2297} height={332} alt="SunucumWEB" className="h-7 w-auto max-w-[44vw] object-contain sm:h-8 sm:max-w-none dark:brightness-0 dark:invert" />
             </Link>
 
             <nav className="hidden xl:flex items-center gap-0.5" onMouseLeave={menuKapatGecikmeli}>
@@ -474,7 +474,7 @@ export function SiteHeader() {
 
             <div className="flex shrink-0 items-center gap-1 sm:gap-2">
               <ParaBirimiSecici />
-              <button type="button" onClick={() => setBasla(true)} data-umami-event="Hemen Başla" className="group hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap rounded-xl bg-brand-500 px-4 py-2.5 text-[14px] font-semibold text-white shadow-lg shadow-brand-500/25 transition-[transform,box-shadow,border-color,opacity] hover:bg-brand-600 2xl:px-5 2xl:text-[15px]">
+              <button type="button" onClick={() => setBasla(true)} data-umami-event="Hemen Başla" className="group hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap rounded-xl bg-brand-700 px-4 py-2.5 text-[14px] font-semibold text-white shadow-lg shadow-brand-500/25 transition-[transform,box-shadow,border-color,opacity] hover:bg-brand-800 2xl:px-5 2xl:text-[15px]">
                 {m('genel.hemen_basla')} <Icon name="arrow" className="hidden h-4 w-4 transition-transform group-hover:translate-x-0.5 sm:block" />
               </button>
               <button onClick={() => setOpen((v) => !v)} className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-strong transition-colors hover:bg-surface2 xl:hidden" aria-label={m('genel.menu')} aria-expanded={open}>
@@ -496,7 +496,7 @@ export function SiteHeader() {
           <div className="absolute inset-x-0 top-0 flex max-h-full flex-col bg-surface shadow-2xl animate-[fadeup_0.3s_ease-out]">
             <div className="flex shrink-0 items-center justify-between border-b border-line px-4 py-3">
               <Link href="/" onClick={() => setOpen(false)} className="flex items-center">
-                <img src="/icon/logo.png" alt="SunucumWEB" className="h-7 w-auto dark:brightness-0 dark:invert" />
+                <img src="/icon/logo.png" width={2297} height={332} alt="SunucumWEB" className="h-7 w-auto dark:brightness-0 dark:invert" />
               </Link>
               <button onClick={() => setOpen(false)} aria-label={m('genel.kapat')} className="grid h-10 w-10 place-items-center rounded-xl text-strong transition-colors hover:bg-surface2">
                 <Icon name="xmark" className="w-5 h-5" />
@@ -533,7 +533,7 @@ export function SiteHeader() {
                 </div>
               ))}
 
-              <button type="button" onClick={() => { setOpen(false); setBasla(true); }} data-umami-event="Hemen Başla" className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-500 px-5 py-3.5 text-center font-bold text-white shadow-lg shadow-brand-500/25">
+              <button type="button" onClick={() => { setOpen(false); setBasla(true); }} data-umami-event="Hemen Başla" className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-700 px-5 py-3.5 text-center font-bold text-white shadow-lg shadow-brand-500/25">
                 {m('genel.hemen_basla')} <Icon name="arrow" className="h-4 w-4" />
               </button>
 
@@ -660,7 +660,7 @@ function GoogleYorum() {
       </svg>
       <span className="text-[15px] font-extrabold tabular-nums text-white">{puanYazi}</span>
       <Yildizlar puan={ozet.puan} />
-      <Icon name="arrow" className="h-3.5 w-3.5 shrink-0 text-slate-500 transition-transform group-hover:translate-x-0.5 group-hover:text-brand-300" />
+      <Icon name="arrow" className="h-3.5 w-3.5 shrink-0 text-slate-400 transition-transform group-hover:translate-x-0.5 group-hover:text-brand-300" />
     </a>
   );
 }
@@ -731,7 +731,7 @@ export function SiteFooter() {
         <BultenFormu kaynak="footer" />
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,3fr)]">
           <div className="max-w-sm">
-            <img src="/icon/logo.png" alt={FIRMA.unvan} className="h-8 w-auto brightness-0 invert" />
+            <img src="/icon/logo.png" width={2297} height={332} alt={FIRMA.unvan} className="h-8 w-auto brightness-0 invert" />
             <p className="mt-4 text-sm leading-relaxed text-slate-400">
               {m('genel.footer_tanitim')}
             </p>
@@ -751,7 +751,7 @@ export function SiteFooter() {
               </li>
               <li className="flex items-center gap-2.5">
                 <Icon name="shield" className="h-4 w-4 shrink-0 text-brand-400" />
-                <span className="break-all text-slate-300"><span className="text-slate-500">{m('genel.kep')}</span> {FIRMA.kep}</span>
+                <span className="break-all text-slate-300"><span className="text-slate-400">{m('genel.kep')}</span> {FIRMA.kep}</span>
               </li>
             </ul>
 
@@ -759,7 +759,7 @@ export function SiteFooter() {
               href={FIRMA.panel}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-brand-500 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-brand-400"
+              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-brand-700 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-brand-800"
             >
               <Icon name="user" className="h-4 w-4" /> {m('genel.musteri_paneli')}
             </a>
@@ -773,7 +773,7 @@ export function SiteFooter() {
                     rel="noopener noreferrer"
                     aria-label={s.ad}
                     title={s.ad}
-                    className="grid h-10 w-10 place-items-center rounded-xl bg-white/5 text-slate-300 ring-1 ring-white/10 transition-colors hover:bg-brand-500 hover:text-white hover:ring-brand-400"
+                    className="grid h-10 w-10 place-items-center rounded-xl bg-white/5 text-slate-300 ring-1 ring-white/10 transition-colors hover:bg-brand-700 hover:text-white hover:ring-brand-400"
                   >
                     <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                       <path d={s.d} />
@@ -858,7 +858,7 @@ export function SiteFooter() {
       <div className="mt-10 border-t border-white/10">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-5 py-6 lg:flex-row lg:px-8">
           <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm text-slate-400">
-            <span>{m('genel.telif', { unvan: FIRMA.unvan })}</span>
+            <span>{m('genel.telif', { unvan: FIRMA.unvan, yil: new Date().getFullYear() })}</span>
             <span className="hidden text-white/20 sm:inline">|</span>
             <DurumRozeti />
           </div>
@@ -874,7 +874,7 @@ export function CtaBand({ title, text }) {
   const { cta, firma } = useSiteAyarlari();
   return (
     <section className="mx-auto max-w-7xl px-5 lg:px-8 py-20">
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-600 to-brand-800 px-8 py-14 sm:px-14 text-center shadow-[0_40px_90px_-40px_rgba(15,118,110,0.7)]">
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-700 to-brand-900 px-8 py-14 sm:px-14 text-center shadow-[0_40px_90px_-40px_rgba(15,118,110,0.7)]">
         <div aria-hidden className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.25),transparent_55%)]" />
         <div className="relative">
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white text-balance">{title ?? cta.baslik}</h2>

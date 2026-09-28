@@ -27,7 +27,7 @@ function IndirimRozet({ eski, yeni }) {
   const oran = Math.round((1 - yeni / eski) * 100);
   if (oran < 1) return null;
   return (
-    <span className="absolute left-3 top-3 rounded-lg bg-rose-500 px-2 py-1 text-[11px] font-extrabold text-white shadow-lg">
+    <span className="absolute left-3 top-3 rounded-lg bg-rose-600 px-2 py-1 text-[11px] font-extrabold text-white shadow-lg">
       {m('yazilim.indirim', { oran })}
     </span>
   );
@@ -49,7 +49,7 @@ function Kart({ y, kategoriler }) {
         />
         <IndirimRozet eski={y.eskiFiyat} yeni={y.fiyat} />
         {y.oneCikan && (
-          <span className="absolute right-3 top-3 rounded-md bg-amber-500 px-1.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-white shadow">
+          <span className="absolute right-3 top-3 rounded-md bg-amber-700 px-1.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-white shadow">
             {m('yazilim.populer')}
           </span>
         )}
@@ -170,11 +170,11 @@ export default function HazirYazilimPage({ yazilimlar: YAZILIMLAR, kategoriler: 
               <button
                 onClick={() => setKategori('hepsi')}
                 className={`inline-flex shrink-0 items-center justify-between gap-2 rounded-xl px-3.5 py-2.5 text-[14px] font-semibold transition-colors lg:w-full ${
-                  kategori === 'hepsi' ? 'bg-brand-500 text-white shadow-lg shadow-brand-500/20' : 'bg-surface text-strong ring-1 ring-line hover:bg-surface2'
+                  kategori === 'hepsi' ? 'bg-brand-700 text-white shadow-lg shadow-brand-500/20' : 'bg-surface text-strong ring-1 ring-line hover:bg-surface2'
                 }`}
               >
                 <span className="flex items-center gap-2"><Icon name="layers" className="h-4 w-4" /> {m('yazilim.tumu')}</span>
-                <span className={`hidden text-[12px] font-bold lg:inline ${kategori === 'hepsi' ? 'text-white/80' : 'text-muted'}`}>{YAZILIMLAR.length}</span>
+                <span className={`hidden text-[12px] font-bold lg:inline ${kategori === 'hepsi' ? 'text-white' : 'text-muted'}`}>{YAZILIMLAR.length}</span>
               </button>
               {YAZILIM_KATEGORILERI.map((k) => {
                 const aktif = kategori === k.slug;
@@ -183,11 +183,11 @@ export default function HazirYazilimPage({ yazilimlar: YAZILIMLAR, kategoriler: 
                     key={k.slug}
                     onClick={() => setKategori(k.slug)}
                     className={`inline-flex shrink-0 items-center justify-between gap-2 rounded-xl px-3.5 py-2.5 text-[14px] font-semibold transition-colors lg:w-full ${
-                      aktif ? 'bg-brand-500 text-white shadow-lg shadow-brand-500/20' : 'bg-surface text-strong ring-1 ring-line hover:bg-surface2'
+                      aktif ? 'bg-brand-700 text-white shadow-lg shadow-brand-500/20' : 'bg-surface text-strong ring-1 ring-line hover:bg-surface2'
                     }`}
                   >
                     <span className="flex items-center gap-2 whitespace-nowrap"><Icon name={k.icon} className="h-4 w-4" /> {k.ad}</span>
-                    <span className={`hidden text-[12px] font-bold lg:inline ${aktif ? 'text-white/80' : 'text-muted'}`}>{sayimlar[k.slug] || 0}</span>
+                    <span className={`hidden text-[12px] font-bold lg:inline ${aktif ? 'text-white' : 'text-muted'}`}>{sayimlar[k.slug] || 0}</span>
                   </button>
                 );
               })}
@@ -240,7 +240,7 @@ export default function HazirYazilimPage({ yazilimlar: YAZILIMLAR, kategoriler: 
                 <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-surface text-muted ring-1 ring-line"><Icon name="search" className="h-6 w-6" /></span>
                 <p className="mt-5 text-[16px] font-bold text-strong">{m('yazilim.sonuc_yok_baslik')}</p>
                 <p className="mt-1.5 text-[14px] text-body">{m('yazilim.sonuc_yok_metin')}</p>
-                <button onClick={() => { setArama(''); setKategori('hepsi'); }} className="mt-5 inline-flex items-center gap-2 rounded-xl bg-brand-500 px-5 py-2.5 text-[14px] font-bold text-white transition-colors hover:bg-brand-600">
+                <button onClick={() => { setArama(''); setKategori('hepsi'); }} className="mt-5 inline-flex items-center gap-2 rounded-xl bg-brand-700 px-5 py-2.5 text-[14px] font-bold text-white transition-colors hover:bg-brand-800">
                   <Icon name="refresh" className="h-4 w-4" /> {m('yazilim.filtre_sifirla')}
                 </button>
               </div>
@@ -266,7 +266,7 @@ export default function HazirYazilimPage({ yazilimlar: YAZILIMLAR, kategoriler: 
                     onClick={() => setSayfa(n)}
                     aria-current={n === guncelSayfa}
                     className={`grid h-10 min-w-10 place-items-center rounded-xl px-3 text-[14px] font-bold transition-colors ${
-                      n === guncelSayfa ? 'bg-brand-500 text-white shadow-lg shadow-brand-500/25' : 'border border-line bg-surface text-strong hover:bg-surface2'
+                      n === guncelSayfa ? 'bg-brand-700 text-white shadow-lg shadow-brand-500/25' : 'border border-line bg-surface text-strong hover:bg-surface2'
                     }`}
                   >
                     {n}

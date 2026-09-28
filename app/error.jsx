@@ -15,7 +15,7 @@ export default function Error({ reset }) {
           <button
             type="button"
             onClick={reset}
-            className="inline-flex items-center gap-2 rounded-xl bg-brand-500 px-5 py-3 text-[15px] font-bold text-white transition-colors hover:bg-brand-600"
+            className="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-5 py-3 text-[15px] font-bold text-white transition-colors hover:bg-brand-800"
           >
             {m('hata.tekrar_dene')}
           </button>

@@ -24,7 +24,7 @@ const YUKLENIYOR_ADIMLARI = () => [
 const DURUM = () => ({
   musait: { etiket: m('alanadiai.durum_musait'), icon: 'check', cls: 'bg-emerald-50 text-emerald-700 ring-emerald-200' },
   alinmis: { etiket: m('alanadiai.durum_alinmis'), icon: 'xmark', cls: 'bg-rose-50 text-rose-600 ring-rose-200' },
-  bilinmiyor: { etiket: m('alanadiai.durum_bilinmiyor'), icon: 'question', cls: 'bg-amber-50 text-amber-700 ring-amber-200' },
+  bilinmiyor: { etiket: m('alanadiai.durum_bilinmiyor'), icon: 'question', cls: 'bg-amber-50 text-amber-800 ring-amber-200' },
 });
 
 const STIL_ETIKET = () => ({
@@ -256,7 +256,7 @@ export default function DomainAI() {
                         onClick={() => tldToggle(t)}
                         aria-pressed={secili}
                         className={`rounded-lg px-3 py-1.5 text-[13px] font-bold transition ${
-                          secili ? 'bg-brand-500 text-white shadow shadow-brand-500/30' : 'bg-surface2 text-body hover:bg-line'
+                          secili ? 'bg-brand-700 text-white shadow shadow-brand-500/30' : 'bg-surface2 text-body hover:bg-line'
                         }`}
                       >
                         {t}
@@ -277,7 +277,7 @@ export default function DomainAI() {
                 type="button"
                 onClick={uret}
                 disabled={yukleniyor}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-500 px-6 py-3.5 text-[15px] font-bold text-white shadow-lg shadow-brand-500/30 transition hover:bg-brand-600 disabled:cursor-not-allowed disabled:opacity-70"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-700 px-6 py-3.5 text-[15px] font-bold text-white shadow-lg shadow-brand-500/30 transition hover:bg-brand-800 disabled:cursor-not-allowed disabled:opacity-70"
               >
                 {yukleniyor ? (
                   <>
@@ -323,7 +323,7 @@ export default function DomainAI() {
               onChange={(e) => setDogrudan(e.target.value)}
               placeholder={m('alanadiai.dogrudan_ph')}
               aria-label={m('alanadiai.dogrudan_aria')}
-              className="min-w-0 flex-1 bg-transparent py-1.5 text-[14px] text-white placeholder:text-slate-500 outline-none"
+              className="min-w-0 flex-1 bg-transparent py-1.5 text-[14px] text-white placeholder:text-slate-400 outline-none"
             />
             <button type="submit" className="shrink-0 rounded-lg bg-white/10 px-4 py-2 text-[13px] font-bold text-white ring-1 ring-white/20 transition-colors hover:bg-white/20">
               {m('alanadiai.sorgula')}
@@ -356,7 +356,7 @@ export default function DomainAI() {
                   onClick={() => setSadeceMusait((v) => !v)}
                   aria-pressed={sadeceMusait}
                   className={`rounded-lg px-3 py-1.5 text-[13px] font-bold ring-1 transition ${
-                    sadeceMusait ? 'bg-brand-500 text-white ring-brand-400' : 'bg-white/5 text-slate-300 ring-white/15 hover:bg-white/10'
+                    sadeceMusait ? 'bg-brand-700 text-white ring-brand-400' : 'bg-white/5 text-slate-300 ring-white/15 hover:bg-white/10'
                   }`}
                 >
                   {m('alanadiai.sadece_musait')}
@@ -411,7 +411,7 @@ export default function DomainAI() {
                             className={`inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-[13px] font-bold transition ${
                               alinmis
                                 ? 'bg-white/10 text-slate-300 hover:bg-white/15'
-                                : 'bg-brand-500 text-white shadow shadow-brand-500/25 hover:bg-brand-400'
+                                : 'bg-brand-700 text-white shadow shadow-brand-500/25 hover:bg-brand-400'
                             }`}
                           >
                             {alinmis ? m('alanadiai.yine_sorgula') : m('alanadiai.hemen_al')} <Icon name="arrow" className="w-3.5 h-3.5" />

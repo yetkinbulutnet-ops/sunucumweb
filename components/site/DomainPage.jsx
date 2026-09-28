@@ -65,7 +65,7 @@ function SonucKart() {
         <div className="flex items-center gap-2 border-b border-line bg-surface2 px-4 py-3.5">
           <Icon name="search" className="h-4 w-4 shrink-0 text-brandtext" />
           <span className="min-w-0 flex-1 truncate text-[14px] font-semibold text-strong">{m('alanadi.ornek_marka')}</span>
-          <span className="rounded-lg bg-brand-500 px-2.5 py-1 text-[12px] font-bold text-white">{m('alanadi.tescil_buton')}</span>
+          <span className="rounded-lg bg-brand-700 px-2.5 py-1 text-[12px] font-bold text-white">{m('alanadi.tescil_buton')}</span>
         </div>
         <ul className="divide-y divide-line">
           {SONUC().map((s) => {
@@ -102,14 +102,14 @@ function TransferKart() {
         <div className="flex items-center gap-2 border-b border-line bg-surface2 px-4 py-3.5">
           <Icon name="refresh" className="h-4 w-4 shrink-0 text-brandtext" />
           <span className="min-w-0 flex-1 truncate text-[14px] font-semibold text-strong">{m('alanadi.ornek_transfer')}</span>
-          <span className="rounded-lg bg-emerald-500/15 px-2.5 py-1 text-[11px] font-bold text-emerald-500 ring-1 ring-emerald-500/30">{m('alanadi.arti_bir_yil')}</span>
+          <span className="rounded-lg bg-emerald-500/15 px-2.5 py-1 text-[11px] font-bold text-emerald-700 dark:text-emerald-400 ring-1 ring-emerald-500/30">{m('alanadi.arti_bir_yil')}</span>
         </div>
         <ul className="p-2">
           {TRANSFER_ADIM().map((a) => {
             const bitti = a.durum === 'ok', aktif = a.durum === 'aktif';
             return (
               <li key={a.t} className="flex items-center gap-3 rounded-xl px-3 py-3">
-                <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full ${bitti ? 'bg-emerald-500/15 text-emerald-500' : aktif ? 'bg-brand-500 text-white' : 'bg-surface2 text-muted ring-1 ring-line'}`}>
+                <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full ${bitti ? 'bg-emerald-500/15 text-emerald-500' : aktif ? 'bg-brand-700 text-white' : 'bg-surface2 text-muted ring-1 ring-line'}`}>
                   {bitti ? <Icon name="check" className="h-3.5 w-3.5" /> : aktif ? <Icon name="refresh" className="h-3.5 w-3.5" /> : <span className="h-1.5 w-1.5 rounded-full bg-current" />}
                 </span>
                 <span className={`min-w-0 flex-1 text-[14.5px] ${bitti || aktif ? 'font-semibold text-strong' : 'text-muted'}`}>{a.t}</span>
@@ -198,7 +198,7 @@ export default function DomainPage({ mode = 'register', veri }) {
         <div className="grid gap-5 md:grid-cols-3">
           {STEPS[mode].map((s, i) => (
             <div key={s.t} className="relative rounded-2xl border border-line bg-surface p-7 shadow-[0_10px_40px_-24px_rgba(15,41,66,0.25)]">
-              <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand-500 text-white font-extrabold">{i + 1}</span>
+              <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand-700 text-white font-extrabold">{i + 1}</span>
               <h3 className="mt-4 text-lg font-bold text-strong">{s.t}</h3>
               <p className="mt-2 text-[15px] leading-relaxed text-body">{s.d}</p>
             </div>
@@ -209,7 +209,7 @@ export default function DomainPage({ mode = 'register', veri }) {
       <section className="mx-auto max-w-7xl px-5 lg:px-8 py-16 lg:py-20">
         <div className="mx-auto mb-12 max-w-2xl text-center"><span className="text-[13px] font-bold uppercase tracking-[0.14em] text-brandtext">{m('alanadi.avantajlar_etiket')}</span><h2 className="mt-3 tipo-bolum font-extrabold tracking-tight text-strong text-balance">{m('alanadi.avantajlar_baslik')}</h2></div>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {DFEATURES.map((f) => (<div key={f.t} className="group rounded-2xl border border-line bg-surface p-6 shadow-[0_10px_40px_-24px_rgba(15,41,66,0.2)] transition-[transform,box-shadow,border-color,opacity] hover:-translate-y-1"><span className="grid h-12 w-12 place-items-center rounded-2xl bg-brandsoft text-brandtext transition-colors group-hover:bg-brand-500 group-hover:text-white"><Icon name={f.icon} /></span><h3 className="mt-4 text-[17px] font-bold text-strong">{f.t}</h3><p className="mt-2 text-sm leading-relaxed text-body">{f.d}</p></div>))}
+          {DFEATURES.map((f) => (<div key={f.t} className="group rounded-2xl border border-line bg-surface p-6 shadow-[0_10px_40px_-24px_rgba(15,41,66,0.2)] transition-[transform,box-shadow,border-color,opacity] hover:-translate-y-1"><span className="grid h-12 w-12 place-items-center rounded-2xl bg-brandsoft text-brandtext transition-colors group-hover:bg-brand-700 group-hover:text-white"><Icon name={f.icon} /></span><h3 className="mt-4 text-[17px] font-bold text-strong">{f.t}</h3><p className="mt-2 text-sm leading-relaxed text-body">{f.d}</p></div>))}
         </div>
       </section>
 
