@@ -18,6 +18,35 @@ const CSP = [
 ].join('; ');
 const dusukCpu = process.env.BUILD_CPUS ? { cpus: Number(process.env.BUILD_CPUS) } : {};
 
+const ESKI_SAYFALAR = {
+  'abd-sunucu-detay': '/abd-sunucu',
+  'abd-sunucu-paketleri': '/abd-sunucu',
+  'abd-sunucu-teknoloji': '/abd-sunucu',
+  'hosting-kampanya': '/kampanyalar',
+  'vds-kampanya': '/kampanyalar',
+  'kurumsal-vds': '/sanal-sunucu',
+  'premium-vds': '/sanal-sunucu',
+  'residential-vds': '/sanal-sunucu',
+  'vds-paketleri': '/sanal-sunucu',
+  'vds-teknoloji': '/sanal-sunucu',
+  'web-hosting-teknoloji': '/web-hosting',
+  'wisecp-ip-paketleri': '/ip-kiralama',
+  'ryzen-sunucu': '/dedicated-sunucu',
+};
+const HTML_HEDEF = {
+  'gizlilik-sozlesmesi': '/legal/gizlilik-sozlesmesi',
+  'iade-politikasi': '/legal/iade-politikasi',
+  'kullanim-kosullari': '/legal/kullanim-kosullari',
+  'ticari-bilgiler': '/legal',
+  whois: '/araclar/whois',
+};
+const ESKI_HTML = [
+  ...Object.keys(ESKI_SAYFALAR),
+  ...Object.keys(HTML_HEDEF),
+  'abd-sunucu', 'alan-adi', 'dedicated-sunucu', 'gpu-sunucu', 'hakkimizda', 'iletisim', 'ip-kiralama', 'isp-sunucu', 'kurumsal-hosting',
+  'premium-sunucu', 'reseller-hosting', 'sanal-sunucu', 'sunucu-barindirma', 'transfer', 'web-hosting', 'wordpress-hosting',
+];
+
 const nextConfig = {
   reactStrictMode: false,
   eslint: { ignoreDuringBuilds: true },
@@ -36,6 +65,11 @@ const nextConfig = {
       { source: '/iade-politikasi', destination: '/legal/iade-politikasi', permanent: true },
       { source: '/kullanim-politikasi', destination: '/legal/kullanim-kosullari', permanent: true },
       { source: '/hazir-yazilim/ajans-yaziliim', destination: '/hazir-yazilim/ajans-yazilimi', permanent: true },
+      { source: '/kullanim-politikas%C4%B1', destination: '/legal/kullanim-kosullari', permanent: true },
+      { source: '/bilgi/:yol*', destination: 'https://my.sunucumweb.com/bilgi/:yol*', permanent: true },
+      { source: '/index.html', destination: '/', permanent: true },
+      ...Object.entries(ESKI_SAYFALAR).map(([eski, yeni]) => ({ source: `/${eski}`, destination: yeni, permanent: true })),
+      ...ESKI_HTML.map((ad) => ({ source: `/${ad}.html`, destination: HTML_HEDEF[ad] || ESKI_SAYFALAR[ad] || `/${ad}`, permanent: true })),
     ];
   },
 
