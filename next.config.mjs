@@ -34,10 +34,10 @@ const ESKI_SAYFALAR = {
   'ryzen-sunucu': '/dedicated-sunucu',
 };
 const HTML_HEDEF = {
-  'gizlilik-sozlesmesi': '/legal/gizlilik-sozlesmesi',
-  'iade-politikasi': '/legal/iade-politikasi',
-  'kullanim-kosullari': '/legal/kullanim-kosullari',
-  'ticari-bilgiler': '/legal',
+  'gizlilik-sozlesmesi': '/yasal-belgeler/gizlilik-sozlesmesi',
+  'iade-politikasi': '/yasal-belgeler/iade-politikasi',
+  'kullanim-kosullari': '/yasal-belgeler/kullanim-kosullari',
+  'ticari-bilgiler': '/yasal-belgeler/sirket-bilgileri',
   whois: '/araclar/whois',
 };
 const ESKI_HTML = [
@@ -53,19 +53,22 @@ const nextConfig = {
   images: { unoptimized: true },
   ...(process.env.DOCKER_BUILD ? { output: 'standalone' } : {}),
   poweredByHeader: false,
+  serverExternalPackages: ['pdfkit'],
   experimental: { ...dusukCpu, staleTimes: { dynamic: 0, static: 30 } },
 
   async redirects() {
     return [
-      { source: '/sozlesmeler', destination: '/legal/kullanim-kosullari', permanent: true },
-      { source: '/ticari-bilgiler', destination: '/legal', permanent: true },
+      { source: '/sozlesmeler', destination: '/yasal-belgeler/kullanim-kosullari', permanent: true },
+      { source: '/ticari-bilgiler', destination: '/yasal-belgeler/sirket-bilgileri', permanent: true },
       { source: '/whois', destination: '/araclar/whois', permanent: true },
-      { source: '/kullanim-kosullari', destination: '/legal/kullanim-kosullari', permanent: true },
-      { source: '/gizlilik-sozlesmesi', destination: '/legal/gizlilik-sozlesmesi', permanent: true },
-      { source: '/iade-politikasi', destination: '/legal/iade-politikasi', permanent: true },
-      { source: '/kullanim-politikasi', destination: '/legal/kullanim-kosullari', permanent: true },
+      { source: '/kullanim-kosullari', destination: '/yasal-belgeler/kullanim-kosullari', permanent: true },
+      { source: '/gizlilik-sozlesmesi', destination: '/yasal-belgeler/gizlilik-sozlesmesi', permanent: true },
+      { source: '/iade-politikasi', destination: '/yasal-belgeler/iade-politikasi', permanent: true },
+      { source: '/kullanim-politikasi', destination: '/yasal-belgeler/kullanim-kosullari', permanent: true },
       { source: '/hazir-yazilim/ajans-yaziliim', destination: '/hazir-yazilim/ajans-yazilimi', permanent: true },
-      { source: '/kullanim-politikas%C4%B1', destination: '/legal/kullanim-kosullari', permanent: true },
+      { source: '/kullanim-politikas%C4%B1', destination: '/yasal-belgeler/kullanim-kosullari', permanent: true },
+      { source: '/legal', destination: '/yasal-belgeler', permanent: true },
+      { source: '/legal/:belge', destination: '/yasal-belgeler/:belge', permanent: true },
       { source: '/bilgi/:yol*', destination: 'https://my.sunucumweb.com/bilgi/:yol*', permanent: true },
       { source: '/index.html', destination: '/', permanent: true },
       ...Object.entries(ESKI_SAYFALAR).map(([eski, yeni]) => ({ source: `/${eski}`, destination: yeni, permanent: true })),

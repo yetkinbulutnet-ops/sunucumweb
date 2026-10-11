@@ -168,7 +168,7 @@ export default function BultenFormu({ kaynak }) {
             <label className={`mt-3 flex items-start gap-2.5 text-[13px] leading-snug ${koyu ? 'text-slate-400' : 'text-body'}`}>
               <input type="checkbox" checked={izin} onChange={(e) => (setIzin(e.target.checked), hazirla())} disabled={durum === 'gonderiliyor'} className="mt-0.5 h-4 w-4 shrink-0 accent-brand-500" />
               <span className="min-w-0">
-                <Link href="/legal/gizlilik-sozlesmesi" target="_blank" className={`font-semibold underline ${koyu ? 'text-brand-300' : 'text-brandtext'}`}>{m('bulten.izin_link')}</Link> {m('bulten.izin_metni')}
+                <Link href="/yasal-belgeler/gizlilik-sozlesmesi" target="_blank" className={`font-semibold underline ${koyu ? 'text-brand-300' : 'text-brandtext'}`}>{m('bulten.izin_link')}</Link> {m('bulten.izin_metni')}
               </span>
             </label>
             <div ref={kutu} className="w-full [&>*]:mt-3" />

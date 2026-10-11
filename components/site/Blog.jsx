@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Icon, SiteShell, CtaBand } from './chrome';
 import BultenFormu from './BultenFormu';
+import BlogArama from './BlogArama';
 import Sema from './Sema';
 import { ekmekKirintisi } from '@/lib/semalar';
 import { tarihYaz } from '@/lib/blog';
@@ -216,8 +217,23 @@ function BosDurum({ m }) {
   );
 }
 
-export async function BlogListe({ yazilar, oneCikan, kategoriler, aktifKategori, sayfa, sayfaSayisi, tabanYol, baslik, aciklama, yol }) {
+export async function BlogListe({ yazilar, oneCikan, kapsam = [], kategoriler, aktifKategori, sayfa, sayfaSayisi, tabanYol, baslik, aciklama, yol }) {
   const m = await metinAl();
+  const aramaVerisi = kapsam.map((y) => ({ slug: y.slug, baslik: y.baslik || '', ozet: y.ozet || '', kategori: y.kategori?.slug || '', kategoriAd: y.kategori?.ad || '', zaman: y.tarih ? new Date(y.tarih).getTime() : 0 }));
+  const kartlar = Object.fromEntries(kapsam.map((y) => [y.slug, <BlogKart key={y.slug} y={y} />]));
+  const aramaMetni = {
+    araEtiket: m('blog.ara_etiket'),
+    araYer: m('blog.ara_yer'),
+    kategoriEtiket: m('blog.filtre_kategori'),
+    tumKategoriler: m('blog.filtre_tum_kategoriler'),
+    siraEtiket: m('blog.sirala_etiket'),
+    siraYeni: m('blog.sirala_yeni'),
+    siraEski: m('blog.sirala_eski'),
+    siraAz: m('blog.sirala_az'),
+    sonucN: m('blog.arama_sonuc_n'),
+    sonucYok: m('blog.arama_sonuc_yok'),
+    temizle: m('blog.arama_temizle'),
+  };
   const listeSemasi = yazilar.length
     ? {
         '@context': 'https://schema.org',
@@ -243,7 +259,7 @@ export async function BlogListe({ yazilar, oneCikan, kategoriler, aktifKategori,
         {!yazilar.length && !oneCikan ? (
           <div className="mt-10"><BosDurum m={m} /></div>
         ) : (
-          <>
+          <BlogArama yazilar={aramaVerisi} kartlar={kartlar} kategoriler={kategoriler.filter((k) => k.adet > 0).map((k) => ({ slug: k.slug, ad: k.ad }))} kategoriSecimi={!aktifKategori} t={aramaMetni}>
             {oneCikan && <div className="mt-10"><OneCikanKart m={m} y={oneCikan} /></div>}
             {yazilar.length > 0 && (
               <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -251,7 +267,7 @@ export async function BlogListe({ yazilar, oneCikan, kategoriler, aktifKategori,
               </div>
             )}
             <Sayfalama m={m} sayfa={sayfa} sayfaSayisi={sayfaSayisi} tabanYol={tabanYol} />
-          </>
+          </BlogArama>
         )}
       </section>
       <BultenFormu kaynak="blog" />

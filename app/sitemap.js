@@ -27,7 +27,7 @@ export default async function sitemap() {
 
   const araclar = (await araclariGetir()).map((a) => girdi(`/araclar/${a.slug}`, 0.7, 'monthly', a.guncelleme));
 
-  const yasal = (await yasalBelgeleriGetir()).map((b) => girdi(`/legal/${b.slug}`, 0.3, 'yearly', b.guncelleme));
+  const yasal = (await yasalBelgeleriGetir()).map((b) => girdi(`/yasal-belgeler/${b.slug}`, 0.3, 'yearly', b.guncelleme));
 
   const dnsSayfalari = ORNEK_ALANLAR.flatMap((alan) => [
     girdi(dnsYolu(alan), 0.5, 'weekly'),
@@ -49,7 +49,9 @@ export default async function sitemap() {
     girdi('/', 1, 'weekly'),
     girdi('/kampanyalar', 0.8, 'monthly'),
     girdi('/hazir-yazilim', 0.8, 'monthly'),
-    girdi('/legal', 0.4, 'yearly'),
+    girdi('/yasal-belgeler', 0.4, 'yearly'),
+    girdi('/yasal-belgeler/sirket-bilgileri', 0.3, 'yearly'),
+    girdi('/banka-hesaplari', 0.5, 'yearly'),
     girdi('/araclar', 0.8, 'monthly'),
     ...sayfalar,
     ...araclar,
