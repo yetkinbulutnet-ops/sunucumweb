@@ -7,13 +7,21 @@ import { sayfaMeta } from '@/lib/seo';
 export const revalidate = 300;
 export const dynamicParams = true;
 
+const SLUG_RE = /^[a-z0-9-]{1,120}$/;
+
+const yaziGetir = async (slug) => {
+  if (!SLUG_RE.test(String(slug || ''))) return null;
+  if (!(await tumBlogYazilari()).some((y) => y.slug === slug)) return null;
+  return blogYazisi(slug);
+};
+
 export async function generateStaticParams() {
   return (await tumBlogYazilari()).map((y) => ({ slug: y.slug }));
 }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const y = await blogYazisi(slug);
+  const y = await yaziGetir(slug);
   if (!y) return {};
   const meta = sayfaMeta({
     baslik: y.seoBaslik || y.baslik,
@@ -35,7 +43,7 @@ export async function generateMetadata({ params }) {
 
 export default async function Page({ params }) {
   const { slug } = await params;
-  const yazi = await blogYazisi(slug);
+  const yazi = await yaziGetir(slug);
   if (!yazi) notFound();
   const hepsi = await tumBlogYazilari();
   const digerleri = hepsi.filter((y) => y.slug !== yazi.slug);

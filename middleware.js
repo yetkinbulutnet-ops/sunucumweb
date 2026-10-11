@@ -5,7 +5,7 @@ import {
 } from '@/lib/guvenlik';
 
 export const config = {
-  matcher: ['/((?!api/|_next/|assets/|img/|icon/|fonts/|guvenlik|engellendi|.*\\.[a-zA-Z0-9]+$).*)'],
+  matcher: ['/((?!api/|_next/|assets/|img/|icon/|fonts/|guvenlik|engellendi|.*\\.[a-zA-Z0-9]+$).*)', '/araclar/dns/:path*'],
 };
 
 const RL_PENCERE_MS = 10000;

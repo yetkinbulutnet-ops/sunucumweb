@@ -6,8 +6,7 @@ import { alanNormalle, gecerliAlan, dnsYolu } from '@/lib/dns-yol';
 import { kanonik } from '@/lib/seo';
 import { sistemMetinHazirla } from '@/lib/sistem-metin';
 
-export const revalidate = 900;
-export const fetchCache = 'force-cache';
+export const dynamic = 'force-dynamic';
 
 function alanCoz(ham) {
   const alan = alanNormalle(ham);

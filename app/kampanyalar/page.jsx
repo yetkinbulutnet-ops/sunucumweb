@@ -2,6 +2,7 @@ import KampanyalarPage from '@/components/site/KampanyalarPage';
 import { kampanyalariGetir, sayfaMetinleri } from '@/lib/cms';
 import { mutlakUrl, sayfaMeta } from '@/lib/seo';
 import SayfaMetni from '@/components/site/SayfaMetni';
+import { jsonLdMetni } from '@/lib/json-ld';
 
 export const revalidate = 300;
 
@@ -29,7 +30,7 @@ function JsonLd({ kampanyalar }) {
       },
     })),
   };
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(veri) }} />;
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdMetni(veri) }} />;
 }
 
 export default async function Page() {

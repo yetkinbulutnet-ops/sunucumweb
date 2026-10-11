@@ -3,6 +3,7 @@ import HazirYazilimDetay from '@/components/site/HazirYazilimDetay';
 import { yazilimVerisi, metinAl } from '@/lib/cms';
 import { mutlakUrl } from '@/lib/seo';
 import SayfaMetni from '@/components/site/SayfaMetni';
+import { jsonLdMetni } from '@/lib/json-ld';
 
 export const dynamicParams = true;
 export const revalidate = 300;
@@ -72,7 +73,7 @@ export default async function Page({ params }) {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonld) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdMetni(jsonld) }} />
       <SayfaMetni onekler={['yazilim']}>
         <HazirYazilimDetay urun={u} yazilimlar={veri.yazilimlar} kategoriler={veri.kategoriler} />
       </SayfaMetni>

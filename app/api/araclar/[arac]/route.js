@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { aracCalistir } from '@/lib/engines/tools';
+import { aracCalistir, aracVarMi } from '@/lib/engines/tools';
 import { rateLimit, clientKey, istemciIp } from '@/lib/engines/core/ratelimit';
 import { sistemMetinHazirla, sm } from '@/lib/sistem-metin';
 
@@ -13,6 +13,9 @@ const ziyaretciIpAl = (request) => istemciIp(request);
 export async function POST(request, { params }) {
   await sistemMetinHazirla();
   const { arac } = await params;
+  if (!aracVarMi(arac)) {
+    return NextResponse.json({ ok: false, error: { code: 'BAD_INPUT', message: sm('sistem.arac_bilinmeyen') } }, { status: 404 });
+  }
 
   const limit = rateLimit(clientKey(request, `arac:${arac}`), {
     limit: ARAC_SINIRI[arac] ?? 20,

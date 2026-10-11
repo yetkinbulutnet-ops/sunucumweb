@@ -6,8 +6,7 @@ import { alanNormalle, gecerliHedef, tipNormalle, gecerliTip, dnsYolu } from '@/
 import { kanonik } from '@/lib/seo';
 import { sistemMetinHazirla } from '@/lib/sistem-metin';
 
-export const revalidate = 900;
-export const fetchCache = 'force-cache';
+export const dynamic = 'force-dynamic';
 
 function coz(hamAlan, hamTip) {
   const tip = tipNormalle(hamTip);

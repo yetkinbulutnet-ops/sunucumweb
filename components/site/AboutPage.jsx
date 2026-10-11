@@ -6,6 +6,7 @@ import SayacKartlari from './SayacKartlari';
 import KabinSlider from './KabinSlider';
 import { hakkimizdaSabit } from '@/content/site/hakkimizda';
 import { metinAl } from '@/lib/cms';
+import { jsonLdMetni } from '@/lib/json-ld';
 
 const semaYap = (f, unvan) => ({
   '@context': 'https://schema.org',
@@ -38,7 +39,7 @@ export default async function AboutPage({ veri, markalar: MARKALAR, markaSeridi,
   const MARKA_SERIDI = { baslik: markaSeridi.baslik, metin: markaSeridi.aciklama };
   return (
     <SiteShell>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SEMA) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdMetni(SEMA) }} />
 
       <section className="relative overflow-hidden border-b border-line">
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">

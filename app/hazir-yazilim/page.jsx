@@ -2,6 +2,7 @@ import HazirYazilimPage from '@/components/site/HazirYazilimPage';
 import { yazilimVerisi, sayfaMetinleri } from '@/lib/cms';
 import { sayfaMeta } from '@/lib/seo';
 import SayfaMetni from '@/components/site/SayfaMetni';
+import { jsonLdMetni } from '@/lib/json-ld';
 
 export const revalidate = 300;
 
@@ -28,7 +29,7 @@ function JsonLd({ yazilimlar }) {
       },
     })),
   };
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(veri) }} />;
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdMetni(veri) }} />;
 }
 
 export default async function Page() {
