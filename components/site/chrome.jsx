@@ -8,6 +8,7 @@ import { currentTheme, toggleTheme } from '@/lib/engines/theme';
 import { formatTRY, CHECKOUT_URL } from '@/lib/engines/cart';
 import { scrollKilitle } from '@/lib/engines/scroll-lock';
 import SmoothScroll from './SmoothScroll';
+import { tercihleriAc } from '@/lib/cerez-izin';
 import BultenFormu from './BultenFormu';
 import { CartProvider, useCart } from './CartProvider';
 import { CurrencyProvider, ParaBirimiSecici } from './CurrencyProvider';
@@ -864,6 +865,8 @@ export function SiteFooter() {
             <span>{m('genel.telif', { unvan: FIRMA.unvan, yil: new Date().getFullYear() })}</span>
             <span className="hidden text-white/20 sm:inline">|</span>
             <DurumRozeti />
+            <span className="hidden text-white/20 sm:inline">|</span>
+            <button type="button" onClick={tercihleriAc} className="text-slate-400 underline-offset-2 transition-colors hover:text-white hover:underline">{m('cerez.tercihler_link')}</button>
           </div>
 
           <OdemeLogolari />

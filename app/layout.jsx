@@ -77,7 +77,7 @@ export async function generateMetadata() {
 
 export default async function RootLayout({ children }) {
   const [duyuru, cark, ayar, bulten] = await Promise.all([aktifDuyuru(), carkVerisi(), siteAyarlari(), bultenAyari()]);
-  const metinler = await istemciMetinleri(['genel', 'sepet', 'cark', 'durum', 'hata', 'duyuru', ...(bulten ? ['bulten'] : [])]);
+  const metinler = await istemciMetinleri(['genel', 'sepet', 'cark', 'durum', 'hata', 'duyuru', 'cerez', ...(bulten ? ['bulten'] : [])]);
   return (
     <html lang="tr">
       <head>
