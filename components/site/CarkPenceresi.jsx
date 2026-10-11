@@ -246,7 +246,7 @@ export default function CarkPenceresi({ cark, kapat, bitti }) {
                 <label className="mt-4 flex items-start gap-2.5 text-[13px] leading-snug text-body">
                   <input type="checkbox" checked={kvkk} onChange={(e) => setKvkk(e.target.checked)} disabled={asama !== 'form'} className="mt-0.5 h-4 w-4 shrink-0 accent-brand-500" />
                   <span>
-                    <Link href="/yasal-belgeler/gizlilik-sozlesmesi" target="_blank" className="font-semibold text-brandtext underline">{m('cark.kvkk_link')}</Link> {m('cark.kvkk_metin')}
+                    <Link href="/yasal-belgeler/kvkk" target="_blank" className="font-semibold text-brandtext underline">{m('cark.kvkk_link')}</Link> {m('cark.kvkk_metin')}
                   </span>
                 </label>
                 <label className="mt-2.5 flex items-start gap-2.5 text-[13px] leading-snug text-body">
