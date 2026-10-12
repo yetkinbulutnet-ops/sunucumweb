@@ -1,8 +1,14 @@
 'use client';
+import { useEffect } from 'react';
 import Link from 'next/link';
+import { birKezYenile, surumHatasiMi } from '@/lib/surum-yenile';
 import { m } from '@/lib/metin';
 
-export default function Error({ reset }) {
+export default function Error({ error, reset }) {
+  useEffect(() => {
+    if (surumHatasiMi(error)) birKezYenile();
+  }, [error]);
+
   return (
     <div className="grid min-h-ekran place-items-center bg-page px-5 py-20 text-center">
       <div className="max-w-md">

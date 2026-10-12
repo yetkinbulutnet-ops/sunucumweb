@@ -1,6 +1,13 @@
 'use client';
 
-export default function GlobalError({ reset }) {
+import { useEffect } from 'react';
+import { birKezYenile } from '@/lib/surum-yenile';
+
+export default function GlobalError() {
+  useEffect(() => {
+    birKezYenile();
+  }, []);
+
   return (
     <html lang="tr">
       <body style={{ margin: 0, minHeight: '100vh', display: 'grid', placeItems: 'center', padding: '2rem', textAlign: 'center', background: '#0b1017', color: '#e2e8f0', fontFamily: 'system-ui, -apple-system, Segoe UI, Roboto, sans-serif' }}>
@@ -11,7 +18,7 @@ export default function GlobalError({ reset }) {
           </p>
           <button
             type="button"
-            onClick={reset}
+            onClick={() => window.location.reload()}
             style={{ marginTop: '1.5rem', background: '#14b8a6', color: '#fff', border: 0, borderRadius: 12, padding: '0.8rem 1.6rem', fontWeight: 700, fontSize: '1rem', cursor: 'pointer' }}
           >
             Tekrar dene
